@@ -13,8 +13,6 @@ import java.util.Properties;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.TimeUnit;
-
 
 public enum ConnectionPool {
     INSTANCE;
@@ -23,7 +21,6 @@ public enum ConnectionPool {
     private static final String DB_URL = "url";
     private static final String DB_DRIVER = "driver";
     private static final int POOL_SIZE = 32;
-    private static final int DEFAULT_CONNECTION_AWAIT = 30;
     private BlockingQueue<ProxyConnection> availableConnections;
     private Queue<ProxyConnection> busyConnections;
     private static final Logger LOG = LogManager.getLogger();
@@ -37,7 +34,6 @@ public enum ConnectionPool {
     private void init(){
             ClassLoader classLoader = this.getClass().getClassLoader();
             Properties properties = new Properties();
-
             try {
                 properties.load(classLoader.getResourceAsStream(DB_PROPERTIES));
                 String url = properties.getProperty(DB_URL);
