@@ -2,9 +2,7 @@ package by.prokhorenko.pool;
 import by.prokhorenko.exception.ConnectionPoolException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -16,7 +14,7 @@ import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
+
 
 public enum ConnectionPool {
     INSTANCE;
@@ -28,16 +26,15 @@ public enum ConnectionPool {
     private static final int DEFAULT_CONNECTION_AWAIT = 30;
     private BlockingQueue<ProxyConnection> availableConnections;
     private Queue<ProxyConnection> busyConnections;
-    private AtomicBoolean isInitialized = new AtomicBoolean(false);
     private static final Logger LOG = LogManager.getLogger();
 
     ConnectionPool(){
         availableConnections = new LinkedBlockingDeque<>(POOL_SIZE);
         busyConnections = new ArrayDeque<>();
+        init();
     }
 
-    public void init() throws ConnectionPoolException {
-        if(!isInitialized.get()){
+    private void init(){
             ClassLoader classLoader = this.getClass().getClassLoader();
             Properties properties = new Properties();
 
@@ -49,28 +46,24 @@ public enum ConnectionPool {
                 for(int i = 0; i < POOL_SIZE; i++){
                     availableConnections.add(new ProxyConnection(DriverManager.getConnection(url,properties)));
                 }
-                isInitialized.set(true);
             } catch (IOException | ClassNotFoundException | SQLException e) {
-                throw new ConnectionPoolException("Connection pool wasn't initialized",e);
+                LOG.error("Connection pool wasn't initialized",e);
             }
-        }
+
     }
 
     public Connection getConnection() throws ConnectionPoolException {
-        if(isInitialized.get()) {
             ProxyConnection connection = null;
             if (!availableConnections.isEmpty()) {
                 try {
-                    connection = availableConnections.poll(DEFAULT_CONNECTION_AWAIT, TimeUnit.SECONDS);
+                    connection = availableConnections.take();
                 } catch (InterruptedException e) {
-                    LOG.error(e);
+                    LOG.error("Can't get connection",e);
                     Thread.currentThread().interrupt();
                 }
                 busyConnections.add(connection);
             }
             return connection;
-        }
-        throw new ConnectionPoolException("ConnectionPool is not initialized");
     }
 
     public void releaseConnection(Connection connection) throws ConnectionPoolException {
@@ -90,7 +83,6 @@ public enum ConnectionPool {
             }
         }
         deregisterDrivers();
-        isInitialized.set(false);
     }
 
     private void deregisterDrivers(){
