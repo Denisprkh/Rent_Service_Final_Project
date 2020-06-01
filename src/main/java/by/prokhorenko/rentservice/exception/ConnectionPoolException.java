@@ -1,4 +1,4 @@
-package by.prokhorenko.exception;
+package by.prokhorenko.rentservice.exception;
 
 public class ConnectionPoolException extends Exception{
     public ConnectionPoolException() {

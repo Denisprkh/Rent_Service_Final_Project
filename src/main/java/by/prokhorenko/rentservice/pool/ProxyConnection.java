@@ -1,6 +1,6 @@
-package by.prokhorenko.pool;
+package by.prokhorenko.rentservice.pool;
 
-import by.prokhorenko.exception.ConnectionPoolException;
+import by.prokhorenko.rentservice.exception.ConnectionPoolException;
 
 import java.sql.*;
 import java.util.Map;

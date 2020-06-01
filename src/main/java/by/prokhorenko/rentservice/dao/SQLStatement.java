@@ -1,4 +1,4 @@
-package by.prokhorenko.dao;
+package by.prokhorenko.rentservice.dao;
 
 public enum SQLStatement {
 
