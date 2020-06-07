@@ -21,13 +21,13 @@ public enum ConnectionPool {
     private static final String DB_PROPERTIES = "database.properties";
     private static final String DB_URL = "url";
     private static final String DB_DRIVER = "driver";
-    private static final int POOL_SIZE = 32;
+    private static final int DEFAULT_POOL_SIZE = 32;
     private BlockingQueue<ProxyConnection> availableConnections;
     private Queue<ProxyConnection> busyConnections;
     private static final Logger LOG = LogManager.getLogger();
 
     ConnectionPool(){
-        availableConnections = new LinkedBlockingDeque<>(POOL_SIZE);
+        availableConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
         busyConnections = new ArrayDeque<>();
         init();
     }
@@ -40,7 +40,7 @@ public enum ConnectionPool {
             String url = properties.getProperty(DB_URL);
             String driver = properties.getProperty(DB_DRIVER);
             Class.forName(driver);
-            for(int i = 0; i < POOL_SIZE; i++){
+            for(int i = 0; i < DEFAULT_POOL_SIZE; i++){
                 availableConnections.add(new ProxyConnection(DriverManager.getConnection(url,properties)));
             }
         } catch (IOException | ClassNotFoundException | SQLException e) {
@@ -49,7 +49,7 @@ public enum ConnectionPool {
 
     }
 
-    public Connection getConnection() throws ConnectionPoolException {
+    public ProxyConnection getConnection(){
         ProxyConnection connection = null;
         if (!availableConnections.isEmpty()) {
             try {
@@ -72,11 +72,11 @@ public enum ConnectionPool {
     }
 
     public void destroyPool(){
-        for(int i = 0; i < POOL_SIZE; i++){
+        for(int i = 0; i < DEFAULT_POOL_SIZE; i++){
             try {
-                availableConnections.take().close();
+                availableConnections.take().closeToDestroy();
             } catch (SQLException | InterruptedException e) {
-                LOG.error(e);
+                LOG.error("Pool hasn't been destroyed",e);
             }
         }
         deregisterDrivers();

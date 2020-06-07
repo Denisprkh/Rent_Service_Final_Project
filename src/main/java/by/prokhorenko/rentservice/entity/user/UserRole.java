@@ -5,8 +5,8 @@ import java.util.Optional;
 
 public enum UserRole {
     ADMIN(1),
-    GUEST(2),
-    USER(3);
+    USER(2),
+    GUEST(3);
 
     private final int id;
 
@@ -18,7 +18,7 @@ public enum UserRole {
         return id;
     }
 
-    public Optional<UserRole> getUserRoleById(int id){
+    public static Optional<UserRole> getUserRoleById(int id){
         UserRole[] usersId = UserRole.values();
         Optional<UserRole> role = Arrays.stream(usersId).filter(o -> o.getUserRolesId() == id).findAny();
         return role;

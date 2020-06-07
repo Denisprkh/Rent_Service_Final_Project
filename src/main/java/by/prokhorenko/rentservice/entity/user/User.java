@@ -1,5 +1,6 @@
 package by.prokhorenko.rentservice.entity.user;
 
+import by.prokhorenko.rentservice.builder.UserBuilder;
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -10,8 +11,28 @@ public class User implements Serializable {
     private String email;
     private String password;
     private String phone;
-    private int usersRoleId;
+    private UserRole userRole;
     private String logInToken;
+    private boolean isBanned;
+
+    public User(UserBuilder userBuilder){
+        this.id = userBuilder.getId();
+        this.firstName = userBuilder.getFirstName();
+        this.lastName = userBuilder.getLastName();
+        this.email = userBuilder.getEmail();
+        this.password = userBuilder.getPassword();
+        this.phone = userBuilder.getPhone();
+        this.userRole = userBuilder.getUserRole();
+        this.logInToken = userBuilder.getLogInToken();
+    }
+
+    public User(String firstName, String lastName, String email, String password, String phone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+    }
 
     public User(){
 
@@ -65,12 +86,12 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
-    public int getUsersRoleId() {
-        return usersRoleId;
+    public UserRole getUserRole() {
+        return userRole;
     }
 
-    public void setUsersRoleId(int usersRoleId) {
-        this.usersRoleId = usersRoleId;
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     public String getLogInToken() {
@@ -81,6 +102,14 @@ public class User implements Serializable {
         this.logInToken = logInToken;
     }
 
+    public boolean isBanned() {
+        return isBanned;
+    }
+
+    public void setBanned(boolean banned) {
+        isBanned = banned;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,12 +118,13 @@ public class User implements Serializable {
         User user = (User) o;
 
         if (id != user.id) return false;
-        if (usersRoleId != user.usersRoleId) return false;
+        if (isBanned != user.isBanned) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
+        if (userRole != user.userRole) return false;
         return logInToken != null ? logInToken.equals(user.logInToken) : user.logInToken == null;
     }
 
@@ -106,8 +136,9 @@ public class User implements Serializable {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + usersRoleId;
+        result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
         result = 31 * result + (logInToken != null ? logInToken.hashCode() : 0);
+        result = 31 * result + (isBanned ? 1 : 0);
         return result;
     }
 
@@ -120,8 +151,9 @@ public class User implements Serializable {
         sb.append(", email='").append(email).append('\'');
         sb.append(", password='").append(password).append('\'');
         sb.append(", phone='").append(phone).append('\'');
-        sb.append(", usersRoleId=").append(usersRoleId);
+        sb.append(", userRole=").append(userRole);
         sb.append(", logInToken='").append(logInToken).append('\'');
+        sb.append(", isBanned=").append(isBanned);
         sb.append('}');
         return sb.toString();
     }

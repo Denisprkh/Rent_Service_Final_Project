@@ -1,5 +1,6 @@
 package by.prokhorenko.rentservice.entity.flat;
 
+import by.prokhorenko.rentservice.builder.FlatBuilder;
 import by.prokhorenko.rentservice.entity.user.User;
 
 import java.io.Serializable;
@@ -11,6 +12,18 @@ public class Flat implements Serializable {
     private FlatDescription flatDescription;
     private FlatAddress flatAddress;
     private User owner;
+
+    public Flat(FlatBuilder flatBuilder){
+        this.id = flatBuilder.getId();
+        this.isFree = flatBuilder.isFree();
+        this.flatDescription = flatBuilder.getFlatDescription();
+        this.flatAddress = flatBuilder.getFlatAddress();
+        this.owner = flatBuilder.getOwner();
+    }
+
+    public Flat(){
+
+    }
 
     public int getId() {
         return id;
@@ -51,6 +64,8 @@ public class Flat implements Serializable {
     public void setOwner(User owner) {
         this.owner = owner;
     }
+
+
 
     @Override
     public boolean equals(Object o) {
