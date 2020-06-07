@@ -1,0 +1,138 @@
+html{
+    box-sizing: border-box;
+}
+
+*, *::after, *:before{
+    box-sizing: inherit;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    line-height: 28px;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+}
+
+a{
+    color: #fff;
+    text-decoration: none;
+}
+
+.header{
+    height: 75px;
+    background-color:#434242;
+    width: 100%;
+}
+
+.container{
+    width: 1100px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.header_items{
+    display: flex;
+    justify-content: space-between;
+}
+
+.header_logo{
+    display: flex;
+    align-self: center;
+}
+
+.header_logo__img{
+    margin-right: 16px;
+    height: 53px;
+    margin-top: 8px;
+}
+
+.header_logo__img img{
+    height: 53px;
+    width: 53px;
+}
+
+.header_logo__name{
+    height: 30px;
+    width: auto;
+    font-size: 24px;
+    margin-top: 22px;
+}
+
+.header_btn{
+    display: flex;
+    margin-top: 22px;
+}
+
+.btnt{
+    width: 95px;
+    height: 30px;
+    border: 2px solid #fff;
+    border-image: linear-gradient(180deg, #FACD68 0%, #FC76B3 100%);
+    border-image-slice: 1;
+    font-size: 14px;
+    line-height: 16px;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+}
+
+.header_register{
+    margin-left: 25px;
+}
+
+.header_language{
+    margin-left: 25px;
+}
+
+.header_language img{
+    height: 30px;
+}
+
+.reg_form{
+    width: 410px;
+    height: 575px;
+    background: #F9F9F9;
+    border-radius: 5px;
+    margin: 77px auto;
+}
+
+.reg_form__items{
+    margin: 0 30px;
+}
+
+.reg_form__title{
+    color: #545454;
+    font-size: 24px;
+    line-height: 28px;
+    padding: 36px 0 39px 0 ;
+}
+
+.reg_form__items input{
+    width: 350px;
+    height: 42px;
+    border: 1px solid #858585;
+    border-radius: 5px;
+    padding: 13px;
+    font-size: 14px;
+    line-height: 16px;
+    color: #6C6C6C;
+    margin-bottom: 23px;
+    background-color: #fff;
+    outline: none;
+}
+
+.reg_form__items button{
+    background: #00E492;
+    border-radius: 5px;
+    width: 220px;
+    height: 28px;
+    color: #fff;
+    margin: 13px 65px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    line-height: 16px;
+}
+
