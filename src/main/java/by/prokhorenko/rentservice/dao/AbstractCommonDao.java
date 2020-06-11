@@ -8,15 +8,11 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.util.List;
 
-public abstract class AbstractCommonDao<T>{
+public abstract class AbstractCommonDao{
     protected ProxyConnection connection;
     private static final Logger LOG = LogManager.getLogger();
     private static final int ONE_ROW_COUNT = 1;
     private static final int GENERATED_ID_ROW_NUMBER = 1;
-
-    protected abstract List<T> findAll() throws DaoException;
-    protected abstract T findById(int id) throws DaoException;
-    protected abstract T buildEntityFromResultSet(ResultSet resultSet) throws DaoException;
 
     protected void closeStatement(Statement statement) {
         try {
@@ -48,23 +44,23 @@ public abstract class AbstractCommonDao<T>{
         }
     }
 
-//    protected int executeUpdateAndGetGeneratedId(PreparedStatement statement) throws DaoException {
-//        ResultSet generatedId = null;
-//        try {
-//            int updatedRowCount = statement.executeUpdate();
-//            if (updatedRowCount == ONE_ROW_COUNT) {
-//                generatedId = statement.getGeneratedKeys();
-//                if (generatedId.next()) {
-//                    return generatedId.getInt(GENERATED_ID_ROW_NUMBER);
-//                }
-//            }
-//            throw new DaoException("Updating row error: 0 rows were updated");
-//        } catch (SQLException e) {
-//            throw new DaoException(e);
-//        } finally {
-//            closeResultSet(generatedId);
-//        }
-//    }
+    protected int executeUpdateAndGetGeneratedId(PreparedStatement statement) throws DaoException {
+        ResultSet generatedId = null;
+        try {
+            int updatedRowCount = statement.executeUpdate();
+            if (updatedRowCount == ONE_ROW_COUNT) {
+                generatedId = statement.getGeneratedKeys();
+                if (generatedId.next()) {
+                    return generatedId.getInt(GENERATED_ID_ROW_NUMBER);
+                }
+            }
+            throw new DaoException("Updating row error: 0 rows were updated");
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            closeResultSet(generatedId);
+        }
+    }
 
     protected boolean updateEntityById(int id, String sqlQuery) throws DaoException {
         try(PreparedStatement statement = connection.prepareStatement(sqlQuery)) {

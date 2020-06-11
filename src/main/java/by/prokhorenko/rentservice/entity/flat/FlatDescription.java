@@ -12,6 +12,7 @@ public class FlatDescription {
     private boolean hasTheInternet;
     private boolean possibleWithChild;
     private boolean possibleWithPets;
+    private FlatRepairType repairType;
     private String usersDescription;
 
     public FlatDescription(FlatDescriptionBuilder flatDescriptionBuilder){

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserDaoImpl extends AbstractCommonDao<User> implements UserDao {
+public class UserDaoImpl extends AbstractCommonDao implements UserDao {
 
     private static final Logger LOG = LogManager.getLogger();
 
@@ -35,7 +35,7 @@ public class UserDaoImpl extends AbstractCommonDao<User> implements UserDao {
             statement.setString(3,user.getEmail());
             statement.setString(4,user.getPassword());
             statement.setString(5,user.getPhone());
-            statement.execute();
+            statement.executeUpdate();
         }catch (SQLException e) {
             throw new DaoException("User has not been added",e);
         }
@@ -74,6 +74,23 @@ public class UserDaoImpl extends AbstractCommonDao<User> implements UserDao {
             closeResultSet(resultSet);
         }
     }
+
+    @Override
+    public User update(User user) throws DaoException {
+        try(PreparedStatement statement = connection.prepareStatement(SQLQuery.UPDATE_USER_BY_ID)) {
+            statement.setString(1,user.getFirstName());
+            statement.setString(2,user.getLastName());
+            statement.setString(3,user.getEmail());
+            statement.setString(4,user.getPassword());
+            statement.setString(5,user.getPhone());
+            statement.setInt(6,user.getId());
+            statement.executeUpdate();
+            return findById(user.getId());
+        } catch (SQLException e) {
+            throw new DaoException("Updating user error",e);
+        }
+    }
+
 
     @Override
     public User findByEmailAndPassword(String email, String password) throws DaoException {
@@ -140,7 +157,25 @@ public class UserDaoImpl extends AbstractCommonDao<User> implements UserDao {
     }
 
     @Override
-    protected User buildEntityFromResultSet(ResultSet resultSet) throws DaoException {
+    public User findByPhone(String phone) throws DaoException {
+        ResultSet resultSet = null;
+        try(PreparedStatement statement = connection.prepareStatement(SQLQuery.FIND_USER_BY_PHONE)) {
+            statement.setString(1,phone);
+            resultSet = statement.executeQuery();
+            User user = null;
+            while(resultSet.next()){
+                buildEntityFromResultSet(resultSet);
+            }
+            return user;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }finally {
+            closeResultSet(resultSet);
+        }
+    }
+
+    @Override
+    public User buildEntityFromResultSet(ResultSet resultSet) throws DaoException {
 
         try {
           return new UserBuilder()

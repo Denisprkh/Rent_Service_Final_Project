@@ -44,7 +44,7 @@ public enum ConnectionPool {
                 availableConnections.add(new ProxyConnection(DriverManager.getConnection(url,properties)));
             }
         } catch (IOException | ClassNotFoundException | SQLException e) {
-            LOG.error("Connection pool wasn't initialized",e);
+            throw new RuntimeException("Connection pool wasn't initialized");
         }
 
     }
@@ -60,6 +60,7 @@ public enum ConnectionPool {
             }
             busyConnections.add(connection);
         }
+        LOG.info("Connection was taken");
         return connection;
     }
 
@@ -68,7 +69,10 @@ public enum ConnectionPool {
             throw new ConnectionPoolException("Invalid connection");
         }
         busyConnections.remove(connection);
-        availableConnections.offer((ProxyConnection)connection);
+        availableConnections.offer((ProxyConnection)
+                connection);
+        LOG.info("Connection was released");
+        LOG.info(availableConnections.size() + busyConnections.size());
     }
 
     public void destroyPool(){

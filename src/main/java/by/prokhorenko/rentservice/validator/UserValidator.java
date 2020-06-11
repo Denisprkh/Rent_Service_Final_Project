@@ -4,6 +4,7 @@ import by.prokhorenko.rentservice.entity.user.User;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.user.UserService;
+import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,7 +41,8 @@ public class UserValidator {
                     lastNameIsCorrect(user.getLastName()) &&
                     passwordIsCorrect(user.getPassword()) &&
                     phoneIsCorrect(user.getPhone()) &&
-                    emailIsNotInUse(user.getEmail());
+                    emailIsNotInUse(user.getEmail()) &&
+                    phoneIsNotInUse(user.getPhone());
         }
         return isCorrect;
     }
@@ -89,5 +91,16 @@ public class UserValidator {
             LOG.error(e);
         }
         return emailIsNotInUse;
+    }
+
+    private boolean phoneIsNotInUse(String phone){
+        UserService userService = ServiceFactory.getInstance().getUserService();
+        boolean phoneIsNotInUse = false;
+        try {
+            phoneIsNotInUse = userService.findUserByPhone(phone) == null;
+        } catch (ServiceException e) {
+            LOG.error(e);
+        }
+        return phoneIsNotInUse;
     }
 }

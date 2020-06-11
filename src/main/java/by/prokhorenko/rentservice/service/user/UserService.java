@@ -15,4 +15,5 @@ public interface UserService {
     boolean unBanUser(int id) throws ServiceException;
     User findUserById(int id) throws ServiceException;
     User findUserByEmail(String email) throws ServiceException;
+    User findUserByPhone(String phone) throws  ServiceException;
 }

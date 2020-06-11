@@ -30,8 +30,6 @@ public class SignUpCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-
-
         try {
             User user = new UserBuilder()
                     .buildFirstName(request.getParameter(PARAM_FIRST_NAME))
@@ -40,7 +38,7 @@ public class SignUpCommand implements Command {
                     .buildPassword(request.getParameter(PARAM_PASSWORD))
                     .buildPhone(request.getParameter(PARAM_PHONE))
                     .buildUser();
-            userService.signUp(user);
+            user = userService.signUp(user);
             LOG.info("User " + user + " signed up");
             return PagePath.MAIN;
         } catch (ServiceException e) {

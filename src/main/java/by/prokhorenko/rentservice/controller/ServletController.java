@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
 
-@WebServlet(urlPatterns = {"/controller"})
+@WebServlet("/controller")
 public class ServletController extends HttpServlet {
 
     private static final Logger LOG = LogManager.getLogger();
@@ -40,6 +40,8 @@ public class ServletController extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
 
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         Optional<Command> commandOptional = CommandProvider.defineCommand(request.getParameter("command"));
 
         Command command = commandOptional.orElseThrow(IllegalArgumentException::new);

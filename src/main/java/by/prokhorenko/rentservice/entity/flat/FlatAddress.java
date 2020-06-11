@@ -1,5 +1,7 @@
 package by.prokhorenko.rentservice.entity.flat;
 
+import by.prokhorenko.rentservice.builder.FlatAddressBuilder;
+
 import java.io.Serializable;
 
 public class FlatAddress implements Serializable {
@@ -9,6 +11,29 @@ public class FlatAddress implements Serializable {
     private String district;
     private String street;
     private String house;
+
+    public FlatAddress(FlatAddressBuilder flatAddressBuilder){
+        this.id = flatAddressBuilder.getId();
+        this.city = flatAddressBuilder.getCity();
+        this.district = flatAddressBuilder.getDistrict();
+        this.street = flatAddressBuilder.getStreet();
+        this.house = flatAddressBuilder.getHouse();
+    }
+
+    public FlatAddress(String city, String district, String street, String house){
+        this.city = city;
+        this.district = district;
+        this.street = street;
+        this.house = house;
+    }
+
+    public FlatAddress(int id,String city, String district, String street, String house){
+        this.id = id;
+        this.city = city;
+        this.district = district;
+        this.street = street;
+        this.house = house;
+    }
 
     public int getId() {
         return id;

@@ -12,7 +12,7 @@
 <header class="header">
     <div class="container">
         <div class="header_items"  >
-            <a class="header_logo" href="#">
+            <a class="header_logo" href="main.jsp">
                 <div class="header_logo__img">
                     <img src="../img/logo.svg" alt="logo">
                 </div>
@@ -40,13 +40,13 @@
             <div class="reg_form__title">
                 Registration
             </div>
-            <form action="/controller" method="post">
-                <input required type="firstName" value="First name"/>
-                <input required type="lastName" value="Last name"/>
-                <input required type="email" value="E-mail"/>
-                <input required type="password" value="Password"/>
-                <input required type="passwordTwo" value="Confirm password"/>
-                <input required type="phone" value="Phone number"/>
+            <form action="controller" method="post">
+                <input required name="firstName" placeholder="First name"/>
+                <input required name="lastName" placeholder="Last name"/>
+                <input required name="email" placeholder="email"/>
+                <input required name="password" placeholder="password"/>
+                <input required name="passwordTwo" placeholder="Confirm password"/>
+                <input required name="phone" placeholder="phone"/>
                 <button class="form_btn" type="submit" name="command" value="SIGN_UP">
                     Register
                 </button>
@@ -54,6 +54,5 @@
         </div>
     </div>
 </div>
-<script src="../js/main.js"></script>
 </body>
 </html>

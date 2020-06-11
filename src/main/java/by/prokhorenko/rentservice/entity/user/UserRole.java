@@ -22,7 +22,6 @@ public enum UserRole {
         UserRole[] usersId = UserRole.values();
         Optional<UserRole> role = Arrays.stream(usersId).filter(o -> o.getUserRolesId() == id).findAny();
         return role;
-
     }
 
 }

@@ -64,22 +64,49 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() throws ServiceException {
-        return null;
+        List<User> users = null;
+        try {
+            users = userDao.findAll();
+            return users;
+        } catch (DaoException e) {
+            throw new ServiceException();
+        }
     }
 
     @Override
     public boolean banUser(int id) throws ServiceException {
-        return false;
+        try {
+            boolean banned = userDao.ban(id);
+            return banned;
+        } catch (DaoException e) {
+            throw new ServiceException();
+        }finally {
+            userDao.closeConnection();
+        }
     }
 
     @Override
     public boolean unBanUser(int id) throws ServiceException {
-        return false;
+        try {
+            boolean unbanned = userDao.unBan(id);
+            return unbanned;
+        } catch (DaoException e) {
+            throw new ServiceException();
+        }finally {
+            userDao.closeConnection();
+        }
     }
 
     @Override
     public User findUserById(int id) throws ServiceException {
-        return null;
+        try {
+            User user = userDao.findById(id);
+            return user;
+        } catch (DaoException e) {
+            throw new ServiceException();
+        }finally {
+            userDao.closeConnection();
+        }
     }
 
     @Override
@@ -88,6 +115,17 @@ public class UserServiceImpl implements UserService {
             return userDao.findByEmail(email);
         } catch (DaoException e) {
             throw new ServiceException("Finding user by email error",e);
+        }finally {
+            userDao.closeConnection();
+        }
+    }
+
+    @Override
+    public User findUserByPhone(String phone) throws ServiceException {
+        try {
+            return userDao.findByPhone(phone);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }finally {
             userDao.closeConnection();
         }

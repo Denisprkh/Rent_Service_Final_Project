@@ -1,6 +1,7 @@
 package by.prokhorenko.rentservice.builder;
 
 import by.prokhorenko.rentservice.entity.flat.FlatDescription;
+import by.prokhorenko.rentservice.entity.flat.FlatRepairType;
 
 public class FlatDescriptionBuilder {
 
@@ -13,6 +14,7 @@ public class FlatDescriptionBuilder {
     private boolean possibleWithChild;
     private boolean possibleWithPets;
     private String usersDescription;
+    private FlatRepairType repairType;
 
     public int getId() {
         return id;
@@ -25,6 +27,15 @@ public class FlatDescriptionBuilder {
 
     public int getRooms() {
         return rooms;
+    }
+
+    public FlatRepairType getRepairType() {
+        return repairType;
+    }
+
+    public FlatDescriptionBuilder buildRepairType(FlatRepairType repairType) {
+        this.repairType = repairType;
+        return this;
     }
 
     public FlatDescriptionBuilder buildRooms(int rooms) {
