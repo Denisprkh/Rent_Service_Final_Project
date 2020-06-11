@@ -8,5 +8,5 @@ import javax.mail.Address;
 
 public interface FlatAddressDao extends CommonDao<FlatAddress> {
 
-    FlatAddress getFlatAddressByFullData(String city, String district, String street, String house) throws DaoException;
+    FlatAddress getFlatAddressByFullData(String city, String district, String street, String house) throws DaoException; //make return optional
 }
