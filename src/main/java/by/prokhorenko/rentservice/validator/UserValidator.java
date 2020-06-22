@@ -86,7 +86,7 @@ public class UserValidator {
         UserService userService = ServiceFactory.getInstance().getUserService();
         boolean emailIsNotInUse = false;
         try {
-           emailIsNotInUse = userService.findUserByEmail(email) == null;
+           emailIsNotInUse = !userService.findUserByEmail(email).isPresent();
         } catch (ServiceException e) {
             LOG.error(e);
         }
@@ -97,7 +97,7 @@ public class UserValidator {
         UserService userService = ServiceFactory.getInstance().getUserService();
         boolean phoneIsNotInUse = false;
         try {
-            phoneIsNotInUse = userService.findUserByPhone(phone) == null;
+            phoneIsNotInUse = !userService.findUserByPhone(phone).isPresent();
         } catch (ServiceException e) {
             LOG.error(e);
         }

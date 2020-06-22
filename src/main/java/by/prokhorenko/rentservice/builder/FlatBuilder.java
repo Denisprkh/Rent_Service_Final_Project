@@ -11,7 +11,6 @@ public class FlatBuilder {
     private boolean isFree;
     private FlatDescription flatDescription;
     private FlatAddress flatAddress;
-    private User owner;
 
     public int getId() {
         return id;
@@ -46,15 +45,6 @@ public class FlatBuilder {
 
     public FlatBuilder buildFlatAddress(FlatAddress flatAddress) {
         this.flatAddress = flatAddress;
-        return this;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public FlatBuilder buildOwner(User owner) {
-        this.owner = owner;
         return this;
     }
 

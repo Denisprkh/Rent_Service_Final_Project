@@ -8,12 +8,12 @@ import java.util.Optional;
 
 public interface UserService {
 
-    User signUp(User user) throws ServiceException;
-    User signIn(String email, String password) throws ServiceException;
+    Optional<User> signUp(User user) throws ServiceException;
+    Optional<User> signIn(String email, String password) throws ServiceException;
     List<User> getAllUsers() throws ServiceException;
     boolean banUser(int id) throws  ServiceException;
     boolean unBanUser(int id) throws ServiceException;
-    User findUserById(int id) throws ServiceException;
-    User findUserByEmail(String email) throws ServiceException;
-    User findUserByPhone(String phone) throws  ServiceException;
+    Optional<User> findUserById(int id) throws ServiceException;
+    Optional<User> findUserByEmail(String email) throws ServiceException;
+    Optional<User> findUserByPhone(String phone) throws  ServiceException;
 }

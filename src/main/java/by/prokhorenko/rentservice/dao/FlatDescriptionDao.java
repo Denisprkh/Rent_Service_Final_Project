@@ -1,4 +1,4 @@
-package by.prokhorenko.rentservice.dao.flat;
+package by.prokhorenko.rentservice.dao;
 
 import by.prokhorenko.rentservice.dao.CommonDao;
 import by.prokhorenko.rentservice.entity.flat.Flat;
@@ -6,10 +6,11 @@ import by.prokhorenko.rentservice.entity.flat.FlatDescription;
 import by.prokhorenko.rentservice.entity.flat.FlatRepairType;
 import by.prokhorenko.rentservice.exception.DaoException;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface FlatDescriptionDao extends CommonDao<FlatDescription> {
-    Optional<FlatDescription> findByRoomsAmount(int roomsAmount) throws DaoException;
-    Optional<FlatDescription> findByLivingArea(float livingArea) throws DaoException;
-    Optional<FlatDescription> findByRepairType(FlatRepairType repairType) throws DaoException;
+    List<FlatDescription> findByRoomsAmount(int roomsAmount) throws DaoException;
+    List<FlatDescription> findByLivingArea(float livingArea) throws DaoException;
+    List<FlatDescription> findByRepairType(FlatRepairType repairType) throws DaoException;
 }

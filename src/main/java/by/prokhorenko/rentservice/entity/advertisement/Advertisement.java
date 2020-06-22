@@ -4,18 +4,18 @@ import by.prokhorenko.rentservice.builder.AdvertisementBuilder;
 import by.prokhorenko.rentservice.entity.flat.Flat;
 import by.prokhorenko.rentservice.entity.user.User;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
-public class Advertisement {
+public class Advertisement implements Serializable {
 
     private int id;
     private User author;
     private Flat flat;
     private String title;
     private BigDecimal price;
-    private boolean communalPaymentsByOwner;
-    private Date dateOfCreation;
+    private LocalDateTime dateOfCreation;
 
     public Advertisement(AdvertisementBuilder advertisementBuilder){
         this.id = advertisementBuilder.getId();
@@ -23,7 +23,6 @@ public class Advertisement {
         this.flat = advertisementBuilder.getFlat();
         this.title = advertisementBuilder.getTitle();
         this.price = advertisementBuilder.getPrice();
-        this.communalPaymentsByOwner = advertisementBuilder.isCommunalPaymentsByOwner();
         this.dateOfCreation = advertisementBuilder.getDateOfCreation();
     }
 
@@ -71,19 +70,11 @@ public class Advertisement {
         this.price = price;
     }
 
-    public boolean isCommunalPaymentsByOwner() {
-        return communalPaymentsByOwner;
-    }
-
-    public void setCommunalPaymentsByOwner(boolean communalPaymentsByOwner) {
-        this.communalPaymentsByOwner = communalPaymentsByOwner;
-    }
-
-    public Date getDateOfCreation() {
+    public LocalDateTime getDateOfCreation() {
         return dateOfCreation;
     }
 
-    public void setDateOfCreation(Date dateOfCreation) {
+    public void setDateOfCreation(LocalDateTime dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
     }
 
@@ -95,7 +86,6 @@ public class Advertisement {
         Advertisement that = (Advertisement) o;
 
         if (id != that.id) return false;
-        if (communalPaymentsByOwner != that.communalPaymentsByOwner) return false;
         if (author != null ? !author.equals(that.author) : that.author != null) return false;
         if (flat != null ? !flat.equals(that.flat) : that.flat != null) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
@@ -110,7 +100,6 @@ public class Advertisement {
         result = 31 * result + (flat != null ? flat.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (communalPaymentsByOwner ? 1 : 0);
         result = 31 * result + (dateOfCreation != null ? dateOfCreation.hashCode() : 0);
         return result;
     }
@@ -123,7 +112,6 @@ public class Advertisement {
         sb.append(", flat=").append(flat);
         sb.append(", title='").append(title).append('\'');
         sb.append(", price=").append(price);
-        sb.append(", communalPaymentsByOwner=").append(communalPaymentsByOwner);
         sb.append(", dateOfCreation=").append(dateOfCreation);
         sb.append('}');
         return sb.toString();

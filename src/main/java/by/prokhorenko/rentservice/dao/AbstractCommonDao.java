@@ -4,11 +4,10 @@ import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.*;
-import java.util.List;
 
-public abstract class AbstractCommonDao{
+
+public abstract class AbstractCommonDao implements AutoCloseable{
     protected ProxyConnection connection;
     private static final Logger LOG = LogManager.getLogger();
     private static final int ONE_ROW_COUNT = 1;
@@ -44,6 +43,16 @@ public abstract class AbstractCommonDao{
         }
     }
 
+    protected void rollbackTransaction(Connection connection){
+        if(connection != null){
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                LOG.error("Transaction rollback error",e);
+            }
+        }
+    }
+
     protected int executeUpdateAndGetGeneratedId(PreparedStatement statement) throws DaoException {
         ResultSet generatedId = null;
         try {
@@ -62,6 +71,18 @@ public abstract class AbstractCommonDao{
         }
     }
 
+    protected boolean updateEntity(PreparedStatement statement) throws DaoException {
+        try{
+            int updatedRows = statement.executeUpdate();
+            if(updatedRows != 1){
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Updating entity error",e);
+        }
+        return true;
+    }
+
     protected boolean updateEntityById(int id, String sqlQuery) throws DaoException {
         try(PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
             statement.setInt(1,id);
@@ -70,8 +91,10 @@ public abstract class AbstractCommonDao{
                 return false;
             }
         } catch (SQLException e) {
-            throw new DaoException();
+            throw new DaoException("Updating entity by id error",e);
         }
         return true;
     }
+
+
 }

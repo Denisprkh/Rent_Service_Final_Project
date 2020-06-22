@@ -4,15 +4,15 @@ import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 import by.prokhorenko.rentservice.entity.request.Request;
 import by.prokhorenko.rentservice.entity.user.User;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class RequestBuilder {
 
     private int id;
     private User user;
-    private Date startDate;
-    private Date endDate;
-    private Date applicationDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private LocalDateTime applicationDate;
     private Advertisement advertisement;
 
     public int getId() {
@@ -33,29 +33,29 @@ public class RequestBuilder {
         return this;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public RequestBuilder buildStartDate(Date startDate) {
+    public RequestBuilder buildStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public RequestBuilder buildEndDate(Date endDate) {
+    public RequestBuilder buildEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
         return this;
     }
 
-    public Date getApplicationDate() {
+    public LocalDateTime getApplicationDate() {
         return applicationDate;
     }
 
-    public RequestBuilder buildApplicationDate(Date applicationDate) {
+    public RequestBuilder buildApplicationDate(LocalDateTime applicationDate) {
         this.applicationDate = applicationDate;
         return this;
     }

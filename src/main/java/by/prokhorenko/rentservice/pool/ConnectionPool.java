@@ -71,7 +71,6 @@ public enum ConnectionPool {
         busyConnections.remove(connection);
         availableConnections.offer((ProxyConnection)
                 connection);
-        LOG.info("Connection was released");
         LOG.info(availableConnections.size() + busyConnections.size());
     }
 

@@ -5,7 +5,7 @@ import by.prokhorenko.rentservice.entity.flat.Flat;
 import by.prokhorenko.rentservice.entity.user.User;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class AdvertisementBuilder {
     private int id;
@@ -13,8 +13,7 @@ public class AdvertisementBuilder {
     private Flat flat;
     private String title;
     private BigDecimal price;
-    private boolean communalPaymentsByOwner;
-    private Date dateOfCreation;
+    private LocalDateTime dateOfCreation;
 
     public int getId() {
         return id;
@@ -61,20 +60,11 @@ public class AdvertisementBuilder {
         return this;
     }
 
-    public boolean isCommunalPaymentsByOwner() {
-        return communalPaymentsByOwner;
-    }
-
-    public AdvertisementBuilder buildCommunalPaymentsByOwner(boolean communalPaymentsByOwner) {
-        this.communalPaymentsByOwner = communalPaymentsByOwner;
-        return this;
-    }
-
-    public Date getDateOfCreation() {
+    public LocalDateTime getDateOfCreation() {
         return dateOfCreation;
     }
 
-    public AdvertisementBuilder buildDateOfCreation(Date dateOfCreation) {
+    public AdvertisementBuilder buildDateOfCreation(LocalDateTime dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
         return this;
     }

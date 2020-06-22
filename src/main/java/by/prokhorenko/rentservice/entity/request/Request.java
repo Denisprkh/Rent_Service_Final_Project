@@ -4,18 +4,20 @@ import by.prokhorenko.rentservice.builder.RequestBuilder;
 import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 import by.prokhorenko.rentservice.entity.user.User;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
-public class Request {
+public class Request implements Serializable {
 
     private int id;
     private User user;
-    private Date startDate;
-    private Date endDate;
-    private Date applicationDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private LocalDateTime applicationDate;
     private Advertisement advertisement;
+    private boolean isApproved;
 
-    public Request(RequestBuilder requestBuilder){
+    public Request(RequestBuilder requestBuilder) {
         this.id = requestBuilder.getId();
         this.user = requestBuilder.getUser();
         this.startDate = requestBuilder.getStartDate();
@@ -24,7 +26,7 @@ public class Request {
         this.advertisement = requestBuilder.getAdvertisement();
     }
 
-    public Request(){
+    public Request() {
 
     }
 
@@ -44,27 +46,27 @@ public class Request {
         this.user = user;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
-    public Date getApplicationDate() {
+    public LocalDateTime getApplicationDate() {
         return applicationDate;
     }
 
-    public void setApplicationDate(Date applicationDate) {
+    public void setApplicationDate(LocalDateTime applicationDate) {
         this.applicationDate = applicationDate;
     }
 
@@ -76,6 +78,14 @@ public class Request {
         this.advertisement = advertisement;
     }
 
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public void setApproved(boolean approved) {
+        isApproved = approved;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,6 +94,7 @@ public class Request {
         Request request = (Request) o;
 
         if (id != request.id) return false;
+        if (isApproved != request.isApproved) return false;
         if (user != null ? !user.equals(request.user) : request.user != null) return false;
         if (startDate != null ? !startDate.equals(request.startDate) : request.startDate != null) return false;
         if (endDate != null ? !endDate.equals(request.endDate) : request.endDate != null) return false;
@@ -100,6 +111,7 @@ public class Request {
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         result = 31 * result + (applicationDate != null ? applicationDate.hashCode() : 0);
         result = 31 * result + (advertisement != null ? advertisement.hashCode() : 0);
+        result = 31 * result + (isApproved ? 1 : 0);
         return result;
     }
 
@@ -112,6 +124,7 @@ public class Request {
         sb.append(", endDate=").append(endDate);
         sb.append(", applicationDate=").append(applicationDate);
         sb.append(", advertisement=").append(advertisement);
+        sb.append(", isApproved=").append(isApproved);
         sb.append('}');
         return sb.toString();
     }

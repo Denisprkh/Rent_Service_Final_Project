@@ -11,14 +11,12 @@ public class Flat implements Serializable {
     private boolean isFree;
     private FlatDescription flatDescription;
     private FlatAddress flatAddress;
-    private User owner;
 
     public Flat(FlatBuilder flatBuilder){
         this.id = flatBuilder.getId();
         this.isFree = flatBuilder.isFree();
         this.flatDescription = flatBuilder.getFlatDescription();
         this.flatAddress = flatBuilder.getFlatAddress();
-        this.owner = flatBuilder.getOwner();
     }
 
     public Flat(){
@@ -57,16 +55,6 @@ public class Flat implements Serializable {
         this.flatAddress = flatAddress;
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,8 +66,7 @@ public class Flat implements Serializable {
         if (isFree != flat.isFree) return false;
         if (flatDescription != null ? !flatDescription.equals(flat.flatDescription) : flat.flatDescription != null)
             return false;
-        if (flatAddress != null ? !flatAddress.equals(flat.flatAddress) : flat.flatAddress != null) return false;
-        return owner != null ? owner.equals(flat.owner) : flat.owner == null;
+        return flatAddress != null ? flatAddress.equals(flat.flatAddress) : flat.flatAddress == null;
     }
 
     @Override
@@ -88,7 +75,17 @@ public class Flat implements Serializable {
         result = 31 * result + (isFree ? 1 : 0);
         result = 31 * result + (flatDescription != null ? flatDescription.hashCode() : 0);
         result = 31 * result + (flatAddress != null ? flatAddress.hashCode() : 0);
-        result = 31 * result + (owner != null ? owner.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Flat{");
+        sb.append("id=").append(id);
+        sb.append(", isFree=").append(isFree);
+        sb.append(", flatDescription=").append(flatDescription);
+        sb.append(", flatAddress=").append(flatAddress);
+        sb.append('}');
+        return sb.toString();
     }
 }

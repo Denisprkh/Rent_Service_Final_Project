@@ -21,6 +21,8 @@ public class ServletController extends HttpServlet {
 
     private static final Logger LOG = LogManager.getLogger();
 
+
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request,response);
@@ -32,11 +34,11 @@ public class ServletController extends HttpServlet {
 
     }
 
-    @Override
-    public void destroy() {
-        LOG.trace("ControllerServlet destroying");
-        ConnectionPool.INSTANCE.destroyPool();
-    }
+//    @Override
+//    public void destroy() {
+//        LOG.trace("ControllerServlet destroying");
+//        ConnectionPool.INSTANCE.destroyPool();
+//    }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
 

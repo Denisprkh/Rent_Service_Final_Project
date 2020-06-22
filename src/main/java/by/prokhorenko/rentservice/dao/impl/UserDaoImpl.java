@@ -1,10 +1,10 @@
-package by.prokhorenko.rentservice.dao.user.impl;
+package by.prokhorenko.rentservice.dao.impl;
 
 import by.prokhorenko.rentservice.builder.UserBuilder;
 import by.prokhorenko.rentservice.dao.AbstractCommonDao;
-import by.prokhorenko.rentservice.dao.SQLColumnName;
-import by.prokhorenko.rentservice.dao.SQLQuery;
-import by.prokhorenko.rentservice.dao.user.UserDao;
+import by.prokhorenko.rentservice.dao.constant.SqlColumnName;
+import by.prokhorenko.rentservice.dao.constant.SqlQuery;
+import by.prokhorenko.rentservice.dao.UserDao;
 import by.prokhorenko.rentservice.entity.user.User;
 import by.prokhorenko.rentservice.entity.user.UserRole;
 import by.prokhorenko.rentservice.exception.DaoException;
@@ -14,38 +14,42 @@ import org.apache.logging.log4j.Logger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class UserDaoImpl extends AbstractCommonDao implements UserDao {
 
     private static final Logger LOG = LogManager.getLogger();
-
-    public UserDaoImpl(){
+    private static final UserDao INSTANCE = new UserDaoImpl();
+    private UserDaoImpl(){
         this.connection = ConnectionPool.INSTANCE.getConnection();
+    }
+    public static UserDao getInstance(){
+        return INSTANCE;
     }
 
     @Override
-    public boolean add(User user) throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(SQLQuery.ADD_USER)){
+    public Optional<User> add(User user) throws DaoException {
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.ADD_USER)){
             statement.setString(1,user.getFirstName());
             statement.setString(2,user.getLastName());
             statement.setString(3,user.getEmail());
             statement.setString(4,user.getPassword());
             statement.setString(5,user.getPhone());
-            statement.executeUpdate();
+            int id = executeUpdateAndGetGeneratedId(statement);
+            user.setId(id);
+            return Optional.of(user);
         }catch (SQLException e) {
             throw new DaoException("User has not been added",e);
         }
-        return true;
     }
 
     @Override
     public List<User> findAll() throws DaoException {
         List<User> allUsers;
-        try(PreparedStatement statement = connection.prepareStatement(SQLQuery.FIND_ALL_USERS);
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_USERS);
             ResultSet resultSet = statement.executeQuery()){
                     allUsers = new ArrayList<>();
                     while (resultSet.next()) {
@@ -58,16 +62,15 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
     }
 
     @Override
-    public User findById(int id) throws DaoException{
+    public Optional<User> findById(int id) throws DaoException{
         ResultSet resultSet = null;
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.FIND_USER_BY_ID)) {
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SqlQuery.FIND_USER_BY_ID)) {
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
-            User user = null;
-            while(resultSet.next()){
-                user = buildEntityFromResultSet(resultSet);
+            if(resultSet.next()){
+               return Optional.of(buildEntityFromResultSet(resultSet));
             }
-            return user;
+            return Optional.empty();
         } catch (SQLException  e) {
             throw new DaoException("Finding user by id error", e);
         } finally {
@@ -76,8 +79,8 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
     }
 
     @Override
-    public User update(User user) throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(SQLQuery.UPDATE_USER_BY_ID)) {
+    public Optional<User> update(User user) throws DaoException {
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_USER_BY_ID)) {
             statement.setString(1,user.getFirstName());
             statement.setString(2,user.getLastName());
             statement.setString(3,user.getEmail());
@@ -93,17 +96,16 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
 
 
     @Override
-    public User findByEmailAndPassword(String email, String password) throws DaoException {
+    public Optional<User> findByEmailAndPassword(String email, String password) throws DaoException {
         ResultSet resultSet = null;
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.FIND_USER_BY_EMAIL_AND_PASSWORD)){
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SqlQuery.FIND_USER_BY_EMAIL_AND_PASSWORD)){
             preparedStatement.setString(1,email);
             preparedStatement.setString(2,password);
             resultSet = preparedStatement.executeQuery();
-            User user = null;
-            while(resultSet.next()){
-                user = buildEntityFromResultSet(resultSet);
+            if(resultSet.next()){
+                return Optional.of(buildEntityFromResultSet(resultSet));
             }
-            return user;
+            return Optional.empty();
         } catch (SQLException e) {
             throw new DaoException("Finding user by password and email error",e);
         }finally {
@@ -112,18 +114,17 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
     }
 
     @Override
-    public User findByEmail(String email) throws DaoException {
+    public Optional<User> findByEmail(String email) throws DaoException {
         ResultSet resultSet = null;
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.FIND_USER_BY_EMAIL)) {
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SqlQuery.FIND_USER_BY_EMAIL)) {
             preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
-            User user = null;
-            while(resultSet.next()){
-                user = buildEntityFromResultSet(resultSet);
+            if(resultSet.next()){
+                return Optional.of(buildEntityFromResultSet(resultSet));
             }
-            return user;
+            return Optional.empty();
         } catch (SQLException e) {
-            throw new DaoException("", e);
+            throw new DaoException("Finding user by email error", e);
         } finally {
             closeResultSet(resultSet);
         }
@@ -131,17 +132,17 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
 
     @Override
     public boolean ban(int id) throws DaoException {
-      return updateEntityById(id,SQLQuery.UPDATE_USERS_BAN_STATUS_TRUE);
+      return updateEntityById(id, SqlQuery.UPDATE_USERS_BAN_STATUS_TRUE);
     }
 
     @Override
     public boolean unBan(int id) throws DaoException {
-        return updateEntityById(id,SQLQuery.UPDATE_USERS_BAN_STATUS_FALSE);
+        return updateEntityById(id, SqlQuery.UPDATE_USERS_BAN_STATUS_FALSE);
     }
 
     @Override
     public boolean updateRole(int usersId, int roleId) throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(SQLQuery.UPDATE_USERS_ROLE)){
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_USERS_ROLE)){
             statement.setInt(1, roleId);
             statement.setInt(2, usersId);
             statement.executeUpdate();
@@ -152,23 +153,23 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
     }
 
     @Override
-    public void closeConnection() {
+    public void close() {
         closeConnection(this.connection);
+        LOG.info("UserDao was closed");
     }
 
     @Override
-    public User findByPhone(String phone) throws DaoException {
+    public Optional<User> findByPhone(String phone) throws DaoException {
         ResultSet resultSet = null;
-        try(PreparedStatement statement = connection.prepareStatement(SQLQuery.FIND_USER_BY_PHONE)) {
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_USER_BY_PHONE)) {
             statement.setString(1,phone);
             resultSet = statement.executeQuery();
-            User user = null;
-            while(resultSet.next()){
-                buildEntityFromResultSet(resultSet);
+            if(resultSet.next()){
+                return Optional.of(buildEntityFromResultSet(resultSet));
             }
-            return user;
+            return Optional.empty();
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException("Finding user by phone error",e);
         }finally {
             closeResultSet(resultSet);
         }
@@ -179,16 +180,16 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
 
         try {
           return new UserBuilder()
-                        .buildId(resultSet.getInt(SQLColumnName.USERS_ID_COLUMN_NAME))
-                        .buildFirstName(resultSet.getString(SQLColumnName.USERS_FIRST_NAME_COLUMN_NAME))
-                        .buildLastName(resultSet.getString(SQLColumnName.USERS_LAST_NAME_COLUMN_NAME))
-                        .buildEmail(resultSet.getString(SQLColumnName.USERS_EMAIL_COLUMN_NAME))
-                        .buildPassword(resultSet.getString(SQLColumnName.USERS_PASSWORD_COLUMN_NAME))
-                        .buildPhone(resultSet.getString(SQLColumnName.USERS_PHONE_COLUMN_NAME))
+                        .buildId(resultSet.getInt(SqlColumnName.USERS_ID_COLUMN_NAME))
+                        .buildFirstName(resultSet.getString(SqlColumnName.USERS_FIRST_NAME_COLUMN_NAME))
+                        .buildLastName(resultSet.getString(SqlColumnName.USERS_LAST_NAME_COLUMN_NAME))
+                        .buildEmail(resultSet.getString(SqlColumnName.USERS_EMAIL_COLUMN_NAME))
+                        .buildPassword(resultSet.getString(SqlColumnName.USERS_PASSWORD_COLUMN_NAME))
+                        .buildPhone(resultSet.getString(SqlColumnName.USERS_PHONE_COLUMN_NAME))
                         .buildUserRole(UserRole.getUserRoleById
-                                (resultSet.getInt(SQLColumnName.USERS_ROLE_ID_COLUMN_NAME)).get())
-                        .buildLogInToken(resultSet.getString(SQLColumnName.USERS_LOG_IN_TOKEN_COLUMN_NAME))
-                        .buildIsBanned(resultSet.getBoolean(SQLColumnName.USERS_IS_BANNED_COLUMN_NAME))
+                                (resultSet.getInt(SqlColumnName.USERS_ROLE_ID_COLUMN_NAME)).get())
+                        .buildLogInToken(resultSet.getString(SqlColumnName.USERS_LOG_IN_TOKEN_COLUMN_NAME))
+                        .buildIsBanned(resultSet.getBoolean(SqlColumnName.USERS_IS_BANNED_COLUMN_NAME))
                         .buildUser();
         } catch (SQLException e) {
             throw new DaoException("Building user from resultSet error",e);

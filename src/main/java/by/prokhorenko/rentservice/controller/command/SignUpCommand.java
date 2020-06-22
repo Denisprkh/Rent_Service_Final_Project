@@ -38,7 +38,7 @@ public class SignUpCommand implements Command {
                     .buildPassword(request.getParameter(PARAM_PASSWORD))
                     .buildPhone(request.getParameter(PARAM_PHONE))
                     .buildUser();
-            user = userService.signUp(user);
+            user = userService.signUp(user).get();
             LOG.info("User " + user + " signed up");
             return PagePath.MAIN;
         } catch (ServiceException e) {

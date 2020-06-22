@@ -98,6 +98,14 @@ a{
     margin: 77px auto;
 }
 
+.reg_form_sign_in{
+    width: 410px;
+    height: 350px;
+    background: #F9F9F9;
+    border-radius: 5px;
+    margin: 77px auto;
+}
+
 .reg_form__items{
     margin: 0 30px;
 }

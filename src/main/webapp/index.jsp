@@ -9,9 +9,9 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="../css/style.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<jsp:forward page="signUp.jsp"></jsp:forward>
+<jsp:forward page="jsp/signUp.jsp"></jsp:forward>
 </body>
 </html>

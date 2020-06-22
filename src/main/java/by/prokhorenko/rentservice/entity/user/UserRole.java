@@ -1,9 +1,10 @@
 package by.prokhorenko.rentservice.entity.user;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
 
-public enum UserRole {
+public enum UserRole implements Serializable {
     ADMIN(1),
     USER(2),
     GUEST(3);

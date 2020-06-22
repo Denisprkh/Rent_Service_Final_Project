@@ -2,7 +2,9 @@ package by.prokhorenko.rentservice.entity.flat;
 
 import by.prokhorenko.rentservice.builder.FlatDescriptionBuilder;
 
-public class FlatDescription {
+import java.io.Serializable;
+
+public class FlatDescription implements Serializable {
 
     private int id;
     private int rooms;
@@ -24,6 +26,7 @@ public class FlatDescription {
         this.possibleWithChild = flatDescriptionBuilder.isPossibleWithChild();
         this.possibleWithPets = flatDescriptionBuilder.isPossibleWithPets();
         this.usersDescription = flatDescriptionBuilder.getUsersDescription();
+        this.repairType = flatDescriptionBuilder.getRepairType();
     }
 
     public FlatDescription(){
@@ -40,6 +43,14 @@ public class FlatDescription {
 
     public int getRooms() {
         return rooms;
+    }
+
+    public FlatRepairType getRepairType() {
+        return repairType;
+    }
+
+    public void setRepairType(FlatRepairType repairType) {
+        this.repairType = repairType;
     }
 
     public void setRooms(int rooms) {
@@ -145,6 +156,7 @@ public class FlatDescription {
         sb.append(", hasTheInternet=").append(hasTheInternet);
         sb.append(", possibleWithChild=").append(possibleWithChild);
         sb.append(", possibleWithPets=").append(possibleWithPets);
+        sb.append(", repairType=").append(repairType);
         sb.append(", usersDescription='").append(usersDescription).append('\'');
         sb.append('}');
         return sb.toString();

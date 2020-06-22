@@ -1,8 +1,10 @@
-package by.prokhorenko.rentservice.dao;
+package by.prokhorenko.rentservice.dao.constant;
 
-public class SQLColumnName {
+import com.sun.org.apache.xalan.internal.xsltc.dom.SimpleResultTreeImpl;
 
-    private SQLColumnName(){}
+public class SqlColumnName {
+
+    private SqlColumnName(){}
 
     public static final String USERS_ID_COLUMN_NAME = "users_id";
     public static final String USERS_FIRST_NAME_COLUMN_NAME = "first_name";
@@ -30,4 +32,37 @@ public class SQLColumnName {
     public static final String FLAT_DESCRIPTION_POSSIBLE_WITH_PETS_COLUMN_NAME = "possible_with_pets";
     public static final String FLAT_DESCRIPTION_REPAIR_COLUMN_NAME = "repair";
     public static final String FLAT_DESCRIPTION_USERS_DESCRIPTION_COLUMN_NAME = "users_description";
+
+    public static final String FLAT_ID_COLUMN_NAME = "flats_id";
+    public static final String FLAT_IS_FREE_COLUMN_NAME = "is_free";
+    public static final String FLAT_FLATS_DESCRIPTION_ID_COLUMN_NAME = "flats_description_id";
+    public static final String FLAT_FLATS_ADDRESS_ID_COLUMN_NAME = "flats_address_id";
+    public static final String FLAT_OWNERS_ID_COLUMN_NAME = "owners_id";
+
+    public static final String FLAT_PHOTO_FLATS_PHOTO_ID_COLUMN_NAME = "flats_photo_id";
+    public static final String FLAT_PHOTO_FLATS_ID_COLUMN_NAME = "flats_id";
+    public static final String FLAT_PHOTO_PHOTO_COLUMN_NAME = "photo";
+
+    public static final String ADVERTISEMENT_ADVERTISEMENTS_ID_COLUMN_NAME = "advertisements_id";
+    public static final String ADVERTISEMENT_AUTHOR_ID_COLUMN_NAME = "author_id";
+    public static final String ADVERTISEMENT_FLATS_ID_COLUMN_NAME = "flats_id";
+    public static final String ADVERTISEMENT_TITLE_COLUMN_NAME = "title";
+    public static final String ADVERTISEMENT_PRICE_COLUMN_NAME = "price";
+    public static final String ADVERTISEMENT_DATE_OF_CREATION_COLUMN_NAME = "date_of_creation";
+
+    public static final String REQUEST_REQUESTS_ID_COLUMN_NAME = "requests_id";
+    public static final String REQUEST_USERS_ID_COLUMN_NAME = "users_id";
+    public static final String REQUEST_START_DATE_COLUMN_NAME = "start_date";
+    public static final String REQUEST_END_DATE_COLUMN_NAME = "end_date";
+    public static final String REQUEST_ADVERTISEMENTS_ID_COLUMN_NAME = "advertisements_id";
+    public static final String REQUEST_APPLICATION_DATE_COLUMN_NAME = "application_date";
+    public static final String REQUEST_IS_APPROVED_COLUMN_NAME = "is_approved";
+
+
+
+
+
+
+
+
 }
