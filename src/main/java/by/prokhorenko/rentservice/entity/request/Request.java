@@ -6,6 +6,7 @@ import by.prokhorenko.rentservice.entity.user.User;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Request implements Serializable {
 
@@ -13,7 +14,7 @@ public class Request implements Serializable {
     private User user;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private LocalDateTime applicationDate;
+    private Date applicationDate;
     private Advertisement advertisement;
     private boolean isApproved;
 
@@ -62,11 +63,11 @@ public class Request implements Serializable {
         this.endDate = endDate;
     }
 
-    public LocalDateTime getApplicationDate() {
+    public Date getApplicationDate() {
         return applicationDate;
     }
 
-    public void setApplicationDate(LocalDateTime applicationDate) {
+    public void setApplicationDate(Date applicationDate) {
         this.applicationDate = applicationDate;
     }
 
