@@ -1,10 +1,19 @@
 package by.prokhorenko.rentservice.dao;
 
+import by.prokhorenko.rentservice.builder.*;
+import by.prokhorenko.rentservice.dao.constant.SqlColumnName;
+import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
+import by.prokhorenko.rentservice.entity.flat.*;
+import by.prokhorenko.rentservice.entity.user.User;
+import by.prokhorenko.rentservice.entity.user.UserRole;
 import by.prokhorenko.rentservice.exception.DaoException;
+import by.prokhorenko.rentservice.factory.DaoFactory;
 import by.prokhorenko.rentservice.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.sql.*;
+import java.time.Instant;
+import java.time.ZoneId;
 
 
 public abstract class AbstractCommonDao implements AutoCloseable{
@@ -96,5 +105,102 @@ public abstract class AbstractCommonDao implements AutoCloseable{
         return true;
     }
 
+    protected User buildUserFromResultSet(ResultSet resultSet) throws DaoException {
 
+        try {
+            return new UserBuilder()
+                    .buildId(resultSet.getInt(SqlColumnName.USERS_ID_COLUMN_NAME))
+                    .buildFirstName(resultSet.getString(SqlColumnName.USERS_FIRST_NAME_COLUMN_NAME))
+                    .buildLastName(resultSet.getString(SqlColumnName.USERS_LAST_NAME_COLUMN_NAME))
+                    .buildEmail(resultSet.getString(SqlColumnName.USERS_EMAIL_COLUMN_NAME))
+                    .buildPassword(resultSet.getString(SqlColumnName.USERS_PASSWORD_COLUMN_NAME))
+                    .buildPhone(resultSet.getString(SqlColumnName.USERS_PHONE_COLUMN_NAME))
+                    .buildUserRole(UserRole.getUserRoleById
+                            (resultSet.getInt(SqlColumnName.USERS_ROLE_ID_COLUMN_NAME)).get())
+                    .buildLogInToken(resultSet.getString(SqlColumnName.USERS_LOG_IN_TOKEN_COLUMN_NAME))
+                    .buildIsBanned(resultSet.getBoolean(SqlColumnName.USERS_IS_BANNED_COLUMN_NAME))
+                    .buildUser();
+        } catch (SQLException e) {
+            throw new DaoException("Building user from resultSet error",e);
+        }
+    }
+
+
+    protected FlatPhoto buildFlatPhotoFromResultSet(ResultSet resultSet) throws DaoException {
+        try {
+            return new FlatPhotoBuilder()
+                    .buildId(resultSet.getInt(SqlColumnName.FLAT_PHOTO_FLATS_PHOTO_ID_COLUMN_NAME))
+                    .buildFlatsId(resultSet.getInt(SqlColumnName.FLAT_PHOTO_FLATS_ID_COLUMN_NAME))
+                    .buildFlatPhotoData(resultSet.getBinaryStream(SqlColumnName.FLAT_PHOTO_PHOTO_COLUMN_NAME))
+                    .buildFlatPhoto();
+        } catch (SQLException e) {
+            throw new DaoException("Building flatPhoto from resultSet error",e);
+        }
+    }
+
+    protected FlatDescription buildFlatDescriptionFromResultSet(ResultSet resultSet) throws DaoException {
+        try {
+            return new FlatDescriptionBuilder()
+                    .buildId(resultSet.getInt(SqlColumnName.FLAT_DESCRIPTION_ID_COLUMN_NAME))
+                    .buildRooms(resultSet.getInt(SqlColumnName.FLAT_DESCRIPTION_ROOMS_COLUMN_NAME))
+                    .buildLivingArea(resultSet.getFloat(SqlColumnName.FLAT_DESCRIPTION_LIVING_AREA_COLUMN_NAME))
+                    .buildHasFurniture(resultSet.getBoolean(SqlColumnName.FLAT_DESCRIPTION_HAS_FURNITURE_COLUMN_NAME))
+                    .buildHasHomeAppliances(resultSet.getBoolean
+                            (SqlColumnName.FLAT_DESCRIPTION_HAS_HOME_APPLIANCES_COLUMN_NAME))
+                    .buildHasTheInternet(resultSet.getBoolean(SqlColumnName.FLAT_DESCRIPTION_HAS_THE_INTERNET_COLUMN_NAME))
+                    .buildPossibleWithChild(resultSet.getBoolean
+                            (SqlColumnName.FLAT_DESCRIPTION_POSSIBLE_WITH_CHILD_COLUMN_NAME))
+                    .buildRepairType(FlatRepairType.getRepairTypeByName(resultSet.getString
+                            (SqlColumnName.FLAT_DESCRIPTION_REPAIR_COLUMN_NAME)).get())
+                    .buildPossibleWithPets
+                            (resultSet.getBoolean(SqlColumnName.FLAT_DESCRIPTION_POSSIBLE_WITH_PETS_COLUMN_NAME))
+                    .buildUsersDescription(resultSet.getString(SqlColumnName.FLAT_DESCRIPTION_USERS_DESCRIPTION_COLUMN_NAME))
+
+                    .buildFlatDescription();
+        } catch (SQLException e) {
+            throw new DaoException("Building flats description from resultSet error",e);
+        }
+    }
+
+    protected FlatAddress buildFlatAddressFromResultSet(ResultSet resultSet) throws DaoException {
+        try {
+            return new FlatAddressBuilder().buildId(resultSet.getInt(SqlColumnName.FLAT_ADDRESS_ID_COLUMN_NAME))
+                    .buildCity(resultSet.getString(SqlColumnName.FLAT_ADDRESS_CITY_COLUMN_NAME))
+                    .buildDistrict(resultSet.getString(SqlColumnName.FLAT_ADDRESS_DISTRICT_COLUMN_NAME))
+                    .buildStreet(resultSet.getString(SqlColumnName.FLAT_ADDRESS_STREET_COLUMN_NAME))
+                    .buildHouse(resultSet.getString(SqlColumnName.FLAT_ADDRESS_HOUSE_COLUMN_NAME))
+                    .buildFlatAddress();
+        } catch (SQLException e) {
+            throw new DaoException("Building flats address from resultSet error",e);
+        }
+    }
+
+    protected Flat buildFlatFromResultSet(ResultSet resultSet) throws DaoException {
+        try {
+            return new FlatBuilder()
+                    .buildId(resultSet.getInt(SqlColumnName.FLAT_ID_COLUMN_NAME))
+                    .buildIsFree(resultSet.getBoolean(SqlColumnName.FLAT_IS_FREE_COLUMN_NAME))
+                    .buildFlatDescription(buildFlatDescriptionFromResultSet(resultSet))
+                    .buildFlatAddress(buildFlatAddressFromResultSet(resultSet))
+                    .buildFlat();
+        } catch (SQLException e) {
+            throw new DaoException("Building flat from resultSet error",e);
+        }
+    }
+
+    public Advertisement buildAdvertisementFromResultSet(ResultSet resultSet) throws DaoException {
+        try{
+            return new AdvertisementBuilder()
+                    .buildId(resultSet.getInt(SqlColumnName.ADVERTISEMENT_ADVERTISEMENTS_ID_COLUMN_NAME))
+                    .buildAuthor(buildUserFromResultSet(resultSet))
+                    .buildFlat(buildFlatFromResultSet(resultSet))
+                    .buildTitle(resultSet.getString(SqlColumnName.ADVERTISEMENT_TITLE_COLUMN_NAME))
+                    .buildPrice(resultSet.getBigDecimal(SqlColumnName.ADVERTISEMENT_PRICE_COLUMN_NAME))
+                    .buildDateOfCreation(Instant.ofEpochMilli(resultSet.getLong(SqlColumnName.
+                            ADVERTISEMENT_DATE_OF_CREATION_COLUMN_NAME)).atZone(ZoneId.systemDefault()).toLocalDateTime())
+                    .buildAdvertisement();
+        } catch (SQLException e) {
+            throw new DaoException("Building advertisement from resultSet error",e);
+        }
+    }
 }

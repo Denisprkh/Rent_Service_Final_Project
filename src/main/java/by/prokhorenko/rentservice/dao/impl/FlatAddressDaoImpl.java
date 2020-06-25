@@ -49,7 +49,7 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
             ResultSet resultSet = statement.executeQuery()) {
             List<FlatAddress> flatAddresses = new ArrayList<>();
             while (resultSet.next()){
-                flatAddresses.add(buildEntityFromResultSet(resultSet));
+                flatAddresses.add(buildFlatAddressFromResultSet(resultSet));
             }
             return flatAddresses;
         } catch (SQLException e) {
@@ -64,7 +64,7 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
             statement.setInt(1,id);
             resultSet = statement.executeQuery();
             if(resultSet.next()){
-                return Optional.of(buildEntityFromResultSet(resultSet));
+                return Optional.of(buildFlatAddressFromResultSet(resultSet));
             }
             return Optional.empty();
         } catch (SQLException e) {
@@ -90,20 +90,6 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
     }
 
     @Override
-    public FlatAddress buildEntityFromResultSet(ResultSet resultSet) throws DaoException {
-        try {
-            return new FlatAddressBuilder().buildId(resultSet.getInt(SqlColumnName.FLAT_ADDRESS_ID_COLUMN_NAME))
-                    .buildCity(resultSet.getString(SqlColumnName.FLAT_ADDRESS_CITY_COLUMN_NAME))
-                    .buildDistrict(resultSet.getString(SqlColumnName.FLAT_ADDRESS_DISTRICT_COLUMN_NAME))
-                    .buildStreet(resultSet.getString(SqlColumnName.FLAT_ADDRESS_STREET_COLUMN_NAME))
-                    .buildHouse(resultSet.getString(SqlColumnName.FLAT_ADDRESS_HOUSE_COLUMN_NAME))
-                    .buildFlatAddress();
-        } catch (SQLException e) {
-            throw new DaoException("Building flats address from resultSet error",e);
-        }
-    }
-
-    @Override
     public void close() {
         closeConnection(this.connection);
     }
@@ -120,7 +106,7 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
             resultSet = statement.executeQuery();
             List<FlatAddress> flatAddresses = new ArrayList<>();
             while(resultSet.next()){
-                flatAddresses.add(buildEntityFromResultSet(resultSet));
+                flatAddresses.add(buildFlatAddressFromResultSet(resultSet));
             }
             return flatAddresses;
         } catch (SQLException e) {
@@ -138,7 +124,7 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
             resultSet = statement.executeQuery();
             List<FlatAddress> flatAddresses = new ArrayList<>();
             while(resultSet.next()){
-                flatAddresses.add(buildEntityFromResultSet(resultSet));
+                flatAddresses.add(buildFlatAddressFromResultSet(resultSet));
             }
             return flatAddresses;
         } catch (SQLException e) {
@@ -157,7 +143,7 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
             resultSet = statement.executeQuery();
             List<FlatAddress> flatAddresses = new ArrayList<>();
             while(resultSet.next()){
-                flatAddresses.add(buildEntityFromResultSet(resultSet));
+                flatAddresses.add(buildFlatAddressFromResultSet(resultSet));
             }
             return flatAddresses;
         } catch (SQLException e) {

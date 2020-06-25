@@ -5,7 +5,6 @@ import by.prokhorenko.rentservice.entity.request.Request;
 import by.prokhorenko.rentservice.entity.user.User;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class RequestBuilder {
 
@@ -13,7 +12,7 @@ public class RequestBuilder {
     private User user;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private Date applicationDate;
+    private LocalDateTime applicationDate;
     private Advertisement advertisement;
 
     public int getId() {
@@ -52,11 +51,11 @@ public class RequestBuilder {
         return this;
     }
 
-    public Date getApplicationDate() {
+    public LocalDateTime getApplicationDate() {
         return applicationDate;
     }
 
-    public RequestBuilder buildApplicationDate(Date applicationDate) {
+    public RequestBuilder buildApplicationDate(LocalDateTime applicationDate) {
         this.applicationDate = applicationDate;
         return this;
     }

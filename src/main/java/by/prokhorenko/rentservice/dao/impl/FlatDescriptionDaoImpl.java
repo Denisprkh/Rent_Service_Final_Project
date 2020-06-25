@@ -57,7 +57,7 @@ public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDes
             ResultSet resultSet = statement.executeQuery()) {
             List<FlatDescription> flatDescriptions = new ArrayList<>();
             while (resultSet.next()){
-                flatDescriptions.add(buildEntityFromResultSet(resultSet));
+                flatDescriptions.add(buildFlatDescriptionFromResultSet(resultSet));
             }
             return flatDescriptions;
         } catch (SQLException e) {
@@ -70,9 +70,10 @@ public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDes
         ResultSet resultSet = null;
         try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_DESCRIPTION_BY_ID)){
             statement.setInt(1,id);
+            System.out.println(statement);
             resultSet = statement.executeQuery();
             if(resultSet.next()){
-                return Optional.of(buildEntityFromResultSet(resultSet));
+                return Optional.of(buildFlatDescriptionFromResultSet(resultSet));
             }
             return Optional.empty();
         } catch (SQLException e) {
@@ -102,30 +103,7 @@ public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDes
         }
     }
 
-    @Override
-    public FlatDescription buildEntityFromResultSet(ResultSet resultSet) throws DaoException {
-        try {
-            return new FlatDescriptionBuilder()
-                    .buildId(resultSet.getInt(SqlColumnName.FLAT_DESCRIPTION_ID_COLUMN_NAME))
-                    .buildRooms(resultSet.getInt(SqlColumnName.FLAT_DESCRIPTION_ROOMS_COLUMN_NAME))
-                    .buildLivingArea(resultSet.getFloat(SqlColumnName.FLAT_DESCRIPTION_LIVING_AREA_COLUMN_NAME))
-                    .buildHasFurniture(resultSet.getBoolean(SqlColumnName.FLAT_DESCRIPTION_HAS_FURNITURE_COLUMN_NAME))
-                    .buildHasHomeAppliances(resultSet.getBoolean
-                            (SqlColumnName.FLAT_DESCRIPTION_HAS_HOME_APPLIANCES_COLUMN_NAME))
-                    .buildHasTheInternet(resultSet.getBoolean(SqlColumnName.FLAT_DESCRIPTION_HAS_THE_INTERNET_COLUMN_NAME))
-                    .buildPossibleWithChild(resultSet.getBoolean
-                            (SqlColumnName.FLAT_DESCRIPTION_POSSIBLE_WITH_CHILD_COLUMN_NAME))
-                    .buildRepairType(FlatRepairType.getRepairTypeByName(resultSet.getString
-                            (SqlColumnName.FLAT_DESCRIPTION_REPAIR_COLUMN_NAME)).get())
-                    .buildPossibleWithPets
-                            (resultSet.getBoolean(SqlColumnName.FLAT_DESCRIPTION_POSSIBLE_WITH_PETS_COLUMN_NAME))
-                    .buildUsersDescription(resultSet.getString(SqlColumnName.FLAT_DESCRIPTION_USERS_DESCRIPTION_COLUMN_NAME))
 
-                    .buildFlatDescription();
-        } catch (SQLException e) {
-          throw new DaoException("Building flats description from entity error",e);
-        }
-    }
 
     @Override
     public void close() {
@@ -140,7 +118,7 @@ public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDes
             resultSet = statement.executeQuery();
             List<FlatDescription> flatDescriptions = new ArrayList<>();
             while (resultSet.next()){
-                flatDescriptions.add(buildEntityFromResultSet(resultSet));
+                flatDescriptions.add(buildFlatDescriptionFromResultSet(resultSet));
             }
             return flatDescriptions;
         } catch (SQLException e) {
@@ -158,7 +136,7 @@ public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDes
             resultSet = statement.executeQuery();
             List<FlatDescription> flatDescriptions = new ArrayList<>();
             while(resultSet.next()){
-                flatDescriptions.add(buildEntityFromResultSet(resultSet));
+                flatDescriptions.add(buildFlatDescriptionFromResultSet(resultSet));
             }
             return flatDescriptions;
         } catch (SQLException e) {
@@ -169,14 +147,14 @@ public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDes
     }
 
     @Override
-    public List<FlatDescription> findByRepairType(FlatRepairType repairType) throws DaoException {
+    public List<FlatDescription> findByRepairType(String repai) throws DaoException {
         ResultSet resultSet = null;
         try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_DESCRIPTION_BY_REPAIR_TYPE)){
-            statement.setString(1,repairType.getRepairType());
+            statement.setString(1,repai);
             resultSet = statement.executeQuery();
             List<FlatDescription> flatDescriptions = new ArrayList<>();
             while (resultSet.next()){
-                flatDescriptions.add(buildEntityFromResultSet(resultSet));
+                flatDescriptions.add(buildFlatDescriptionFromResultSet(resultSet));
             }
             return flatDescriptions;
         } catch (SQLException e) {

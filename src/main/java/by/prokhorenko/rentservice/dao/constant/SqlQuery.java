@@ -56,7 +56,7 @@ public class SqlQuery {
             "users_description FROM flats_description WHERE living_area = ?";
     public static final String FIND_FLAT_DESCRIPTION_BY_REPAIR_TYPE = "SELECT flats_description_id,rooms,living_area, " +
             "has_furniture, has_home_appliciances,has_the_internet,possible_with_childs,possible_with_pets, repair," +
-            "users_description FROM flats_description WHERE repair = ?";
+            "users_description FROM flats_description WHERE repair REGEXP ?";
 
     public static final String ADD_FLAT = "INSERT INTO flats (flats_description_id,flats_address_id) VALUES (?,?)";
     public static final String FIND_ALL_FLATS = "SELECT flats.flats_id, flats.is_free, flats.flats_description_id," +
@@ -152,9 +152,29 @@ public class SqlQuery {
             " flats.flats_description_id = flats_description.flats_description_id AND flats.flats_address_id = " +
             "flats_address.flats_address_id AND flats.flats_id = advertisements.flats_id AND users.users_id = " +
             "advertisements.author_id AND advertisements.author_id = ?";
+    public static final String FIND_ADVERTISEMENT_BY_USERS_CHOICE = "SELECT flats.flats_id, flats.is_free, " +
+            "flats.flats_description_id,flats.flats_address_id, flats_address.flats_address_id,flats_address.city," +
+            "flats_address.district, flats_address.street, flats_address.house, flats_description.flats_description_id," +
+            "flats_description.rooms,flats_description.living_area,flats_description.has_furniture," +
+            "flats_description.has_home_appliciances,flats_description.has_the_internet," +
+            "flats_description.possible_with_childs,flats_description.possible_with_pets, flats_description.repair," +
+            "flats_description.users_description, users.users_id, users.first_name, users.last_name, users.email," +
+            "users.password, users.phone, users.users_role_id, users.log_in_token, users.is_banned, " +
+            "advertisements.advertisements_id, advertisements.author_id, advertisements.flats_id, advertisements.title," +
+            "advertisements.price, advertisements.date_of_creation FROM flats,flats_address,flats_description,users," +
+            "advertisements WHERE flats.flats_description_id = flats_description.flats_description_id AND" +
+            " flats.flats_description_id = flats_description.flats_description_id AND flats.flats_address_id = " +
+            "flats_address.flats_address_id AND flats.flats_id = advertisements.flats_id AND users.users_id = " +
+            "advertisements.author_id AND flats_address.city REGEXP ? AND flats_address.district REGEXP ? AND " +
+            "flats_address.street REGEXP ? AND flats_description.rooms REGEXP ? AND " +
+            "flats_description.living_area REGEXP ? AND flats_description.repair REGEXP ? AND " +
+            "flats_description.has_furniture REGEXP ? AND flats_description.has_home_appliciances REGEXP ?" +
+            " AND flats_description.possible_with_pets REGEXP ? AND flats_description.possible_with_childs " +
+            "REGEXP ? AND advertisements.price REGEXP ?";
 
     public static final String ADD_REQUEST = "INSERT INTO requests users_id,start_date,end_date,application_date " +
             "VALUES (?,?,?,?)";
+
 
 
 

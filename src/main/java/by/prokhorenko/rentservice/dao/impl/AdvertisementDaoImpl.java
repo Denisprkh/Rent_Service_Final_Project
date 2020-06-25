@@ -1,31 +1,36 @@
 package by.prokhorenko.rentservice.dao.impl;
 
-import by.prokhorenko.rentservice.builder.AdvertisementBuilder;
+
 import by.prokhorenko.rentservice.dao.AbstractCommonDao;
-import by.prokhorenko.rentservice.dao.constant.SqlColumnName;
 import by.prokhorenko.rentservice.dao.constant.SqlQuery;
 import by.prokhorenko.rentservice.dao.AdvertisementDao;
 import by.prokhorenko.rentservice.dao.FlatDao;
-import by.prokhorenko.rentservice.dao.UserDao;
 import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
+import by.prokhorenko.rentservice.entity.advertisement.UserChoiceHandler;
 import by.prokhorenko.rentservice.entity.flat.Flat;
+import by.prokhorenko.rentservice.entity.flat.FlatAddress;
+import by.prokhorenko.rentservice.entity.flat.FlatDescription;
+import by.prokhorenko.rentservice.entity.flat.FlatRepairType;
 import by.prokhorenko.rentservice.exception.DaoException;
-import by.prokhorenko.rentservice.factory.DaoFactory;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.Instant;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AdvertisementDaoImpl extends AbstractCommonDao implements AdvertisementDao {
 
+    private static final String USER_CHOICE_DEFAULT_REGEX = ".*";
     private static final Logger LOG = LogManager.getLogger();
     public AdvertisementDaoImpl(){
         this.connection = ConnectionPool.INSTANCE.getConnection();
@@ -38,10 +43,7 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
         try {
             connection.setAutoCommit(false);
             Optional<Flat> flat = flatDao.add(advertisement.getFlat());
-            if(!flat.isPresent()){
-               throw new DaoException("Adding flat in advertisement error");
-            }
-            int flatsId = flat.get().getId();
+            int flatsId = flat.orElseThrow(DaoException::new).getId();
             int authorsId = advertisement.getAuthor().getId();
             long timeInMillis = advertisement.getDateOfCreation().atZone(ZoneId.systemDefault()).toInstant().
                     toEpochMilli();
@@ -75,7 +77,7 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
         ResultSet resultSet = statement.executeQuery()) {
             List<Advertisement> allAdvertisements = new ArrayList<>();
             while(resultSet.next()){
-                allAdvertisements.add(buildEntityFromResultSet(resultSet));
+                allAdvertisements.add(buildAdvertisementFromResultSet(resultSet));
             }
             return allAdvertisements;
         } catch (SQLException e) {
@@ -90,7 +92,7 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
             statement.setInt(1,id);
             resultSet = statement.executeQuery();
             if(resultSet.next()){
-                return Optional.of(buildEntityFromResultSet(resultSet));
+                return Optional.of(buildAdvertisementFromResultSet(resultSet));
             }
             return Optional.empty();
         } catch (SQLException e) {
@@ -116,28 +118,6 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
     }
 
     @Override
-    public Advertisement buildEntityFromResultSet(ResultSet resultSet) throws DaoException {
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        try(UserDao userDao = daoFactory.getUserDao();
-            FlatDao flatDao = daoFactory.getFlatDao()) {
-            return new AdvertisementBuilder()
-                    .buildId(resultSet.getInt(SqlColumnName.ADVERTISEMENT_ADVERTISEMENTS_ID_COLUMN_NAME))
-                    .buildAuthor(userDao.buildEntityFromResultSet(resultSet))
-                    .buildFlat(flatDao.buildEntityFromResultSet(resultSet))
-                    .buildTitle(resultSet.getString(SqlColumnName.ADVERTISEMENT_TITLE_COLUMN_NAME))
-                    .buildPrice(resultSet.getBigDecimal(SqlColumnName.ADVERTISEMENT_PRICE_COLUMN_NAME))
-                    .buildDateOfCreation(Instant.ofEpochMilli(resultSet.getLong(SqlColumnName.
-                            ADVERTISEMENT_DATE_OF_CREATION_COLUMN_NAME)).atZone(ZoneId.systemDefault()).toLocalDateTime())
-                    .buildAdvertisement();
-        } catch (SQLException e) {
-            throw new DaoException("Building advertisement from resultSet error",e);
-        } catch (Exception e) {
-            throw new DaoException("Building advertisement from resultSet error: can't" +
-                    "close flat and user dao",e);
-        }
-    }
-
-    @Override
     public void close() {
         closeConnection(this.connection);
     }
@@ -150,7 +130,7 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
             resultSet = statement.executeQuery();
             List<Advertisement> usersAdvertisements = new ArrayList<>();
             while(resultSet.next()){
-                usersAdvertisements.add(buildEntityFromResultSet(resultSet));
+                usersAdvertisements.add(buildAdvertisementFromResultSet(resultSet));
             }
             return usersAdvertisements;
         } catch (SQLException e) {
@@ -159,4 +139,56 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
             closeResultSet(resultSet);
         }
     }
+
+    @Override
+    public List<Advertisement> findAdvertisementsByUsersChoice(UserChoiceHandler userChoiceHandler) throws DaoException {
+        ResultSet resultSet = null;
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ADVERTISEMENT_BY_USERS_CHOICE)) {
+        List<String> regexForStatement = extractRegexForFilterFromUsersChoice(userChoiceHandler);
+        int index = 0;
+        for(String regex : regexForStatement){
+            statement.setString(++index,regex);
+        }
+            System.out.println(statement);
+        resultSet = statement.executeQuery();
+        List<Advertisement> advertisements = new ArrayList<>();
+        while(resultSet.next()){
+            advertisements.add(buildAdvertisementFromResultSet(resultSet));
+        }
+        return advertisements;
+        } catch (SQLException e) {
+            throw new DaoException("Finding advertisements by user choice error",e);
+        }finally {
+            closeResultSet(resultSet);
+        }
+    }
+
+    private List<String> extractRegexForFilterFromUsersChoice(UserChoiceHandler userChoiceHandler){
+        String cityRegex = userChoiceHandler.getCity() == null ? USER_CHOICE_DEFAULT_REGEX :
+                userChoiceHandler.getCity();
+        String districtRegex = userChoiceHandler.getDistrict() == null ? USER_CHOICE_DEFAULT_REGEX :
+                userChoiceHandler.getDistrict();
+        String streetRegex = userChoiceHandler.getStreet() == null ? USER_CHOICE_DEFAULT_REGEX :
+                userChoiceHandler.getStreet();
+        String roomsRegex = userChoiceHandler.getRooms() == 0 ? USER_CHOICE_DEFAULT_REGEX :
+                String.valueOf(userChoiceHandler.getRooms());
+        String livingAreaRegex = userChoiceHandler.getLivingArea() == 0.0 ? USER_CHOICE_DEFAULT_REGEX :
+                String.valueOf(userChoiceHandler.getLivingArea());
+        String  repairTypeRegex = userChoiceHandler.getRepairType() == null ? USER_CHOICE_DEFAULT_REGEX :
+                userChoiceHandler.getRepairType().getRepairType();
+        String hasFurnitureRegex = !userChoiceHandler.isHasFurniture() ? USER_CHOICE_DEFAULT_REGEX :
+                String.valueOf(1);
+        String hasHomeAppliancesRegex = !userChoiceHandler.isHasHomeAppliances() ? USER_CHOICE_DEFAULT_REGEX :
+                String.valueOf(1);
+        String possibleWithPetsRegex = !userChoiceHandler.isPossibleWithPets() ? USER_CHOICE_DEFAULT_REGEX :
+                String.valueOf(1);
+        String possibleWithChildRegex = !userChoiceHandler.isPossibleWithChild() ? USER_CHOICE_DEFAULT_REGEX :
+                String.valueOf(1);
+        String priceRegex = userChoiceHandler.getPrice() == null ? USER_CHOICE_DEFAULT_REGEX :
+                userChoiceHandler.getPrice().toString();
+        return Stream.of(cityRegex,districtRegex,streetRegex,roomsRegex,priceRegex,
+                livingAreaRegex,repairTypeRegex,hasFurnitureRegex,hasHomeAppliancesRegex,possibleWithChildRegex,
+                possibleWithPetsRegex).collect(Collectors.toList());
+    }
+
 }

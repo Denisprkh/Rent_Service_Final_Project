@@ -12,5 +12,4 @@ public interface CommonDao<T> extends AutoCloseable{
     List<T> findAll() throws DaoException;
     Optional<T> findById(int id) throws DaoException;
     Optional<T> update(T t) throws DaoException;
-    T buildEntityFromResultSet(ResultSet resultSet) throws DaoException;
 }

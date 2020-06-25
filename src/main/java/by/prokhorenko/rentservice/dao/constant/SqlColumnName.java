@@ -37,7 +37,6 @@ public class SqlColumnName {
     public static final String FLAT_IS_FREE_COLUMN_NAME = "is_free";
     public static final String FLAT_FLATS_DESCRIPTION_ID_COLUMN_NAME = "flats_description_id";
     public static final String FLAT_FLATS_ADDRESS_ID_COLUMN_NAME = "flats_address_id";
-    public static final String FLAT_OWNERS_ID_COLUMN_NAME = "owners_id";
 
     public static final String FLAT_PHOTO_FLATS_PHOTO_ID_COLUMN_NAME = "flats_photo_id";
     public static final String FLAT_PHOTO_FLATS_ID_COLUMN_NAME = "flats_id";

@@ -1,14 +1,11 @@
 package by.prokhorenko.rentservice.dao.impl;
 
-import by.prokhorenko.rentservice.builder.FlatPhotoBuilder;
 import by.prokhorenko.rentservice.dao.AbstractCommonDao;
-import by.prokhorenko.rentservice.dao.constant.SqlColumnName;
 import by.prokhorenko.rentservice.dao.constant.SqlQuery;
 import by.prokhorenko.rentservice.dao.FlatPhotoDao;
 import by.prokhorenko.rentservice.entity.flat.FlatPhoto;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,7 +34,7 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
             resultSet = statement.executeQuery();
             List<FlatPhoto> flatPhotos = new ArrayList<>();
             while(resultSet.next()){
-                flatPhotos.add(buildEntityFromResultSet(resultSet));
+                flatPhotos.add(buildFlatPhotoFromResultSet(resultSet));
             }
             return flatPhotos;
         } catch (SQLException e) {
@@ -67,7 +64,7 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
             ResultSet resultSet = statement.executeQuery()){
             List<FlatPhoto> allFlatPhotos = new ArrayList<>();
             while (resultSet.next()){
-                allFlatPhotos.add(buildEntityFromResultSet(resultSet));
+                allFlatPhotos.add(buildFlatPhotoFromResultSet(resultSet));
             }
             return allFlatPhotos;
         } catch (SQLException e) {
@@ -82,7 +79,7 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
             statement.setInt(1,id);
             resultSet = statement.executeQuery();
             if(resultSet.next()){
-                return Optional.of(buildEntityFromResultSet(resultSet));
+                return Optional.of(buildFlatPhotoFromResultSet(resultSet));
             }
             return Optional.empty();
         } catch (SQLException e) {
@@ -95,19 +92,6 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
     @Override
     public Optional<FlatPhoto> update(FlatPhoto flatPhoto) throws DaoException {
         throw new UnsupportedOperationException("Updating flats photo operation is not available");
-    }
-
-    @Override
-    public FlatPhoto buildEntityFromResultSet(ResultSet resultSet) throws DaoException {
-        try {
-            return new FlatPhotoBuilder()
-                    .buildId(resultSet.getInt(SqlColumnName.FLAT_PHOTO_FLATS_PHOTO_ID_COLUMN_NAME))
-                    .buildFlatsId(resultSet.getInt(SqlColumnName.FLAT_PHOTO_FLATS_ID_COLUMN_NAME))
-                    .buildFlatPhotoData(resultSet.getBinaryStream(SqlColumnName.FLAT_PHOTO_PHOTO_COLUMN_NAME))
-                    .buildFlatPhoto();
-        } catch (SQLException e) {
-            throw new DaoException("Building flatPhoto from resultSet error",e);
-        }
     }
 
     @Override

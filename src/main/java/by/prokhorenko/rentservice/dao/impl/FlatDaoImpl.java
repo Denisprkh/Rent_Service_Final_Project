@@ -69,7 +69,7 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
             ResultSet resultSet = statement.executeQuery()) {
             List<Flat> allFlats = new ArrayList<>();
             while(resultSet.next()){
-                allFlats.add(buildEntityFromResultSet(resultSet));
+                allFlats.add(buildFlatFromResultSet(resultSet));
             }
             return allFlats;
         } catch (SQLException e) {
@@ -84,7 +84,7 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
             statement.setInt(1,id);
             resultSet = statement.executeQuery();
             if(resultSet.next()){
-                return Optional.of(buildEntityFromResultSet(resultSet));
+                return Optional.of(buildFlatFromResultSet(resultSet));
             }
             return Optional.empty();
         } catch (SQLException e) {
@@ -102,25 +102,6 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
            return findById(flat.getId());
         } catch (SQLException e) {
             throw new DaoException("Updating flatAddress error",e);
-        }
-    }
-
-    @Override
-    public Flat buildEntityFromResultSet(ResultSet resultSet) throws DaoException {
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        try(FlatDescriptionDao descriptionDao = daoFactory.getFlatDescriptionDao();
-        FlatAddressDao addressDao = daoFactory.getFlatAddressDao()) {
-            return new FlatBuilder()
-                    .buildId(resultSet.getInt(SqlColumnName.FLAT_ID_COLUMN_NAME))
-                    .buildIsFree(resultSet.getBoolean(SqlColumnName.FLAT_IS_FREE_COLUMN_NAME))
-                    .buildFlatDescription(descriptionDao.buildEntityFromResultSet(resultSet))
-                    .buildFlatAddress(addressDao.buildEntityFromResultSet(resultSet))
-                    .buildFlat();
-        } catch (SQLException e) {
-            throw new DaoException("Building flat from resultSet error",e);
-        } catch (Exception e) {
-            throw new DaoException("Building flat from resultSet error: can't close " +
-                    "flatDescription and flatAddress dao ",e);
         }
     }
 

@@ -52,10 +52,6 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
         return Optional.empty();
     }
 
-    @Override
-    public Request buildEntityFromResultSet(ResultSet resultSet) throws DaoException {
-        return null;
-    }
 
     @Override
     public void close(){
