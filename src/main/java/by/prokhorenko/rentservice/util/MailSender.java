@@ -1,51 +1,52 @@
 package by.prokhorenko.rentservice.util;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.IOException;
 import java.util.Properties;
 
 public class MailSender {
 
-    private MimeMessage message;
-    private String sendToEmail;
-    private String mailSubject;
-    private String mailText;
-    private Properties properties;
-    public MailSender(String sendToEmail, String mailSubject, String mailText,
-                      Properties properties) {
-        this.sendToEmail = sendToEmail;
-        this.mailSubject = mailSubject;
-        this.mailText = mailText;
-        this.properties = properties;
-    }
-    public void send() {
+    private String username;
+    private String password;
+    private Properties props;
+    private static final String MAIL_PROPERTIES = "mail/mail.properties";
+
+    public MailSender() {
+        props = new Properties();
         try {
-            initMessage();
-            // sending mail
-            Transport.send(message);
-        } catch (AddressException e) {
-            System.err.print("Invalid address: " + sendToEmail + "  " + e);
-            // in log file
-        } catch (MessagingException e) {
-            System.err.print("Error generating or sending message: " + e);
-            // in log file
+            props.load(this.getClass().getClassLoader().getResourceAsStream(MAIL_PROPERTIES));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-    private void initMessage() throws MessagingException {
-        // mail session object
-        Session mailSession = SessionFactory.createSession(properties);
-        mailSession.setDebug(true);
-        // create a mailing object
-        message = new MimeMessage(mailSession);
-        // loading parameters into the mail message object
-        message.setSubject(mailSubject);
-        message.setContent(mailText, "text/html");
-        message.setRecipient(Message.RecipientType.TO, new InternetAddress(sendToEmail));
+
+    public void send(String subject, String text, String toEmail){
+        username = props.getProperty("mail.user.name");
+        password = props.getProperty("mail.user.password");
+        Session session = Session.getDefaultInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            //от кого
+            message.setFrom(new InternetAddress(username));
+            //кому
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+            //тема сообщения
+            message.setSubject(subject);
+            //текст
+            message.setText(text);
+
+            //отправляем сообщение
+            Transport.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

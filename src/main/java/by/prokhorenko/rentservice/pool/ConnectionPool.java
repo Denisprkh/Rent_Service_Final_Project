@@ -59,8 +59,9 @@ public enum ConnectionPool {
                 Thread.currentThread().interrupt();
             }
             busyConnections.add(connection);
+            LOG.debug(availableConnections.size());
         }
-        LOG.info("Connection was taken");
+        LOG.debug("Connection was taken");
         return connection;
     }
 
@@ -68,10 +69,11 @@ public enum ConnectionPool {
         if(connection.getClass() != ProxyConnection.class){
             throw new ConnectionPoolException("Invalid connection");
         }
+        LOG.debug("Connection was released");
         busyConnections.remove(connection);
         availableConnections.offer((ProxyConnection)
                 connection);
-        LOG.info(availableConnections.size() + busyConnections.size());
+        LOG.info(availableConnections.size());
     }
 
     public void destroyPool(){

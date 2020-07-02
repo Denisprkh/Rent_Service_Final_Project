@@ -34,12 +34,6 @@ public class ServletController extends HttpServlet {
 
     }
 
-//    @Override
-//    public void destroy() {
-//        LOG.trace("ControllerServlet destroying");
-//        ConnectionPool.INSTANCE.destroyPool();
-//    }
-
     private void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
 
         request.setCharacterEncoding("UTF-8");

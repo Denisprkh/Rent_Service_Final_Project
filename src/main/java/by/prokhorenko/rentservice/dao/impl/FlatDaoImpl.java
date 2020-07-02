@@ -38,9 +38,10 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
     public Optional<Flat> add(Flat flat) throws DaoException {
         FlatDescriptionDao descriptionDao = FlatDescriptionDaoImpl.getInstance();
         FlatAddressDao addressDao = FlatAddressDaoImpl.getInstance();
+        EntityTransaction entityTransaction = new EntityTransaction();
         PreparedStatement statement = null;
      try {
-         connection.setAutoCommit(false);
+         entityTransaction.beginTransaction(connection,(AbstractCommonDao)descriptionDao,(AbstractCommonDao)addressDao);
          FlatDescription flatDescription = descriptionDao.add(flat.getFlatDescription()).get();//FIXME
          FlatAddress flatAddress = addressDao.add(flat.getFlatAddress()).get();//FIXME
          statement = connection.prepareStatement(SqlQuery.ADD_FLAT, Statement.RETURN_GENERATED_KEYS);
@@ -48,17 +49,16 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
          statement.setInt(2,flatAddress.getId());
          int id = executeUpdateAndGetGeneratedId(statement);
          flat.setId(id);
-         connection.commit();
+         entityTransaction.commit(connection);
          return Optional.of(flat);
      } catch (SQLException e) {
-         rollbackTransaction(connection);
+         entityTransaction.rollback(connection);
+         throw new DaoException("Adding flat error",e);
+     } catch (Exception e) {
+         entityTransaction.rollback(connection);
          throw new DaoException("Adding flat error",e);
      }finally {
-         try {
-             connection.setAutoCommit(true);
-         } catch (SQLException e) {
-             LOG.error("Setting connection autocommit true error",e);
-         }
+             entityTransaction.endTransaction(connection);
          closeStatement(statement);
      }
     }

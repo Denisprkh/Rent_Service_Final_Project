@@ -4,6 +4,7 @@ import by.prokhorenko.rentservice.builder.*;
 import by.prokhorenko.rentservice.dao.constant.SqlColumnName;
 import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 import by.prokhorenko.rentservice.entity.flat.*;
+import by.prokhorenko.rentservice.entity.request.Request;
 import by.prokhorenko.rentservice.entity.user.User;
 import by.prokhorenko.rentservice.entity.user.UserRole;
 import by.prokhorenko.rentservice.exception.DaoException;
@@ -13,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 
@@ -21,6 +23,13 @@ public abstract class AbstractCommonDao implements AutoCloseable{
     private static final Logger LOG = LogManager.getLogger();
     private static final int ONE_ROW_COUNT = 1;
     private static final int GENERATED_ID_ROW_NUMBER = 1;
+
+    public void setConnection(ProxyConnection connection){
+        if(this.connection != null){
+            closeConnection(this.connection);
+        }
+        this.connection = connection;
+    }
 
     protected void closeStatement(Statement statement) {
         try {
@@ -196,11 +205,38 @@ public abstract class AbstractCommonDao implements AutoCloseable{
                     .buildFlat(buildFlatFromResultSet(resultSet))
                     .buildTitle(resultSet.getString(SqlColumnName.ADVERTISEMENT_TITLE_COLUMN_NAME))
                     .buildPrice(resultSet.getBigDecimal(SqlColumnName.ADVERTISEMENT_PRICE_COLUMN_NAME))
-                    .buildDateOfCreation(Instant.ofEpochMilli(resultSet.getLong(SqlColumnName.
-                            ADVERTISEMENT_DATE_OF_CREATION_COLUMN_NAME)).atZone(ZoneId.systemDefault()).toLocalDateTime())
+                    .buildDateOfCreation(convertLongToDate(resultSet.getLong(SqlColumnName.
+                            ADVERTISEMENT_DATE_OF_CREATION_COLUMN_NAME)))
                     .buildAdvertisement();
         } catch (SQLException e) {
             throw new DaoException("Building advertisement from resultSet error",e);
         }
+    }
+
+    protected Request buildRequestFromResultSet(ResultSet resultSet) throws DaoException{
+        DaoFactory daoFactory = DaoFactory.getInstance();
+        try(AdvertisementDao advertisementDao = daoFactory.getAdvertisementDao()) {
+            return new RequestBuilder()
+                    .buildId(resultSet.getInt(SqlColumnName.REQUEST_REQUESTS_ID_COLUMN_NAME))
+                    .buildUser(buildUserFromResultSet(resultSet))
+                    .buildStartDate(convertLongToDate(resultSet.getLong(SqlColumnName.REQUEST_START_DATE_COLUMN_NAME)))
+                    .buildEndDate(convertLongToDate(resultSet.getLong(SqlColumnName.REQUEST_END_DATE_COLUMN_NAME)))
+                    .buildApplicationDate(convertLongToDate(resultSet.getLong
+                            (SqlColumnName.REQUEST_APPLICATION_DATE_COLUMN_NAME)))
+                    .buildAdvertisement(advertisementDao.findById(resultSet.getInt(
+                            SqlColumnName.REQUEST_ADVERTISEMENTS_ID_COLUMN_NAME)).get())
+                    .buildApproved(resultSet.getBoolean(SqlColumnName.REQUEST_IS_APPROVED_COLUMN_NAME))
+                    .buildRequest();
+        } catch (SQLException e) {
+            throw new DaoException("Building request from resultSet error",e);
+        } catch (Exception e) {
+            throw new DaoException("Building request from resultSet error",e);
+
+        }
+    }
+
+    private LocalDateTime convertLongToDate(long millis){
+        LocalDateTime dateFromMillis =  Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDateTime();
+        return dateFromMillis;
     }
 }

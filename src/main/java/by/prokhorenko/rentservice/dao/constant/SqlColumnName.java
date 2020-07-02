@@ -1,6 +1,6 @@
 package by.prokhorenko.rentservice.dao.constant;
 
-import com.sun.org.apache.xalan.internal.xsltc.dom.SimpleResultTreeImpl;
+
 
 public class SqlColumnName {
 
@@ -56,12 +56,5 @@ public class SqlColumnName {
     public static final String REQUEST_ADVERTISEMENTS_ID_COLUMN_NAME = "advertisements_id";
     public static final String REQUEST_APPLICATION_DATE_COLUMN_NAME = "application_date";
     public static final String REQUEST_IS_APPROVED_COLUMN_NAME = "is_approved";
-
-
-
-
-
-
-
 
 }

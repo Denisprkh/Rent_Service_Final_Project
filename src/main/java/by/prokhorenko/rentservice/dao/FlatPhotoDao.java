@@ -8,7 +8,5 @@ import java.io.File;
 import java.util.List;
 
 public interface FlatPhotoDao extends CommonDao<FlatPhoto>{
-
     List<FlatPhoto> findAllPhotosByFlatsId(int flatsId) throws DaoException;
-
 }

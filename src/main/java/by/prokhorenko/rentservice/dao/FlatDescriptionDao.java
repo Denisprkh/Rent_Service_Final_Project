@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FlatDescriptionDao extends CommonDao<FlatDescription> {
-    List<FlatDescription> findByRoomsAmount(int roomsAmount) throws DaoException;
-    List<FlatDescription> findByLivingArea(float livingArea) throws DaoException;
-    List<FlatDescription> findByRepairType(String repai) throws DaoException;
+//    List<FlatDescription> findByRoomsAmount(int roomsAmount) throws DaoException;
+//    List<FlatDescription> findByLivingArea(float livingArea) throws DaoException;
+//    List<FlatDescription> findByRepairType(String repai) throws DaoException;
 }

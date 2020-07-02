@@ -172,10 +172,27 @@ public class SqlQuery {
             " AND flats_description.possible_with_pets REGEXP ? AND flats_description.possible_with_childs " +
             "REGEXP ? AND advertisements.price REGEXP ?";
 
-    public static final String ADD_REQUEST = "INSERT INTO requests users_id,start_date,end_date,application_date " +
-            "VALUES (?,?,?,?)";
-
-
+    public static final String ADD_REQUEST = "INSERT INTO requests (users_id,start_date,end_date,application_date," +
+            "advertisements_id) VALUES (?,?,?,?,?)";
+    public static final String FIND_ALL_REQUESTS = "SELECT  users.users_id, users.first_name, users.last_name, users.email," +
+            "users.password, users.phone, users.users_role_id, users.log_in_token, users.is_banned, " +
+            "requests.requests_id, requests.users_id, requests.start_date,requests.end_date,requests.advertisements_id," +
+            "requests.application_date,requests.is_approved FROM requests JOIN users ON requests.users_id = " +
+            "users.users_id";
+    public static final String FIND_REQUEST_BY_ID = "SELECT  users.users_id, users.first_name, users.last_name, users.email," +
+            "users.password, users.phone, users.users_role_id, users.log_in_token, users.is_banned, " +
+            "requests.requests_id, requests.users_id, requests.start_date,requests.end_date,requests.advertisements_id," +
+            "requests.application_date,requests.is_approved FROM requests JOIN users ON requests.users_id = " +
+            "users.users_id WHERE requests.requests_id = ?";
+    public static final String UPDATE_REQUEST_BY_ID = "UPDATE requests req SET req.start_date = ?, req.end_date = ?" +
+            " WHERE req.requests_id = ?";
+    public static final String UPDATE_REQUEST_APPROVED_STATUS = "UPDATE requests req SET req.is_approved = ? WHERE " +
+            "req.requests_id = ?";
+    public static final String FIND_REQUESTS_BY_USERS_ID = "SELECT  users.users_id, users.first_name, " +
+            "users.last_name, users.email, users.password, users.phone, users.users_role_id, users.log_in_token, " +
+            "users.is_banned,requests.requests_id, requests.users_id, requests.start_date,requests.end_date," +
+            "requests.advertisements_id, requests.application_date,requests.is_approved FROM requests JOIN " +
+            "users ON requests.users_id = users.users_id WHERE requests.users_id = ?";
 
 
 

@@ -1,15 +1,8 @@
 package by.prokhorenko.rentservice.factory;
 
-import by.prokhorenko.rentservice.dao.FlatAddressDao;
-import by.prokhorenko.rentservice.dao.FlatDao;
-import by.prokhorenko.rentservice.dao.FlatDescriptionDao;
-import by.prokhorenko.rentservice.dao.FlatPhotoDao;
-import by.prokhorenko.rentservice.dao.impl.FlatAddressDaoImpl;
-import by.prokhorenko.rentservice.dao.impl.FlatDaoImpl;
-import by.prokhorenko.rentservice.dao.impl.FlatDescriptionDaoImpl;
-import by.prokhorenko.rentservice.dao.impl.FlatPhotoDaoImpl;
-import by.prokhorenko.rentservice.dao.UserDao;
-import by.prokhorenko.rentservice.dao.impl.UserDaoImpl;
+import by.prokhorenko.rentservice.dao.*;
+import by.prokhorenko.rentservice.dao.impl.*;
+import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 
 public class DaoFactory {
 
@@ -18,6 +11,7 @@ public class DaoFactory {
     private final FlatDescriptionDao flatDescriptionDao;
     private final FlatDao flatDao;
     private final FlatPhotoDao flatPhotoDao;
+    private final AdvertisementDao advertisementDao;
 
     private DaoFactory(){
         userDao = UserDaoImpl.getInstance();
@@ -25,6 +19,7 @@ public class DaoFactory {
         flatDescriptionDao = FlatDescriptionDaoImpl.getInstance();
         flatDao = FlatDaoImpl.getInstance();
         flatPhotoDao = FlatPhotoDaoImpl.getInstance();
+        advertisementDao = AdvertisementDaoImpl.getInstance();
 
     }
 
@@ -51,5 +46,6 @@ public class DaoFactory {
     public FlatPhotoDao getFlatPhotoDao(){
         return flatPhotoDao;
     }
+    public AdvertisementDao getAdvertisementDao(){return advertisementDao; }
 
 }

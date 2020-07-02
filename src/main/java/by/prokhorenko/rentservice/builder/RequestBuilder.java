@@ -15,6 +15,17 @@ public class RequestBuilder {
     private LocalDateTime applicationDate;
     private Advertisement advertisement;
 
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public RequestBuilder buildApproved(boolean approved) {
+        isApproved = approved;
+        return this;
+    }
+
+    private boolean isApproved;
+
     public int getId() {
         return id;
     }
