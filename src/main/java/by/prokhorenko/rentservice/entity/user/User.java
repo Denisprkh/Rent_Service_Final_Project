@@ -12,7 +12,7 @@ public class User implements Serializable {
     private String password;
     private String phone;
     private UserRole userRole;
-    private String logInToken;
+    private boolean isActivated;
     private boolean isBanned;
 
     public User(UserBuilder userBuilder){
@@ -23,7 +23,7 @@ public class User implements Serializable {
         this.password = userBuilder.getPassword();
         this.phone = userBuilder.getPhone();
         this.userRole = userBuilder.getUserRole();
-        this.logInToken = userBuilder.getLogInToken();
+        this.isActivated = userBuilder.getActivated();
     }
 
     public User(String firstName, String lastName, String email, String password, String phone) {
@@ -103,12 +103,12 @@ public class User implements Serializable {
         this.userRole = userRole;
     }
 
-    public String getLogInToken() {
-        return logInToken;
+    public boolean isActivated() {
+        return isActivated;
     }
 
-    public void setLogInToken(String logInToken) {
-        this.logInToken = logInToken;
+    public void setActivated(boolean activated) {
+        this.isActivated = activated;
     }
 
     public boolean isBanned() {
@@ -127,14 +127,14 @@ public class User implements Serializable {
         User user = (User) o;
 
         if (id != user.id) return false;
+        if (isActivated != user.isActivated) return false;
         if (isBanned != user.isBanned) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
-        if (userRole != user.userRole) return false;
-        return logInToken != null ? logInToken.equals(user.logInToken) : user.logInToken == null;
+        return userRole == user.userRole;
     }
 
     @Override
@@ -146,7 +146,7 @@ public class User implements Serializable {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
-        result = 31 * result + (logInToken != null ? logInToken.hashCode() : 0);
+        result = 31 * result + (isActivated ? 1 : 0);
         result = 31 * result + (isBanned ? 1 : 0);
         return result;
     }
@@ -161,7 +161,7 @@ public class User implements Serializable {
         sb.append(", password='").append(password).append('\'');
         sb.append(", phone='").append(phone).append('\'');
         sb.append(", userRole=").append(userRole);
-        sb.append(", logInToken='").append(logInToken).append('\'');
+        sb.append(", isActivated=").append(isActivated);
         sb.append(", isBanned=").append(isBanned);
         sb.append('}');
         return sb.toString();

@@ -1,10 +1,12 @@
 package by.prokhorenko.rentservice.dao;
 
 import by.prokhorenko.rentservice.exception.DaoException;
+
+import java.io.Closeable;
 import java.util.List;
 import java.util.Optional;
 
-public interface CommonDao<T> extends AutoCloseable{
+public interface CommonDao<T> extends Closeable, AutoCloseable{
     Optional<T> add(T t) throws DaoException;
     List<T> findAll() throws DaoException;
     Optional<T> findById(int id) throws DaoException;

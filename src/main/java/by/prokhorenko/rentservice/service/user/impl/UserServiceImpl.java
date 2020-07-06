@@ -11,16 +11,21 @@ import by.prokhorenko.rentservice.validator.UserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
 
     private static final Logger LOG = LogManager.getLogger();
+    private static final UserService INSTANCE = new UserServiceImpl();
 
-    public UserServiceImpl(){
-
+    public static UserService getInstance(){
+        return INSTANCE;
     }
+
+    private UserServiceImpl(){}
+
 
     @Override
     public Optional<User> signUp(User user) throws ServiceException {
@@ -30,39 +35,35 @@ public class UserServiceImpl implements UserService {
         }
             try(UserDao userDao = UserDaoImpl.getInstance()) {
                     return userDao.add(user);
-            } catch (DaoException e) {
-                throw new ServiceException("Signing up user error",e);
-            } catch (Exception e) {
+            } catch (DaoException | IOException e) {
                 throw new ServiceException("Signing up user error",e);
             }
     }
 
     @Override
-    public Optional<User> signIn(String email, String password) throws ServiceException {
+    public User signIn(String email, String password) throws ServiceException {
         UserValidator userValidator = UserValidator.getInstance();
         DaoFactory daoFactory = DaoFactory.getInstance();
         if(!userValidator.emailIsCorrect(email) || !userValidator.passwordIsCorrect(password)){
             throw new ServiceException("Email or password is incorrect");
         }
         try(UserDao userDao = daoFactory.getUserDao()) {
-            return (userDao.findByEmailAndPassword(email,password));
-        } catch (DaoException e) {
-            throw new ServiceException("Signing user in error",e);
-        } catch (Exception e) {
+            LOG.debug(email,password);
+           User user =  userDao.findByEmailAndPassword(email,password).orElseThrow(ServiceException::new);
+           return user;
+        } catch (DaoException | IOException e) {
             throw new ServiceException("Signing user in error",e);
         }
     }
 
     @Override
     public List<User> getAllUsers() throws ServiceException {
-        List<User> allUsers = null;
+        List<User> allUsers;
         DaoFactory daoFactory = DaoFactory.getInstance();
         try(UserDao userDao = daoFactory.getUserDao()) {
             allUsers = userDao.findAll();
             return allUsers;
-        } catch (DaoException e) {
-            throw new ServiceException("Finding all users error",e);
-        } catch (Exception e) {
+        } catch (DaoException | IOException e) {
             throw new ServiceException("Finding all users error",e);
         }
     }
@@ -71,11 +72,9 @@ public class UserServiceImpl implements UserService {
     public boolean banUser(int id) throws ServiceException {
         DaoFactory daoFactory = DaoFactory.getInstance();
         try(UserDao userDao = daoFactory.getUserDao()) {
-            boolean banned = userDao.ban(id);
+            boolean banned = userDao.banUser(id);
             return banned;
-        } catch (DaoException e) {
-            throw new ServiceException("Banning user error",e);
-        } catch (Exception e) {
+        } catch (DaoException | IOException e) {
             throw new ServiceException("Banning user error",e);
         }
     }
@@ -84,11 +83,9 @@ public class UserServiceImpl implements UserService {
     public boolean unBanUser(int id) throws ServiceException {
         DaoFactory daoFactory = DaoFactory.getInstance();
         try(UserDao userDao = daoFactory.getUserDao()) {
-            boolean unbanned = userDao.unBan(id);
+            boolean unbanned = userDao.unBanUser(id);
             return unbanned;
-        } catch (DaoException e) {
-            throw new ServiceException("Unbanning user error",e);
-        } catch (Exception e) {
+        } catch (DaoException | IOException e) {
             throw new ServiceException("Unbanning user error",e);
         }
     }
@@ -98,9 +95,7 @@ public class UserServiceImpl implements UserService {
         DaoFactory daoFactory = DaoFactory.getInstance();
         try(UserDao userDao = daoFactory.getUserDao()) {
             return userDao.findById(id);
-        } catch (DaoException e) {
-            throw new ServiceException("Finding user by id error",e);
-        } catch (Exception e) {
+        } catch (DaoException | IOException e) {
             throw new ServiceException("Finding user by id error",e);
         }
     }
@@ -110,9 +105,7 @@ public class UserServiceImpl implements UserService {
         DaoFactory daoFactory = DaoFactory.getInstance();
         try(UserDao userDao = daoFactory.getUserDao()) {
             return userDao.findByEmail(email);
-        } catch (DaoException e) {
-            throw new ServiceException("Finding user by email error",e);
-        } catch (Exception e) {
+        } catch (DaoException | IOException e) {
             throw new ServiceException("Finding user by email error",e);
         }
     }
@@ -122,10 +115,18 @@ public class UserServiceImpl implements UserService {
         DaoFactory daoFactory = DaoFactory.getInstance();
         try(UserDao userDao = daoFactory.getUserDao()) {
             return userDao.findByPhone(phone);
-        } catch (DaoException e) {
+        } catch (DaoException | IOException e) {
             throw new ServiceException("Finding user by phone error",e);
-        } catch (Exception e) {
-            throw new ServiceException("Finding user by phone error",e);
+        }
+    }
+
+    @Override
+    public boolean activateUser(int id) throws ServiceException {
+        DaoFactory daoFactory = DaoFactory.getInstance();
+        try(UserDao userDao = daoFactory.getUserDao()){
+            return userDao.activateUser(id);
+        } catch (DaoException | IOException e) {
+            throw new ServiceException("Activating user error",e);
         }
     }
 }

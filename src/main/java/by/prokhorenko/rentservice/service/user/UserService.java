@@ -9,11 +9,12 @@ import java.util.Optional;
 public interface UserService {
 
     Optional<User> signUp(User user) throws ServiceException;
-    Optional<User> signIn(String email, String password) throws ServiceException;
+    User signIn(String email, String password) throws ServiceException;
     List<User> getAllUsers() throws ServiceException;
     boolean banUser(int id) throws  ServiceException;
     boolean unBanUser(int id) throws ServiceException;
     Optional<User> findUserById(int id) throws ServiceException;
     Optional<User> findUserByEmail(String email) throws ServiceException;
     Optional<User> findUserByPhone(String phone) throws  ServiceException;
+    boolean activateUser(int id) throws ServiceException;
 }

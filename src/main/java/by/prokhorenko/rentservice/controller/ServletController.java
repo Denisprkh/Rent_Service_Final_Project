@@ -2,7 +2,6 @@ package by.prokhorenko.rentservice.controller;
 
 import by.prokhorenko.rentservice.controller.command.Command;
 import by.prokhorenko.rentservice.controller.command.CommandProvider;
-import by.prokhorenko.rentservice.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Optional;
 
 @WebServlet("/controller")
@@ -25,6 +23,7 @@ public class ServletController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOG.debug(request);
         processRequest(request,response);
     }
 
@@ -35,16 +34,15 @@ public class ServletController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
-
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
         Optional<Command> commandOptional = CommandProvider.defineCommand(request.getParameter("command"));
 
         Command command = commandOptional.orElseThrow(IllegalArgumentException::new);
 
-        String page = command.execute(request);
+        String page = command.execute(request,response);
+        if (page != PagePath.EMPTY_PAGE) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+            dispatcher.forward(request,response);
+        }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-        dispatcher.forward(request,response);
     }
 }

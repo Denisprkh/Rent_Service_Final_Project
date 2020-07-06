@@ -14,41 +14,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><fmt:message key="reg_page.title"/></title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="${root}/../css/style.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 </head>
 <body>
-<header class="header">
-    <div class="container">
-        <div class="header_items"  >
-            <a class="header_logo" href="${pageContext.request.contextPath}/main.jsp">
-                <div class="header_logo__img">
-                    <img src="img/logo.svg" alt="logo">
-                </div>
-                <div class="header_logo__name">
-                    <fmt:message key="nav_bar.title"/>
-                </div>
-            </a>
-            <div class="header_btn">
-                <div class="header_signin btnt">
-                    <fmt:message key="nav_bar.sign_in"/>
-                </div>
-                <div class="header_register btnt">
-                    <fmt:message key="nav_bar.sign_up"/>
-                </div>
-                <div class="header_language">
-                    <img src="img/eng.svg" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+<jsp:include page="header.jsp"/>
 <div class="container">
     <div class="reg_form">
         <div class="reg_form__items">
             <div class="reg_form__title">
                 <fmt:message key="reg_form.title"/>
             </div>
-            <form action="controller" method="post">
+            <form action="${pageContext.request.contextPath}/controller" method="post">
                 <input required name="firstName" placeholder="<fmt:message key="reg_form.first_name"/>"
                        required pattern="^[a-zA-Zа-яА-Я]{2,45}$" title="First name is incorrect"/>
                 <input required name="lastName" placeholder="<fmt:message key="reg_form.last_name"/>"

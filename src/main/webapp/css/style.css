@@ -96,6 +96,7 @@ a{
     background: #F9F9F9;
     border-radius: 5px;
     margin: 77px auto;
+    box-shadow: 5px 2px 13px rgba(0, 0, 0, 0.19); /* тест */
 }
 
 .reg_form_sign_in{
@@ -104,6 +105,7 @@ a{
     background: #F9F9F9;
     border-radius: 5px;
     margin: 77px auto;
+    box-shadow: 5px 2px 13px rgba(0, 0, 0, 0.19);
 }
 
 .reg_form__items{
@@ -143,4 +145,117 @@ a{
     font-size: 14px;
     line-height: 16px;
 }
+
+.confirm_sign_up_label{
+    position: absolute;
+    width: 337px;
+    height: 234px;
+    left: 565px;
+    top: 256px;
+    color: #FACD68;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 100px;
+}
+
+header {
+    background-color: #ddd;
+    height: 30px;
+}
+.menu {
+    width: 95px;
+    height: 100%;
+    font-family: Roboto;
+    font-size: 14px;
+    float: right;
+    position: relative;
+}
+.menu__title {
+    text-decoration: none;
+    line-height: 30px;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    color: white;
+}
+.menu__down {
+    position: absolute;
+    top: 95%;
+    left: 0;
+    right: 0;
+    padding-top: 15px;
+    display: none;
+    background:#434242;
+    text-align:center;
+    cursor:pointer;
+}
+.menu__section a {
+    text-decoration: none;
+    display: block;
+    color: #000;
+}
+.menu__section a:hover {
+    background:#434242;
+    padding:3px 0 3px 3px;
+}
+.menu:hover .menu__down {
+    display: block;
+}
+.box-card{
+    margin-top: 160px;
+    height: 145px;
+    width: 350px;
+}
+
+.box-card p{
+    color: black;
+    font-family: Roboto;
+    font-size: 24px;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+.error_image{
+    position: absolute;
+    width: 194px;
+    height: 194px;
+    left: 300px;
+    top: 290px;
+    display: flex;
+    justify-content: center;
+}
+
+.code_error_text{
+    position: absolute;
+    width: 337px;
+    height: 234px;
+    left: 565px;
+    top: 256px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 200px;
+    line-height: 234px;
+    background: linear-gradient(180deg, #FACD68 0%, #FC76B3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.info_error_text{
+    position: absolute;
+    width: 243px;
+    height: 42px;
+    left: 612px;
+    top: 469px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 36px;
+    line-height: 42px;
+    color: #D5D5D5;
+}
+
 

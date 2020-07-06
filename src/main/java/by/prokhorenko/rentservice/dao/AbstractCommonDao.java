@@ -126,7 +126,7 @@ public abstract class AbstractCommonDao implements AutoCloseable{
                     .buildPhone(resultSet.getString(SqlColumnName.USERS_PHONE_COLUMN_NAME))
                     .buildUserRole(UserRole.getUserRoleById
                             (resultSet.getInt(SqlColumnName.USERS_ROLE_ID_COLUMN_NAME)).get())
-                    .buildLogInToken(resultSet.getString(SqlColumnName.USERS_LOG_IN_TOKEN_COLUMN_NAME))
+                    .buildIsActivated(resultSet.getBoolean(SqlColumnName.USERS_IS_ACTIVATED_COLUMN_NAME))
                     .buildIsBanned(resultSet.getBoolean(SqlColumnName.USERS_IS_BANNED_COLUMN_NAME))
                     .buildUser();
         } catch (SQLException e) {

@@ -44,7 +44,7 @@ public enum ConnectionPool {
                 availableConnections.add(new ProxyConnection(DriverManager.getConnection(url,properties)));
             }
         } catch (IOException | ClassNotFoundException | SQLException e) {
-            throw new RuntimeException("Connection pool wasn't initialized");
+            throw new RuntimeException("Connection pool wasn't initialized",e);
         }
 
     }

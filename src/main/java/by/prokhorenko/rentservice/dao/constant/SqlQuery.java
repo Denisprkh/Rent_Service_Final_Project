@@ -9,20 +9,21 @@ public class SqlQuery {
     public static final String UPDATE_USER_BY_ID ="UPDATE users us SET us.first_name = ?, " +
             "us.last_name = ?, us.email = ?, us.password = ?, us.phone = ? WHERE us.users_id = ?";
     public static final String FIND_USER_BY_ID = "SELECT users_id,first_name,last_name,email,password," +
-            "phone,users_role_id,log_in_token,is_banned FROM users WHERE users_id = ?";
+            "phone,users_role_id,is_activated,is_banned FROM users WHERE users_id = ?";
     public static final String FIND_ALL_USERS = "SELECT users_id,first_name,last_name,email,password,phone," +
-            "users_role_id,log_in_token,is_banned FROM users";
+            "users_role_id,is_activated,is_banned FROM users";
     public static final String FIND_USER_BY_EMAIL = "SELECT users_id,first_name,last_name,email,password,phone," +
-            "users_role_id,log_in_token,is_banned FROM users WHERE email = ? ";
+            "users_role_id,is_activated,is_banned FROM users WHERE email = ? ";
     public static final String FIND_USER_BY_EMAIL_AND_PASSWORD = "SELECT users_id,first_name,last_name,email,password,"+
-            "phone,users_role_id,log_in_token,is_banned FROM users WHERE email = ? AND password = ?";
+            "phone,users_role_id,is_activated,is_banned FROM users WHERE email = ? AND password = ?";
     public static final String UPDATE_USERS_ROLE = "UPDATE users us SET us.users_role_id = ? WHERE us.users_id = ?";
     public static final String UPDATE_USERS_BAN_STATUS_TRUE = "UPDATE users us SET us.is_banned =" +
             " TRUE WHERE us.users_id = ?";
     public static final String UPDATE_USERS_BAN_STATUS_FALSE = "UPDATE users us SET us.is_banned =" +
             " FALSE WHERE us.users_id = ?";
     public static final String FIND_USER_BY_PHONE = "SELECT users_id,first_name,last_name,email,password,phone," +
-            "users_role_id,log_in_token,is_banned FROM users WHERE phone = ? ";
+            "users_role_id,is_activated,is_banned FROM users WHERE phone = ? ";
+    public static final String ACTIVATE_USER = "UPDATE users SET is_activated = true WHERE users_id = ?";
 
     public static final String ADD_FLAT_ADDRESS = "INSERT INTO flats_address (city,district,street,house) " +
             "VALUES (?,?,?,?)";
@@ -115,7 +116,7 @@ public class SqlQuery {
             "flats_description.has_home_appliciances,flats_description.has_the_internet," +
             "flats_description.possible_with_childs,flats_description.possible_with_pets, flats_description.repair," +
             "flats_description.users_description, users.users_id, users.first_name, users.last_name, users.email," +
-            "users.password, users.phone, users.users_role_id, users.log_in_token, users.is_banned, " +
+            "users.password, users.phone, users.users_role_id, users.is_activated, users.is_banned, " +
             "advertisements.advertisements_id, advertisements.author_id, advertisements.flats_id, advertisements.title," +
             "advertisements.price, advertisements.date_of_creation FROM flats,flats_address,flats_description,users," +
             "advertisements WHERE flats.flats_description_id = flats_description.flats_description_id AND" +
@@ -129,7 +130,7 @@ public class SqlQuery {
             "flats_description.has_home_appliciances,flats_description.has_the_internet," +
             "flats_description.possible_with_childs,flats_description.possible_with_pets, flats_description.repair," +
             "flats_description.users_description, users.users_id, users.first_name, users.last_name, users.email," +
-            "users.password, users.phone, users.users_role_id, users.log_in_token, users.is_banned, " +
+            "users.password, users.phone, users.users_role_id, users.is_activated, users.is_banned, " +
             "advertisements.advertisements_id, advertisements.author_id, advertisements.flats_id, advertisements.title," +
             "advertisements.price, advertisements.date_of_creation FROM flats,flats_address,flats_description,users," +
             "advertisements WHERE flats.flats_description_id = flats_description.flats_description_id AND" +
@@ -145,7 +146,7 @@ public class SqlQuery {
             "flats_description.has_home_appliciances,flats_description.has_the_internet," +
             "flats_description.possible_with_childs,flats_description.possible_with_pets, flats_description.repair," +
             "flats_description.users_description, users.users_id, users.first_name, users.last_name, users.email," +
-            "users.password, users.phone, users.users_role_id, users.log_in_token, users.is_banned, " +
+            "users.password, users.phone, users.users_role_id, users.is_activated, users.is_banned, " +
             "advertisements.advertisements_id, advertisements.author_id, advertisements.flats_id, advertisements.title," +
             "advertisements.price, advertisements.date_of_creation FROM flats,flats_address,flats_description,users," +
             "advertisements WHERE flats.flats_description_id = flats_description.flats_description_id AND" +
@@ -159,7 +160,7 @@ public class SqlQuery {
             "flats_description.has_home_appliciances,flats_description.has_the_internet," +
             "flats_description.possible_with_childs,flats_description.possible_with_pets, flats_description.repair," +
             "flats_description.users_description, users.users_id, users.first_name, users.last_name, users.email," +
-            "users.password, users.phone, users.users_role_id, users.log_in_token, users.is_banned, " +
+            "users.password, users.phone, users.users_role_id, users.is_activated, users.is_banned, " +
             "advertisements.advertisements_id, advertisements.author_id, advertisements.flats_id, advertisements.title," +
             "advertisements.price, advertisements.date_of_creation FROM flats,flats_address,flats_description,users," +
             "advertisements WHERE flats.flats_description_id = flats_description.flats_description_id AND" +
@@ -175,12 +176,12 @@ public class SqlQuery {
     public static final String ADD_REQUEST = "INSERT INTO requests (users_id,start_date,end_date,application_date," +
             "advertisements_id) VALUES (?,?,?,?,?)";
     public static final String FIND_ALL_REQUESTS = "SELECT  users.users_id, users.first_name, users.last_name, users.email," +
-            "users.password, users.phone, users.users_role_id, users.log_in_token, users.is_banned, " +
+            "users.password, users.phone, users.users_role_id, users.is_activated, users.is_banned, " +
             "requests.requests_id, requests.users_id, requests.start_date,requests.end_date,requests.advertisements_id," +
             "requests.application_date,requests.is_approved FROM requests JOIN users ON requests.users_id = " +
             "users.users_id";
     public static final String FIND_REQUEST_BY_ID = "SELECT  users.users_id, users.first_name, users.last_name, users.email," +
-            "users.password, users.phone, users.users_role_id, users.log_in_token, users.is_banned, " +
+            "users.password, users.phone, users.users_role_id, users.is_activated, users.is_banned, " +
             "requests.requests_id, requests.users_id, requests.start_date,requests.end_date,requests.advertisements_id," +
             "requests.application_date,requests.is_approved FROM requests JOIN users ON requests.users_id = " +
             "users.users_id WHERE requests.requests_id = ?";
@@ -189,7 +190,7 @@ public class SqlQuery {
     public static final String UPDATE_REQUEST_APPROVED_STATUS = "UPDATE requests req SET req.is_approved = ? WHERE " +
             "req.requests_id = ?";
     public static final String FIND_REQUESTS_BY_USERS_ID = "SELECT  users.users_id, users.first_name, " +
-            "users.last_name, users.email, users.password, users.phone, users.users_role_id, users.log_in_token, " +
+            "users.last_name, users.email, users.password, users.phone, users.users_role_id, users.is_activated, " +
             "users.is_banned,requests.requests_id, requests.users_id, requests.start_date,requests.end_date," +
             "requests.advertisements_id, requests.application_date,requests.is_approved FROM requests JOIN " +
             "users ON requests.users_id = users.users_id WHERE requests.users_id = ?";

@@ -13,7 +13,7 @@ public class SqlColumnName {
     public static final String USERS_PASSWORD_COLUMN_NAME = "password";
     public static final String USERS_PHONE_COLUMN_NAME = "phone";
     public static final String USERS_ROLE_ID_COLUMN_NAME = "users_role_id";
-    public static final String USERS_LOG_IN_TOKEN_COLUMN_NAME = "log_in_token";
+    public static final String USERS_IS_ACTIVATED_COLUMN_NAME = "is_activated";
     public static final String USERS_IS_BANNED_COLUMN_NAME = "is_banned";
 
     public static final String FLAT_ADDRESS_ID_COLUMN_NAME = "flats_address_id";

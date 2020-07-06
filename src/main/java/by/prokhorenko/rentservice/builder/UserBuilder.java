@@ -12,7 +12,7 @@ public class UserBuilder {
     private String password;
     private String phone;
     private UserRole userRole;
-    private String logInToken;
+    private boolean isActivated;
     private boolean isBanned;
 
     public boolean isBanned() {
@@ -87,12 +87,12 @@ public class UserBuilder {
         return this;
     }
 
-    public String getLogInToken() {
-        return logInToken;
+    public boolean getActivated() {
+        return isActivated;
     }
 
-    public UserBuilder buildLogInToken(String logInToken) {
-        this.logInToken = logInToken;
+    public UserBuilder buildIsActivated(boolean logInToken) {
+        this.isActivated = logInToken;
         return this;
     }
 

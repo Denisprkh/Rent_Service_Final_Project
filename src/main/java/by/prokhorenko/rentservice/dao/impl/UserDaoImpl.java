@@ -106,8 +106,8 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
             preparedStatement.setString(1,email);
             preparedStatement.setString(2,DigestUtils.md5Hex(password));
             resultSet = preparedStatement.executeQuery();
-            User user = null;
             if(resultSet.next()){
+                LOG.debug(buildUserFromResultSet(resultSet));
                 return Optional.of(buildUserFromResultSet(resultSet));
             }
             return Optional.empty();
@@ -136,13 +136,23 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
     }
 
     @Override
-    public boolean ban(int id) throws DaoException {
+    public boolean banUser(int id) throws DaoException {
       return updateEntityById(id, SqlQuery.UPDATE_USERS_BAN_STATUS_TRUE);
     }
 
     @Override
-    public boolean unBan(int id) throws DaoException {
+    public boolean unBanUser(int id) throws DaoException {
         return updateEntityById(id, SqlQuery.UPDATE_USERS_BAN_STATUS_FALSE);
+    }
+
+    @Override
+    public boolean activateUser(int id) throws DaoException {
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.ACTIVATE_USER)){
+            statement.setInt(1,id);
+            return updateEntity(statement);
+        } catch (SQLException e) {
+            throw new DaoException("Activating user error",e);
+        }
     }
 
     @Override

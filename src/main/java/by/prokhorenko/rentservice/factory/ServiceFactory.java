@@ -8,7 +8,7 @@ public class ServiceFactory {
     private final UserService userService;
 
     private ServiceFactory(){
-        userService = new UserServiceImpl();
+        userService = UserServiceImpl.getInstance();
     }
 
     private static class ServiceFactoryHolder{
