@@ -1,6 +1,7 @@
 package by.prokhorenko.rentservice.controller.command.impl;
 
 import by.prokhorenko.rentservice.controller.PagePath;
+import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
@@ -22,7 +23,8 @@ public class ConfirmRegistrationCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request, HttpServletResponse response) {
+        Router router = new Router();
         try {
             int id = Integer.parseInt(request.getParameter(JspParameter.PARAM_ID));
             String page;
@@ -31,10 +33,11 @@ public class ConfirmRegistrationCommand implements Command {
             }else {
                 page = PagePath.SIGN_UP;
             }
-            return page;
+            router.setPage(page);
+            router.setRedirect();
         }catch (ServiceException e){
             LOG.error(e);
-            return PagePath.SIGN_UP;
         }
+        return router;
     }
 }

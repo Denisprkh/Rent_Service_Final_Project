@@ -15,10 +15,36 @@
 
   <filter>
     <filter-name>EncodingFilter</filter-name>
-    <filter-class>by.prokhorenko.rentservice.filter.EncodingFilter</filter-class>
+    <filter-class>by.prokhorenko.rentservice.controller.filter.EncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
   </filter>
+
+  <filter>
+    <filter-name>UserRoleSecurityFilter</filter-name>
+    <filter-class>by.prokhorenko.rentservice.controller.filter.UserRoleSecurityFilter</filter-class>
+  </filter>
+
+  <filter>
+    <filter-name>LocaleFilter</filter-name>
+    <filter-class>by.prokhorenko.rentservice.controller.filter.LocaleFilter</filter-class>
+  </filter>
+
+
   <filter-mapping>
     <filter-name>EncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>UserRoleSecurityFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>LocaleFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 

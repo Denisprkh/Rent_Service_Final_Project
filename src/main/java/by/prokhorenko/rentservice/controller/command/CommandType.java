@@ -1,7 +1,6 @@
 package by.prokhorenko.rentservice.controller.command;
 
 import by.prokhorenko.rentservice.controller.command.impl.*;
-import by.prokhorenko.rentservice.service.user.impl.UserServiceImpl;
 
 public enum  CommandType {
     SIGN_UP(new SignUpCommand()),

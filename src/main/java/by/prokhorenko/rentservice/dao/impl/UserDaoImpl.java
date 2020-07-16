@@ -1,6 +1,7 @@
 package by.prokhorenko.rentservice.dao.impl;
 
 import by.prokhorenko.rentservice.dao.AbstractCommonDao;
+import by.prokhorenko.rentservice.dao.constant.SqlColumnName;
 import by.prokhorenko.rentservice.dao.constant.SqlQuery;
 import by.prokhorenko.rentservice.dao.UserDao;
 import by.prokhorenko.rentservice.entity.user.User;
@@ -107,6 +108,7 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
             preparedStatement.setString(2,DigestUtils.md5Hex(password));
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
+                LOG.debug(resultSet.getBoolean(SqlColumnName.USERS_IS_BANNED_COLUMN_NAME));
                 LOG.debug(buildUserFromResultSet(resultSet));
                 return Optional.of(buildUserFromResultSet(resultSet));
             }

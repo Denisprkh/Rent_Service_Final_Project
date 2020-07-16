@@ -12,6 +12,8 @@ public class MailSender {
     private String password;
     private Properties props;
     private static final String MAIL_PROPERTIES = "mail/mail.properties";
+    private static final String USER_NAME_PROPERTY = "mail.user.name";
+    private static final String USER_PASSWORD_PROPERTY = "mail.user.password";
 
     public MailSender() {
         props = new Properties();
@@ -23,8 +25,8 @@ public class MailSender {
     }
 
     public void send(String subject, String text, String toEmail){
-        username = props.getProperty("mail.user.name");
-        password = props.getProperty("mail.user.password");
+        username = props.getProperty(USER_NAME_PROPERTY);
+        password = props.getProperty(USER_PASSWORD_PROPERTY);
         Session session = Session.getDefaultInstance(props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);

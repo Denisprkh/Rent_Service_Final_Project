@@ -1,14 +1,10 @@
 package by.prokhorenko.rentservice.validator;
 
 import by.prokhorenko.rentservice.entity.user.User;
-import by.prokhorenko.rentservice.exception.ServiceException;
-import by.prokhorenko.rentservice.factory.ServiceFactory;
-import by.prokhorenko.rentservice.service.user.UserService;
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,7 +26,12 @@ public class UserValidator {
     private static final String FIRST_NAME_REGEX = "^[a-zA-Zа-яА-Я]{2,45}$";
     private static final String LAST_NAME_REGEX = "^[a-zA-Zа-яА-Я-]{2,45}$";
     private static final String PASSWORD_REGEX = ".{1,30}";
-    private static final String PHONE_REGEX = "^(\\+375[0-9]{2}[0-9]{7})$";
+    private static final String PHONE_REGEX = "^(\\+375\\([\\d]{2}\\)[\\d]{3}\\-[\\d]{2}\\-[\\d]{2})$";
+    private static final String EMAIL = "email";
+    private static final String FIRST_NAME = "firstName";
+    private static final String LAST_NAME = "lastName";
+    private static final String PASSWORD = "password";
+    private static final String PHONE_NUMBER = "phoneNumber";
     private static final Logger LOG = LogManager.getLogger();
 
     public boolean userIsCorrectForSignUp(User user){
@@ -40,11 +41,21 @@ public class UserValidator {
                     firstNameIsCorrect(user.getFirstName()) &&
                     lastNameIsCorrect(user.getLastName()) &&
                     passwordIsCorrect(user.getPassword()) &&
-                    phoneIsCorrect(user.getPhone()) &&
-                    emailIsNotInUse(user.getEmail()) &&
-                    phoneIsNotInUse(user.getPhone());
+                    phoneIsCorrect(user.getPhone());
         }
         return isCorrect;
+    }
+
+    public Map<String, Boolean> validateDataForSignUp(User user){
+        Map<String,Boolean> validations = new HashMap<>();
+        if(user != null) {
+            validations.put(EMAIL, emailIsCorrect(user.getEmail()));
+            validations.put(FIRST_NAME, firstNameIsCorrect(user.getFirstName()));
+            validations.put(LAST_NAME, lastNameIsCorrect(user.getLastName()));
+            validations.put(PASSWORD, passwordIsCorrect(user.getPassword()));
+            validations.put(PHONE_NUMBER, phoneIsCorrect(user.getPhone()));
+        }
+        return validations;
     }
 
     public boolean userIsCorrectForSignIn(User user){
@@ -82,25 +93,4 @@ public class UserValidator {
         return matcher.matches();
     }
 
-    private boolean emailIsNotInUse(String email){
-        UserService userService = ServiceFactory.getInstance().getUserService();
-        boolean emailIsNotInUse = false;
-        try {
-           emailIsNotInUse = !userService.findUserByEmail(email).isPresent();
-        } catch (ServiceException e) {
-            LOG.error(e);
-        }
-        return emailIsNotInUse;
-    }
-
-    private boolean phoneIsNotInUse(String phone){
-        UserService userService = ServiceFactory.getInstance().getUserService();
-        boolean phoneIsNotInUse = false;
-        try {
-            phoneIsNotInUse = !userService.findUserByPhone(phone).isPresent();
-        } catch (ServiceException e) {
-            LOG.error(e);
-        }
-        return phoneIsNotInUse;
-    }
 }

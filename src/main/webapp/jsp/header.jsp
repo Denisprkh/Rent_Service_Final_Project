@@ -19,7 +19,7 @@
 <header class="header">
     <div class="container">
         <div class="header_items"  >
-            <a class="header_logo" href="${pageContext.request.contextPath}/jsp/main.jsp">
+            <a class="header_logo" href="${pageContext.request.contextPath}/controller?command=FIND_ALL_ADVERTISEMENTS">
                 <div class="header_logo__img">
                     <img src="${pageContext.request.contextPath}/img/logo.svg" alt="logo">
                 </div>
@@ -27,39 +27,38 @@
                     <fmt:message key="nav_bar.title"/>
                 </div>
             </a>
+                <c:if test="${sessionScope.userRole == 'GUEST'}">
             <div class="header_btn">
-                <c:if test="${user == null}">
-                <div class="header_signin btnt">
-                    <a href="${pageContext.request.contextPath}/jsp/signIn.jsp"><fmt:message key="nav_bar.sign_in"/></a>
-                </div>
-                <div class="header_register btnt">
-                    <a href="${pageContext.request.contextPath}/jsp/signUp.jsp"><fmt:message key="nav_bar.sign_up"/></a>
-                </div>
+                    <div class="header_signin btnt">
+                        <a href="${pageContext.request.contextPath}/jsp/signIn.jsp"><fmt:message key="nav_bar.sign_in"/></a>
+                    </div>
+                    <div class="header_register btnt">
+                        <a href="${pageContext.request.contextPath}/jsp/signUp.jsp"><fmt:message key="nav_bar.sign_up"/></a>
+                    </div>
                 </c:if>
-                <c:if test="${user != null}">
+                <c:if test="${sessionScope.userRole == 'USER' || sessionScope.userRole == 'ADMIN'}">
                     <div class="header_profile_logo">
                         <a href="#"><img src="${pageContext.request.contextPath}/img/userProfileLogo.svg"></a>
                     </div>
+                <div class="header_btn">
                     <div class="header_register btnt">
                         <a href="${pageContext.request.contextPath}/controller?command=LOG_OUT">
                             <fmt:message key="nav_bar.log_out"/></a>
                     </div>
                 </c:if>
-
                 <div class="header_language">
-
-                      <div class="menu">
+                    <div class="menu">
                         <a class="menu__title" href="#"><fmt:message key="nav_bar.language"/></a>
-                     <div class="menu__down">
-            <div class="menu__section">
-                <a href="${pageContext.request.contextPath}/controller?command=CHANGE_LANGUAGE&language=en">
-                    <img src="${pageContext.request.contextPath}/img/eng.svg" alt=""></a></div>
-            <div class="menu__section">
-                <a href="${pageContext.request.contextPath}/controller?command=CHANGE_LANGUAGE&language=ru">
-                    <img src="${pageContext.request.contextPath}/img/ru.svg" alt=""></a></div>
-                      </div>
-                   </div>
-
+                        <div class="menu__down">
+                            <div class="menu__section">
+                                <a href="${pageContext.request.contextPath}/controller?command=CHANGE_LANGUAGE&language=en">
+                                    <img src="${pageContext.request.contextPath}/img/eng.svg" alt=""></a></div>
+                            <div class="menu__section">
+                                <a href="${pageContext.request.contextPath}/controller?command=CHANGE_LANGUAGE&language=ru">
+                                    <img src="${pageContext.request.contextPath}/img/ru.svg" alt=""></a></div>
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>

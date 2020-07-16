@@ -40,6 +40,7 @@ a{
 .header_logo{
     display: flex;
     align-self: center;
+    width: 400px;
 }
 
 .header_logo__img{
@@ -55,7 +56,8 @@ a{
 
 .header_logo__name{
     height: 30px;
-    width: auto;
+    width: 300px;
+    white-space: nowrap;
     font-size: 24px;
     margin-top: 22px;
 }
@@ -219,25 +221,17 @@ header {
 }
 
 .error_image{
-    position: absolute;
     width: 194px;
     height: 194px;
-    left: 300px;
-    top: 290px;
-    display: flex;
-    justify-content: center;
 }
 
 .code_error_text{
-    position: absolute;
-    width: 337px;
-    height: 234px;
-    left: 565px;
-    top: 256px;
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
     font-size: 200px;
+    height: 234px;
+    width: 337px;
     line-height: 234px;
     background: linear-gradient(180deg, #FACD68 0%, #FC76B3 100%);
     -webkit-background-clip: text;
@@ -245,17 +239,51 @@ header {
 }
 
 .info_error_text{
-    position: absolute;
-    width: 243px;
-    height: 42px;
-    left: 612px;
-    top: 469px;
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
     font-size: 36px;
-    line-height: 42px;
     color: #D5D5D5;
 }
 
+.pgnt__items{
+    display: flex;
+    margin: 150px auto;
+    width: 602px;
+}
 
+.left__item{
+    margin-right: 71px;
+    margin-top: 5%;
+}
+
+.info_error_text{
+    width: 337px;
+}
+
+.info_error_text{
+    text-align: center;
+}
+
+.header_profile_logo{
+    margin-top: 17px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 370px;
+}
+
+.err__message{
+    color:#FF3900;
+    font-size: 13px;
+    margin-left: 90px;
+    font-family: Roboto;
+}
+
+.sign_up__err__message{
+    color:#FF3900;
+    font-size: 13px;
+    width: 337px;
+    text-align: center;
+    font-family: Roboto;
+    white-space: nowrap;
+}

@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 </head>
 <body>
-<jsp:include page="header.jsp"/>
+<%@ include file="header.jsp"%>
 <div class="container">
     <div class="reg_form_sign_in">
         <div class="reg_form__items">
@@ -26,11 +26,16 @@
             <form action="${pageContext.request.contextPath}/controller" method="post">
                 <input required name="email" placeholder="<fmt:message key="sign_in_form.email"/>" required
                        pattern="[a-zA-z0-9_.-]{1,40}@[a-zA-z0-9_-]{2,40}\.[a-z]{2,10}" title="Email format is incorrect"/>
-                <input required name="password" id="password" placeholder="<fmt:message key="sign_in_form.password"/>"/>
+                <input required name="password" type="password" placeholder="<fmt:message key="sign_in_form.password"/>"/>
                 <button class="form_btn" type="submit" name="command" value="SIGN_IN">
                     <fmt:message key="sign_in_form.button"/>
                 </button>
             </form>
+        </div>
+        <div class="err__message">
+            <c:if test="${not empty sessionScope.errorMessage}">
+                <fmt:message key="${sessionScope.errorMessage}"/>
+            </c:if>
         </div>
     </div>
 </div>

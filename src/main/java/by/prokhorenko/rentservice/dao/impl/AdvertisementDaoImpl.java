@@ -62,12 +62,12 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
         } catch (SQLException e) {
             entityTransaction.rollback(connection);
             throw new DaoException("Adding advertisement error",e);
-        } catch (Exception e) {
+        } catch (DaoException e) {
             entityTransaction.rollback(connection);
             throw new DaoException("Adding advertisement error",e);
         }finally {
-            entityTransaction.endTransaction(connection);
             closeStatement(statement);
+            entityTransaction.endTransaction(connection);
         }
     }
 
@@ -149,7 +149,6 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
         for(String regex : regexForStatement){
             statement.setString(++index,regex);
         }
-            System.out.println(statement);
         resultSet = statement.executeQuery();
         List<Advertisement> advertisements = new ArrayList<>();
         while(resultSet.next()){

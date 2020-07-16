@@ -2,10 +2,11 @@ package by.prokhorenko.rentservice.controller;
 
 import by.prokhorenko.rentservice.controller.command.Command;
 import by.prokhorenko.rentservice.controller.command.CommandProvider;
+import by.prokhorenko.rentservice.controller.command.impl.JspParameter;
+import by.prokhorenko.rentservice.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +24,6 @@ public class ServletController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOG.debug(request);
         processRequest(request,response);
     }
 
@@ -34,15 +34,21 @@ public class ServletController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
-        Optional<Command> commandOptional = CommandProvider.defineCommand(request.getParameter("command"));
-
+        Optional<Command> commandOptional = CommandProvider.defineCommand(
+                request.getParameter(JspParameter.PARAM_COMMAND));
         Command command = commandOptional.orElseThrow(IllegalArgumentException::new);
-
-        String page = command.execute(request,response);
-        if (page != PagePath.EMPTY_PAGE) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-            dispatcher.forward(request,response);
+        Router router = command.execute(request,response);
+        if(Router.DisPathType.FORWARD.equals(router.getDisPathType())){
+            request.getRequestDispatcher(router.getPage()).forward(request,response);
+        }else{
+            response.sendRedirect(router.getPage());
         }
 
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        ConnectionPool.INSTANCE.destroyPool();
     }
 }

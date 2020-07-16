@@ -1,56 +1,82 @@
 package by.prokhorenko.rentservice.service.user.impl;
 
+import by.prokhorenko.rentservice.controller.command.ResourceBundleErrorMessage;
 import by.prokhorenko.rentservice.dao.UserDao;
-import by.prokhorenko.rentservice.dao.impl.UserDaoImpl;
 import by.prokhorenko.rentservice.entity.user.User;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.DaoFactory;
 import by.prokhorenko.rentservice.service.user.UserService;
+import by.prokhorenko.rentservice.util.MailSender;
 import by.prokhorenko.rentservice.validator.UserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
 
     private static final Logger LOG = LogManager.getLogger();
     private static final UserService INSTANCE = new UserServiceImpl();
-
+    private static final String ACTIVATION_LINK = "http://localhost:8080/RentSetviceProkhorenkoDM_war/controller?" +
+            "command=CONFIRM_REGISTRATION&id=";
+    private static final String ACTIVATION_MESSAGE_TITLE = "Confirmation of registration";
     public static UserService getInstance(){
         return INSTANCE;
     }
 
     private UserServiceImpl(){}
 
-
     @Override
-    public Optional<User> signUp(User user) throws ServiceException {
-        UserValidator userValidator = UserValidator.getInstance();
-        if(!userValidator.userIsCorrectForSignUp(user)) {
-            throw new ServiceException("Data for registration is not correct" + user);
-        }
-            try(UserDao userDao = UserDaoImpl.getInstance()) {
-                    return userDao.add(user);
-            } catch (DaoException | IOException e) {
-                throw new ServiceException("Signing up user error",e);
-            }
+    public User signUp(User user) throws ServiceException {
+       UserDao userDao = DaoFactory.getInstance().getUserDao();
+       MailSender mailSender = new MailSender();
+       try{
+            User signedUpUser = userDao.add(user).orElseThrow(ServiceException::new);
+            mailSender.send(ACTIVATION_MESSAGE_TITLE,ACTIVATION_LINK + user.getId(),user.getEmail());
+            return signedUpUser;
+       } catch (DaoException e) {
+           LOG.debug(e);
+           throw new ServiceException("Signing user up error" + e.getMessage(),e);
+       }
     }
+
+    public Map<String,Boolean> defineUsersIncorrectData(User user) throws ServiceException {
+        UserValidator userValidator = UserValidator.getInstance();
+        String emailIsUnique = "emailIsUnique";
+        String phoneIsUnique = "phoneIsUnique";
+        Map<String, Boolean> validatedUsersData = userValidator.validateDataForSignUp(user);
+        validatedUsersData.put(emailIsUnique,!findUserByEmail(user.getEmail()).isPresent());
+        validatedUsersData.put(phoneIsUnique,!findUserByPhone(user.getPhone()).isPresent());
+        return validatedUsersData;
+    }
+
+
 
     @Override
     public User signIn(String email, String password) throws ServiceException {
         UserValidator userValidator = UserValidator.getInstance();
         DaoFactory daoFactory = DaoFactory.getInstance();
         if(!userValidator.emailIsCorrect(email) || !userValidator.passwordIsCorrect(password)){
-            throw new ServiceException("Email or password is incorrect");
+            throw new ServiceException(ResourceBundleErrorMessage.INVALID_INPUT_VALUES);
         }
         try(UserDao userDao = daoFactory.getUserDao()) {
-            LOG.debug(email,password);
-           User user =  userDao.findByEmailAndPassword(email,password).orElseThrow(ServiceException::new);
-           return user;
+           Optional<User> user = userDao.findByEmailAndPassword(email,password);
+           if(!user.isPresent()){
+               throw new ServiceException(ResourceBundleErrorMessage.EMAIL_OR_PASSWORD_IS_INCORRECT_ERROR_MESSAGE);
+           }
+           User signedInUser = user.get();
+            LOG.debug(signedInUser.isBanned());
+           if(signedInUser.isBanned()){
+               throw new ServiceException(ResourceBundleErrorMessage.ACCOUNT_IS_BLOCKED);
+           }
+           if(!signedInUser.isActivated()){
+               throw new ServiceException(ResourceBundleErrorMessage.ACCOUNT_IS_NOT_ACTIVATED);
+           }
+           return signedInUser;
         } catch (DaoException | IOException e) {
             throw new ServiceException("Signing user in error",e);
         }
@@ -129,4 +155,5 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Activating user error",e);
         }
     }
+
 }

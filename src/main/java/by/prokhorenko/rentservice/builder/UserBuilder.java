@@ -2,6 +2,8 @@ package by.prokhorenko.rentservice.builder;
 
 import by.prokhorenko.rentservice.entity.user.User;
 import by.prokhorenko.rentservice.entity.user.UserRole;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class UserBuilder {
 
@@ -18,9 +20,9 @@ public class UserBuilder {
     public boolean isBanned() {
         return isBanned;
     }
-
-    public UserBuilder buildIsBanned(boolean banned) {
-        isBanned = banned;
+    private static final Logger LOG = LogManager.getLogger();
+    public UserBuilder buildIsBanned(boolean isBanned){
+        this.isBanned = isBanned;
         return this;
     }
 
@@ -91,8 +93,8 @@ public class UserBuilder {
         return isActivated;
     }
 
-    public UserBuilder buildIsActivated(boolean logInToken) {
-        this.isActivated = logInToken;
+    public UserBuilder buildIsActivated(boolean isActivated) {
+        this.isActivated = isActivated;
         return this;
     }
 

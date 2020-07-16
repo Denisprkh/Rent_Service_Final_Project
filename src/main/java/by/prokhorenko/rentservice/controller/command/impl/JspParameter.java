@@ -9,5 +9,5 @@ public class JspParameter {
     public static final String PARAM_LANGUAGE = "language";
     public static final String PARAM_USER = "user";
     public static final String PARAM_ID = "id";
-
+    public static final String PARAM_COMMAND = "command";
 }

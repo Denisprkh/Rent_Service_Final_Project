@@ -12,7 +12,11 @@ public class EntityTransaction {
 
     private static final Logger LOG = LogManager.getLogger();
 
-    public void beginTransaction(ProxyConnection connection, AbstractCommonDao ... daos){
+    EntityTransaction(){
+
+    }
+
+     void beginTransaction(ProxyConnection connection, AbstractCommonDao ... daos){
         try {
             connection.setAutoCommit(false);
             for(AbstractCommonDao dao : daos){
@@ -24,7 +28,7 @@ public class EntityTransaction {
         }
     }
 
-    public void endTransaction(ProxyConnection connection){
+     void endTransaction(ProxyConnection connection){
         try {
             connection.setAutoCommit(true);
             connection.close();
@@ -34,7 +38,7 @@ public class EntityTransaction {
         }
     }
 
-    public void commit(ProxyConnection connection){
+     void commit(ProxyConnection connection){
         try {
             connection.commit();
             LOG.debug("Committing transaction");
@@ -43,7 +47,7 @@ public class EntityTransaction {
         }
     }
 
-    public void rollback(ProxyConnection connection){
+    void rollback(ProxyConnection connection){
         try {
             connection.rollback();
             LOG.debug("Rollback transaction");

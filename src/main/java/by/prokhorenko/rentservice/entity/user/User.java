@@ -24,6 +24,7 @@ public class User implements Serializable {
         this.phone = userBuilder.getPhone();
         this.userRole = userBuilder.getUserRole();
         this.isActivated = userBuilder.getActivated();
+        this.isBanned = userBuilder.isBanned();
     }
 
     public User(String firstName, String lastName, String email, String password, String phone) {

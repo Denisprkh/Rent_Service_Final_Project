@@ -18,18 +18,24 @@
 </head>
 <body>
 <jsp:include page="header.jsp"/>
-<div class="container">
-    <div class="handler">
-        <div class="error_image">
-            <img src="${pageContext.request.contextPath}/img/errorImage.svg">
-        </div>
-        <div class="code_error_text">
-            500
-        </div>
-        <div class="info_error_text">
-            <fmt:message key="error_page_500.info"/>
-        </div>
-    </div>
-</div>
+    <section class="handler">
+        <div class="container">
+            <div class="pgnt__items">
+                <div class="left__item">
+                    <div class="error_image">
+                     <img src="${pageContext.request.contextPath}/img/errorImage.svg">
+                     </div>
+                </div>
+        <div class="right__item">
+            <div class="code_error_text">
+                <fmt:message key="error_page_500.code"/>
+             </div>
+                <div class="info_error_text">
+                <fmt:message key="error_page_500.info"/>
+                  </div>
+             </div>
+                 </div>
+                    </div>
+                    </section>
 </body>
 </html>
