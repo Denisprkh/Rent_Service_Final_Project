@@ -1,20 +1,18 @@
 package by.prokhorenko.rentservice.dao.impl;
 
-import by.prokhorenko.rentservice.builder.FlatBuilder;
-import by.prokhorenko.rentservice.dao.AbstractCommonDao;
-import by.prokhorenko.rentservice.dao.constant.SqlColumnName;
+import by.prokhorenko.rentservice.dao.*;
 import by.prokhorenko.rentservice.dao.constant.SqlQuery;
-import by.prokhorenko.rentservice.dao.FlatAddressDao;
-import by.prokhorenko.rentservice.dao.FlatDao;
-import by.prokhorenko.rentservice.dao.FlatDescriptionDao;
+import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 import by.prokhorenko.rentservice.entity.flat.Flat;
 import by.prokhorenko.rentservice.entity.flat.FlatAddress;
 import by.prokhorenko.rentservice.entity.flat.FlatDescription;
+import by.prokhorenko.rentservice.entity.flat.FlatPhoto;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.factory.DaoFactory;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,35 +34,49 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
 
     @Override
     public Optional<Flat> add(Flat flat) throws DaoException {
-        FlatDescriptionDao descriptionDao = FlatDescriptionDaoImpl.getInstance();
-        FlatAddressDao addressDao = FlatAddressDaoImpl.getInstance();
         EntityTransaction entityTransaction = new EntityTransaction();
         PreparedStatement statement = null;
-     try {
-         entityTransaction.beginTransaction(connection,(AbstractCommonDao)descriptionDao,(AbstractCommonDao)addressDao);
-         FlatDescription flatDescription = descriptionDao.add(flat.getFlatDescription()).get();//FIXME
-         FlatAddress flatAddress = addressDao.add(flat.getFlatAddress()).get();//FIXME
+     try(FlatAddressDao addressDao = DaoFactory.getInstance().getFlatAddressDao();
+     FlatDescriptionDao descriptionDao = DaoFactory.getInstance().getFlatDescriptionDao();
+     FlatPhotoDao flatPhotoDao = DaoFactory.getInstance().getFlatPhotoDao()) {
+         entityTransaction.setConnectionToAllDaos(connection,(AbstractCommonDao)descriptionDao,
+                 (AbstractCommonDao)addressDao,(AbstractCommonDao)flatPhotoDao);
+         entityTransaction.beginTransaction(connection);
+         FlatDescription flatDescription = descriptionDao.add(flat.getFlatDescription()).orElseThrow(DaoException::new);
+         FlatAddress flatAddress = addressDao.add(flat.getFlatAddress()).orElseThrow(DaoException::new);
          statement = connection.prepareStatement(SqlQuery.ADD_FLAT, Statement.RETURN_GENERATED_KEYS);
          statement.setInt(1,flatDescription.getId());
          statement.setInt(2,flatAddress.getId());
-         int id = executeUpdateAndGetGeneratedId(statement);
-         flat.setId(id);
+         int flatsId = executeUpdateAndGetGeneratedId(statement);
+         List<FlatPhoto> flatPhotos = setFlatsIdToPhotos(flat.getFlatPhotos(),flatsId);
+         flat.setId(flatsId);
+         LOG.debug("Before adding photos");
+         if(!flatPhotoDao.addAllPhotos(flatPhotos)){
+             throw new DaoException("Flats photos have not been added");
+         }
          entityTransaction.commit(connection);
+         LOG.debug("flat added");
          return Optional.of(flat);
-     } catch (SQLException e) {
-         entityTransaction.rollback(connection);
-         throw new DaoException("Adding flat error",e);
-     } catch (Exception e) {
+     } catch (SQLException | IOException e) {
          entityTransaction.rollback(connection);
          throw new DaoException("Adding flat error",e);
      }finally {
+            closeStatement(statement);
              entityTransaction.endTransaction(connection);
-         closeStatement(statement);
      }
     }
 
+    private List<FlatPhoto> setFlatsIdToPhotos(List<FlatPhoto> flatPhotos, int flatsId){
+        List<FlatPhoto> photos= new ArrayList<>();
+        for(FlatPhoto photo : flatPhotos){
+            photo.setFlatsId(flatsId);
+            photos.add(photo);
+        }
+        return flatPhotos;
+    }
+
     @Override
-    public List<Flat> findAll() throws DaoException {
+    public List<Flat> findAll(int start, int total) throws DaoException {
         try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_FLATS);
             ResultSet resultSet = statement.executeQuery()) {
             List<Flat> allFlats = new ArrayList<>();
@@ -80,14 +92,18 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
     @Override
     public Optional<Flat> findById(int id) throws DaoException {
         ResultSet resultSet = null;
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_BY_ID)){
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_BY_ID);
+         FlatPhotoDao flatPhotoDao = DaoFactory.getInstance().getFlatPhotoDao()){
+            List<FlatPhoto> flatPhotos = flatPhotoDao.findAllPhotosByFlatsId(id);
             statement.setInt(1,id);
             resultSet = statement.executeQuery();
             if(resultSet.next()){
-                return Optional.of(buildFlatFromResultSet(resultSet));
+                Flat flat = buildFlatFromResultSet(resultSet);
+                flat.setFlatPhotos(flatPhotos);
+                return Optional.of(flat);
             }
             return Optional.empty();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             throw new DaoException("Finding flat by id error",e);
         }finally {
             closeResultSet(resultSet);
@@ -103,6 +119,24 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
         } catch (SQLException e) {
             throw new DaoException("Updating flatAddress error",e);
         }
+    }
+
+    private List<Advertisement> buildWithPhotos(List<Advertisement> advertisements) throws DaoException {
+        try(FlatPhotoDao flatPhotoDao = DaoFactory.getInstance().getFlatPhotoDao()) {
+            for(Advertisement advertisement : advertisements){
+                List<FlatPhoto> flatPhotos = flatPhotoDao.findAllPhotosByFlatsId(advertisement.getFlat().getId());
+                Flat flat = advertisement.getFlat();
+                flat.setFlatPhotos(flatPhotos);
+            }
+            return advertisements;
+        } catch (IOException | DaoException e) {
+            throw new DaoException("Setting photos to flat error",e);
+        }
+    }
+
+    @Override
+    public int findQuantity() throws DaoException {
+        return 0;
     }
 
     @Override

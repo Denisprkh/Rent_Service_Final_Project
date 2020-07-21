@@ -7,7 +7,11 @@ public enum  CommandType {
     CONFIRM_REGISTRATION(new ConfirmRegistrationCommand()),
     CHANGE_LANGUAGE(new ChangeLanguageCommand()),
     SIGN_IN(new SignInCommand()),
-    LOG_OUT(new LogOutCommand());
+    LOG_OUT(new LogOutCommand()),
+    FIND_ALL_ADVERTISEMENTS(new FindAllAdvertisementsCommand()),
+    CREATE_NEW_ADVERTISEMENT(new AddNewAdvertisementCommand()),
+    PROFILE_PAGE(new ProfileRedirectCommand()),
+    TEST(new TestCommand());
 
     private Command command;
 

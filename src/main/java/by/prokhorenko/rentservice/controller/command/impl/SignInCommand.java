@@ -3,8 +3,6 @@ package by.prokhorenko.rentservice.controller.command.impl;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
-import by.prokhorenko.rentservice.controller.command.ResourceBundleErrorMessage;
-import by.prokhorenko.rentservice.controller.command.util.CommandUtil;
 import by.prokhorenko.rentservice.entity.user.User;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
@@ -30,15 +28,16 @@ public class SignInCommand implements Command {
         HttpSession session = request.getSession();
         router.setRedirect();
         try {
-            String email = request.getParameter(JspParameter.PARAM_EMAIL);
-            String password = request.getParameter(JspParameter.PARAM_PASSWORD);
+            String email = request.getParameter(RequestParameter.USER_EMAIL);
+            String password = request.getParameter(RequestParameter.USER_PASSWORD);
             User user = userService.signIn(email,password);
-                session.setAttribute(Attribute.USER,user);
-                session.setAttribute(Attribute.USER_ROLE,user.getUserRole());
-                router.setPage(PagePath.INDEX);
+            session.setAttribute(Attribute.USER,user);
+            session.setAttribute(Attribute.USER_ROLE,user.getUserRole());
+            router.setPage(PagePath.INDEX);
+            session.removeAttribute(Attribute.SIGN_IN_ERROR_MESSAGE);
         } catch (ServiceException e) {
             LOG.error(e);
-            request.getSession().setAttribute(Attribute.ERROR_MESSAGE,e.getMessage());
+            request.getSession().setAttribute(Attribute.SIGN_IN_ERROR_MESSAGE,e.getMessage());
             router.setPage(PagePath.SIGN_IN);
         }
         return router;

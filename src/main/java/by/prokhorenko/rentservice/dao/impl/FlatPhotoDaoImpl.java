@@ -6,6 +6,10 @@ import by.prokhorenko.rentservice.dao.FlatPhotoDao;
 import by.prokhorenko.rentservice.entity.flat.FlatPhoto;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,6 +26,7 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
         this.connection = ConnectionPool.INSTANCE.getConnection();
     }
 
+    private static final Logger LOG = LogManager.getLogger();
     public static FlatPhotoDao getInstance(){
         return INSTANCE;
     }
@@ -45,6 +50,15 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
     }
 
     @Override
+    public boolean addAllPhotos(List<FlatPhoto> flatPhotos) throws DaoException {
+        boolean photosAreAdded = false;
+        for(FlatPhoto flatPhoto : flatPhotos){
+            photosAreAdded = add(flatPhoto).isPresent();
+        }
+        return photosAreAdded;
+    }
+
+    @Override
     public Optional<FlatPhoto> add(FlatPhoto photo) throws DaoException {
         try(PreparedStatement statement = connection.prepareStatement(SqlQuery.ADD_FLATS_PHOTO,
                 Statement.RETURN_GENERATED_KEYS)) {
@@ -52,14 +66,17 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
             statement.setBlob(2,photo.getFlatPhotoData());
             int id = executeUpdateAndGetGeneratedId(statement);
             photo.setId(id);
+            LOG.debug("photo was added");
             return Optional.of(photo);
         } catch (SQLException e) {
             throw new DaoException("Adding flats photo error",e);
         }
     }
 
+
+
     @Override
-    public List<FlatPhoto> findAll() throws DaoException {
+    public List<FlatPhoto> findAll(int start, int total) throws DaoException {
         try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_FLAT_PHOTO);
             ResultSet resultSet = statement.executeQuery()){
             List<FlatPhoto> allFlatPhotos = new ArrayList<>();
@@ -92,6 +109,11 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
     @Override
     public Optional<FlatPhoto> update(FlatPhoto flatPhoto) throws DaoException {
         throw new UnsupportedOperationException("Updating flats photo operation is not available");
+    }
+
+    @Override
+    public int findQuantity() throws DaoException {
+        return 0;
     }
 
     @Override

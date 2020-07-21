@@ -4,21 +4,17 @@ import by.prokhorenko.rentservice.builder.UserBuilder;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
-import by.prokhorenko.rentservice.controller.command.ResourceBundleErrorMessage;
+import by.prokhorenko.rentservice.controller.command.ResourceBundleErrorMessageKey;
 import by.prokhorenko.rentservice.entity.user.User;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.user.UserService;
-import by.prokhorenko.rentservice.service.user.impl.UserServiceImpl;
-import by.prokhorenko.rentservice.util.MailSender;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.HttpConstraintElement;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.*;
 import java.util.Map;
 import java.util.Optional;
 
@@ -42,6 +38,7 @@ public class SignUpCommand implements Command {
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         Router router = new Router();
         router.setRedirect();
+        HttpSession session = request.getSession();
         try {
             User user = buildUserFromRequest(request);
             Map<String,Boolean> usersDataValidations = userService.defineUsersIncorrectData(user);
@@ -49,6 +46,7 @@ public class SignUpCommand implements Command {
             if(!usersDataValidations.containsValue(Boolean.FALSE)){
                 userService.signUp(user);
                 router.setPage(PagePath.ACTIVATION_INFO);
+                session.removeAttribute(Attribute.SIGN_UP_ERROR_MESSAGE);
             }else{
                defineErrorMessageFromValidations(request,usersDataValidations);
                router.setPage(PagePath.SIGN_UP);
@@ -73,37 +71,37 @@ public class SignUpCommand implements Command {
         HttpSession session = request.getSession();
         String falseKey = defineFalseKey(usersDataValidations);
         switch (falseKey){
-            case EMAIL: session.setAttribute(Attribute.ERROR_MESSAGE,
-                    ResourceBundleErrorMessage.EMAIL_INCORRECT_ERROR_MESSAGE);
+            case EMAIL: session.setAttribute(Attribute.SIGN_UP_ERROR_MESSAGE,
+                    ResourceBundleErrorMessageKey.EMAIL_INCORRECT_ERROR_MESSAGE);
                 break;
-            case FIRST_NAME: session.setAttribute(Attribute.ERROR_MESSAGE,
-                    ResourceBundleErrorMessage.FIRST_NAME_INCORRECT_ERROR_MESSAGE);
+            case FIRST_NAME: session.setAttribute(Attribute.SIGN_UP_ERROR_MESSAGE,
+                    ResourceBundleErrorMessageKey.FIRST_NAME_INCORRECT_ERROR_MESSAGE);
                 break;
-            case LAST_NAME: session.setAttribute(Attribute.ERROR_MESSAGE,
-                    ResourceBundleErrorMessage.LAST_NAME_INCORRECT_ERROR_MESSAGE);
+            case LAST_NAME: session.setAttribute(Attribute.SIGN_UP_ERROR_MESSAGE,
+                    ResourceBundleErrorMessageKey.LAST_NAME_INCORRECT_ERROR_MESSAGE);
                 break;
-            case PASSWORD: session.setAttribute(Attribute.ERROR_MESSAGE,
-                    ResourceBundleErrorMessage.PASSWORD_INCORRECT_ERROR_MESSAGE);
+            case PASSWORD: session.setAttribute(Attribute.SIGN_UP_ERROR_MESSAGE,
+                    ResourceBundleErrorMessageKey.PASSWORD_INCORRECT_ERROR_MESSAGE);
                 break;
-            case PHONE_NUMBER: session.setAttribute(Attribute.ERROR_MESSAGE,
-                    ResourceBundleErrorMessage.PHONE_INCORRECT_ERROR_MESSAGE);
+            case PHONE_NUMBER: session.setAttribute(Attribute.SIGN_UP_ERROR_MESSAGE,
+                    ResourceBundleErrorMessageKey.PHONE_INCORRECT_ERROR_MESSAGE);
                 break;
-            case EMAIL_IS_UNIQUE: session.setAttribute(Attribute.ERROR_MESSAGE,
-                    ResourceBundleErrorMessage.EMAIL_IS_NOT_UNIQUE_ERROR_MESSAGE);
+            case EMAIL_IS_UNIQUE: session.setAttribute(Attribute.SIGN_UP_ERROR_MESSAGE,
+                    ResourceBundleErrorMessageKey.EMAIL_IS_NOT_UNIQUE_ERROR_MESSAGE);
                 break;
-            case PHONE_IS_UNIQUE: session.setAttribute(Attribute.ERROR_MESSAGE,
-                    ResourceBundleErrorMessage.PHONE_IS_NOT_UNIQUE_ERROR_MESSAGE);
+            case PHONE_IS_UNIQUE: session.setAttribute(Attribute.SIGN_UP_ERROR_MESSAGE,
+                    ResourceBundleErrorMessageKey.PHONE_IS_NOT_UNIQUE_ERROR_MESSAGE);
                 break;
         }
     }
 
     private User buildUserFromRequest(HttpServletRequest request){
         User user = new UserBuilder()
-                .buildFirstName(request.getParameter(JspParameter.PARAM_FIRST_NAME))
-                .buildLastName(request.getParameter(JspParameter.PARAM_LAST_NAME))
-                .buildEmail(request.getParameter(JspParameter.PARAM_EMAIL))
-                .buildPassword(request.getParameter(JspParameter.PARAM_PASSWORD))
-                .buildPhone(request.getParameter(JspParameter.PARAM_PHONE))
+                .buildFirstName(request.getParameter(RequestParameter.USER_FIRST_NAME))
+                .buildLastName(request.getParameter(RequestParameter.USER_LAST_NAME))
+                .buildEmail(request.getParameter(RequestParameter.USER_EMAIL))
+                .buildPassword(request.getParameter(RequestParameter.USER_PASSWORD))
+                .buildPhone(request.getParameter(RequestParameter.USER_PHONE))
                 .buildUser();
         return user;
     }

@@ -4,6 +4,7 @@ import by.prokhorenko.rentservice.builder.FlatBuilder;
 import by.prokhorenko.rentservice.entity.user.User;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Flat implements Serializable {
 
@@ -11,12 +12,14 @@ public class Flat implements Serializable {
     private boolean isFree;
     private FlatDescription flatDescription;
     private FlatAddress flatAddress;
+    List<FlatPhoto> flatPhotos;
 
     public Flat(FlatBuilder flatBuilder){
         this.id = flatBuilder.getId();
         this.isFree = flatBuilder.isFree();
         this.flatDescription = flatBuilder.getFlatDescription();
         this.flatAddress = flatBuilder.getFlatAddress();
+        this.flatPhotos = flatBuilder.getFlatPhotos();
     }
 
     public Flat(){
@@ -55,6 +58,14 @@ public class Flat implements Serializable {
         this.flatAddress = flatAddress;
     }
 
+    public List<FlatPhoto> getFlatPhotos() {
+        return flatPhotos;
+    }
+
+    public void setFlatPhotos(List<FlatPhoto> flatPhotos) {
+        this.flatPhotos = flatPhotos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -66,7 +77,8 @@ public class Flat implements Serializable {
         if (isFree != flat.isFree) return false;
         if (flatDescription != null ? !flatDescription.equals(flat.flatDescription) : flat.flatDescription != null)
             return false;
-        return flatAddress != null ? flatAddress.equals(flat.flatAddress) : flat.flatAddress == null;
+        if (flatAddress != null ? !flatAddress.equals(flat.flatAddress) : flat.flatAddress != null) return false;
+        return flatPhotos != null ? flatPhotos.equals(flat.flatPhotos) : flat.flatPhotos == null;
     }
 
     @Override
@@ -75,6 +87,7 @@ public class Flat implements Serializable {
         result = 31 * result + (isFree ? 1 : 0);
         result = 31 * result + (flatDescription != null ? flatDescription.hashCode() : 0);
         result = 31 * result + (flatAddress != null ? flatAddress.hashCode() : 0);
+        result = 31 * result + (flatPhotos != null ? flatPhotos.hashCode() : 0);
         return result;
     }
 
@@ -85,6 +98,7 @@ public class Flat implements Serializable {
         sb.append(", isFree=").append(isFree);
         sb.append(", flatDescription=").append(flatDescription);
         sb.append(", flatAddress=").append(flatAddress);
+        sb.append(", flatPhotos=").append(flatPhotos);
         sb.append('}');
         return sb.toString();
     }

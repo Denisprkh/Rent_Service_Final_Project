@@ -47,7 +47,7 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
     }
 
     @Override
-    public List<Request> findAll() throws DaoException {
+    public List<Request> findAll(int start, int total) throws DaoException {
         try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_REQUESTS);
         ResultSet resultSet = statement.executeQuery()) {
             List<Request> allRequests = new ArrayList<>();
@@ -88,6 +88,11 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
         } catch (SQLException e) {
             throw new DaoException("Updating request error",e);
         }
+    }
+
+    @Override
+    public int findQuantity() throws DaoException {
+        return 0;
     }
 
 

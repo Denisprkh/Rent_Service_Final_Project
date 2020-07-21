@@ -8,7 +8,8 @@ import java.util.Optional;
 
 public interface CommonDao<T> extends Closeable, AutoCloseable{
     Optional<T> add(T t) throws DaoException;
-    List<T> findAll() throws DaoException;
+    List<T> findAll(int start, int total) throws DaoException;
     Optional<T> findById(int id) throws DaoException;
     Optional<T> update(T t) throws DaoException;
+    int findQuantity() throws DaoException;
 }

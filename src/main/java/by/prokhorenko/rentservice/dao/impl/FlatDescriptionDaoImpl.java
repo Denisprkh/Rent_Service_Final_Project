@@ -22,145 +22,94 @@ public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDes
 
     private static final FlatDescriptionDao INSTANCE = new FlatDescriptionDaoImpl();
 
-    private FlatDescriptionDaoImpl(){
+    private FlatDescriptionDaoImpl() {
         this.connection = ConnectionPool.INSTANCE.getConnection();
     }
 
-    public static FlatDescriptionDao getInstance(){
+    public static FlatDescriptionDao getInstance() {
         return INSTANCE;
     }
 
     @Override
     public Optional<FlatDescription> add(FlatDescription flatDescription) throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.ADD_FLAT_DESCRIPTION,
-                Statement.RETURN_GENERATED_KEYS)){
-            statement.setInt(1,flatDescription.getRooms());
-            statement.setFloat(2,flatDescription.getLivingArea());
-            statement.setBoolean(3,flatDescription.isHasFurniture());
-            statement.setBoolean(4,flatDescription.isHasHomeAppliances());
-            statement.setBoolean(5,flatDescription.isHasTheInternet());
-            statement.setBoolean(6,flatDescription.isPossibleWithChild());
-            statement.setBoolean(7,flatDescription.isPossibleWithPets());
-            statement.setString(8,flatDescription.getRepairType().getRepairType());
-            statement.setString(9,flatDescription.getUsersDescription());
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.ADD_FLAT_DESCRIPTION,
+                Statement.RETURN_GENERATED_KEYS)) {
+            statement.setInt(1, flatDescription.getRooms());
+            statement.setFloat(2, flatDescription.getLivingArea());
+            statement.setBoolean(3, flatDescription.isHasFurniture());
+            statement.setBoolean(4, flatDescription.isHasHomeAppliances());
+            statement.setBoolean(5, flatDescription.isHasTheInternet());
+            statement.setBoolean(6, flatDescription.isPossibleWithChild());
+            statement.setBoolean(7, flatDescription.isPossibleWithPets());
+            statement.setString(8, flatDescription.getRepairType().getRepairType());
+            statement.setString(9, flatDescription.getUsersDescription());
             int id = executeUpdateAndGetGeneratedId(statement);
             flatDescription.setId(id);
             return Optional.of(flatDescription);
         } catch (SQLException e) {
-            throw new DaoException("Adding flats description error",e);
+            throw new DaoException("Adding flats description error", e);
         }
     }
 
     @Override
-    public List<FlatDescription> findAll() throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_FLAT_DESCRIPTIONS);
-            ResultSet resultSet = statement.executeQuery()) {
+    public List<FlatDescription> findAll(int start, int total) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_FLAT_DESCRIPTIONS);
+             ResultSet resultSet = statement.executeQuery()) {
             List<FlatDescription> flatDescriptions = new ArrayList<>();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 flatDescriptions.add(buildFlatDescriptionFromResultSet(resultSet));
             }
             return flatDescriptions;
         } catch (SQLException e) {
-            throw new DaoException("Finding all flats descriptions error",e);
+            throw new DaoException("Finding all flats descriptions error", e);
         }
     }
 
     @Override
     public Optional<FlatDescription> findById(int id) throws DaoException {
         ResultSet resultSet = null;
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_DESCRIPTION_BY_ID)){
-            statement.setInt(1,id);
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_DESCRIPTION_BY_ID)) {
+            statement.setInt(1, id);
             System.out.println(statement);
             resultSet = statement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 return Optional.of(buildFlatDescriptionFromResultSet(resultSet));
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new DaoException("Finding flatDescription by id error",e);
-        }finally {
+            throw new DaoException("Finding flatDescription by id error", e);
+        } finally {
             closeResultSet(resultSet);
         }
     }
 
     @Override
     public Optional<FlatDescription> update(FlatDescription flatDescription) throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_FLAT_DESCRIPTION_BY_ID)) {
-            statement.setInt(1,flatDescription.getRooms());
-            statement.setFloat(2,flatDescription.getLivingArea());
-            statement.setBoolean(3,flatDescription.isHasFurniture());
-            statement.setBoolean(4,flatDescription.isHasHomeAppliances());
-            statement.setBoolean(5,flatDescription.isHasTheInternet());
-            statement.setBoolean(6,flatDescription.isPossibleWithChild());
-            statement.setBoolean(7,flatDescription.isPossibleWithPets());
-            statement.setString(8,flatDescription.getRepairType().getRepairType());
-            statement.setString(9,flatDescription.getUsersDescription());
-            statement.setInt(10,flatDescription.getId());
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_FLAT_DESCRIPTION_BY_ID)) {
+            statement.setInt(1, flatDescription.getRooms());
+            statement.setFloat(2, flatDescription.getLivingArea());
+            statement.setBoolean(3, flatDescription.isHasFurniture());
+            statement.setBoolean(4, flatDescription.isHasHomeAppliances());
+            statement.setBoolean(5, flatDescription.isHasTheInternet());
+            statement.setBoolean(6, flatDescription.isPossibleWithChild());
+            statement.setBoolean(7, flatDescription.isPossibleWithPets());
+            statement.setString(8, flatDescription.getRepairType().getRepairType());
+            statement.setString(9, flatDescription.getUsersDescription());
+            statement.setInt(10, flatDescription.getId());
             updateEntity(statement);
             return findById(flatDescription.getId());
         } catch (SQLException e) {
-            throw new DaoException("Updating flatAddress error",e);
+            throw new DaoException("Updating flatAddress error", e);
         }
     }
 
-
+    @Override
+    public int findQuantity() throws DaoException {
+        return 0;
+    }
 
     @Override
     public void close() {
         closeConnection(this.connection);
     }
-
-//    @Override
-//    public List<FlatDescription> findByRoomsAmount(int roomsAmount) throws DaoException {
-//        ResultSet resultSet = null;
-//        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_DESCRIPTION_BY_ROOMS_AMOUNT)){
-//            statement.setInt(1,roomsAmount);
-//            resultSet = statement.executeQuery();
-//            List<FlatDescription> flatDescriptions = new ArrayList<>();
-//            while (resultSet.next()){
-//                flatDescriptions.add(buildFlatDescriptionFromResultSet(resultSet));
-//            }
-//            return flatDescriptions;
-//        } catch (SQLException e) {
-//            throw new DaoException("Finding flatDescription by rooms amount error",e);
-//        }finally {
-//            closeResultSet(resultSet);
-//        }
-//    }
-//
-//    @Override
-//    public List<FlatDescription> findByLivingArea(float livingArea) throws DaoException {
-//        ResultSet resultSet = null;
-//        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_DESCRIPTION_BY_LIVING_AREA)){
-//            statement.setFloat(1,livingArea);
-//            resultSet = statement.executeQuery();
-//            List<FlatDescription> flatDescriptions = new ArrayList<>();
-//            while(resultSet.next()){
-//                flatDescriptions.add(buildFlatDescriptionFromResultSet(resultSet));
-//            }
-//            return flatDescriptions;
-//        } catch (SQLException e) {
-//            throw new DaoException("Finding flatDescription by living area error",e);
-//        }finally {
-//            closeResultSet(resultSet);
-//        }
-//    }
-//
-//    @Override
-//    public List<FlatDescription> findByRepairType(String repai) throws DaoException {
-//        ResultSet resultSet = null;
-//        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_DESCRIPTION_BY_REPAIR_TYPE)){
-//            statement.setString(1,repai);
-//            resultSet = statement.executeQuery();
-//            List<FlatDescription> flatDescriptions = new ArrayList<>();
-//            while (resultSet.next()){
-//                flatDescriptions.add(buildFlatDescriptionFromResultSet(resultSet));
-//            }
-//            return flatDescriptions;
-//        } catch (SQLException e) {
-//            throw new DaoException("Finding flatDescription by living area error",e);
-//        }finally {
-//            closeResultSet(resultSet);
-//        }
-//    }
 }

@@ -6,13 +6,14 @@ import by.prokhorenko.rentservice.dao.constant.SqlQuery;
 import by.prokhorenko.rentservice.dao.AdvertisementDao;
 import by.prokhorenko.rentservice.dao.FlatDao;
 import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
-import by.prokhorenko.rentservice.entity.advertisement.UserChoiceHandler;
+import by.prokhorenko.rentservice.entity.advertisement.UserAdvertisementDataHandler;
 import by.prokhorenko.rentservice.entity.flat.Flat;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.factory.DaoFactory;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,14 +38,16 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
 
     @Override
     public Optional<Advertisement> add(Advertisement advertisement) throws DaoException {
+        LOG.debug(advertisement);
         DaoFactory daoFactory = DaoFactory.getInstance();
         FlatDao flatDao = daoFactory.getFlatDao();
         EntityTransaction entityTransaction = new EntityTransaction();
         PreparedStatement statement = null;
         try {
-            entityTransaction.beginTransaction(connection,(AbstractCommonDao)flatDao);
+            entityTransaction.setConnectionToAllDaos(connection,(AbstractCommonDao) flatDao);
             Optional<Flat> flat = flatDao.add(advertisement.getFlat());
             int flatsId = flat.orElseThrow(DaoException::new).getId();
+            entityTransaction.beginTransaction(connection);
             int authorsId = advertisement.getAuthor().getId();
             long timeInMillis = advertisement.getDateOfCreation().atZone(ZoneId.systemDefault()).toInstant().
                     toEpochMilli();
@@ -58,6 +61,7 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
             int advertisementsId = executeUpdateAndGetGeneratedId(statement);
             advertisement.setId(advertisementsId);
             entityTransaction.commit(connection);
+            LOG.debug("adv added");
             return Optional.of(advertisement);
         } catch (SQLException e) {
             entityTransaction.rollback(connection);
@@ -72,16 +76,22 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
     }
 
     @Override
-    public List<Advertisement> findAll() throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_ADVERTISEMENTS);
-        ResultSet resultSet = statement.executeQuery()) {
+    public List<Advertisement> findAll(int start, int total) throws DaoException {
+        ResultSet resultSet = null;
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_ADVERTISEMENTS)){
+            statement.setInt(1,start);
+            statement.setInt(2,total);
+            resultSet = statement.executeQuery();
             List<Advertisement> allAdvertisements = new ArrayList<>();
             while(resultSet.next()){
                 allAdvertisements.add(buildAdvertisementFromResultSet(resultSet));
             }
+
             return allAdvertisements;
         } catch (SQLException e) {
             throw new DaoException("Finding all advertisements error",e);
+        }finally {
+            closeResultSet(resultSet);
         }
     }
 
@@ -118,6 +128,20 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
     }
 
     @Override
+    public int findQuantity() throws DaoException {
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ADVERTISEMENT_QUANTITY);
+        ResultSet resultSet = statement.executeQuery()){
+            int advertisementsQuantity = 0;
+            if(resultSet.next()){
+                advertisementsQuantity = resultSet.getInt(1);
+            }
+            return advertisementsQuantity;
+        } catch (SQLException e) {
+            throw new DaoException("Finding advertisements quantity error",e);
+        }
+    }
+
+    @Override
     public void close() {
         closeConnection(this.connection);
     }
@@ -140,11 +164,12 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
         }
     }
 
+
     @Override
-    public List<Advertisement> findAdvertisementsByUsersChoice(UserChoiceHandler userChoiceHandler) throws DaoException {
+    public List<Advertisement> findAdvertisementsByUsersChoice(UserAdvertisementDataHandler userAdvertisementDataHandler) throws DaoException {
         ResultSet resultSet = null;
         try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ADVERTISEMENT_BY_USERS_CHOICE)) {
-        List<String> regexForStatement = extractRegexForFilterFromUsersChoice(userChoiceHandler);
+        List<String> regexForStatement = extractRegexForFilterFromUsersChoice(userAdvertisementDataHandler);
         int index = 0;
         for(String regex : regexForStatement){
             statement.setString(++index,regex);
@@ -162,33 +187,34 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
         }
     }
 
-    private List<String> extractRegexForFilterFromUsersChoice(UserChoiceHandler userChoiceHandler){
-        String cityRegex = userChoiceHandler.getCity() != null ? userChoiceHandler.getCity() :
-                USER_CHOICE_DEFAULT_REGEX;
-        String districtRegex = userChoiceHandler.getDistrict() != null ? userChoiceHandler.getDistrict() :
-                USER_CHOICE_DEFAULT_REGEX;
-        String streetRegex = userChoiceHandler.getStreet() != null ? userChoiceHandler.getStreet() :
-                USER_CHOICE_DEFAULT_REGEX;
-        String roomsRegex = userChoiceHandler.getRooms() == 0 ? USER_CHOICE_DEFAULT_REGEX :
-                String.valueOf(userChoiceHandler.getRooms());
-        String livingAreaRegex = userChoiceHandler.getLivingArea() == 0.0 ? USER_CHOICE_DEFAULT_REGEX :
-                String.valueOf(userChoiceHandler.getLivingArea());
-        String  repairTypeRegex = userChoiceHandler.getRepairType() != null ?
-                userChoiceHandler.getRepairType().getRepairType() : USER_CHOICE_DEFAULT_REGEX;
-        String hasFurnitureRegex = !userChoiceHandler.isHasFurniture() ? USER_CHOICE_DEFAULT_REGEX :
-                String.valueOf(1);
-        String hasHomeAppliancesRegex = !userChoiceHandler.isHasHomeAppliances() ? USER_CHOICE_DEFAULT_REGEX :
-                String.valueOf(1);
-        String possibleWithPetsRegex = !userChoiceHandler.isPossibleWithPets() ? USER_CHOICE_DEFAULT_REGEX :
-                String.valueOf(1);
-        String possibleWithChildRegex = !userChoiceHandler.isPossibleWithChild() ? USER_CHOICE_DEFAULT_REGEX :
-                String.valueOf(1);
-        String priceRegex = userChoiceHandler.getPrice() != null ?  userChoiceHandler.getPrice().toString():
-                USER_CHOICE_DEFAULT_REGEX  ;
-        List<String> regexForStatement = List.of(cityRegex,districtRegex,streetRegex,roomsRegex,priceRegex,
-                livingAreaRegex,repairTypeRegex,hasFurnitureRegex,hasHomeAppliancesRegex,possibleWithChildRegex,
-                possibleWithPetsRegex);
-        return regexForStatement;
+    private List<String> extractRegexForFilterFromUsersChoice(UserAdvertisementDataHandler userAdvertisementDataHandler){
+//        String cityRegex = userAdvertisementDataHandler.getCity() != null ? userAdvertisementDataHandler.getCity() :
+//                USER_CHOICE_DEFAULT_REGEX;
+//        String districtRegex = userAdvertisementDataHandler.getDistrict() != null ? userAdvertisementDataHandler.getDistrict() :
+//                USER_CHOICE_DEFAULT_REGEX;
+//        String streetRegex = userAdvertisementDataHandler.getStreet() != null ? userAdvertisementDataHandler.getStreet() :
+//                USER_CHOICE_DEFAULT_REGEX;
+//        String roomsRegex = userAdvertisementDataHandler.getRooms() == 0 ? USER_CHOICE_DEFAULT_REGEX :
+//                String.valueOf(userAdvertisementDataHandler.getRooms());
+//        String livingAreaRegex = userAdvertisementDataHandler.getLivingArea() == 0.0 ? USER_CHOICE_DEFAULT_REGEX :
+//                String.valueOf(userAdvertisementDataHandler.getLivingArea());
+//        String  repairTypeRegex = userAdvertisementDataHandler.getRepairType() != null ?
+//                userAdvertisementDataHandler.getRepairType().getRepairType() : USER_CHOICE_DEFAULT_REGEX;
+//        String hasFurnitureRegex = !userAdvertisementDataHandler.isHasFurniture() ? USER_CHOICE_DEFAULT_REGEX :
+//                String.valueOf(1);
+//        String hasHomeAppliancesRegex = !userAdvertisementDataHandler.isHasHomeAppliances() ? USER_CHOICE_DEFAULT_REGEX :
+//                String.valueOf(1);
+//        String possibleWithPetsRegex = !userAdvertisementDataHandler.isPossibleWithPets() ? USER_CHOICE_DEFAULT_REGEX :
+//                String.valueOf(1);
+//        String possibleWithChildRegex = !userAdvertisementDataHandler.isPossibleWithChild() ? USER_CHOICE_DEFAULT_REGEX :
+//                String.valueOf(1);
+//        String priceRegex = userAdvertisementDataHandler.getPrice() != null ?  userAdvertisementDataHandler.getPrice().toString():
+//                USER_CHOICE_DEFAULT_REGEX  ;
+//        List<String> regexForStatement = List.of(cityRegex,districtRegex,streetRegex,roomsRegex,priceRegex,
+//                livingAreaRegex,repairTypeRegex,hasFurnitureRegex,hasHomeAppliancesRegex,possibleWithChildRegex,
+//                possibleWithPetsRegex);
+//        return regexForStatement;
+        return null;
     }
 
 }

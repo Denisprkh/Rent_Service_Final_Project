@@ -44,7 +44,7 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
     }
 
     @Override
-    public List<FlatAddress> findAll() throws DaoException {
+    public List<FlatAddress> findAll(int start, int total) throws DaoException {
         try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_FLAT_ADDRESSES);
             ResultSet resultSet = statement.executeQuery()) {
             List<FlatAddress> flatAddresses = new ArrayList<>();
@@ -90,66 +90,13 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
     }
 
     @Override
+    public int findQuantity() throws DaoException {
+        return 0;
+    }
+
+    @Override
     public void close() {
         closeConnection(this.connection);
     }
 
-//    @Override
-//    public List<FlatAddress> findByFullData(String city, String district, String street, String house)
-//            throws DaoException {
-//        ResultSet resultSet = null;
-//        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_ADDRESS_BY_FULL_DATA)) {
-//            statement.setString(1,city);
-//            statement.setString(2,district);
-//            statement.setString(3,street);
-//            statement.setString(4,house);
-//            resultSet = statement.executeQuery();
-//            List<FlatAddress> flatAddresses = new ArrayList<>();
-//            while(resultSet.next()){
-//                flatAddresses.add(buildFlatAddressFromResultSet(resultSet));
-//            }
-//            return flatAddresses;
-//        } catch (SQLException e) {
-//            throw new DaoException("Finding flatAddress by full data error",e);
-//        }finally {
-//            closeResultSet(resultSet);
-//        }
-//    }
-//
-//    @Override
-//    public List<FlatAddress> findByCity(String city) throws DaoException {
-//        ResultSet resultSet = null;
-//        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_ADDRESS_BY_FULL_DATA)) {
-//            statement.setString(1,city);
-//            resultSet = statement.executeQuery();
-//            List<FlatAddress> flatAddresses = new ArrayList<>();
-//            while(resultSet.next()){
-//                flatAddresses.add(buildFlatAddressFromResultSet(resultSet));
-//            }
-//            return flatAddresses;
-//        } catch (SQLException e) {
-//            throw new DaoException("Finding flatAddress by city error",e);
-//        }finally {
-//            closeResultSet(resultSet);
-//        }
-//    }
-//
-//    @Override
-//    public List<FlatAddress> findByCityAndDistrict(String city, String district) throws DaoException {
-//        ResultSet resultSet = null;
-//        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_ADDRESS_BY_FULL_DATA)) {
-//            statement.setString(1,city);
-//            statement.setString(2,district);
-//            resultSet = statement.executeQuery();
-//            List<FlatAddress> flatAddresses = new ArrayList<>();
-//            while(resultSet.next()){
-//                flatAddresses.add(buildFlatAddressFromResultSet(resultSet));
-//            }
-//            return flatAddresses;
-//        } catch (SQLException e) {
-//            throw new DaoException("Finding flatAddress by city and district error",e);
-//        }finally {
-//            closeResultSet(resultSet);
-//        }
-//    }
 }

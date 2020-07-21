@@ -3,7 +3,10 @@ package by.prokhorenko.rentservice.builder;
 import by.prokhorenko.rentservice.entity.flat.Flat;
 import by.prokhorenko.rentservice.entity.flat.FlatAddress;
 import by.prokhorenko.rentservice.entity.flat.FlatDescription;
+import by.prokhorenko.rentservice.entity.flat.FlatPhoto;
 import by.prokhorenko.rentservice.entity.user.User;
+
+import java.util.List;
 
 public class FlatBuilder {
 
@@ -11,6 +14,7 @@ public class FlatBuilder {
     private boolean isFree;
     private FlatDescription flatDescription;
     private FlatAddress flatAddress;
+    private List<FlatPhoto> flatPhotos;
 
     public int getId() {
         return id;
@@ -27,6 +31,15 @@ public class FlatBuilder {
 
     public FlatBuilder buildIsFree(boolean free) {
         isFree = free;
+        return this;
+    }
+
+    public List<FlatPhoto> getFlatPhotos() {
+        return flatPhotos;
+    }
+
+    public FlatBuilder buildFlatPhotos(List<FlatPhoto> flatPhotos) {
+        this.flatPhotos = flatPhotos;
         return this;
     }
 

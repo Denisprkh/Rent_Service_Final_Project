@@ -48,7 +48,7 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
     }
 
     @Override
-    public List<User> findAll() throws DaoException {
+    public List<User> findAll(int start, int total) throws DaoException {
         List<User> allUsers;
         try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_USERS);
             ResultSet resultSet = statement.executeQuery()){
@@ -97,6 +97,11 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
         } catch (SQLException e) {
             throw new DaoException("Updating user error",e);
         }
+    }
+
+    @Override
+    public int findQuantity() throws DaoException {
+        return 0;
     }
 
 

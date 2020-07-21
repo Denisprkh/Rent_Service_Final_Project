@@ -1,7 +1,7 @@
 package by.prokhorenko.rentservice.controller.filter;
 
 import by.prokhorenko.rentservice.controller.command.impl.Attribute;
-import by.prokhorenko.rentservice.controller.command.impl.JspParameter;
+import by.prokhorenko.rentservice.controller.command.impl.RequestParameter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -25,7 +25,7 @@ public class LocaleFilter implements Filter {
         if(languageAttribute == null){
             session.setAttribute(Attribute.LANGUAGE,DEFAULT_LOCALE);
         }
-        String languageParameter = request.getParameter(JspParameter.PARAM_LANGUAGE);
+        String languageParameter = request.getParameter(RequestParameter.PARAM_LANGUAGE);
         if(languageParameter != null){
             session.setAttribute(Attribute.LANGUAGE,languageParameter);
         }

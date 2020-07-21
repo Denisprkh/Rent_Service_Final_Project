@@ -2,11 +2,13 @@ package by.prokhorenko.rentservice.entity.advertisement;
 
 import by.prokhorenko.rentservice.builder.AdvertisementBuilder;
 import by.prokhorenko.rentservice.entity.flat.Flat;
+import by.prokhorenko.rentservice.entity.flat.FlatPhoto;
 import by.prokhorenko.rentservice.entity.user.User;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Advertisement implements Serializable {
 

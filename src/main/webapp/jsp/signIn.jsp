@@ -33,8 +33,8 @@
             </form>
         </div>
         <div class="err__message">
-            <c:if test="${not empty sessionScope.errorMessage}">
-                <fmt:message key="${sessionScope.errorMessage}"/>
+            <c:if test="${not empty sessionScope.signInErrorMessage}">
+                <fmt:message key="${sessionScope.signInErrorMessage}"/>
             </c:if>
         </div>
     </div>

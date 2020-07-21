@@ -6,7 +6,6 @@ import by.prokhorenko.rentservice.controller.command.Command;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.user.UserService;
-import by.prokhorenko.rentservice.service.user.impl.UserServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,7 +25,7 @@ public class ConfirmRegistrationCommand implements Command {
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         Router router = new Router();
         try {
-            int id = Integer.parseInt(request.getParameter(JspParameter.PARAM_ID));
+            int id = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID));
             String page;
             if (userService.activateUser(id)) {
                 page = PagePath.SIGN_IN;

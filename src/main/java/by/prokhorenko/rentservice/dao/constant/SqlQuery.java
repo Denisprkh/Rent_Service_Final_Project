@@ -2,8 +2,6 @@ package by.prokhorenko.rentservice.dao.constant;
 
 public class SqlQuery {
 
-    private SqlQuery(){}
-
     public static final String ADD_USER = "INSERT INTO users (first_name,last_name,email,password,phone) " +
             "VALUES (?,?,?,?,?)";
     public static final String UPDATE_USER_BY_ID ="UPDATE users us SET us.first_name = ?, " +
@@ -49,16 +47,6 @@ public class SqlQuery {
             "fd.living_area = ?, fd.has_furniture = ? fd.has_home_appliciances = ?, df.has_the_internet = ?," +
             "fd.possible_with_childs = ?, fd.possible_with_pets = ?, fd.repair = ?, fd.users_description = ? " +
             "WHERE fd.flats_description_id = ?";
-    public static final String FIND_FLAT_DESCRIPTION_BY_ROOMS_AMOUNT = "SELECT flats_description_id,rooms,living_area, " +
-            "has_furniture, has_home_appliciances,has_the_internet,possible_with_childs,possible_with_pets, repair," +
-            "users_description FROM flats_description WHERE rooms = ?";
-    public static final String FIND_FLAT_DESCRIPTION_BY_LIVING_AREA = "SELECT flats_description_id,rooms,living_area, " +
-            "has_furniture, has_home_appliciances,has_the_internet,possible_with_childs,possible_with_pets, repair," +
-            "users_description FROM flats_description WHERE living_area = ?";
-    public static final String FIND_FLAT_DESCRIPTION_BY_REPAIR_TYPE = "SELECT flats_description_id,rooms,living_area, " +
-            "has_furniture, has_home_appliciances,has_the_internet,possible_with_childs,possible_with_pets, repair," +
-            "users_description FROM flats_description WHERE repair REGEXP ?";
-
     public static final String ADD_FLAT = "INSERT INTO flats (flats_description_id,flats_address_id) VALUES (?,?)";
     public static final String FIND_ALL_FLATS = "SELECT flats.flats_id, flats.is_free, flats.flats_description_id," +
             "flats.flats_address_id, flats_address.flats_address_id,flats_address.city," +
@@ -122,7 +110,7 @@ public class SqlQuery {
             "advertisements WHERE flats.flats_description_id = flats_description.flats_description_id AND" +
             " flats.flats_description_id = flats_description.flats_description_id AND flats.flats_address_id = " +
             "flats_address.flats_address_id AND flats.flats_id = advertisements.flats_id AND users.users_id = " +
-            "advertisements.author_id ";
+            "advertisements.author_id LIMIT ?, ?";
     public static final String FIND_ADVERTISEMENT_BY_ID = "SELECT flats.flats_id, flats.is_free, flats.flats_description_id," +
             "flats.flats_address_id, flats_address.flats_address_id,flats_address.city," +
             "flats_address.district, flats_address.street, flats_address.house, flats_description.flats_description_id," +
@@ -137,6 +125,7 @@ public class SqlQuery {
             " flats.flats_description_id = flats_description.flats_description_id AND flats.flats_address_id = " +
             "flats_address.flats_address_id AND flats.flats_id = advertisements.flats_id AND users.users_id = " +
             "advertisements.author_id AND advertisements.advertisements_id = ?";
+    public static final String FIND_ADVERTISEMENT_QUANTITY = "SELECT COUNT(*) FROM advertisements";
     public static final String UPDATE_ADVERTISEMENT_BY_ID = "UPDATE advertisements ad SET ad.title = ?, " +
             "ad.price = ? WHERE advertisements.advertisements_id = ?";
     public static final String FIND_ADVERTISEMENTS_BY_USERS_ID = "SELECT flats.flats_id, flats.is_free, flats.flats_description_id," +
@@ -195,6 +184,5 @@ public class SqlQuery {
             "requests.advertisements_id, requests.application_date,requests.is_approved FROM requests JOIN " +
             "users ON requests.users_id = users.users_id WHERE requests.users_id = ?";
 
-
-
+    private SqlQuery(){}
 }

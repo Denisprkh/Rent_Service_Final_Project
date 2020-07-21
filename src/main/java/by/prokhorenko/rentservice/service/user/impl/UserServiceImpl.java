@@ -1,6 +1,6 @@
 package by.prokhorenko.rentservice.service.user.impl;
 
-import by.prokhorenko.rentservice.controller.command.ResourceBundleErrorMessage;
+import by.prokhorenko.rentservice.controller.command.ResourceBundleErrorMessageKey;
 import by.prokhorenko.rentservice.dao.UserDao;
 import by.prokhorenko.rentservice.entity.user.User;
 import by.prokhorenko.rentservice.exception.DaoException;
@@ -61,20 +61,20 @@ public class UserServiceImpl implements UserService {
         UserValidator userValidator = UserValidator.getInstance();
         DaoFactory daoFactory = DaoFactory.getInstance();
         if(!userValidator.emailIsCorrect(email) || !userValidator.passwordIsCorrect(password)){
-            throw new ServiceException(ResourceBundleErrorMessage.INVALID_INPUT_VALUES);
+            throw new ServiceException(ResourceBundleErrorMessageKey.INVALID_INPUT_VALUES);
         }
         try(UserDao userDao = daoFactory.getUserDao()) {
            Optional<User> user = userDao.findByEmailAndPassword(email,password);
            if(!user.isPresent()){
-               throw new ServiceException(ResourceBundleErrorMessage.EMAIL_OR_PASSWORD_IS_INCORRECT_ERROR_MESSAGE);
+               throw new ServiceException(ResourceBundleErrorMessageKey.EMAIL_OR_PASSWORD_IS_INCORRECT_ERROR_MESSAGE);
            }
            User signedInUser = user.get();
             LOG.debug(signedInUser.isBanned());
            if(signedInUser.isBanned()){
-               throw new ServiceException(ResourceBundleErrorMessage.ACCOUNT_IS_BLOCKED);
+               throw new ServiceException(ResourceBundleErrorMessageKey.ACCOUNT_IS_BLOCKED);
            }
            if(!signedInUser.isActivated()){
-               throw new ServiceException(ResourceBundleErrorMessage.ACCOUNT_IS_NOT_ACTIVATED);
+               throw new ServiceException(ResourceBundleErrorMessageKey.ACCOUNT_IS_NOT_ACTIVATED);
            }
            return signedInUser;
         } catch (DaoException | IOException e) {
@@ -84,12 +84,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() throws ServiceException {
-        List<User> allUsers;
+        List<User> allUsers = null;
         DaoFactory daoFactory = DaoFactory.getInstance();
         try(UserDao userDao = daoFactory.getUserDao()) {
-            allUsers = userDao.findAll();
+//            allUsers = userDao.findAll();
             return allUsers;
-        } catch (DaoException | IOException e) {
+        } catch ( IOException e) {
             throw new ServiceException("Finding all users error",e);
         }
     }

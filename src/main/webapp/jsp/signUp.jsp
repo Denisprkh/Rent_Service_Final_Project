@@ -33,7 +33,8 @@
                        title="<fmt:message key="sign_up_form.invalid_first_name_format"/>"/>
                 <input required name="lastName" placeholder="<fmt:message key="reg_form.last_name"/>"
                        required pattern="^[a-zA-Zа-яА-Я]{2,45}$"
-                       title="<fmt:message key="sign_up_form.invalid_last_name_format"/>" <fmt:message key="sign_up_form.invalid_last_name_format"/>/>
+                       title="<fmt:message key="sign_up_form.invalid_last_name_format"/>"
+                        <fmt:message key="sign_up_form.invalid_last_name_format"/>/>
                 <input required name="email" placeholder="<fmt:message key="reg_form.email"/>" required
                        pattern="[a-zA-z0-9_.-]{1,40}@[a-zA-z0-9_-]{2,40}\.[a-z]{2,10}"
                        title="<fmt:message key="sign_up_form.invalid_email_format"/>"/>
@@ -42,13 +43,14 @@
                 <input required name="passwordTwo" id="password_confirm" type="password" placeholder="<fmt:message
                 key="reg_form.confirm_password"/>"/>
                 <input type ="phone" required name="phone" placeholder="<fmt:message key="reg_form.phone_number"/>"required
-                       pattern="^(\+375\([\d]{2}\)[\d]{3}\-[\d]{2}\-[\d]{2})$" title="<fmt:message key="sign_up_form.invalid_phone_number_format"/>"/>
+                       pattern="^(\+375\([\d]{2}\)[\d]{3}\-[\d]{2}\-[\d]{2})$" title="
+                        <fmt:message key="sign_up_form.invalid_phone_number_format"/>"/>
                 <button class="form_btn" type="submit" name="command" value="SIGN_UP">
-                    <fmt:message key="reg_form.button"/>
+                         <fmt:message key="reg_form.button"/>
                 </button>
                 <div class="sign_up__err__message">
-                    <c:if test="${not empty sessionScope.errorMessage}">
-                        <fmt:message key="${sessionScope.errorMessage}"/>
+                    <c:if test="${not empty sessionScope.signUpErrorMessage}">
+                        <fmt:message key="${sessionScope.signUpErrorMessage}"/>
                     </c:if>
                 </div>
             </form>

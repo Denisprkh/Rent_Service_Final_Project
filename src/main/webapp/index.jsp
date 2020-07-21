@@ -12,6 +12,6 @@
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<jsp:forward page="jsp/signUp.jsp"></jsp:forward>
+<jsp:forward page="/controller?command=FIND_ALL_ADVERTISEMENTS"></jsp:forward>
 </body>
 </html>

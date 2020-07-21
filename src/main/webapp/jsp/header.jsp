@@ -38,7 +38,8 @@
                 </c:if>
                 <c:if test="${sessionScope.userRole == 'USER' || sessionScope.userRole == 'ADMIN'}">
                     <div class="header_profile_logo">
-                        <a href="#"><img src="${pageContext.request.contextPath}/img/userProfileLogo.svg"></a>
+                        <a href="${pageContext.request.contextPath}/controller?command=PROFILE_PAGE">
+                            <img src="${pageContext.request.contextPath}/img/userProfileLogo.svg"></a>
                     </div>
                 <div class="header_btn">
                     <div class="header_register btnt">

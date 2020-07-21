@@ -22,6 +22,7 @@ public class FlatDescription implements Serializable {
         this.rooms = flatDescriptionBuilder.getRooms();
         this.livingArea = flatDescriptionBuilder.getLivingArea();
         this.hasFurniture = flatDescriptionBuilder.isHasFurniture();
+        this.hasHomeAppliances = flatDescriptionBuilder.isHasHomeAppliances();
         this.hasTheInternet = flatDescriptionBuilder.isHasTheInternet();
         this.possibleWithChild = flatDescriptionBuilder.isPossibleWithChild();
         this.possibleWithPets = flatDescriptionBuilder.isPossibleWithPets();
