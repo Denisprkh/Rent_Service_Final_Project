@@ -47,13 +47,13 @@
                             Name
                         </div>
                         <div class="name-botton">
-                            Denis Prokhopenko
+                            Denis Prokhorenko
                         </div>
                         <div class="name-top">
                             E-mail
                         </div>
                         <div class="name-botton">
-                            Ctatist3001@wardaftanks.ru
+                            
                         </div>
                         <div class="name-top">
                             Phone number
