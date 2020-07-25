@@ -1,11 +1,8 @@
 package by.prokhorenko.rentservice.builder;
 
-import by.prokhorenko.rentservice.entity.advertisement.UserAdvertisementDataHandler;
-import by.prokhorenko.rentservice.entity.flat.FlatRepairType;
+import by.prokhorenko.rentservice.entity.advertisement.AdvertisementDataHandler;
 
-import java.math.BigDecimal;
-
-public class UserAdvertisementDataHandlerBuilder {
+public class AdvertisementDataHandlerBuilder {
 
     private String city;
     private String district;
@@ -20,7 +17,6 @@ public class UserAdvertisementDataHandlerBuilder {
     private boolean hasTheInternet;
     private boolean possibleWithChildren;
     private boolean possibleWithPets;
-    private FlatRepairType repairType;
     private String usersDescription;
 
 
@@ -29,7 +25,7 @@ public class UserAdvertisementDataHandlerBuilder {
         return city;
     }
 
-    public UserAdvertisementDataHandlerBuilder buildCity(String city) {
+    public AdvertisementDataHandlerBuilder buildCity(String city) {
         this.city = city;
         return this;
     }
@@ -38,7 +34,7 @@ public class UserAdvertisementDataHandlerBuilder {
         return houseNumber;
     }
 
-    public UserAdvertisementDataHandlerBuilder buildHouseNumber(String houseNumber) {
+    public AdvertisementDataHandlerBuilder buildHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
         return this;
     }
@@ -47,7 +43,7 @@ public class UserAdvertisementDataHandlerBuilder {
         return district;
     }
 
-    public UserAdvertisementDataHandlerBuilder buildDistrict(String district) {
+    public AdvertisementDataHandlerBuilder buildDistrict(String district) {
         this.district = district;
         return this;
     }
@@ -56,7 +52,7 @@ public class UserAdvertisementDataHandlerBuilder {
         return hasFurniture;
     }
 
-    public UserAdvertisementDataHandlerBuilder buildIsHasFurniture(boolean hasFurniture) {
+    public AdvertisementDataHandlerBuilder buildIsHasFurniture(boolean hasFurniture) {
         this.hasFurniture = hasFurniture;
         return this;
     }
@@ -65,7 +61,7 @@ public class UserAdvertisementDataHandlerBuilder {
         return hasHomeAppliances;
     }
 
-    public UserAdvertisementDataHandlerBuilder buildIsHasHomeAppliances(boolean hasHomeAppliances) {
+    public AdvertisementDataHandlerBuilder buildIsHasHomeAppliances(boolean hasHomeAppliances) {
         this.hasHomeAppliances = hasHomeAppliances;
         return this;
     }
@@ -74,7 +70,7 @@ public class UserAdvertisementDataHandlerBuilder {
         return hasTheInternet;
     }
 
-    public UserAdvertisementDataHandlerBuilder buildIsHasTheInternet(boolean hasTheInternet) {
+    public AdvertisementDataHandlerBuilder buildIsHasTheInternet(boolean hasTheInternet) {
         this.hasTheInternet = hasTheInternet;
         return this;
     }
@@ -83,7 +79,7 @@ public class UserAdvertisementDataHandlerBuilder {
         return possibleWithChildren;
     }
 
-    public UserAdvertisementDataHandlerBuilder buildPossibleWithChildren(boolean possibleWithChildren) {
+    public AdvertisementDataHandlerBuilder buildPossibleWithChildren(boolean possibleWithChildren) {
         this.possibleWithChildren = possibleWithChildren;
         return this;
     }
@@ -92,25 +88,17 @@ public class UserAdvertisementDataHandlerBuilder {
         return possibleWithPets;
     }
 
-    public UserAdvertisementDataHandlerBuilder buildPossibleWithPets(boolean possibleWithPets) {
+    public AdvertisementDataHandlerBuilder buildPossibleWithPets(boolean possibleWithPets) {
         this.possibleWithPets = possibleWithPets;
         return this;
     }
 
-    public FlatRepairType getRepairType() {
-        return repairType;
-    }
-
-    public UserAdvertisementDataHandlerBuilder buildRepairType(FlatRepairType repairType) {
-        this.repairType = repairType;
-        return this;
-    }
 
     public String getUsersDescription() {
         return usersDescription;
     }
 
-    public UserAdvertisementDataHandlerBuilder buildUsersDescription(String usersDescription) {
+    public AdvertisementDataHandlerBuilder buildUsersDescription(String usersDescription) {
         this.usersDescription = usersDescription;
         return this;
     }
@@ -119,7 +107,7 @@ public class UserAdvertisementDataHandlerBuilder {
         return title;
     }
 
-    public UserAdvertisementDataHandlerBuilder buildTitle(String title) {
+    public AdvertisementDataHandlerBuilder buildTitle(String title) {
         this.title = title;
         return this;
     }
@@ -128,7 +116,7 @@ public class UserAdvertisementDataHandlerBuilder {
         return street;
     }
 
-    public UserAdvertisementDataHandlerBuilder buildStreet(String street) {
+    public AdvertisementDataHandlerBuilder buildStreet(String street) {
         this.street = street;
         return this;
     }
@@ -137,7 +125,7 @@ public class UserAdvertisementDataHandlerBuilder {
         return rooms;
     }
 
-    public UserAdvertisementDataHandlerBuilder buildRooms(String rooms) {
+    public AdvertisementDataHandlerBuilder buildRooms(String rooms) {
         this.rooms = rooms;
         return this;
     }
@@ -146,7 +134,7 @@ public class UserAdvertisementDataHandlerBuilder {
         return price;
     }
 
-    public UserAdvertisementDataHandlerBuilder buildPrice(String price) {
+    public AdvertisementDataHandlerBuilder buildPrice(String price) {
         this.price = price;
         return this;
     }
@@ -155,13 +143,13 @@ public class UserAdvertisementDataHandlerBuilder {
         return livingArea;
     }
 
-    public UserAdvertisementDataHandlerBuilder buildLivingArea(String livingArea) {
+    public AdvertisementDataHandlerBuilder buildLivingArea(String livingArea) {
         this.livingArea = livingArea;
         return this;
     }
 
-    public UserAdvertisementDataHandler buildUserChoiceHandler(){
+    public AdvertisementDataHandler buildUserChoiceHandler(){
 
-        return new UserAdvertisementDataHandler(this);
+        return new AdvertisementDataHandler(this);
     }
 }

@@ -33,7 +33,6 @@ public class ConfirmRegistrationCommand implements Command {
                 page = PagePath.SIGN_UP;
             }
             router.setPage(page);
-            router.setRedirect();
         }catch (ServiceException e){
             LOG.error(e);
         }

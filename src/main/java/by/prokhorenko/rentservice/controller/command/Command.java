@@ -17,10 +17,10 @@ public interface Command {
 
     default void definePaginationContext(HttpServletRequest request, int fullRecordsQuantity, int currentPage, int recordsPerPage) {
         int allPagesAmount = fullRecordsQuantity / recordsPerPage;
-        if(allPagesAmount % recordsPerPage > 0){
+        if(fullRecordsQuantity % recordsPerPage > 0){
             allPagesAmount++;
         }
-        System.out.println(allPagesAmount);
+        LogManager.getLogger().debug(allPagesAmount+" "+fullRecordsQuantity);
         request.setAttribute(Attribute.PAGINATION_PAGES_QUANTITY,allPagesAmount);
         request.setAttribute(Attribute.PAGINATION_CURRENT_PAGE,currentPage);
     }

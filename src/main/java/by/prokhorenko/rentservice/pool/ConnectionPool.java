@@ -90,7 +90,7 @@ public enum ConnectionPool {
     private void deregisterDrivers(){
         Enumeration<Driver> drivers= DriverManager.getDrivers();
         while(drivers.hasMoreElements()){
-            Driver driver = (Driver) drivers.nextElement();
+            Driver driver = drivers.nextElement();
             try {
                 DriverManager.deregisterDriver(driver);
             } catch (SQLException e) {

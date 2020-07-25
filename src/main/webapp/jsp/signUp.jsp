@@ -49,8 +49,8 @@
                          <fmt:message key="reg_form.button"/>
                 </button>
                 <div class="sign_up__err__message">
-                    <c:if test="${not empty sessionScope.signUpErrorMessage}">
-                        <fmt:message key="${sessionScope.signUpErrorMessage}"/>
+                    <c:if test="${not empty sessionScope.incorrectDataErrorMessage}">
+                        <fmt:message key="${sessionScope.incorrectDataErrorMessage}"/>
                     </c:if>
                 </div>
             </form>

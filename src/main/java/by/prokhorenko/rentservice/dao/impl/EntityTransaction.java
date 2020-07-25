@@ -16,16 +16,12 @@ public class EntityTransaction {
 
     }
 
-    void setConnectionToAllDaos(ProxyConnection connection, AbstractCommonDao ... daos){
-        for(AbstractCommonDao dao : daos){
-            dao.setConnection(connection);
-        }
-        LOG.debug("All daos have same connection");
-    }
-
-     void beginTransaction(ProxyConnection connection){
+     void beginTransaction(ProxyConnection connection, AbstractCommonDao ... daos){
         try {
             connection.setAutoCommit(false);
+            for(AbstractCommonDao dao : daos){
+                dao.setConnection(connection);
+            }
             LOG.debug("beginning transaction");
         } catch (SQLException e) {
             LOG.error("Setting connection autoCommit false error"+e.getMessage() + e.getCause(),e);

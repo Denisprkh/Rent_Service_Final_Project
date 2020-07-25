@@ -6,7 +6,7 @@ import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
 import by.prokhorenko.rentservice.controller.command.ResourceBundleErrorMessageKey;
 import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
-import by.prokhorenko.rentservice.entity.advertisement.UserAdvertisementDataHandler;
+import by.prokhorenko.rentservice.entity.advertisement.AdvertisementDataHandler;
 import by.prokhorenko.rentservice.entity.flat.*;
 import by.prokhorenko.rentservice.entity.user.User;
 import by.prokhorenko.rentservice.exception.ServiceException;
@@ -39,19 +39,14 @@ public class AddNewAdvertisementCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         Router router = new Router();
-        router.setRedirect();
         router.setPage(PagePath.ADD_AN_ADVERTISEMENT);
         HttpSession session = request.getSession();
         User author = (User) request.getSession().getAttribute(Attribute.USER);
         try {
             List<InputStream> flatPhotoData = buildPhotosDataFromRequest(request);
-            LOG.debug(flatPhotoData);
-            if(flatPhotoData.size() != 3){
-                return router;
-            }
             List<FlatPhoto> flatPhotos = buildFlatPhotosFromDataList(flatPhotoData);
             LOG.debug(flatPhotos);
-            UserAdvertisementDataHandler dataHandler = buildAdvertisementDataHandlerFromRequest(request);
+            AdvertisementDataHandler dataHandler = buildAdvertisementDataHandlerFromRequest(request);
             advertisementService.defineIncorrectData(dataHandler);
             FlatAddress flatAddress = buildFlatAddressFromDataHandler(dataHandler);
             FlatDescription flatDescription = buildFlatDescriptionFromDataHandler(dataHandler);
@@ -82,8 +77,8 @@ public class AddNewAdvertisementCommand implements Command {
         return photosData;
     }
 
-    private UserAdvertisementDataHandler buildAdvertisementDataHandlerFromRequest(HttpServletRequest request) {
-        UserAdvertisementDataHandler dataHandler = new UserAdvertisementDataHandlerBuilder()
+    private AdvertisementDataHandler buildAdvertisementDataHandlerFromRequest(HttpServletRequest request) {
+        AdvertisementDataHandler dataHandler = new AdvertisementDataHandlerBuilder()
                 .buildTitle(request.getParameter(RequestParameter.ADVERTISEMENT_TITLE))
                 .buildPrice(request.getParameter(RequestParameter.ADVERTISEMENT_PRICE))
                 .buildCity(request.getParameter(RequestParameter.ADVERTISEMENT_FLAT_LOCATION_CITY))
@@ -104,8 +99,6 @@ public class AddNewAdvertisementCommand implements Command {
                         (RequestParameter.ADVERTISEMENT_FLAT_DESCRIPTION_PETS)))
                 .buildUsersDescription(request.getParameter
                         (RequestParameter.ADVERTISEMENT_FLAT_DESCRIPTION_USERS_DESCRIPTION))
-                .buildRepairType(FlatRepairType.getRepairTypeByName(request.getParameter
-                        (RequestParameter.ADVERTISEMENT_FLAT_DESCRIPTION_REPAIR)).get())
                 .buildUserChoiceHandler();
 
         return dataHandler;
@@ -121,7 +114,7 @@ public class AddNewAdvertisementCommand implements Command {
         return flatPhotos;
     }
 
-    private FlatAddress buildFlatAddressFromDataHandler(UserAdvertisementDataHandler handler) {
+    private FlatAddress buildFlatAddressFromDataHandler(AdvertisementDataHandler handler) {
         FlatAddress flatAddress = new FlatAddressBuilder()
                 .buildCity(handler.getCity())
                 .buildDistrict(handler.getDistrict())
@@ -131,11 +124,10 @@ public class AddNewAdvertisementCommand implements Command {
         return flatAddress;
     }
 
-    private FlatDescription buildFlatDescriptionFromDataHandler(UserAdvertisementDataHandler handler) {
+    private FlatDescription buildFlatDescriptionFromDataHandler(AdvertisementDataHandler handler) {
         FlatDescription flatDescription = new FlatDescriptionBuilder()
                 .buildRooms(Integer.parseInt(handler.getRooms()))
                 .buildLivingArea(Float.parseFloat(handler.getArea()))
-                .buildRepairType(handler.getRepairType())
                 .buildHasFurniture(handler.isHasFurniture())
                 .buildPossibleWithChild(handler.isPossibleWithChildren())
                 .buildHasHomeAppliances(handler.isHasHomeAppliances())
@@ -155,7 +147,7 @@ public class AddNewAdvertisementCommand implements Command {
         return flat;
     }
 
-    private Advertisement buildAdvertisementFromDataHandler(User author, UserAdvertisementDataHandler handler, Flat flat) {
+    private Advertisement buildAdvertisementFromDataHandler(User author, AdvertisementDataHandler handler, Flat flat) {
         Advertisement advertisement = new AdvertisementBuilder()
                 .buildPrice(new BigDecimal(handler.getPrice()))
                 .buildTitle(handler.getTitle())

@@ -1,12 +1,9 @@
 package by.prokhorenko.rentservice.dao.impl;
 
-import by.prokhorenko.rentservice.builder.FlatDescriptionBuilder;
 import by.prokhorenko.rentservice.dao.AbstractCommonDao;
-import by.prokhorenko.rentservice.dao.constant.SqlColumnName;
 import by.prokhorenko.rentservice.dao.constant.SqlQuery;
 import by.prokhorenko.rentservice.dao.FlatDescriptionDao;
 import by.prokhorenko.rentservice.entity.flat.FlatDescription;
-import by.prokhorenko.rentservice.entity.flat.FlatRepairType;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
 
@@ -41,8 +38,7 @@ public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDes
             statement.setBoolean(5, flatDescription.isHasTheInternet());
             statement.setBoolean(6, flatDescription.isPossibleWithChild());
             statement.setBoolean(7, flatDescription.isPossibleWithPets());
-            statement.setString(8, flatDescription.getRepairType().getRepairType());
-            statement.setString(9, flatDescription.getUsersDescription());
+            statement.setString(8, flatDescription.getUsersDescription());
             int id = executeUpdateAndGetGeneratedId(statement);
             flatDescription.setId(id);
             return Optional.of(flatDescription);
@@ -93,9 +89,8 @@ public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDes
             statement.setBoolean(5, flatDescription.isHasTheInternet());
             statement.setBoolean(6, flatDescription.isPossibleWithChild());
             statement.setBoolean(7, flatDescription.isPossibleWithPets());
-            statement.setString(8, flatDescription.getRepairType().getRepairType());
-            statement.setString(9, flatDescription.getUsersDescription());
-            statement.setInt(10, flatDescription.getId());
+            statement.setString(8, flatDescription.getUsersDescription());
+            statement.setInt(9, flatDescription.getId());
             updateEntity(statement);
             return findById(flatDescription.getId());
         } catch (SQLException e) {

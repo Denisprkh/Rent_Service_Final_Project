@@ -16,9 +16,19 @@ public class AdvertisementBuilder {
     private String title;
     private BigDecimal price;
     private LocalDateTime dateOfCreation;
+    private boolean isVisible;
 
     public int getId() {
         return id;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public AdvertisementBuilder buildVisible(boolean visible) {
+        isVisible = visible;
+        return this;
     }
 
     public AdvertisementBuilder buildId(int id) {

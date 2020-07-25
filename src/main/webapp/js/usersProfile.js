@@ -57,3 +57,49 @@ if (allUsers === null){
     allUsersCard = document.querySelector('.all_users')
     allUsers.addEventListener('click', () => {addActive(allUsersAll, allUsersCard)})
 }
+
+var btnEditProfile = document.querySelector('#profile-edit')
+
+btnEditProfile.addEventListener('click', () => {
+    btnEditProfile.remove()
+    addInput()
+    inputValue()
+    addBtn()
+})
+
+
+var profileInfo = []
+
+
+var addInput = function() {
+    info = document.querySelectorAll('[data-type = profile-info]')
+    info.forEach((element) => {
+        profileInfo.push(element.innerText)
+        element.classList.add('none')
+    });
+}
+
+var inputValue = function(){
+    input = document.querySelectorAll('[data-type = profile-input]')
+
+    for (i = 0; i < input.length; i++) {
+        input[i].value = profileInfo[i]
+        input[i].classList.remove('none')
+    }
+}
+
+var addBtn = function() {
+    document.querySelectorAll('#profile-edit-btn').forEach((elem) => {
+        elem.classList.remove('none')
+    })
+}
+
+
+var reset = document.querySelector('[data-type = profile-reset]')
+
+console.log(reset)
+
+reset.addEventListener('click', () => {
+    addInput()
+    inputValue()
+})

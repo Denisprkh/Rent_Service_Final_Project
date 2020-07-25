@@ -6,7 +6,6 @@ import by.prokhorenko.rentservice.controller.command.impl.RequestParameter;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +18,6 @@ import java.util.Optional;
 public class ServletController extends HttpServlet {
 
     private static final Logger LOG = LogManager.getLogger();
-
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,7 +35,7 @@ public class ServletController extends HttpServlet {
                 request.getParameter(RequestParameter.PARAM_COMMAND));
         Command command = commandOptional.orElseThrow(IllegalArgumentException::new);
         Router router = command.execute(request,response);
-        if(Router.DisPathType.FORWARD.equals(router.getDisPathType())){
+        if(DisPathType.FORWARD.equals(router.getDisPathType())){
             request.getRequestDispatcher(router.getPage()).forward(request,response);
         }else{
             response.sendRedirect(router.getPage());

@@ -10,6 +10,7 @@ public class PagePath {
     public static final String USER_PROFILE = "jsp/usersProfile.jsp";
     public static final String ADMIN_PROFILE = "jsp/adminProfile.jsp";
     public static final String ADD_AN_ADVERTISEMENT = "jsp/addAnAdvertisement.jsp";
+    public static final String ADVERTISEMENT = "jsp/advertisement.jsp";
 
     private PagePath(){
 

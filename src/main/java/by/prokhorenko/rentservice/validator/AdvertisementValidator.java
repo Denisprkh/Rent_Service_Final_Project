@@ -1,25 +1,17 @@
 package by.prokhorenko.rentservice.validator;
 
-import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
-import by.prokhorenko.rentservice.entity.advertisement.UserAdvertisementDataHandler;
-import by.prokhorenko.rentservice.entity.flat.Flat;
-import by.prokhorenko.rentservice.entity.flat.FlatAddress;
-import by.prokhorenko.rentservice.entity.flat.FlatDescription;
-import by.prokhorenko.rentservice.util.MailSender;
+import by.prokhorenko.rentservice.entity.advertisement.AdvertisementDataHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AdvertisementValidator {
 
     private static final String COMMON_STRING_DATA_REGEX = "^[a-zA-Zа-яА-Я]{2,45}$";
     private static final String PRICE_REGEX = "^[0-9.]{1,45}$";
     private static final String LOCATION_REGEX = "^[a-zA-Zа-яА-Я.-]{2,45}$";
-    private static final String HOUSE_NUMBER_REGEX = "^[a-zA-Z0-9_\\-.]{2,40}$";
+    private static final String HOUSE_NUMBER_REGEX = "^\\d+[a-z/\\d]*$";
     private static final String ROOMS_REGEX = "^[0-9]{1,10}$";
     private static final String AREA_REGEX = "^[0-9.]{1,45}$";
     private static final Logger LOG = LogManager.getLogger();
@@ -35,7 +27,7 @@ public class AdvertisementValidator {
         return AdvertisementValidatorHolder.INSTANCE;
     }
 
-    public List<Boolean> validateAdvertisementsData(UserAdvertisementDataHandler handler) {
+    public List<Boolean> validateAdvertisementsData(AdvertisementDataHandler handler) {
         List<Boolean> validations = List.of(
                 advertisementTitleDataIsValid(handler.getTitle()),
                 priceDataIsValid(handler.getPrice()),

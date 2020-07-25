@@ -159,12 +159,9 @@ public abstract class AbstractCommonDao implements AutoCloseable{
                     .buildHasTheInternet(resultSet.getBoolean(SqlColumnName.FLAT_DESCRIPTION_HAS_THE_INTERNET_COLUMN_NAME))
                     .buildPossibleWithChild(resultSet.getBoolean
                             (SqlColumnName.FLAT_DESCRIPTION_POSSIBLE_WITH_CHILD_COLUMN_NAME))
-                    .buildRepairType(FlatRepairType.getRepairTypeByName(resultSet.getString
-                            (SqlColumnName.FLAT_DESCRIPTION_REPAIR_COLUMN_NAME)).get())
                     .buildPossibleWithPets
                             (resultSet.getBoolean(SqlColumnName.FLAT_DESCRIPTION_POSSIBLE_WITH_PETS_COLUMN_NAME))
                     .buildUsersDescription(resultSet.getString(SqlColumnName.FLAT_DESCRIPTION_USERS_DESCRIPTION_COLUMN_NAME))
-
                     .buildFlatDescription();
         } catch (SQLException e) {
             throw new DaoException("Building flats description from resultSet error",e);
@@ -207,6 +204,8 @@ public abstract class AbstractCommonDao implements AutoCloseable{
                     .buildPrice(resultSet.getBigDecimal(SqlColumnName.ADVERTISEMENT_PRICE_COLUMN_NAME))
                     .buildDateOfCreation(convertLongToDate(resultSet.getLong(SqlColumnName.
                             ADVERTISEMENT_DATE_OF_CREATION_COLUMN_NAME)))
+                    .buildVisible(Boolean.parseBoolean(resultSet.getString
+                            (SqlColumnName.ADVERTISEMENT_IS_VISIBLE_COLUMN_NAME)))
                     .buildAdvertisement();
         } catch (SQLException e) {
             throw new DaoException("Building advertisement from resultSet error",e);

@@ -56,13 +56,6 @@
                                 "<fmt:message key="add_an_advertisement.flat_description_rooms"/>" required pattern="^[0-9]{1,10}$"/>
                         <input class="input__item" name="area" placeholder=
                                 "<fmt:message key="add_an_advertisement.flat_description_area"/>" required pattern="^[0-9.]{1,45}$"/>
-                        <select class="input__item" name="repair">
-                            <option><fmt:message key="main_page_filter.any_repair"/></option>
-                            <option><fmt:message key="main_page_filter.european_quality"/></option>
-                            <option><fmt:message key="main_page_filter.redecorating"/></option>
-                            <option><fmt:message key="main_page_filter.design_repair"/></option>
-                            <option><fmt:message key="main_page_filter.without_repair"/></option>
-                        </select>
                     </div>
 
                     <div class="check-box__items">

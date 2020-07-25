@@ -30,7 +30,7 @@ public class UploadController extends HttpServlet {
                 request.getParameter(RequestParameter.PARAM_COMMAND));
         Command command = commandOptional.orElseThrow(IllegalArgumentException::new);
         Router router = command.execute(request,response);
-        if(Router.DisPathType.FORWARD.equals(router.getDisPathType())){
+        if(DisPathType.FORWARD.equals(router.getDisPathType())){
             request.getRequestDispatcher(router.getPage()).forward(request,response);
         }else{
             response.sendRedirect(router.getPage());

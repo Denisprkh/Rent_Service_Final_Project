@@ -19,7 +19,8 @@
 <header class="header">
     <div class="container">
         <div class="header_items"  >
-            <a class="header_logo" href="${pageContext.request.contextPath}/controller?command=FIND_ALL_ADVERTISEMENTS">
+            <a class="header_logo" href="${pageContext.request.contextPath}/controller?
+            command=FIND_ALL_ADVERTISEMENTS&currentPage=1">
                 <div class="header_logo__img">
                     <img src="${pageContext.request.contextPath}/img/logo.svg" alt="logo">
                 </div>

@@ -10,6 +10,7 @@ public class FlatPhoto implements Serializable {
     private int id;
     private int flatsId;
     private InputStream flatPhotoData;
+    private String base64PhotoData;
 
     public FlatPhoto(){}
 
@@ -43,6 +44,14 @@ public class FlatPhoto implements Serializable {
         this.flatPhotoData = flatPhotoData;
     }
 
+    public String getBase64PhotoData() {
+        return base64PhotoData;
+    }
+
+    public void setBase64PhotoData(String base64PhotoData) {
+        this.base64PhotoData = base64PhotoData;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,7 +61,9 @@ public class FlatPhoto implements Serializable {
 
         if (id != flatPhoto.id) return false;
         if (flatsId != flatPhoto.flatsId) return false;
-        return flatPhotoData != null ? flatPhotoData.equals(flatPhoto.flatPhotoData) : flatPhoto.flatPhotoData == null;
+        if (flatPhotoData != null ? !flatPhotoData.equals(flatPhoto.flatPhotoData) : flatPhoto.flatPhotoData != null)
+            return false;
+        return base64PhotoData != null ? base64PhotoData.equals(flatPhoto.base64PhotoData) : flatPhoto.base64PhotoData == null;
     }
 
     @Override
@@ -60,6 +71,7 @@ public class FlatPhoto implements Serializable {
         int result = id;
         result = 31 * result + flatsId;
         result = 31 * result + (flatPhotoData != null ? flatPhotoData.hashCode() : 0);
+        result = 31 * result + (base64PhotoData != null ? base64PhotoData.hashCode() : 0);
         return result;
     }
 

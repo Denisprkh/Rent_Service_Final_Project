@@ -21,9 +21,9 @@
     <div class="top-filters">
         <div class="container">
             <div class="top-filters__items">
-                <input type="city" placeholder="<fmt:message key="main_page_filter.city"/>" class="city filters">
-                <input type="number" placeholder="<fmt:message key="main_page_filter.rooms"/>" class="rooms filters">
-                <input type="number" placeholder="<fmt:message key="main_page_filter.price"/>" class="price filters">
+                <input type="city" name="filterCity" placeholder="<fmt:message key="main_page_filter.city"/>" class="city filters">
+                <input type="number" name="filterRooms" placeholder="<fmt:message key="main_page_filter.rooms"/>" class="rooms filters">
+                <input type="number" name="filterPrice" placeholder="<fmt:message key="main_page_filter.price"/>" class="price filters">
                 <button class="search filters" type="submit" name="command" value="find">
             <fmt:message key="main_page_filter.search"/></button>
             </div>
@@ -35,32 +35,25 @@
         <div class="filters-right">
             <span><fmt:message key="main_page_filter.filter_title"/></span>
             <div class="filters-right-top__items">
-                <input type="district" placeholder="<fmt:message key="main_page_filter.district"/>" class="filters">
-                <input type="number" placeholder="<fmt:message key="main_page_filter.floor"/>" class="filters">
-                <input type="number" placeholder="<fmt:message key="main_page_filter.living_area"/>" class="filters">
-                <select class="filters filters_select">
-                    <option><fmt:message key="main_page_filter.any_repair"/></option>
-                    <option><fmt:message key="main_page_filter.european_quality"/></option>
-                    <option><fmt:message key="main_page_filter.redecorating"/></option>
-                    <option><fmt:message key="main_page_filter.design_repair"/></option>
-                    <option><fmt:message key="main_page_filter.without_repair"/></option>
-                </select>
+                <input type="district" name="filterDistrict" placeholder="<fmt:message key="main_page_filter.district"/>" class="filters"/>
+                <input type="number" name="filterFloor" placeholder="<fmt:message key="main_page_filter.floor"/>" class="filters"/>
+                <input type="number" name="filterLivingArea" placeholder="<fmt:message key="main_page_filter.living_area"/>" class="filters"/>
             </div>
             <div class="filters-right-bottom__items">
                 <label class="filters-right-bottom__item">
-                    <input type="checkbox">
+                    <input type="checkbox" name="filterIsHasFurniture" value="true"/>
                     <span><fmt:message key="main_page_filter.furniture"/></span>
                 </label>
                 <label class="filters-right-bottom__item">
-                    <input type="checkbox">
+                    <input type="checkbox" name="filterIsHasHomeAppliances" value="true"/>
                     <span><fmt:message key="main_page_filter.home_appliances"/></span>
                 </label>
                 <label class="filters-right-bottom__item">
-                    <input type="checkbox">
+                    <input type="checkbox" name="filterPossibleWithChildren" value="true"/>
                     <span><fmt:message key="main_page_filter.children"/></span>
                 </label>
                 <label class="filters-right-bottom__item">
-                    <input type="checkbox">
+                    <input type="checkbox" name="filterPossibleWithPets" value="true"/>
                     <span><fmt:message key="main_page_filter.pets"/></span>
                 </label>
             </div>
@@ -68,11 +61,12 @@
         </form>
         <div class="list-flat__items">
         <c:forEach var="elem" items="${advertisementList}">
+            <a href="${pageContext.request.contextPath}/controller?command=advertisement_page&advertisementId=${elem.getId()}">
             <div class="list-flat__item">
-                <img src="${pageContext.request.contextPath}/img/Rectangle 27.png" alt="flat_one" class="List-flat__img">
+                <img src="data:image/jpg;base64,${elem.flat.flatPhotos.get(0).base64PhotoData}" alt="flat_one" class="List-flat__img">
                 <div class="list-flat__text">
                     <div class="text-top">
-                        ${elem.getTitle()}  ${elem.getId()}
+                        ${elem.title}  ${elem.id}
                     </div>
                     <div class="list-flat__place">
                         <div class="icon-place">
@@ -86,10 +80,11 @@
                         ${elem.getFlat().getFlatDescription().getUsersDescription()}
                     </div>
                     <div class="text-price">
-                        ${elem.getPrice()}
+                        ${elem.getPrice()}$
                     </div>
                 </div>
             </div>
+            </a>
             </c:forEach>
             <div class="card-page">
                 <c:if test="${currentPage != 1}">
@@ -104,7 +99,9 @@
                 </c:if>
 
                 <div class="number-page">
-                    ${currentPage}
+                    <c:if test="${pagesQuantity ne 1}">
+                        ${currentPage}
+                    </c:if>
                 </div>
                 <c:if test="${currentPage ne pagesQuantity}">
                 <div class="next-page bgc-page">

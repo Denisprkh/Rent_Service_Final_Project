@@ -20,7 +20,6 @@ public class ChangeLanguageCommand implements Command {
             req.getSession().setAttribute(Attribute.LANGUAGE, targetLanguage);
             String previousPage = req.getHeader(REFERER_HEADER);
             router.setPage(previousPage);
-            router.setRedirect();
         }
         return router;
     }

@@ -13,8 +13,8 @@ public class UserValidator {
 
     private static final String EMAIL_REGEX = "[a-zA-z0-9_.-]{1,40}@[a-zA-Z0-9_-]{2,40}\\.[a-z]{2,10}";
     private static final String FIRST_NAME_REGEX = "^[a-zA-Zа-яА-Я]{2,45}$";
-    private static final String LAST_NAME_REGEX = "^[a-zA-Zа-яА-Я-]{2,45}$";
-    private static final String PASSWORD_REGEX = ".{1,30}";
+    private static final String LAST_NAME_REGEX = "^[a-zA-Zа-яА-Я]{2,45}$";
+    private static final String PASSWORD_REGEX = ".{1,32}";
     private static final String PHONE_REGEX = "^(\\+375\\([\\d]{2}\\)[\\d]{3}\\-[\\d]{2}\\-[\\d]{2})$";
     private static final String EMAIL = "email";
     private static final String FIRST_NAME = "firstName";
@@ -34,42 +34,48 @@ public class UserValidator {
         return UserValidator.UserValidatorHolder.INSTANCE;
     }
 
-    public Map<String, Boolean> validateDataForSignUp(User user) {
+    public Map<String, Boolean> validateDataForSignUp(String email, String firstName, String lastName, String password,
+                                                      String phoneNumber) {
         Map<String, Boolean> validations = new HashMap<>();
-        if (user != null) {
-            validations.put(EMAIL, emailIsCorrect(user.getEmail()));
-            validations.put(FIRST_NAME, firstNameIsCorrect(user.getFirstName()));
-            validations.put(LAST_NAME, lastNameIsCorrect(user.getLastName()));
-            validations.put(PASSWORD, passwordIsCorrect(user.getPassword()));
-            validations.put(PHONE_NUMBER, phoneIsCorrect(user.getPhone()));
-        }
+        validations.put(EMAIL, emailIsCorrect(email));
+        validations.put(FIRST_NAME, firstNameIsCorrect(firstName));
+        validations.put(LAST_NAME, lastNameIsCorrect(lastName));
+        validations.put(PASSWORD, passwordIsCorrect(password));
+        validations.put(PHONE_NUMBER, phoneIsCorrect(phoneNumber));
+
         return validations;
     }
 
+
     public boolean emailIsCorrect(String email) {
-        return (email != null && isStringMatchesRegex(email, EMAIL_REGEX));
+        return !(isNullOrEmpty(email) || !isStringMatchesRegex(email,EMAIL_REGEX));
     }
 
     private boolean firstNameIsCorrect(String firstName) {
-        return (firstName != null && isStringMatchesRegex(firstName, FIRST_NAME_REGEX));
+        return !(isNullOrEmpty(firstName) || !isStringMatchesRegex(firstName,FIRST_NAME_REGEX));
     }
 
     private boolean lastNameIsCorrect(String lastName) {
-        return (lastName != null && isStringMatchesRegex(lastName, LAST_NAME_REGEX));
+        return !(isNullOrEmpty(lastName) || !isStringMatchesRegex(lastName,LAST_NAME_REGEX));
     }
 
     public boolean passwordIsCorrect(String password) {
-        return (password != null && isStringMatchesRegex(password, PASSWORD_REGEX));
+        return !(isNullOrEmpty(password) || !isStringMatchesRegex(password,PASSWORD_REGEX));
     }
 
     private boolean phoneIsCorrect(String phone) {
-        return (phone != null && isStringMatchesRegex(phone, PHONE_REGEX));
+        return !(isNullOrEmpty(phone) || !isStringMatchesRegex(phone,PHONE_REGEX));
     }
 
     private boolean isStringMatchesRegex(String string, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(string);
         return matcher.matches();
+    }
+
+    private boolean isNullOrEmpty(String data) {
+        boolean isNullOrEmpty = data == null || data.isEmpty();
+        return isNullOrEmpty;
     }
 
 }

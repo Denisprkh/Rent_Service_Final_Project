@@ -26,7 +26,6 @@ public class SignInCommand implements Command {
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         Router router = new Router();
         HttpSession session = request.getSession();
-        router.setRedirect();
         try {
             String email = request.getParameter(RequestParameter.USER_EMAIL);
             String password = request.getParameter(RequestParameter.USER_PASSWORD);

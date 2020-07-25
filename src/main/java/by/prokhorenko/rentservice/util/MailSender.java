@@ -1,5 +1,8 @@
 package by.prokhorenko.rentservice.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -10,21 +13,22 @@ public class MailSender {
 
     private String username;
     private String password;
-    private Properties props;
+    private final Properties props;
     private static final String MAIL_PROPERTIES = "mail/mail.properties";
     private static final String USER_NAME_PROPERTY = "mail.user.name";
     private static final String USER_PASSWORD_PROPERTY = "mail.user.password";
+    private static final Logger LOG = LogManager.getLogger();
 
     public MailSender() {
         props = new Properties();
         try {
             props.load(this.getClass().getClassLoader().getResourceAsStream(MAIL_PROPERTIES));
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error("Loading properties for mail sending error");
         }
     }
 
-    public void send(String subject, String text, String toEmail){
+    public void send(String subject, String text, String toEmail) {
         username = props.getProperty(USER_NAME_PROPERTY);
         password = props.getProperty(USER_PASSWORD_PROPERTY);
         Session session = Session.getDefaultInstance(props, new Authenticator() {

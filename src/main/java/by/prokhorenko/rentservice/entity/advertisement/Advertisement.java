@@ -2,13 +2,12 @@ package by.prokhorenko.rentservice.entity.advertisement;
 
 import by.prokhorenko.rentservice.builder.AdvertisementBuilder;
 import by.prokhorenko.rentservice.entity.flat.Flat;
-import by.prokhorenko.rentservice.entity.flat.FlatPhoto;
 import by.prokhorenko.rentservice.entity.user.User;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 public class Advertisement implements Serializable {
 
@@ -18,18 +17,28 @@ public class Advertisement implements Serializable {
     private String title;
     private BigDecimal price;
     private LocalDateTime dateOfCreation;
+    private boolean isVisible;
 
-    public Advertisement(AdvertisementBuilder advertisementBuilder){
+    public Advertisement(AdvertisementBuilder advertisementBuilder) {
         this.id = advertisementBuilder.getId();
         this.author = advertisementBuilder.getAuthor();
         this.flat = advertisementBuilder.getFlat();
         this.title = advertisementBuilder.getTitle();
         this.price = advertisementBuilder.getPrice();
         this.dateOfCreation = advertisementBuilder.getDateOfCreation();
+        this.isVisible = advertisementBuilder.isVisible();
     }
 
-    public Advertisement(){
+    public Advertisement() {
 
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
     }
 
     public int getId() {
@@ -88,6 +97,7 @@ public class Advertisement implements Serializable {
         Advertisement that = (Advertisement) o;
 
         if (id != that.id) return false;
+        if (isVisible != that.isVisible) return false;
         if (author != null ? !author.equals(that.author) : that.author != null) return false;
         if (flat != null ? !flat.equals(that.flat) : that.flat != null) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
@@ -103,6 +113,7 @@ public class Advertisement implements Serializable {
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (dateOfCreation != null ? dateOfCreation.hashCode() : 0);
+        result = 31 * result + (isVisible ? 1 : 0);
         return result;
     }
 
@@ -115,6 +126,7 @@ public class Advertisement implements Serializable {
         sb.append(", title='").append(title).append('\'');
         sb.append(", price=").append(price);
         sb.append(", dateOfCreation=").append(dateOfCreation);
+        sb.append(", isVisible=").append(isVisible);
         sb.append('}');
         return sb.toString();
     }

@@ -9,19 +9,24 @@ import by.prokhorenko.rentservice.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
 public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao {
 
     private static final FlatPhotoDao INSTANCE = new FlatPhotoDaoImpl();
-
+    private static final int BUFFER_SIZE = 4096;
+    private static final int BYTES_READ_START_VALUE = -1;
     private FlatPhotoDaoImpl(){
         this.connection = ConnectionPool.INSTANCE.getConnection();
     }
@@ -41,12 +46,34 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
             while(resultSet.next()){
                 flatPhotos.add(buildFlatPhotoFromResultSet(resultSet));
             }
+            addBase64DataToPhotos(flatPhotos);
             return flatPhotos;
         } catch (SQLException e) {
             throw new DaoException("Finding all flats photo by flats id error",e);
         }finally {
             closeResultSet(resultSet);
         }
+    }
+
+    private List<FlatPhoto> addBase64DataToPhotos(List<FlatPhoto> flatPhotos){
+        for(FlatPhoto flatPhoto : flatPhotos){
+            InputStream inputStream = flatPhoto.getFlatPhotoData();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int bytesRead = BYTES_READ_START_VALUE;
+            while (true) {
+                try {
+                    if (!((bytesRead = inputStream.read(buffer)) != -1)) break;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            byte[] imageBytes = outputStream.toByteArray();
+            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+            flatPhoto.setBase64PhotoData(base64Image);
+        }
+        return flatPhotos;
     }
 
     @Override
@@ -83,6 +110,7 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
             while (resultSet.next()){
                 allFlatPhotos.add(buildFlatPhotoFromResultSet(resultSet));
             }
+            addBase64DataToPhotos(allFlatPhotos);
             return allFlatPhotos;
         } catch (SQLException e) {
             throw new DaoException("Finding all flats photos error",e);
@@ -91,19 +119,7 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
 
     @Override
     public Optional<FlatPhoto> findById(int id) throws DaoException {
-        ResultSet resultSet = null;
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_PHOTO_BY_ID)){
-            statement.setInt(1,id);
-            resultSet = statement.executeQuery();
-            if(resultSet.next()){
-                return Optional.of(buildFlatPhotoFromResultSet(resultSet));
-            }
-            return Optional.empty();
-        } catch (SQLException e) {
-            throw new DaoException("Finding flats photo by id error",e);
-        }finally {
-            closeResultSet(resultSet);
-        }
+        throw new UnsupportedOperationException();
     }
 
     @Override

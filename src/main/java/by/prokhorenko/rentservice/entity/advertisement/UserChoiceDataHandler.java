@@ -1,49 +1,64 @@
-package by.prokhorenko.rentservice.entity.flat;
+package by.prokhorenko.rentservice.entity.advertisement;
 
-import by.prokhorenko.rentservice.builder.FlatDescriptionBuilder;
+import by.prokhorenko.rentservice.builder.UserChoiceDataHandlerBuilder;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
 
-public class FlatDescription implements Serializable {
-
-    private int id;
+public class UserChoiceDataHandler {
+    private String city;
+    private String district;
+    private String street;
     private int rooms;
     private float livingArea;
     private boolean hasFurniture;
     private boolean hasHomeAppliances;
-    private boolean hasTheInternet;
     private boolean possibleWithChild;
     private boolean possibleWithPets;
-    private String usersDescription;
+    private BigDecimal price;
 
-    public FlatDescription(FlatDescriptionBuilder flatDescriptionBuilder){
-        this.id = flatDescriptionBuilder.getId();
-        this.rooms = flatDescriptionBuilder.getRooms();
-        this.livingArea = flatDescriptionBuilder.getLivingArea();
-        this.hasFurniture = flatDescriptionBuilder.isHasFurniture();
-        this.hasHomeAppliances = flatDescriptionBuilder.isHasHomeAppliances();
-        this.hasTheInternet = flatDescriptionBuilder.isHasTheInternet();
-        this.possibleWithChild = flatDescriptionBuilder.isPossibleWithChild();
-        this.possibleWithPets = flatDescriptionBuilder.isPossibleWithPets();
-        this.usersDescription = flatDescriptionBuilder.getUsersDescription();
+    public UserChoiceDataHandler() {
     }
 
-    public FlatDescription(){
-
+    public UserChoiceDataHandler(UserChoiceDataHandlerBuilder userChoiceDataHandlerBuilder) {
+        this.city = userChoiceDataHandlerBuilder.getCity();
+        this.district = userChoiceDataHandlerBuilder.getDistrict();
+        this.street = userChoiceDataHandlerBuilder.getStreet();
+        this.rooms = userChoiceDataHandlerBuilder.getRooms();
+        this.livingArea = userChoiceDataHandlerBuilder.getLivingArea();
+        this.hasFurniture = userChoiceDataHandlerBuilder.isHasFurniture();
+        this.hasHomeAppliances = userChoiceDataHandlerBuilder.isHasHomeAppliances();
+        this.possibleWithChild = userChoiceDataHandlerBuilder.isPossibleWithChild();
+        this.possibleWithPets = userChoiceDataHandlerBuilder.isPossibleWithPets();
+        this.price = userChoiceDataHandlerBuilder.getPrice();
     }
 
-    public int getId() {
-        return id;
+    public String getCity() {
+        return city;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public int getRooms() {
         return rooms;
     }
-
 
     public void setRooms(int rooms) {
         this.rooms = rooms;
@@ -73,14 +88,6 @@ public class FlatDescription implements Serializable {
         this.hasHomeAppliances = hasHomeAppliances;
     }
 
-    public boolean isHasTheInternet() {
-        return hasTheInternet;
-    }
-
-    public void setHasTheInternet(boolean hasTheInternet) {
-        this.hasTheInternet = hasTheInternet;
-    }
-
     public boolean isPossibleWithChild() {
         return possibleWithChild;
     }
@@ -97,12 +104,12 @@ public class FlatDescription implements Serializable {
         this.possibleWithPets = possibleWithPets;
     }
 
-    public String getUsersDescription() {
-        return usersDescription;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setUsersDescription(String usersDescription) {
-        this.usersDescription = usersDescription;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     @Override
@@ -110,45 +117,48 @@ public class FlatDescription implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FlatDescription that = (FlatDescription) o;
+        UserChoiceDataHandler that = (UserChoiceDataHandler) o;
 
-        if (id != that.id) return false;
         if (rooms != that.rooms) return false;
         if (Float.compare(that.livingArea, livingArea) != 0) return false;
         if (hasFurniture != that.hasFurniture) return false;
         if (hasHomeAppliances != that.hasHomeAppliances) return false;
-        if (hasTheInternet != that.hasTheInternet) return false;
         if (possibleWithChild != that.possibleWithChild) return false;
         if (possibleWithPets != that.possibleWithPets) return false;
-        return usersDescription != null ? usersDescription.equals(that.usersDescription) : that.usersDescription == null;
+        if (city != null ? !city.equals(that.city) : that.city != null) return false;
+        if (district != null ? !district.equals(that.district) : that.district != null) return false;
+        if (street != null ? !street.equals(that.street) : that.street != null) return false;
+        return price != null ? price.equals(that.price) : that.price == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = city != null ? city.hashCode() : 0;
+        result = 31 * result + (district != null ? district.hashCode() : 0);
+        result = 31 * result + (street != null ? street.hashCode() : 0);
         result = 31 * result + rooms;
         result = 31 * result + (livingArea != +0.0f ? Float.floatToIntBits(livingArea) : 0);
         result = 31 * result + (hasFurniture ? 1 : 0);
         result = 31 * result + (hasHomeAppliances ? 1 : 0);
-        result = 31 * result + (hasTheInternet ? 1 : 0);
         result = 31 * result + (possibleWithChild ? 1 : 0);
         result = 31 * result + (possibleWithPets ? 1 : 0);
-        result = 31 * result + (usersDescription != null ? usersDescription.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("FlatDescription{");
-        sb.append("id=").append(id);
+        final StringBuilder sb = new StringBuilder("UserChoiceDataHandler{");
+        sb.append("city='").append(city).append('\'');
+        sb.append(", district='").append(district).append('\'');
+        sb.append(", street='").append(street).append('\'');
         sb.append(", rooms=").append(rooms);
         sb.append(", livingArea=").append(livingArea);
         sb.append(", hasFurniture=").append(hasFurniture);
         sb.append(", hasHomeAppliances=").append(hasHomeAppliances);
-        sb.append(", hasTheInternet=").append(hasTheInternet);
         sb.append(", possibleWithChild=").append(possibleWithChild);
         sb.append(", possibleWithPets=").append(possibleWithPets);
-        sb.append(", usersDescription='").append(usersDescription).append('\'');
+        sb.append(", price=").append(price);
         sb.append('}');
         return sb.toString();
     }

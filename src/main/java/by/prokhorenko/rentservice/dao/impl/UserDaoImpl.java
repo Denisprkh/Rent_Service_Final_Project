@@ -7,6 +7,7 @@ import by.prokhorenko.rentservice.dao.UserDao;
 import by.prokhorenko.rentservice.entity.user.User;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
+import by.prokhorenko.rentservice.util.HashGenerator;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +38,7 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
             statement.setString(1,user.getFirstName());
             statement.setString(2,user.getLastName());
             statement.setString(3,user.getEmail());
-            statement.setString(4,DigestUtils.md5Hex(user.getPassword()));
+            statement.setString(4, HashGenerator.generateHash(user.getPassword()));
             statement.setString(5,user.getPhone());
             int id = executeUpdateAndGetGeneratedId(statement);
             user.setId(id);
@@ -89,7 +90,7 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
             statement.setString(1,user.getFirstName());
             statement.setString(2,user.getLastName());
             statement.setString(3,user.getEmail());
-            statement.setString(4,user.getPassword());
+            statement.setString(4,HashGenerator.generateHash(user.getPassword()));
             statement.setString(5,user.getPhone());
             statement.setInt(6,user.getId());
             statement.executeUpdate();
@@ -110,7 +111,7 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
         ResultSet resultSet = null;
         try(PreparedStatement preparedStatement = connection.prepareStatement(SqlQuery.FIND_USER_BY_EMAIL_AND_PASSWORD)){
             preparedStatement.setString(1,email);
-            preparedStatement.setString(2,DigestUtils.md5Hex(password));
+            preparedStatement.setString(2,HashGenerator.generateHash(password));
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
                 LOG.debug(resultSet.getBoolean(SqlColumnName.USERS_IS_BANNED_COLUMN_NAME));

@@ -4,7 +4,7 @@ import by.prokhorenko.rentservice.builder.UserBuilder;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
-import by.prokhorenko.rentservice.controller.command.ResourceBundleErrorMessageKey;
+import by.prokhorenko.rentservice.controller.command.util.CommandUtil;
 import by.prokhorenko.rentservice.entity.user.User;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
@@ -16,18 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
-import java.util.Optional;
 
 public class SignUpCommand implements Command {
 
     private static final Logger LOG = LogManager.getLogger();
-    private static final String EMAIL = "email";
-    private static final String FIRST_NAME = "firstName";
-    private static final String LAST_NAME = "lastName";
-    private static final String PASSWORD = "password";
-    private static final String PHONE_NUMBER = "phoneNumber";
-    private static final String EMAIL_IS_UNIQUE = "emailIsUnique";
-    private static final String PHONE_IS_UNIQUE = "phoneIsUnique";
     private UserService userService;
 
     public SignUpCommand() {
@@ -37,71 +29,39 @@ public class SignUpCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         Router router = new Router();
-        router.setRedirect();
         HttpSession session = request.getSession();
         try {
-            User user = buildUserFromRequest(request);
-            Map<String,Boolean> usersDataValidations = userService.defineUsersIncorrectData(user);
-            LOG.debug(usersDataValidations.values());
+            String firstName = request.getParameter(RequestParameter.USER_FIRST_NAME);
+            String lastName = request.getParameter(RequestParameter.USER_LAST_NAME);
+            String email = request.getParameter(RequestParameter.USER_EMAIL);
+            String password = request.getParameter(RequestParameter.USER_PASSWORD);
+            String phone = request.getParameter(RequestParameter.USER_PHONE);
+            Map<String,Boolean> usersDataValidations = userService.defineUsersIncorrectData(email,firstName,lastName,
+                    password,phone);
             if(!usersDataValidations.containsValue(Boolean.FALSE)){
+                User user = buildUser(firstName,lastName,email,password,phone);
                 userService.signUp(user);
                 router.setPage(PagePath.ACTIVATION_INFO);
-                session.removeAttribute(Attribute.SIGN_UP_ERROR_MESSAGE);
+                session.removeAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE);
             }else{
-               defineErrorMessageFromValidations(request,usersDataValidations);
+               CommandUtil.defineErrorMessageFromValidations(request,usersDataValidations);
                router.setPage(PagePath.SIGN_UP);
             }
         } catch (ServiceException e) {
             LOG.error(e);
+            router.setForward();
             router.setPage(PagePath.SIGN_UP);
         }
         return router;
     }
 
-    private String defineFalseKey(Map<String,Boolean> map){
-        Optional<String> falseKey = map.entrySet()
-                .stream()
-                .filter(entry -> Boolean.FALSE.equals(entry.getValue()))
-                .map(Map.Entry::getKey)
-                .findFirst();
-        return falseKey.get();
-    }
-
-    private void defineErrorMessageFromValidations(HttpServletRequest request,Map<String,Boolean> usersDataValidations){
-        HttpSession session = request.getSession();
-        String falseKey = defineFalseKey(usersDataValidations);
-        switch (falseKey){
-            case EMAIL: session.setAttribute(Attribute.SIGN_UP_ERROR_MESSAGE,
-                    ResourceBundleErrorMessageKey.EMAIL_INCORRECT_ERROR_MESSAGE);
-                break;
-            case FIRST_NAME: session.setAttribute(Attribute.SIGN_UP_ERROR_MESSAGE,
-                    ResourceBundleErrorMessageKey.FIRST_NAME_INCORRECT_ERROR_MESSAGE);
-                break;
-            case LAST_NAME: session.setAttribute(Attribute.SIGN_UP_ERROR_MESSAGE,
-                    ResourceBundleErrorMessageKey.LAST_NAME_INCORRECT_ERROR_MESSAGE);
-                break;
-            case PASSWORD: session.setAttribute(Attribute.SIGN_UP_ERROR_MESSAGE,
-                    ResourceBundleErrorMessageKey.PASSWORD_INCORRECT_ERROR_MESSAGE);
-                break;
-            case PHONE_NUMBER: session.setAttribute(Attribute.SIGN_UP_ERROR_MESSAGE,
-                    ResourceBundleErrorMessageKey.PHONE_INCORRECT_ERROR_MESSAGE);
-                break;
-            case EMAIL_IS_UNIQUE: session.setAttribute(Attribute.SIGN_UP_ERROR_MESSAGE,
-                    ResourceBundleErrorMessageKey.EMAIL_IS_NOT_UNIQUE_ERROR_MESSAGE);
-                break;
-            case PHONE_IS_UNIQUE: session.setAttribute(Attribute.SIGN_UP_ERROR_MESSAGE,
-                    ResourceBundleErrorMessageKey.PHONE_IS_NOT_UNIQUE_ERROR_MESSAGE);
-                break;
-        }
-    }
-
-    private User buildUserFromRequest(HttpServletRequest request){
+    private User buildUser(String firstName,String lastName,String email,String password,String phone){
         User user = new UserBuilder()
-                .buildFirstName(request.getParameter(RequestParameter.USER_FIRST_NAME))
-                .buildLastName(request.getParameter(RequestParameter.USER_LAST_NAME))
-                .buildEmail(request.getParameter(RequestParameter.USER_EMAIL))
-                .buildPassword(request.getParameter(RequestParameter.USER_PASSWORD))
-                .buildPhone(request.getParameter(RequestParameter.USER_PHONE))
+                .buildFirstName(firstName)
+                .buildLastName(lastName)
+                .buildEmail(email)
+                .buildPassword(password)
+                .buildPhone(phone)
                 .buildUser();
         return user;
     }

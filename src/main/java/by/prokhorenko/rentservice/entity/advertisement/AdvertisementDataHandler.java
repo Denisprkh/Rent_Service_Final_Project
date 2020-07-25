@@ -1,11 +1,8 @@
 package by.prokhorenko.rentservice.entity.advertisement;
 
-import by.prokhorenko.rentservice.builder.UserAdvertisementDataHandlerBuilder;
-import by.prokhorenko.rentservice.entity.flat.FlatRepairType;
+import by.prokhorenko.rentservice.builder.AdvertisementDataHandlerBuilder;
 
-import java.math.BigDecimal;
-
-public class UserAdvertisementDataHandler {
+public class AdvertisementDataHandler {
     private String city;
     private String district;
     private String street;
@@ -19,7 +16,6 @@ public class UserAdvertisementDataHandler {
     private boolean hasTheInternet;
     private boolean possibleWithChildren;
     private boolean possibleWithPets;
-    private FlatRepairType repairType;
     private String usersDescription;
 
     public String getTitle() {
@@ -30,25 +26,24 @@ public class UserAdvertisementDataHandler {
         this.title = title;
     }
 
-    public UserAdvertisementDataHandler() {
+    public AdvertisementDataHandler() {
     }
 
-    public UserAdvertisementDataHandler(UserAdvertisementDataHandlerBuilder userAdvertisementDataHandlerBuilder) {
-        this.city = userAdvertisementDataHandlerBuilder.getCity();
-        this.district = userAdvertisementDataHandlerBuilder.getDistrict();
-        this.street = userAdvertisementDataHandlerBuilder.getStreet();
-        this.rooms = userAdvertisementDataHandlerBuilder.getRooms();
-        this.price = userAdvertisementDataHandlerBuilder.getPrice();
-        this.area = userAdvertisementDataHandlerBuilder.getLivingArea();
-        this.houseNumber = userAdvertisementDataHandlerBuilder.getHouseNumber();
-        this.title = userAdvertisementDataHandlerBuilder.getTitle();
-        this.hasFurniture = userAdvertisementDataHandlerBuilder.isHasFurniture();
-        this.hasHomeAppliances = userAdvertisementDataHandlerBuilder.isHasHomeAppliances();
-        this.hasTheInternet = userAdvertisementDataHandlerBuilder.isHasTheInternet();
-        this.possibleWithChildren = userAdvertisementDataHandlerBuilder.isPossibleWithChildren();
-        this.possibleWithPets = userAdvertisementDataHandlerBuilder.isPossibleWithPets();
-        this.repairType = userAdvertisementDataHandlerBuilder.getRepairType();
-        this.usersDescription = userAdvertisementDataHandlerBuilder.getUsersDescription();
+    public AdvertisementDataHandler(AdvertisementDataHandlerBuilder advertisementDataHandlerBuilder) {
+        this.city = advertisementDataHandlerBuilder.getCity();
+        this.district = advertisementDataHandlerBuilder.getDistrict();
+        this.street = advertisementDataHandlerBuilder.getStreet();
+        this.rooms = advertisementDataHandlerBuilder.getRooms();
+        this.price = advertisementDataHandlerBuilder.getPrice();
+        this.area = advertisementDataHandlerBuilder.getLivingArea();
+        this.houseNumber = advertisementDataHandlerBuilder.getHouseNumber();
+        this.title = advertisementDataHandlerBuilder.getTitle();
+        this.hasFurniture = advertisementDataHandlerBuilder.isHasFurniture();
+        this.hasHomeAppliances = advertisementDataHandlerBuilder.isHasHomeAppliances();
+        this.hasTheInternet = advertisementDataHandlerBuilder.isHasTheInternet();
+        this.possibleWithChildren = advertisementDataHandlerBuilder.isPossibleWithChildren();
+        this.possibleWithPets = advertisementDataHandlerBuilder.isPossibleWithPets();
+        this.usersDescription = advertisementDataHandlerBuilder.getUsersDescription();
     }
 
     public String getCity() {
@@ -147,14 +142,6 @@ public class UserAdvertisementDataHandler {
         this.possibleWithPets = possibleWithPets;
     }
 
-    public FlatRepairType getRepairType() {
-        return repairType;
-    }
-
-    public void setRepairType(FlatRepairType repairType) {
-        this.repairType = repairType;
-    }
-
     public String getUsersDescription() {
         return usersDescription;
     }
@@ -168,7 +155,7 @@ public class UserAdvertisementDataHandler {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserAdvertisementDataHandler that = (UserAdvertisementDataHandler) o;
+        AdvertisementDataHandler that = (AdvertisementDataHandler) o;
 
         if (hasFurniture != that.hasFurniture) return false;
         if (hasHomeAppliances != that.hasHomeAppliances) return false;
@@ -183,7 +170,6 @@ public class UserAdvertisementDataHandler {
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (area != null ? !area.equals(that.area) : that.area != null) return false;
         if (price != null ? !price.equals(that.price) : that.price != null) return false;
-        if (repairType != that.repairType) return false;
         return usersDescription != null ? usersDescription.equals(that.usersDescription) : that.usersDescription == null;
     }
 
@@ -202,7 +188,6 @@ public class UserAdvertisementDataHandler {
         result = 31 * result + (hasTheInternet ? 1 : 0);
         result = 31 * result + (possibleWithChildren ? 1 : 0);
         result = 31 * result + (possibleWithPets ? 1 : 0);
-        result = 31 * result + (repairType != null ? repairType.hashCode() : 0);
         result = 31 * result + (usersDescription != null ? usersDescription.hashCode() : 0);
         return result;
     }
@@ -223,7 +208,6 @@ public class UserAdvertisementDataHandler {
         sb.append(", hasTheInternet=").append(hasTheInternet);
         sb.append(", possibleWithChildren=").append(possibleWithChildren);
         sb.append(", possibleWithPets=").append(possibleWithPets);
-        sb.append(", repairType=").append(repairType);
         sb.append(", usersDescription='").append(usersDescription).append('\'');
         sb.append('}');
         return sb.toString();

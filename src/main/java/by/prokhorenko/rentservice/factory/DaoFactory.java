@@ -12,40 +12,53 @@ public class DaoFactory {
     private final FlatDao flatDao;
     private final FlatPhotoDao flatPhotoDao;
     private final AdvertisementDao advertisementDao;
+    private final RequestDao requestDao;
 
-    private DaoFactory(){
+    private DaoFactory() {
         userDao = UserDaoImpl.getInstance();
         flatAddressDao = FlatAddressDaoImpl.getInstance();
         flatDescriptionDao = FlatDescriptionDaoImpl.getInstance();
         flatDao = FlatDaoImpl.getInstance();
         flatPhotoDao = FlatPhotoDaoImpl.getInstance();
         advertisementDao = AdvertisementDaoImpl.getInstance();
+        requestDao = RequestDaoImpl.getInstance();
 
     }
 
-    private static class DaoFactoryHolder{
+    private static class DaoFactoryHolder {
         private static final DaoFactory INSTANCE = new DaoFactory();
     }
 
-    public static DaoFactory getInstance(){
+    public static DaoFactory getInstance() {
         return DaoFactory.DaoFactoryHolder.INSTANCE;
     }
 
-    public UserDao getUserDao(){
+    public UserDao getUserDao() {
         return userDao;
     }
-    public FlatAddressDao getFlatAddressDao(){
+
+    public FlatAddressDao getFlatAddressDao() {
         return flatAddressDao;
     }
-    public FlatDescriptionDao getFlatDescriptionDao(){
+
+    public FlatDescriptionDao getFlatDescriptionDao() {
         return flatDescriptionDao;
     }
-    public FlatDao getFlatDao(){
+
+    public FlatDao getFlatDao() {
         return flatDao;
     }
-    public FlatPhotoDao getFlatPhotoDao(){
+
+    public FlatPhotoDao getFlatPhotoDao() {
         return flatPhotoDao;
     }
-    public AdvertisementDao getAdvertisementDao(){return advertisementDao; }
+
+    public AdvertisementDao getAdvertisementDao() {
+        return advertisementDao;
+    }
+
+    public RequestDao getRequestDao() {
+        return requestDao;
+    }
 
 }

@@ -19,9 +19,12 @@ import java.util.Optional;
 
 public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
 
-
-    public RequestDaoImpl(){
+    private static final RequestDao INSTANCE = new RequestDaoImpl();
+    private RequestDaoImpl(){
         this.connection = ConnectionPool.INSTANCE.getConnection();
+    }
+    public static RequestDao getInstance(){
+        return INSTANCE;
     }
 
     @Override

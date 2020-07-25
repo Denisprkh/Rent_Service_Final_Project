@@ -48,6 +48,7 @@ public class SqlColumnName {
     public static final String ADVERTISEMENT_TITLE_COLUMN_NAME = "title";
     public static final String ADVERTISEMENT_PRICE_COLUMN_NAME = "price";
     public static final String ADVERTISEMENT_DATE_OF_CREATION_COLUMN_NAME = "date_of_creation";
+    public static final String ADVERTISEMENT_IS_VISIBLE_COLUMN_NAME = "is_visible";
 
     public static final String REQUEST_REQUESTS_ID_COLUMN_NAME = "requests_id";
     public static final String REQUEST_USERS_ID_COLUMN_NAME = "users_id";
