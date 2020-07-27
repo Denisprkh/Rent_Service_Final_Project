@@ -11,8 +11,8 @@ public class LogOutCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         Router router = new Router();
-        request.getSession().invalidate();
         request.getSession().removeAttribute(Attribute.USER);
+        request.getSession().removeAttribute(Attribute.USER_ROLE);
         router.setPage(PagePath.INDEX);
         return router;
     }

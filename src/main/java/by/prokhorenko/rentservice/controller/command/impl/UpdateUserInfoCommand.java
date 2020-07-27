@@ -43,11 +43,6 @@ public class UpdateUserInfoCommand implements Command {
         String[] firstNameAndLastName = splitFullName(updatedFullName);
         String updatedFirstName = firstNameAndLastName[FIRST_NAME_INDEX].trim();
         String updatedLastName = firstNameAndLastName[LAST_NAME_INDEX].trim();
-        LOG.debug(updatedFirstName);
-        LOG.debug(updatedLastName);
-        LOG.debug(updatedEmail);
-        LOG.debug(updatedPassword);
-        LOG.debug(updatedPhone);
         try {
             Map<String,Boolean> usersDataValidations = userService.defineUsersIncorrectDataForUpdate(updatedEmail,
                     updatedFirstName,updatedLastName,updatedPassword,updatedPhone,usersId);

@@ -41,7 +41,7 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
             flat.setId(flatsId);
             return Optional.of(flat);
         } catch (SQLException e) {
-            throw new DaoException("Adding flat error",e);
+            throw new DaoException(e);
         }
     }
 
@@ -57,7 +57,7 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
             }
             return allFlats;
         } catch (SQLException e) {
-            throw new DaoException("Finding all flats error",e);
+            throw new DaoException(e);
         }
     }
 
@@ -76,7 +76,7 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
             }
             return Optional.empty();
         } catch (SQLException | IOException e) {
-            throw new DaoException("Finding flat by id error",e);
+            throw new DaoException(e);
         }finally {
             closeResultSet(resultSet);
         }
@@ -86,10 +86,13 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
     public Optional<Flat> update(Flat flat) throws DaoException {
         try(PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_FLAT_BY_ID)) {
            statement.setBoolean(1,flat.isFree());
+           statement.setInt(2,flat.getFlatDescription().getId());
+           statement.setInt(3,flat.getFlatAddress().getId());
+           statement.setInt(4,flat.getId());
            updateEntity(statement);
            return findById(flat.getId());
         } catch (SQLException e) {
-            throw new DaoException("Updating flatAddress error",e);
+            throw new DaoException(e);
         }
     }
 
@@ -103,4 +106,23 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
         closeConnection(this.connection);
     }
 
+    @Override
+    public boolean updateFlatFreeStatusFalse(int flatsId) throws DaoException {
+       try(PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_FLAT_FREE_STATUS_FALSE)) {
+           statement.setInt(1,flatsId);
+           return updateEntity(statement);
+       } catch (SQLException e) {
+           throw new DaoException(e);
+       }
+    }
+
+    @Override
+    public boolean updateFlatFreeStatusTrue(int flatsId) throws DaoException {
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_FLAT_FREE_STATUS_TRUE)) {
+            statement.setInt(1,flatsId);
+            return updateEntity(statement);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
 }

@@ -17,15 +17,17 @@
 <body>
 <jsp:include page="header.jsp"/>
 <section>
-    <form action="controller" method="post">
+    <form action="${pageContext.request.contextPath}/controller" method="post">
     <div class="top-filters">
         <div class="container">
             <div class="top-filters__items">
                 <input type="city" name="filterCity" placeholder="<fmt:message key="main_page_filter.city"/>" class="city filters">
-                <input type="number" name="filterRooms" placeholder="<fmt:message key="main_page_filter.rooms"/>" class="rooms filters">
-                <input type="number" name="filterPrice" placeholder="<fmt:message key="main_page_filter.price"/>" class="price filters">
-                <button class="search filters" type="submit" name="command" value="find">
-            <fmt:message key="main_page_filter.search"/></button>
+                <input type="number" min="1" name="filterRooms" placeholder="<fmt:message key="main_page_filter.rooms"/>" class="rooms filters">
+                <input type="hidden" name="newSearch" value="" id="newSearch"/>
+                <input type="hidden" name="currentPage" value="1">
+                <input type="number" min="1" name="filterPrice" placeholder="<fmt:message key="main_page_filter.price"/>" class="price filters">
+                <button class="search filters" id="filterBtn"type="submit" name="command" value="FIND_ADVERTISEMENTS_BY_FILTER">
+                <fmt:message key="main_page_filter.search"/></button>
             </div>
         </div>
     </div>
@@ -36,7 +38,7 @@
             <span><fmt:message key="main_page_filter.filter_title"/></span>
             <div class="filters-right-top__items">
                 <input type="district" name="filterDistrict" placeholder="<fmt:message key="main_page_filter.district"/>" class="filters"/>
-                <input type="number" name="filterFloor" placeholder="<fmt:message key="main_page_filter.floor"/>" class="filters"/>
+                <input type="text"  name="filterStreet" placeholder="<fmt:message key="main_page_filter.floor"/>" class="filters"/>
                 <input type="number" name="filterLivingArea" placeholder="<fmt:message key="main_page_filter.living_area"/>" class="filters"/>
             </div>
             <div class="filters-right-bottom__items">
@@ -93,10 +95,18 @@
                         <img src="img/arrow2.svg" alt="">
                     </div>
                     <div class="prev-text">
-                        <a href="controller?command=FIND_ALL_ADVERTISEMENTS&currentPage=${currentPage-1}">Prevision page</a>
+                        <c:choose>
+                            <c:when test="${not empty sessionScope.advertisementFilter}">
+                                <a href="controller?command=FIND_ADVERTISEMENTS_BY_FILTER&currentPage=${currentPage-1}">Previous page</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=FIND_ALL_ADVERTISEMENTS&currentPage=${currentPage-1}">Prevision page</a>">Next page</a>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
                 </c:if>
+
 
                 <div class="number-page">
                     <c:if test="${pagesQuantity ne 1}">
@@ -106,7 +116,14 @@
                 <c:if test="${currentPage ne pagesQuantity}">
                 <div class="next-page bgc-page">
                     <div class="next-page-text">
-                        <a href="controller?command=FIND_ALL_ADVERTISEMENTS&currentPage=${currentPage+1}">Next page</a>
+                        <c:choose>
+                            <c:when test="${not empty sessionScope.advertisementFilter}">
+                                <a href="controller?command=FIND_ADVERTISEMENTS_BY_FILTER&currentPage=${currentPage+1}">Next page</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=FIND_ALL_ADVERTISEMENTS&currentPage=${currentPage+1}">Next page</a>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                     <div class="icon">
                         <img src="img/arrow1.svg" alt="">
@@ -120,3 +137,10 @@
 </div>
 </body>
 </html>
+
+<script>
+    var filterBtn = document.querySelector("#filterBtn")
+    var newSearchInput = document.querySelector('#newSearch')
+    filterBtn.addEventListener('click',() => { newSearchInput.value='newSearchInput'})
+    console.log(filterBtn)
+</script>

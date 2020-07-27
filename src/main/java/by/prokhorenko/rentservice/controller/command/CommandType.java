@@ -16,7 +16,9 @@ public enum  CommandType {
     SEND_A_REQUEST(new NewRequestCommand()),
     UPDATE_PROFILE_DATA(new UpdateUserInfoCommand()),
     DELETE_ADVERTISEMENT(new DeleteAdvertisementCommand()),
-    FIND_ADVERTISEMENT_BY_FILTER(new FindAdvertisementsByUserChoiceCommand());
+    FIND_ADVERTISEMENTS_BY_FILTER(new FindAdvertisementsByUserChoiceCommand()),
+    SET_FLAT_IN_RENT(new SetFlatIsInRentCommand()),
+    SET_FLAT_IS_NOT_IN_RENT(new SetFlatIsNotInRentCommand());
 
 
     private Command command;

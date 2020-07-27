@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface AdvertisementDao extends CommonDao<Advertisement> {
     List<Advertisement> findAllAdvertisementsByUsersId(int id) throws DaoException;
-    List<Advertisement> findAdvertisementsByUsersChoice(UserChoiceDataHandler advertisementDataHandler) throws DaoException;
+    List<Advertisement> findAdvertisementsByUsersChoice(UserChoiceDataHandler advertisementDataHandler,
+                                                        int start,int total) throws DaoException;
     boolean setAdvertisementStatusInvisible(int advertisementsId) throws DaoException;
+    int findFilteredAdvertisementsQuantity(UserChoiceDataHandler dataHandler) throws DaoException;
 }

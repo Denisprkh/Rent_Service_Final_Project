@@ -34,6 +34,19 @@ public class RequestParameter {
     public static final String UPDATED_USER_EMAIL = "updatedEmail";
     public static final String UPDATED_USER_PHONE = "updatedPhone";
     public static final String UPDATED_USER_PASSWORD = "updatedPassword";
+    public static final String FILTER_CITY = "filterCity";
+    public static final String FILTER_DISTRICT = "filterDistrict";
+    public static final String FILTER_STREET = "filterStreet";
+    public static final String FILTER_PRICE = "filterPrice";
+    public static final String FILTER_ROOMS = "filterRooms";
+    public static final String FILTER_LIVING_AREA = "filterLivingArea";
+    public static final String FILTER_HAS_FURNITURE = "filterIsHasFurniture";
+    public static final String FILTER_HAS_HOME_APPLIANCES = "filterIsHasHomeAppliances";
+    public static final String FILTER_POSSIBLE_WITH_PETS = "filterPossibleWithPets";
+    public static final String FILTER_POSSIBLE_WITH_CHILDREN = "filterPossibleWithChildren";
+    public static final String NEW_FILTER_SEARCH_FLAG = "newSearch";
+    public static final String REQUEST_ID = "requestId";
+    public static final String FLAT_ID = "flatId";
 
     private RequestParameter(){}
 

@@ -24,6 +24,7 @@ public class Request implements Serializable {
         this.endDate = requestBuilder.getEndDate();
         this.applicationDate = requestBuilder.getApplicationDate();
         this.advertisement = requestBuilder.getAdvertisement();
+        this.isApproved = requestBuilder.isApproved();
     }
 
     public Request() {

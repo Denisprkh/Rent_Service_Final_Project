@@ -43,49 +43,49 @@ public class AdvertisementValidator {
     }
 
     private boolean advertisementTitleDataIsValid(String titleData) {
-        boolean isValid = !(isNullOrEmpty(titleData) || !titleData.matches(COMMON_STRING_DATA_REGEX));
+        boolean isValid = !(isNullOrBlank(titleData) || !titleData.matches(COMMON_STRING_DATA_REGEX));
         return isValid;
     }
 
     private boolean priceDataIsValid(String priceData) {
-        boolean isValid = !(isNullOrEmpty(priceData) || !priceData.matches(PRICE_REGEX));
+        boolean isValid = !(isNullOrBlank(priceData) || !priceData.matches(PRICE_REGEX));
         return isValid;
     }
 
     private boolean cityDataIsValid(String cityData) {
-        boolean isValid = !(isNullOrEmpty(cityData) || !cityData.matches(LOCATION_REGEX));
+        boolean isValid = !(isNullOrBlank(cityData) || !cityData.matches(LOCATION_REGEX));
         return isValid;
     }
 
 
     private boolean districtDataIsValid(String districtData) {
-        boolean isValid = !(isNullOrEmpty(districtData) || !districtData.matches(LOCATION_REGEX));
+        boolean isValid = !(isNullOrBlank(districtData) || !districtData.matches(LOCATION_REGEX));
         return isValid;
     }
 
     private boolean streetDataIsValid(String streetData) {
-        boolean isValid = !(isNullOrEmpty(streetData) || !streetData.matches(LOCATION_REGEX));
+        boolean isValid = !(isNullOrBlank(streetData) || !streetData.matches(LOCATION_REGEX));
         return isValid;
     }
 
     private boolean houseNumberDataIsValid(String houseNumberData) {
-        boolean isValid = !(isNullOrEmpty(houseNumberData) || !houseNumberData.matches(HOUSE_NUMBER_REGEX));
+        boolean isValid = !(isNullOrBlank(houseNumberData) || !houseNumberData.matches(HOUSE_NUMBER_REGEX));
         return isValid;
     }
 
     private boolean roomsDataIsValid(String roomsData) {
-        boolean isValid = !(isNullOrEmpty(roomsData) || !roomsData.matches(ROOMS_REGEX));
+        boolean isValid = !(isNullOrBlank(roomsData) || !roomsData.matches(ROOMS_REGEX));
         return isValid;
     }
 
     private boolean areaDataIsValid(String areaData) {
-        boolean isValid = !(isNullOrEmpty(areaData) || !areaData.matches(AREA_REGEX));
+        boolean isValid = !(isNullOrBlank(areaData) || !areaData.matches(AREA_REGEX));
         return isValid;
     }
 
 
-    private boolean isNullOrEmpty(String data) {
-        boolean isNullOrEmpty = data == null || data.isEmpty();
+    private boolean isNullOrBlank(String data) {
+        boolean isNullOrEmpty = data == null || data.isBlank();
         return isNullOrEmpty;
     }
 }

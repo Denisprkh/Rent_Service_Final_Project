@@ -2,19 +2,19 @@ package by.prokhorenko.rentservice.entity.advertisement;
 
 import by.prokhorenko.rentservice.builder.UserChoiceDataHandlerBuilder;
 
-import java.math.BigDecimal;
+import java.lang.reflect.Field;
 
 public class UserChoiceDataHandler {
     private String city;
     private String district;
     private String street;
-    private int rooms;
-    private float livingArea;
-    private boolean hasFurniture;
-    private boolean hasHomeAppliances;
-    private boolean possibleWithChild;
-    private boolean possibleWithPets;
-    private BigDecimal price;
+    private String rooms;
+    private String livingArea;
+    private String hasFurniture;
+    private String hasHomeAppliances;
+    private String possibleWithChild;
+    private String possibleWithPets;
+    private String price;
 
     public UserChoiceDataHandler() {
     }
@@ -25,10 +25,10 @@ public class UserChoiceDataHandler {
         this.street = userChoiceDataHandlerBuilder.getStreet();
         this.rooms = userChoiceDataHandlerBuilder.getRooms();
         this.livingArea = userChoiceDataHandlerBuilder.getLivingArea();
-        this.hasFurniture = userChoiceDataHandlerBuilder.isHasFurniture();
-        this.hasHomeAppliances = userChoiceDataHandlerBuilder.isHasHomeAppliances();
-        this.possibleWithChild = userChoiceDataHandlerBuilder.isPossibleWithChild();
-        this.possibleWithPets = userChoiceDataHandlerBuilder.isPossibleWithPets();
+        this.hasFurniture = userChoiceDataHandlerBuilder.getHasFurniture();
+        this.hasHomeAppliances = userChoiceDataHandlerBuilder.getHasHomeAppliances();
+        this.possibleWithChild = userChoiceDataHandlerBuilder.getPossibleWithChild();
+        this.possibleWithPets = userChoiceDataHandlerBuilder.getPossibleWithPets();
         this.price = userChoiceDataHandlerBuilder.getPrice();
     }
 
@@ -56,59 +56,59 @@ public class UserChoiceDataHandler {
         this.street = street;
     }
 
-    public int getRooms() {
+    public String getRooms() {
         return rooms;
     }
 
-    public void setRooms(int rooms) {
+    public void setRooms(String rooms) {
         this.rooms = rooms;
     }
 
-    public float getLivingArea() {
+    public String getLivingArea() {
         return livingArea;
     }
 
-    public void setLivingArea(float livingArea) {
+    public void setLivingArea(String livingArea) {
         this.livingArea = livingArea;
     }
 
-    public boolean isHasFurniture() {
+    public String getHasFurniture() {
         return hasFurniture;
     }
 
-    public void setHasFurniture(boolean hasFurniture) {
+    public void setHasFurniture(String hasFurniture) {
         this.hasFurniture = hasFurniture;
     }
 
-    public boolean isHasHomeAppliances() {
+    public String getHasHomeAppliances() {
         return hasHomeAppliances;
     }
 
-    public void setHasHomeAppliances(boolean hasHomeAppliances) {
+    public void setHasHomeAppliances(String hasHomeAppliances) {
         this.hasHomeAppliances = hasHomeAppliances;
     }
 
-    public boolean isPossibleWithChild() {
+    public String getPossibleWithChild() {
         return possibleWithChild;
     }
 
-    public void setPossibleWithChild(boolean possibleWithChild) {
+    public void setPossibleWithChild(String possibleWithChild) {
         this.possibleWithChild = possibleWithChild;
     }
 
-    public boolean isPossibleWithPets() {
+    public String getPossibleWithPets() {
         return possibleWithPets;
     }
 
-    public void setPossibleWithPets(boolean possibleWithPets) {
+    public void setPossibleWithPets(String possibleWithPets) {
         this.possibleWithPets = possibleWithPets;
     }
 
-    public BigDecimal getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -119,15 +119,18 @@ public class UserChoiceDataHandler {
 
         UserChoiceDataHandler that = (UserChoiceDataHandler) o;
 
-        if (rooms != that.rooms) return false;
-        if (Float.compare(that.livingArea, livingArea) != 0) return false;
-        if (hasFurniture != that.hasFurniture) return false;
-        if (hasHomeAppliances != that.hasHomeAppliances) return false;
-        if (possibleWithChild != that.possibleWithChild) return false;
-        if (possibleWithPets != that.possibleWithPets) return false;
         if (city != null ? !city.equals(that.city) : that.city != null) return false;
         if (district != null ? !district.equals(that.district) : that.district != null) return false;
         if (street != null ? !street.equals(that.street) : that.street != null) return false;
+        if (rooms != null ? !rooms.equals(that.rooms) : that.rooms != null) return false;
+        if (livingArea != null ? !livingArea.equals(that.livingArea) : that.livingArea != null) return false;
+        if (hasFurniture != null ? !hasFurniture.equals(that.hasFurniture) : that.hasFurniture != null) return false;
+        if (hasHomeAppliances != null ? !hasHomeAppliances.equals(that.hasHomeAppliances) : that.hasHomeAppliances != null)
+            return false;
+        if (possibleWithChild != null ? !possibleWithChild.equals(that.possibleWithChild) : that.possibleWithChild != null)
+            return false;
+        if (possibleWithPets != null ? !possibleWithPets.equals(that.possibleWithPets) : that.possibleWithPets != null)
+            return false;
         return price != null ? price.equals(that.price) : that.price == null;
     }
 
@@ -136,12 +139,12 @@ public class UserChoiceDataHandler {
         int result = city != null ? city.hashCode() : 0;
         result = 31 * result + (district != null ? district.hashCode() : 0);
         result = 31 * result + (street != null ? street.hashCode() : 0);
-        result = 31 * result + rooms;
-        result = 31 * result + (livingArea != +0.0f ? Float.floatToIntBits(livingArea) : 0);
-        result = 31 * result + (hasFurniture ? 1 : 0);
-        result = 31 * result + (hasHomeAppliances ? 1 : 0);
-        result = 31 * result + (possibleWithChild ? 1 : 0);
-        result = 31 * result + (possibleWithPets ? 1 : 0);
+        result = 31 * result + (rooms != null ? rooms.hashCode() : 0);
+        result = 31 * result + (livingArea != null ? livingArea.hashCode() : 0);
+        result = 31 * result + (hasFurniture != null ? hasFurniture.hashCode() : 0);
+        result = 31 * result + (hasHomeAppliances != null ? hasHomeAppliances.hashCode() : 0);
+        result = 31 * result + (possibleWithChild != null ? possibleWithChild.hashCode() : 0);
+        result = 31 * result + (possibleWithPets != null ? possibleWithPets.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         return result;
     }
@@ -152,13 +155,13 @@ public class UserChoiceDataHandler {
         sb.append("city='").append(city).append('\'');
         sb.append(", district='").append(district).append('\'');
         sb.append(", street='").append(street).append('\'');
-        sb.append(", rooms=").append(rooms);
-        sb.append(", livingArea=").append(livingArea);
-        sb.append(", hasFurniture=").append(hasFurniture);
-        sb.append(", hasHomeAppliances=").append(hasHomeAppliances);
-        sb.append(", possibleWithChild=").append(possibleWithChild);
-        sb.append(", possibleWithPets=").append(possibleWithPets);
-        sb.append(", price=").append(price);
+        sb.append(", rooms='").append(rooms).append('\'');
+        sb.append(", livingArea='").append(livingArea).append('\'');
+        sb.append(", hasFurniture='").append(hasFurniture).append('\'');
+        sb.append(", hasHomeAppliances='").append(hasHomeAppliances).append('\'');
+        sb.append(", possibleWithChild='").append(possibleWithChild).append('\'');
+        sb.append(", possibleWithPets='").append(possibleWithPets).append('\'');
+        sb.append(", price='").append(price).append('\'');
         sb.append('}');
         return sb.toString();
     }

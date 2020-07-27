@@ -2,19 +2,17 @@ package by.prokhorenko.rentservice.builder;
 
 import by.prokhorenko.rentservice.entity.advertisement.UserChoiceDataHandler;
 
-import java.math.BigDecimal;
-
 public class UserChoiceDataHandlerBuilder {
     private String city;
     private String district;
     private String street;
-    private int rooms;
-    private float livingArea;
-    private boolean hasFurniture;
-    private boolean hasHomeAppliances;
-    private boolean possibleWithChild;
-    private boolean possibleWithPets;
-    private BigDecimal price;
+    private String rooms;
+    private String livingArea;
+    private String hasFurniture;
+    private String hasHomeAppliances;
+    private String possibleWithChild;
+    private String possibleWithPets;
+    private String price;
 
     public String getCity() {
         return city;
@@ -43,65 +41,65 @@ public class UserChoiceDataHandlerBuilder {
         return this;
     }
 
-    public int getRooms() {
+    public String getRooms() {
         return rooms;
     }
 
-    public UserChoiceDataHandlerBuilder buildRooms(int rooms) {
+    public UserChoiceDataHandlerBuilder buildRooms(String rooms) {
         this.rooms = rooms;
         return this;
     }
 
-    public float getLivingArea() {
+    public String getLivingArea() {
         return livingArea;
     }
 
-    public UserChoiceDataHandlerBuilder buildLivingArea(float livingArea) {
+    public UserChoiceDataHandlerBuilder buildLivingArea(String livingArea) {
         this.livingArea = livingArea;
         return this;
     }
 
-    public boolean isHasFurniture() {
+    public String getHasFurniture() {
         return hasFurniture;
     }
 
-    public UserChoiceDataHandlerBuilder buildHasFurniture(boolean hasFurniture) {
+    public UserChoiceDataHandlerBuilder buildHasFurniture(String hasFurniture) {
         this.hasFurniture = hasFurniture;
         return this;
     }
 
-    public boolean isHasHomeAppliances() {
+    public String getHasHomeAppliances() {
         return hasHomeAppliances;
     }
 
-    public UserChoiceDataHandlerBuilder buildHasHomeAppliances(boolean hasHomeAppliances) {
+    public UserChoiceDataHandlerBuilder buildHasHomeAppliances(String hasHomeAppliances) {
         this.hasHomeAppliances = hasHomeAppliances;
         return this;
     }
 
-    public boolean isPossibleWithChild() {
+    public String getPossibleWithChild() {
         return possibleWithChild;
     }
 
-    public UserChoiceDataHandlerBuilder buildPossibleWithChild(boolean possibleWithChild) {
+    public UserChoiceDataHandlerBuilder buildPossibleWithChild(String possibleWithChild) {
         this.possibleWithChild = possibleWithChild;
         return this;
     }
 
-    public boolean isPossibleWithPets() {
+    public String getPossibleWithPets() {
         return possibleWithPets;
     }
 
-    public UserChoiceDataHandlerBuilder buildPossibleWithPets(boolean possibleWithPets) {
+    public UserChoiceDataHandlerBuilder buildPossibleWithPets(String possibleWithPets) {
         this.possibleWithPets = possibleWithPets;
         return this;
     }
 
-    public BigDecimal getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public UserChoiceDataHandlerBuilder buildPrice(BigDecimal price) {
+    public UserChoiceDataHandlerBuilder buildPrice(String price) {
         this.price = price;
         return this;
     }

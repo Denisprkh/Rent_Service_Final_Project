@@ -39,7 +39,6 @@ public class AddNewAdvertisementCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         Router router = new Router();
-        router.setPage(PagePath.ADD_AN_ADVERTISEMENT);
         HttpSession session = request.getSession();
         User author = (User) request.getSession().getAttribute(Attribute.USER);
         try {
@@ -56,6 +55,7 @@ public class AddNewAdvertisementCommand implements Command {
             router.setPage(PagePath.USER_PROFILE);
         } catch (ServiceException e) {
             LOG.error(e);
+            router.setPage(PagePath.ADD_AN_ADVERTISEMENT);
             session.setAttribute(Attribute.ADD_ADVERTISEMENT_ERROR_MESSAGE, e.getMessage());
         }
         return router;

@@ -15,13 +15,13 @@ public class DaoFactory {
     private final RequestDao requestDao;
 
     private DaoFactory() {
-        userDao = UserDaoImpl.getInstance();
-        flatAddressDao = FlatAddressDaoImpl.getInstance();
-        flatDescriptionDao = FlatDescriptionDaoImpl.getInstance();
-        flatDao = FlatDaoImpl.getInstance();
-        flatPhotoDao = FlatPhotoDaoImpl.getInstance();
-        advertisementDao = AdvertisementDaoImpl.getInstance();
-        requestDao = RequestDaoImpl.getInstance();
+        this.userDao = UserDaoImpl.getInstance();
+        this.flatAddressDao = FlatAddressDaoImpl.getInstance();
+        this.flatDescriptionDao = FlatDescriptionDaoImpl.getInstance();
+        this.flatDao = FlatDaoImpl.getInstance();
+        this.flatPhotoDao = FlatPhotoDaoImpl.getInstance();
+        this.advertisementDao = AdvertisementDaoImpl.getInstance();
+        this.requestDao = RequestDaoImpl.getInstance();
 
     }
 

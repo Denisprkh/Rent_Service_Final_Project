@@ -6,6 +6,8 @@ import by.prokhorenko.rentservice.dao.constant.SqlQuery;
 import by.prokhorenko.rentservice.entity.request.Request;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +28,7 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
     public static RequestDao getInstance(){
         return INSTANCE;
     }
+    private static final Logger LOG = LogManager.getLogger();
 
     @Override
     public Optional<Request> add(Request request) throws DaoException {
@@ -40,7 +43,7 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
             request.setId(id);
             return Optional.of(request);
         } catch (SQLException e) {
-            throw new DaoException("Adding request error",e);
+            throw new DaoException(e);
         }
     }
 
@@ -59,7 +62,7 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
             }
             return allRequests;
         } catch (SQLException e) {
-           throw new DaoException("Finding all requests error",e);
+           throw new DaoException(e);
         }
     }
 
@@ -75,7 +78,7 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
             return Optional.empty();
 
         } catch (SQLException e) {
-            throw new DaoException("Finding request by id error",e);
+            throw new DaoException(e);
         }finally {
             closeResultSet(resultSet);
         }
@@ -89,7 +92,7 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
             updateEntity(statement);
             return Optional.of(request);
         } catch (SQLException e) {
-            throw new DaoException("Updating request error",e);
+            throw new DaoException(e);
         }
     }
 
@@ -112,23 +115,26 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
             resultSet = statement.executeQuery();
             List<Request> usersRequests= new ArrayList<>();
             while (resultSet.next()){
-                buildRequestFromResultSet(resultSet);
+                usersRequests.add(buildRequestFromResultSet(resultSet));
             }
+            LOG.debug(usersRequests);
             return usersRequests;
         } catch (SQLException e) {
-            throw new DaoException("Finding all users requests error",e);
+            throw new DaoException(e);
+        }finally {
+            closeResultSet(resultSet);
         }
     }
 
     @Override
     public boolean approveRequest(int requestsId) throws DaoException {
         try(PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_REQUEST_APPROVED_STATUS)){
-            statement.setBoolean(1,true);
+            statement.setBoolean(1,Boolean.TRUE);
             statement.setInt(2,requestsId);
             updateEntity(statement);
             return true;
         } catch (SQLException e) {
-            throw new DaoException("Approving request error",e);
+            throw new DaoException(e);
         }
     }
 
@@ -136,6 +142,5 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
     public List<Request> findRequestsByAdvertisementsId(int advertisementsId) throws DaoException {
         return null;
     }
-
 
 }

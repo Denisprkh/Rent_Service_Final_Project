@@ -2,6 +2,8 @@ package by.prokhorenko.rentservice.factory;
 
 import by.prokhorenko.rentservice.service.advertisement.AdvertisementService;
 import by.prokhorenko.rentservice.service.advertisement.impl.AdvertisementServiceImpl;
+import by.prokhorenko.rentservice.service.flat.FlatService;
+import by.prokhorenko.rentservice.service.flat.impl.FlatServiceImpl;
 import by.prokhorenko.rentservice.service.request.RequestService;
 import by.prokhorenko.rentservice.service.request.impl.RequestServiceImpl;
 import by.prokhorenko.rentservice.service.user.UserService;
@@ -12,11 +14,13 @@ public class ServiceFactory {
     private final UserService userService;
     private final AdvertisementService advertisementService;
     private final RequestService requestService;
+    private final FlatService flatService;
 
     private ServiceFactory(){
-        userService = UserServiceImpl.getInstance();
-        advertisementService = AdvertisementServiceImpl.getInstance();
-        requestService = RequestServiceImpl.getInstance();
+        this.userService = UserServiceImpl.getInstance();
+        this.advertisementService = AdvertisementServiceImpl.getInstance();
+        this.requestService = RequestServiceImpl.getInstance();
+        this.flatService = FlatServiceImpl.getInstance();
     }
 
     private static class ServiceFactoryHolder{
@@ -34,4 +38,5 @@ public class ServiceFactory {
         return advertisementService;
     }
     public RequestService getRequestService(){return  requestService; }
+    public FlatService getFlatService(){return flatService;}
 }

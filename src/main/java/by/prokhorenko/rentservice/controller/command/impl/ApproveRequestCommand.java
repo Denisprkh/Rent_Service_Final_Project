@@ -3,36 +3,35 @@ package by.prokhorenko.rentservice.controller.command.impl;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
-import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
+import by.prokhorenko.rentservice.dao.RequestDao;
+import by.prokhorenko.rentservice.entity.request.Request;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
-import by.prokhorenko.rentservice.service.advertisement.AdvertisementService;
+import by.prokhorenko.rentservice.service.request.RequestService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.config.AppenderRef;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.io.Serializable;
 import java.util.List;
 
-public class DeleteAdvertisementCommand implements Command {
+public class ApproveRequestCommand implements Command {
 
     private static final Logger LOG = LogManager.getLogger();
-    private AdvertisementService advertisementService;
-    public DeleteAdvertisementCommand(){
-        this.advertisementService = ServiceFactory.getInstance().getAdvertisementService();
+    private RequestService requestService;
+    public ApproveRequestCommand(){
+        this.requestService = ServiceFactory.getInstance().getRequestService();
     }
 
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
-        int advertisementsId = Integer.parseInt(request.getParameter(RequestParameter.ADVERTISEMENT_ID));
-
+        int requestsId = Integer.parseInt(request.getParameter(RequestParameter.REQUEST_ID));
         try {
-            advertisementService.deleteAdvertisement(advertisementsId);
+            requestService.ApproveRequestById(requestsId);
         } catch (ServiceException e) {
             LOG.error(e);
         }
-        return new Router(PagePath.INDEX);
+        return null;
     }
 }

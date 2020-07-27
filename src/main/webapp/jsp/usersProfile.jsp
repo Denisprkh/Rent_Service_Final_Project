@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <c:if test="${not empty sessionScope.language}">
     <fmt:setLocale value="${sessionScope.language}"/>
 </c:if>
@@ -53,45 +54,50 @@
                                 <div class="name-botton" data-type="profile-info">
                                     ${user.firstName} ${user.lastName}
                                 </div>
-                                <input type="text" class="name-botton input__profile none" name="updatedFullName" data-type="profile-input">
+                                <input type="text" class="name-botton input__profile none" name="updatedFullName"
+                                       data-type="profile-input">
                                 <div class="name-top">
                                     <fmt:message key="profile.my_profile_email"/>
                                 </div>
                                 <div class="name-botton" data-type="profile-info">
                                     ${user.email}
                                 </div>
-                                <input type="text" class="name-botton input__profile none" name="updatedEmail" data-type="profile-input">
+                                <input type="text" class="name-botton input__profile none" name="updatedEmail"
+                                       data-type="profile-input">
                                 <div class="name-top">
                                     <fmt:message key="profile.my_profile_phone_number"/>
                                 </div>
                                 <div class="name-botton" data-type="profile-info">
                                     ${user.phone}
                                 </div>
-                                <input type="phone" class="name-botton input__profile none" name="updatedPhone" data-type="profile-input">
+                                <input type="phone" class="name-botton input__profile none" name="updatedPhone"
+                                       data-type="profile-input">
                                 <div class="name-top">
                                     <fmt:message key="profile.my_profile_password"/>
                                 </div>
-                                <div class="name-botton" data-type="profile-info" >
+                                <div class="name-botton" data-type="profile-info">
 
                                 </div>
-                                <input type="password" class="name-botton input__profile none" name="updatedPassword" data-type="profile-input">
+                                <input type="password" class="name-botton input__profile none" name="updatedPassword"
+                                       data-type="profile-input">
                             </div>
                             <div class="btn-profile__button flex">
                                 <div class="profile-btn-edit" id="profile-edit">
                                     <fmt:message key="profile.my_profile_edit_button"/>
                                 </div>
                                 <button class="profile-btn-edit none" id="profile-edit-btn" type="submit" name="command"
-                                value="UPDATE_PROFILE_DATA">
+                                        value="UPDATE_PROFILE_DATA">
                                     <fmt:message key="profile.my_profile_save_button"/>
                                 </button>
-                                <div class="profile-btn-edit reset none" id="profile-edit-btn" data-type="profile-reset" >
+                                <div class="profile-btn-edit reset none" id="profile-edit-btn"
+                                     data-type="profile-reset">
                                     <fmt:message key="profile.my_profile_cancel_button"/>
                                 </div>
                             </div>
                             <div class="sign_up__err__message">
-                            <c:if test="${not empty sessionScope.incorrectDataErrorMessage}">
-                                <fmt:message key="${sessionScope.incorrectDataErrorMessage}"/>
-                            </c:if>
+                                <c:if test="${not empty sessionScope.incorrectDataErrorMessage}">
+                                    <fmt:message key="${sessionScope.incorrectDataErrorMessage}"/>
+                                </c:if>
                             </div>
                         </form>
                     </div>
@@ -106,14 +112,41 @@
                         <div class="top-name-ads">
                             #1
                         </div>
-                        <div class="card-ads">
-                            <div class="name_ads">
-                                Дворец Лошицкий
+                        <c:forEach var="elem" items="${usersRequestList}">
+                            <div class="card-ads">
+                                <div class="card-ads-info">
+                                    <div class="name">
+                                        <a href="${pageContext.request.contextPath}/controller?command=advertisement_page&advertisementId=${elem.advertisement.id}">
+                                                ${elem.advertisement.title}
+                                        </a>
+                                    </div>
+                                    <div class="date-from-to">
+                                        <ctg:date-time value="${elem.startDate}"/>-<ctg:date-time
+                                            value="${elem.endDate}"/>
+                                    </div>
+                                    <div class="date-to">
+                                        <ctg:date-time value="${elem.applicationDate}"/>
+                                    </div>
+                                    <div class="phone">
+                                        <c:choose>
+                                            <c:when test="${elem.isApproved() eq true}">${elem.advertisement.author.phone}</c:when>
+                                            <c:otherwise>+375(**)***-**-**</c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <div class="accept_status">
+                                        <c:choose>
+                                            <c:when test="${elem.isApproved() eq true}">
+                                                <fmt:message key="profile.request_is_approved"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <fmt:message key="profile.request_is_not_approved"/>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="btn-accept">
-                                <img src="${pageContext.request.contextPath}/img/tick.svg" alt="accept">
-                            </div>
-                        </div>
+                        </c:forEach>
+
                     </div>
                 </div>
             </div>
@@ -132,31 +165,34 @@
                         <div class="top-name-ads">
 
                         </div>
-                        <c:forEach var="elem" items="${advertisementList}">
-                        <div class="card-ads-my-ads">
-                            <a href="${pageContext.request.contextPath}/controller?command=advertisement_page&advertisementId=${elem.id}">
-                            <div class="card-ads">
-                                <div class="card-ads-info my-ads">
-                                    <div class="name">
-                                        ${elem.title}
-                                    </div>
-                                    <div class="date-from-to">
-                                        ${elem.dateOfCreation}
-                                    </div>
-                                    <div class="price">
-                                        ${elem.price}
+                        <c:forEach var="elem" items="${sessionScope.usersAdvertisementList}">
+                            <div class="card-ads-my-ads">
+                                <div class="card-ads">
+                                    <div class="card-ads-info my-ads">
+                                        <div class="name">
+                                            <a href="${pageContext.request.contextPath}/controller?command=ADVERTISEMENT_PAGE&advertisementId=${elem.id}">${elem.title}</a>
+                                        </div>
+                                        <div class="date-from-to">
+                                                ${elem.dateOfCreation}
+                                        </div>
+                                        <div class="price">
+                                                ${elem.price}$
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="card-ads-btn">
+                                    <c:choose>
+                                        <c:when test="${elem.flat.isFree() eq true}">
+                                            <a class="btn-delete" href=
+                                                    "${pageContext.request.contextPath}/controller?command=SET_FLAT_IN_RENT&flatId=${elem.flat.id}">
+                                                <fmt:message key="profile.my_ads_rented_btn"/> </a>
+                                        </c:when>
+                                        <c:otherwise><a class="btn-update" href=
+                                                "${pageContext.request.contextPath}/controller?command=SET_FLAT_IS_NOT_IN_RENT&flatId=${elem.flat.id}">
+                                            <fmt:message key="profile.my_ads_not_rented_btn"/> </a></c:otherwise>
+                                    </c:choose>
+                                </div>
                             </div>
-                            </a>
-                            <div class="card-ads-btn">
-                                <a href="${pageContext.request.contextPath}/controller?command=delete_advertisement&advertisementId=${elem.id}"
-                                   class="btn-delete"> <fmt:message key="profile.my_ads_delete_button"/>
-                                </a>
-                                <a href="#" class="btn-update"> <fmt:message key="profile.my_ads_update_button"/>
-                                </a>
-                            </div>
-                        </div>
                         </c:forEach>
                     </div>
                     <div class="card-page">
@@ -191,25 +227,27 @@
                         <div class="top-name-ads">
                             #1
                         </div>
-                        <div class="card-ads">
-                            <div class="card-ads-info">
-                                <div class="name">
-                                    Дворец Лошицкий
+                        <c:forEach var="elem" items="${usersRequestList}">
+                            <div class="card-ads">
+                                <div class="card-ads-info">
+                                    <div class="name">
+                                        <a href="${pageContext.request.contextPath}/controller?command=ADVERTISEMENT_PAGE&advertisementId=${elem.advertisement.id}">${elem.advertisement.title}</a>
+                                    </div>
+                                    <div class="date-from-to">
+
+                                    </div>
+                                    <div class="date-to">
+                                        03.07.2020; 17:25
+                                    </div>
+                                    <div class="phone">
+
+                                    </div>
                                 </div>
-                                <div class="date-from-to">
-                                    08.07.2020-10.07.2020
-                                </div>
-                                <div class="date-to">
-                                    03.07.2020; 17:25
-                                </div>
-                                <div class="phone">
-                                    +375 25 111 22 33
-                                </div>
+                                <a href="#" class="btn-accept">
+                                    <img src="${pageContext.request.contextPath}/img/tick.svg" alt="accept">
+                                </a>
                             </div>
-                            <a href="#" class="btn-accept">
-                                <img src="${pageContext.request.contextPath}/img/tick.svg" alt="accept">
-                            </a>
-                        </div>
+                        </c:forEach>
                     </div>
                     <div class="card-page">
                         <div class="prevision_page bgc-page">

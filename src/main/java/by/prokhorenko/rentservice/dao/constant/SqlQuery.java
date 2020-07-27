@@ -64,7 +64,10 @@ public class SqlQuery {
             "flats_description.users_description FROM flats,flats_address,flats_description WHERE " +
             "flats.flats_description_id = flats_description.flats_description_id AND " +
             "flats.flats_address_id = flats_address.flats_address_id AND flats.flats_id = ?";
-    public static final String UPDATE_FLAT_BY_ID = "UPDATE flats fl SET fl.is_free = ? WHERE fl.flats_id = ?";
+    public static final String UPDATE_FLAT_BY_ID = "UPDATE flats SET is_free = ?, flats_description_id = ?, " +
+            "flats_address_id = ? WHERE flats_id = ?";
+    public static final String UPDATE_FLAT_FREE_STATUS_FALSE = "UPDATE flats SET is_free = FALSE WHERE flats_id = ?";
+    public static final String UPDATE_FLAT_FREE_STATUS_TRUE = "UPDATE flats SET is_free = TRUE WHERE flats_id = ?";
     public static final String ADD_FLATS_PHOTO = "INSERT INTO flats_photo(flats_id,photo) VALUES (?,?)";
     public static final String FIND_FLAT_PHOTO_BY_FLATS_ID = "SELECT flats_photo_id,flats_id,photo FROM flats_photo " +
             "WHERE flats_id = ?";
@@ -84,7 +87,7 @@ public class SqlQuery {
             "advertisements WHERE flats.flats_description_id = flats_description.flats_description_id AND" +
             " flats.flats_description_id = flats_description.flats_description_id AND flats.flats_address_id = " +
             "flats_address.flats_address_id AND flats.flats_id = advertisements.flats_id AND users.users_id = " +
-            "advertisements.author_id AND advertisements.is_visible = TRUE LIMIT ?, ?";
+            "advertisements.author_id AND advertisements.is_visible = TRUE AND flats.is_free = TRUE LIMIT ?, ?";
     public static final String FIND_ADVERTISEMENT_BY_ID = "SELECT flats.flats_id, flats.is_free, flats.flats_description_id," +
             "flats.flats_address_id, flats_address.flats_address_id,flats_address.city," +
             "flats_address.district, flats_address.street, flats_address.house, flats_description.flats_description_id," +
@@ -98,8 +101,8 @@ public class SqlQuery {
             "advertisements WHERE flats.flats_description_id = flats_description.flats_description_id AND" +
             " flats.flats_description_id = flats_description.flats_description_id AND flats.flats_address_id = " +
             "flats_address.flats_address_id AND flats.flats_id = advertisements.flats_id AND users.users_id = " +
-            "advertisements.author_id AND advertisements.advertisements_id = ? AND advertisements.is_visible = TRUE";
-    public static final String FIND_ADVERTISEMENT_QUANTITY = "SELECT COUNT(*) FROM advertisements";
+            "advertisements.author_id AND advertisements.advertisements_id = ?";
+    public static final String FIND_ADVERTISEMENT_QUANTITY = "SELECT COUNT(*) FROM advertisements WHERE is_visible = TRUE";
     public static final String UPDATE_ADVERTISEMENT_BY_ID = "UPDATE advertisements ad SET ad.title = ?, " +
             "ad.price = ? WHERE advertisements.advertisements_id = ?";
     public static final String FIND_ADVERTISEMENTS_BY_USERS_ID = "SELECT flats.flats_id, flats.is_free, flats.flats_description_id," +
@@ -139,7 +142,18 @@ public class SqlQuery {
             "flats_description.living_area REGEXP ?  AND flats_description.has_furniture REGEXP ? AND " +
             "flats_description.has_home_appliciances REGEXP ? AND flats_description.possible_with_pets REGEXP ? " +
             "AND flats_description.possible_with_childs REGEXP ? AND advertisements.price REGEXP ? " +
-            "AND advertisements.is_visible = TRUE";
+            "AND advertisements.is_visible = TRUE AND flats.is_free = TRUE LIMIT ?,?";
+
+    public static final String FIND_ADVERTISEMENT_BY_USERS_CHOICE_QUANTITY = "SELECT COUNT(*) FROM flats,flats_address, " +
+            "flats_description,users, advertisements WHERE flats.flats_description_id = flats_description.flats_description_id AND" +
+            " flats.flats_description_id = flats_description.flats_description_id AND flats.flats_address_id = " +
+            "flats_address.flats_address_id AND flats.flats_id = advertisements.flats_id AND users.users_id = " +
+            "advertisements.author_id AND flats_address.city REGEXP ? AND flats_address.district REGEXP ? AND " +
+            "flats_address.street REGEXP ? AND flats_description.rooms REGEXP ? AND " +
+            "flats_description.living_area REGEXP ?  AND flats_description.has_furniture REGEXP ? AND " +
+            "flats_description.has_home_appliciances REGEXP ? AND flats_description.possible_with_pets REGEXP ? " +
+            "AND flats_description.possible_with_childs REGEXP ? AND advertisements.price REGEXP ? " +
+            "AND advertisements.is_visible = TRUE AND flats.is_free = TRUE";
 
     public static final String ADD_REQUEST = "INSERT INTO requests (users_id,start_date,end_date,application_date," +
             "advertisements_id) VALUES (?,?,?,?,?)";
@@ -162,6 +176,7 @@ public class SqlQuery {
             "users.is_banned,requests.requests_id, requests.users_id, requests.start_date,requests.end_date," +
             "requests.advertisements_id, requests.application_date,requests.is_approved FROM requests JOIN " +
             "users ON requests.users_id = users.users_id WHERE requests.users_id = ?";
+
 
     private SqlQuery(){}
 }

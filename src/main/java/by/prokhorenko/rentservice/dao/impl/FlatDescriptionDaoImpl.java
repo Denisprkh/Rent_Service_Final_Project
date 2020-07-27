@@ -43,7 +43,7 @@ public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDes
             flatDescription.setId(id);
             return Optional.of(flatDescription);
         } catch (SQLException e) {
-            throw new DaoException("Adding flats description error", e);
+            throw new DaoException(e);
         }
     }
 
@@ -57,7 +57,7 @@ public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDes
             }
             return flatDescriptions;
         } catch (SQLException e) {
-            throw new DaoException("Finding all flats descriptions error", e);
+            throw new DaoException(e);
         }
     }
 
@@ -73,7 +73,7 @@ public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDes
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new DaoException("Finding flatDescription by id error", e);
+            throw new DaoException(e);
         } finally {
             closeResultSet(resultSet);
         }
@@ -94,7 +94,7 @@ public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDes
             updateEntity(statement);
             return findById(flatDescription.getId());
         } catch (SQLException e) {
-            throw new DaoException("Updating flatAddress error", e);
+            throw new DaoException(e);
         }
     }
 

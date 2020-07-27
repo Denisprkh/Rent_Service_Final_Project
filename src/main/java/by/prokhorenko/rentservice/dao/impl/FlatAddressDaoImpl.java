@@ -39,7 +39,7 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
             flatAddress.setId(id);
             return Optional.of(flatAddress);
         } catch (SQLException e) {
-            throw new DaoException("Adding flatAddress error",e);
+            throw new DaoException(e);
         }
     }
 
@@ -53,7 +53,7 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
             }
             return flatAddresses;
         } catch (SQLException e) {
-            throw new DaoException("Finding all flatsAddresses error",e);
+            throw new DaoException(e);
         }
     }
 
@@ -68,7 +68,7 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new DaoException("Can't find flatAddress by id",e);
+            throw new DaoException(e);
         }finally {
             closeResultSet(resultSet);
         }
@@ -85,7 +85,7 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
             updateEntity(statement);
             return findById(flatAddress.getId());
         } catch (SQLException e) {
-           throw new DaoException("Updating flatAddress error",e);
+           throw new DaoException(e);
         }
     }
 

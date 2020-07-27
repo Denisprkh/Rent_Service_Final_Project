@@ -2,6 +2,7 @@ package by.prokhorenko.rentservice.service.advertisement;
 
 import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 import by.prokhorenko.rentservice.entity.advertisement.AdvertisementDataHandler;
+import by.prokhorenko.rentservice.entity.advertisement.UserChoiceDataHandler;
 import by.prokhorenko.rentservice.exception.ServiceException;
 
 import java.util.List;
@@ -14,4 +15,7 @@ public interface AdvertisementService {
     Advertisement findAdvertisementById(int id) throws ServiceException;
     List<Advertisement> findAdvertisementsByUserId(int usersId) throws ServiceException;
     boolean deleteAdvertisement(int advertisementsId) throws ServiceException;
+    int findFilteredAdvertisementsQuantity(UserChoiceDataHandler userChoiceDataHandler) throws ServiceException;
+    List<Advertisement> findAdvertisementsByUsersChoice(UserChoiceDataHandler userChoiceDataHandler,int start,int total)
+            throws ServiceException;
 }

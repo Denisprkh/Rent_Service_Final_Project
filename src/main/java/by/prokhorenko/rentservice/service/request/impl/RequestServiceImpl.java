@@ -8,6 +8,7 @@ import by.prokhorenko.rentservice.factory.DaoFactory;
 import by.prokhorenko.rentservice.service.request.RequestService;
 
 import java.io.IOException;
+import java.util.List;
 
 public class RequestServiceImpl implements RequestService {
 
@@ -23,6 +24,26 @@ public class RequestServiceImpl implements RequestService {
             return requestDao.add(request).isPresent();
         } catch (IOException | DaoException e) {
             throw new ServiceException("Adding request error",e);
+        }
+    }
+
+    @Override
+    public List<Request> findAllUsersRequests(int usersId) throws ServiceException {
+        try(RequestDao requestDao = DaoFactory.getInstance().getRequestDao()){
+            List<Request> usersRequests = requestDao.findRequestsByUsersId(usersId);
+            return usersRequests;
+        } catch (IOException | DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean ApproveRequestById(int requestsId) throws ServiceException {
+        try(RequestDao requestDao = DaoFactory.getInstance().getRequestDao()) {
+            boolean isApproved = requestDao.approveRequest(requestsId);
+            return isApproved;
+        } catch (IOException | DaoException e) {
+            throw new ServiceException(e);
         }
     }
 }

@@ -897,6 +897,7 @@ header {
 
 .formyads{
     padding: 33px 60px 25px 40px;
+    font-size: 20px;
 }
 
 .top-name-ads{
@@ -906,6 +907,7 @@ header {
     background: linear-gradient(180deg, #FACD68 0%, #FC76B3 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    display: flex;
 }
 
 .card-ads-my-ads{
@@ -951,7 +953,7 @@ header {
 .card-ads-info{
     display: flex;
     justify-content: space-around;
-    width: 598px;
+    width: 650px;
 }
 
 .card-ads .date-from-to{
@@ -959,6 +961,7 @@ header {
     border-right: 2px solid #fff;
     border-image: linear-gradient(180deg, #FACD68 0%, #FC76B3 100%);
     border-image-slice: 1;
+    white-space: nowrap;
 }
 
 .card-ads .date-to{
@@ -966,10 +969,12 @@ header {
     border-right: 2px solid #fff;
     border-image: linear-gradient(180deg, #FACD68 0%, #FC76B3 100%);
     border-image-slice: 1;
+    white-space: nowrap;
 }
 
 .card-ads .phone{
     padding: 0px 12px;
+    white-space: nowrap;
 }
 
 .card-ads .e-mail{
@@ -996,6 +1001,13 @@ header {
     border-image: linear-gradient(180deg, #FACD68 0%, #FC76B3 100%);
     border-image-slice: 1;
     background: #E6E6E6;
+    padding: 7px;
+}
+.accept_status{
+    width: 30px;
+    border-left: 2px solid #fff;
+    border-image: linear-gradient(180deg, #FACD68 0%, #FC76B3 100%);
+    border-image-slice: 1;
     padding: 7px;
 }
 
@@ -1390,4 +1402,12 @@ header {
     width: 76px;
     height: 76px;
 
+}
+
+.name a{
+    color:#373737;
+}
+
+.top_name_title{
+    margin-left: 70px;
 }

@@ -49,7 +49,6 @@ public class SignUpCommand implements Command {
             }
         } catch (ServiceException e) {
             LOG.error(e);
-            router.setForward();
             router.setPage(PagePath.SIGN_UP);
         }
         return router;

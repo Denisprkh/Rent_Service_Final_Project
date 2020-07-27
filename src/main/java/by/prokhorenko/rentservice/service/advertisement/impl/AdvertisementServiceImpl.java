@@ -4,6 +4,7 @@ import by.prokhorenko.rentservice.controller.command.ResourceBundleErrorMessageK
 import by.prokhorenko.rentservice.dao.AdvertisementDao;
 import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 import by.prokhorenko.rentservice.entity.advertisement.AdvertisementDataHandler;
+import by.prokhorenko.rentservice.entity.advertisement.UserChoiceDataHandler;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.DaoFactory;
@@ -89,6 +90,28 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         try(AdvertisementDao advertisementDao = DaoFactory.getInstance().getAdvertisementDao()){
             boolean isDeleted = advertisementDao.setAdvertisementStatusInvisible(advertisementsId);
             return isDeleted;
+        } catch (IOException | DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int findFilteredAdvertisementsQuantity(UserChoiceDataHandler userChoiceDataHandler) throws ServiceException {
+        try(AdvertisementDao advertisementDao = DaoFactory.getInstance().getAdvertisementDao()) {
+            int filteredAdvertisementsQuantity = advertisementDao.findFilteredAdvertisementsQuantity(userChoiceDataHandler);
+            return filteredAdvertisementsQuantity;
+        } catch (IOException | DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Advertisement> findAdvertisementsByUsersChoice(UserChoiceDataHandler userChoiceDataHandler,int start,
+                                                               int total) throws ServiceException {
+        try(AdvertisementDao advertisementDao = DaoFactory.getInstance().getAdvertisementDao()) {
+            List<Advertisement> filteredAdvertisements = advertisementDao.findAdvertisementsByUsersChoice
+                    (userChoiceDataHandler,start,total);
+            return filteredAdvertisements;
         } catch (IOException | DaoException e) {
             throw new ServiceException(e);
         }

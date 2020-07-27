@@ -44,7 +44,7 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
             user.setId(id);
             return Optional.of(user);
         }catch (SQLException e) {
-            throw new DaoException("User has not been added",e);
+            throw new DaoException(e);
         }
     }
 
@@ -58,7 +58,7 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
                         allUsers.add(buildUserFromResultSet(resultSet));
                 }
         } catch (SQLException e) {
-            throw new DaoException("Finding all users error",e);
+            throw new DaoException(e);
         }
         return allUsers;
     }
@@ -77,7 +77,7 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
                 return Optional.of(user);
             }
         } catch (SQLException  e) {
-            throw new DaoException("Finding user by id error", e);
+            throw new DaoException(e);
         } finally {
             closeResultSet(resultSet);
         }
@@ -96,7 +96,7 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
             statement.executeUpdate();
             return findById(user.getId());
         } catch (SQLException e) {
-            throw new DaoException("Updating user error",e);
+            throw new DaoException(e);
         }
     }
 
@@ -120,7 +120,7 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new DaoException("Finding user by password and email error",e);
+            throw new DaoException(e);
         }finally {
             closeResultSet(resultSet);
         }
@@ -137,7 +137,7 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new DaoException("Finding user by email error", e);
+            throw new DaoException(e);
         } finally {
             closeResultSet(resultSet);
         }
@@ -159,7 +159,7 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
             statement.setInt(1,id);
             return updateEntity(statement);
         } catch (SQLException e) {
-            throw new DaoException("Activating user error",e);
+            throw new DaoException(e);
         }
     }
 
@@ -171,7 +171,7 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
-            throw new DaoException("Updating users role error",e);
+            throw new DaoException(e);
         }
     }
 
@@ -192,7 +192,7 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new DaoException("Finding user by phone error",e);
+            throw new DaoException(e);
         }finally {
             closeResultSet(resultSet);
         }

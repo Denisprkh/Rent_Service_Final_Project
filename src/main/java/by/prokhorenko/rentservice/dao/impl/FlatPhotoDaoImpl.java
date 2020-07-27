@@ -49,7 +49,7 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
             addBase64DataToPhotos(flatPhotos);
             return flatPhotos;
         } catch (SQLException e) {
-            throw new DaoException("Finding all flats photo by flats id error",e);
+            throw new DaoException(e);
         }finally {
             closeResultSet(resultSet);
         }
@@ -96,7 +96,7 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
             LOG.debug("photo was added");
             return Optional.of(photo);
         } catch (SQLException e) {
-            throw new DaoException("Adding flats photo error",e);
+            throw new DaoException(e);
         }
     }
 
@@ -113,7 +113,7 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
             addBase64DataToPhotos(allFlatPhotos);
             return allFlatPhotos;
         } catch (SQLException e) {
-            throw new DaoException("Finding all flats photos error",e);
+            throw new DaoException(e);
         }
     }
 

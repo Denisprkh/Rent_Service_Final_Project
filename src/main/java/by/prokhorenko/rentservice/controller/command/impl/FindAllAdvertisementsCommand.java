@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
@@ -27,15 +28,16 @@ public class FindAllAdvertisementsCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response){
         int currentPage = Integer.parseInt(request.getParameter(Attribute.PAGINATION_CURRENT_PAGE));
-        int start = ((currentPage-1)*RECORDS_PER_PAGE) + 1;
+        int start = ((currentPage-1) * RECORDS_PER_PAGE);
+        HttpSession session = request.getSession();
         try {
             definePaginationContext(request,advertisementService.findAdvertisementsQuantity(),currentPage,RECORDS_PER_PAGE);
             List<Advertisement> advertisementList = advertisementService.findAllAdvertisements(start,RECORDS_PER_PAGE);
-            LOG.debug(advertisementList);
-            request.setAttribute(Attribute.ADVERTISEMENT_LIST,advertisementList);
+            session.setAttribute(Attribute.ADVERTISEMENT_LIST,advertisementList);
+            session.removeAttribute(Attribute.ADVERTISEMENT_FILTER);
         } catch (ServiceException e) {
             LOG.error(e);
         }
-        return new Router(DisPathType.FORWARD,PagePath.INDEX);
+        return new Router(PagePath.INDEX);
     }
 }

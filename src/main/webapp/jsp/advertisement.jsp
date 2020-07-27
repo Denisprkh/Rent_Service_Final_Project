@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="ctg" uri="customtags" %>
 
 <c:if test="${not empty sessionScope.language}">
     <fmt:setLocale value="${sessionScope.language}"/>
@@ -154,15 +154,23 @@
                 <img src="${pageContext.request.contextPath}/img/Calendaricon.svg" alt="">
             </div>
             <span><fmt:message key="advertisement.date_of_creation"/>
-                ${advertisement.dateOfCreation}</span>
+                <ctg:date-time value="${advertisement.dateOfCreation}"/></span>
         </div>
         <div class="btn-block">
-            <button class="main_page_btn btnt popup__forms">
-                <fmt:message key="advertisement.send_request_button"/>
-            </button>
-            <button class="main_page_btn btnt">
-                <fmt:message key="advertisement.delete_button"/>
-            </button>
+            <c:if test="${(sessionScope.userRole == 'USER' || sessionScope.userRole =='ADMIN') && sessionScope.user.id ne
+            sessionScope.advertisement.author.id}">
+                <button class="main_page_btn btnt popup__forms">
+                    <fmt:message key="advertisement.send_request_button"/>
+                </button>
+            </c:if>
+            <c:if test="${sessionScope.userRole == 'ADMIN' || sessionScope.user.id eq sessionScope.advertisement.author.id}">
+                <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <input type="hidden" name="advertisementId" value="${sessionScope.advertisement.id}"/>
+                    <button class="main_page_btn btnt" name="command" value="delete_advertisement">
+                        <fmt:message key="advertisement.delete_button"/>
+                    </button>
+                </form>
+            </c:if>
         </div>
     </div>
     <form action="${pageContext.request.contextPath}/controller" method="post">
@@ -183,6 +191,7 @@
                                 <img src="${pageContext.request.contextPath}/img/Calendaricon.svg" alt="">
                             </div>
                         </div>
+
                         <button class="forms-date_btn" name="command" value="send_a_request">
                             <fmt:message key="advertisement.send_button"/>
                         </button>
