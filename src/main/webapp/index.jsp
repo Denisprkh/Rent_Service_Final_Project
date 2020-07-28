@@ -12,6 +12,6 @@
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<jsp:forward page="/controller?command=FIND_ALL_ADVERTISEMENTS&currentPage=1"></jsp:forward>
+<jsp:forward page="controller?command=FIND_ALL_ADVERTISEMENTS&currentPage=1"></jsp:forward>
 </body>
 </html>

@@ -101,7 +101,7 @@ public class SqlQuery {
             "advertisements WHERE flats.flats_description_id = flats_description.flats_description_id AND" +
             " flats.flats_description_id = flats_description.flats_description_id AND flats.flats_address_id = " +
             "flats_address.flats_address_id AND flats.flats_id = advertisements.flats_id AND users.users_id = " +
-            "advertisements.author_id AND advertisements.advertisements_id = ?";
+            "advertisements.author_id AND advertisements.is_visible = TRUE AND advertisements.advertisements_id = ?";
     public static final String FIND_ADVERTISEMENT_QUANTITY = "SELECT COUNT(*) FROM advertisements WHERE is_visible = TRUE";
     public static final String UPDATE_ADVERTISEMENT_BY_ID = "UPDATE advertisements ad SET ad.title = ?, " +
             "ad.price = ? WHERE advertisements.advertisements_id = ?";
@@ -175,8 +175,14 @@ public class SqlQuery {
             "users.last_name, users.email, users.password, users.phone, users.users_role_id, users.is_activated, " +
             "users.is_banned,requests.requests_id, requests.users_id, requests.start_date,requests.end_date," +
             "requests.advertisements_id, requests.application_date,requests.is_approved FROM requests JOIN " +
-            "users ON requests.users_id = users.users_id WHERE requests.users_id = ?";
-
+            "users ON requests.users_id = users.users_id JOIN advertisements ON advertisements.advertisements_id = " +
+            "requests.advertisements_id WHERE advertisements.is_visible = TRUE AND requests.users_id = ?";
+    public static final String FIND_REQUESTS_BY_ADVERTISEMENT_AUTHOR_ID = "SELECT users.users_id, users.first_name," +
+            "users.last_name,users.email,users.password,users.phone,users.users_role_id,users.is_activated," +
+            "users.is_banned,requests.requests_id,requests.users_id,requests.start_date,requests.end_date," +
+            "requests.advertisements_id,requests.application_date,requests.is_approved FROM requests JOIN users ON " +
+            "requests.users_id = users.users_id JOIN advertisements ON requests.advertisements_id = " +
+            "advertisements.advertisements_id WHERE advertisements.is_visible = TRUE AND advertisements.author_id = ?";
 
     private SqlQuery(){}
 }

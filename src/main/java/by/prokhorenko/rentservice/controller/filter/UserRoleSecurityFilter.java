@@ -23,7 +23,6 @@ public class UserRoleSecurityFilter implements Filter {
         if(usersRole == null){
             session.setAttribute(Attribute.USER_ROLE, UserRole.GUEST);
         }
-        LOG.debug(session.getAttribute(Attribute.USER_ROLE));
         chain.doFilter(req, resp);
     }
 

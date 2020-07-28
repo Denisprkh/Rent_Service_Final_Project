@@ -30,10 +30,10 @@
                 <c:if test="${sessionScope.userRole == 'GUEST'}">
             <div class="header_btn">
                     <div class="header_signin btnt">
-                        <a href="${pageContext.request.contextPath}/jsp/signIn.jsp"><fmt:message key="nav_bar.sign_in"/></a>
+                        <a href="${pageContext.request.contextPath}/controller?command=SIGN_IN_PAGE"><fmt:message key="nav_bar.sign_in"/></a>
                     </div>
                     <div class="header_register btnt">
-                        <a href="${pageContext.request.contextPath}/jsp/signUp.jsp"><fmt:message key="nav_bar.sign_up"/></a>
+                        <a href="${pageContext.request.contextPath}/controller?command=SIGN_UP_PAGE"><fmt:message key="nav_bar.sign_up"/></a>
                     </div>
                 </c:if>
                 <c:if test="${sessionScope.userRole == 'USER' || sessionScope.userRole == 'ADMIN'}">

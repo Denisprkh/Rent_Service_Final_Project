@@ -24,4 +24,6 @@ public interface Command {
         request.setAttribute(Attribute.PAGINATION_PAGES_QUANTITY,allPagesAmount);
         request.setAttribute(Attribute.PAGINATION_CURRENT_PAGE,currentPage);
     }
+
+
 }

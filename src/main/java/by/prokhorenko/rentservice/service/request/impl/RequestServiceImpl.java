@@ -23,7 +23,7 @@ public class RequestServiceImpl implements RequestService {
         try(RequestDao requestDao = DaoFactory.getInstance().getRequestDao()){
             return requestDao.add(request).isPresent();
         } catch (IOException | DaoException e) {
-            throw new ServiceException("Adding request error",e);
+            throw new ServiceException(e);
         }
     }
 
@@ -42,6 +42,26 @@ public class RequestServiceImpl implements RequestService {
         try(RequestDao requestDao = DaoFactory.getInstance().getRequestDao()) {
             boolean isApproved = requestDao.approveRequest(requestsId);
             return isApproved;
+        } catch (IOException | DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean disApproveRequestById(int requestsId) throws ServiceException {
+        try(RequestDao requestDao = DaoFactory.getInstance().getRequestDao()){
+            boolean isDisApproved = requestDao.disApproveRequest(requestsId);
+            return isDisApproved;
+        } catch (IOException | DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Request> findRequestsOnUsersAdvertisement(int usersId) throws ServiceException {
+        try(RequestDao requestDao = DaoFactory.getInstance().getRequestDao()){
+            List<Request> requestsOnAdvertisement = requestDao.findRequestsByAdvertisementsAuthorId(usersId);
+            return requestsOnAdvertisement;
         } catch (IOException | DaoException e) {
             throw new ServiceException(e);
         }

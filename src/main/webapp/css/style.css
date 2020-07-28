@@ -520,6 +520,12 @@ header {
     align-items: center;
 }
 
+.nothing_found-message{
+    margin: 0 auto;
+    color:#545454;
+    font-size: 20px;
+}
+
 .adv__title{
     font-family: Roboto;
     font-style: normal;
@@ -954,6 +960,7 @@ header {
     display: flex;
     justify-content: space-around;
     width: 650px;
+
 }
 
 .card-ads .date-from-to{

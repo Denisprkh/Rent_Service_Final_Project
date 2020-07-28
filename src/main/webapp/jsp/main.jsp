@@ -62,6 +62,11 @@
         </div>
         </form>
         <div class="list-flat__items">
+            <c:if test="${empty sessionScope.advertisementList}">
+                <div class="nothing_found-message">
+                    <fmt:message key="main_page.nothing_found_message"/>
+                </div>
+            </c:if>
         <c:forEach var="elem" items="${advertisementList}">
             <a href="${pageContext.request.contextPath}/controller?command=advertisement_page&advertisementId=${elem.getId()}">
             <div class="list-flat__item">
@@ -89,10 +94,10 @@
             </a>
             </c:forEach>
             <div class="card-page">
-                <c:if test="${currentPage != 1}">
+                <c:if test="${currentPage != 1 && pagesQuantity > 0}">
                 <div class="prevision_page bgc-page">
                     <div class="icon">
-                        <img src="img/arrow2.svg" alt="">
+                        <img src="${pageContext.request.contextPath}/img/arrow2.svg" alt="">
                     </div>
                     <div class="prev-text">
                         <c:choose>
@@ -113,7 +118,7 @@
                         ${currentPage}
                     </c:if>
                 </div>
-                <c:if test="${currentPage ne pagesQuantity}">
+                <c:if test="${currentPage ne pagesQuantity && pagesQuantity > 0}">
                 <div class="next-page bgc-page">
                     <div class="next-page-text">
                         <c:choose>
@@ -126,7 +131,7 @@
                         </c:choose>
                     </div>
                     <div class="icon">
-                        <img src="img/arrow1.svg" alt="">
+                        <img src="${pageContext.request.contextPath}img/arrow1.svg" alt="">
                     </div>
                 </div>
                 </c:if>

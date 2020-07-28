@@ -33,8 +33,12 @@ public class SetFlatIsNotInRentCommand implements Command {
         int flatsId = Integer.parseInt(request.getParameter(RequestParameter.FLAT_ID));
         User user = (User) session.getAttribute(Attribute.USER);
         int usersId = user.getId();
+        int advertisementId = Integer.parseInt(request.getParameter(RequestParameter.ADVERTISEMENT_ID));
         try {
-            flatService.setFlatIsNotInRent(flatsId);
+            Advertisement advertisement = advertisementService.findAdvertisementById(advertisementId);
+            if(advertisement.getAuthor().getId() == usersId) {
+                flatService.setFlatIsNotInRent(flatsId);
+            }
             List<Advertisement> usersAdvertisements = advertisementService.findAdvertisementsByUserId(usersId);
             session.setAttribute(Attribute.USERS_ADVERTISEMENT_LIST,usersAdvertisements);
         } catch (ServiceException e) {

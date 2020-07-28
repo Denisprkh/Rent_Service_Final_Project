@@ -8,5 +8,6 @@ import java.util.List;
 public interface RequestDao extends CommonDao<Request> {
     List<Request> findRequestsByUsersId(int usersId) throws DaoException;
     boolean approveRequest(int requestsId) throws DaoException;
-    List<Request> findRequestsByAdvertisementsId(int advertisementsId) throws DaoException;
+    boolean disApproveRequest(int requestsId) throws DaoException;
+    List<Request> findRequestsByAdvertisementsAuthorId(int authorId) throws DaoException;
 }

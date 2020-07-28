@@ -14,6 +14,7 @@ public class RequestBuilder {
     private LocalDateTime endDate;
     private LocalDateTime applicationDate;
     private Advertisement advertisement;
+    private boolean isApproved;
 
     public boolean isApproved() {
         return isApproved;
@@ -24,7 +25,6 @@ public class RequestBuilder {
         return this;
     }
 
-    private boolean isApproved;
 
     public int getId() {
         return id;

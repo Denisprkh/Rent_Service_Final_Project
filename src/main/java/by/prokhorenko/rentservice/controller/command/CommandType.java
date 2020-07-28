@@ -1,6 +1,7 @@
 package by.prokhorenko.rentservice.controller.command;
 
 import by.prokhorenko.rentservice.controller.command.impl.*;
+import by.prokhorenko.rentservice.controller.command.impl.page.*;
 
 public enum  CommandType {
     SIGN_UP(new SignUpCommand()),
@@ -18,7 +19,11 @@ public enum  CommandType {
     DELETE_ADVERTISEMENT(new DeleteAdvertisementCommand()),
     FIND_ADVERTISEMENTS_BY_FILTER(new FindAdvertisementsByUserChoiceCommand()),
     SET_FLAT_IN_RENT(new SetFlatIsInRentCommand()),
-    SET_FLAT_IS_NOT_IN_RENT(new SetFlatIsNotInRentCommand());
+    SET_FLAT_IS_NOT_IN_RENT(new SetFlatIsNotInRentCommand()),
+    APPROVE_REQUEST(new ApproveRequestCommand()),
+    DISAPPROVE_REQUEST(new DisapproveRequestCommand()),
+    SIGN_IN_PAGE(new SignInPageCommand()),
+    SIGN_UP_PAGE(new SignUpPageCommand());
 
 
     private Command command;

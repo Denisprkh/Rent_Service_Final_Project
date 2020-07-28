@@ -1,4 +1,4 @@
-package by.prokhorenko.rentservice.controller.command.impl;
+package by.prokhorenko.rentservice.controller.command.impl.page;
 
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;

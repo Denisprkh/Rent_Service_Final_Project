@@ -12,6 +12,8 @@ import by.prokhorenko.rentservice.factory.DaoFactory;
 import by.prokhorenko.rentservice.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
 import java.sql.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -226,11 +228,8 @@ public abstract class AbstractCommonDao implements AutoCloseable{
                             SqlColumnName.REQUEST_ADVERTISEMENTS_ID_COLUMN_NAME)).get())
                     .buildApproved(resultSet.getBoolean(SqlColumnName.REQUEST_IS_APPROVED_COLUMN_NAME))
                     .buildRequest();
-        } catch (SQLException e) {
-            throw new DaoException("Building request from resultSet error",e);
-        } catch (Exception e) {
-            throw new DaoException("Building request from resultSet error",e);
-
+        } catch (SQLException | IOException e) {
+            throw new DaoException("Building request from resultSet error"+ e.getCause() + " "+e.getMessage(),e);
         }
     }
 

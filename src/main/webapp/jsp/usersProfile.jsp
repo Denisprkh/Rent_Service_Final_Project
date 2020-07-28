@@ -75,10 +75,10 @@
                                 <div class="name-top">
                                     <fmt:message key="profile.my_profile_password"/>
                                 </div>
-                                <div class="name-botton" data-type="profile-info">
-
+                                <div class="name-botton" >
+                                        *************
                                 </div>
-                                <input type="password" class="name-botton input__profile none" name="updatedPassword"
+                                <input  class="name-botton input__profile none" name="updatedPassword"
                                        data-type="profile-input">
                             </div>
                             <div class="btn-profile__button flex">
@@ -110,7 +110,7 @@
                 <div class="card-profile">
                     <div class="formyads">
                         <div class="top-name-ads">
-                            #1
+
                         </div>
                         <c:forEach var="elem" items="${usersRequestList}">
                             <div class="card-ads">
@@ -130,16 +130,16 @@
                                     <div class="phone">
                                         <c:choose>
                                             <c:when test="${elem.isApproved() eq true}">${elem.advertisement.author.phone}</c:when>
-                                            <c:otherwise>+375(**)***-**-**</c:otherwise>
+                                            <c:otherwise>************</c:otherwise>
                                         </c:choose>
                                     </div>
                                     <div class="accept_status">
                                         <c:choose>
                                             <c:when test="${elem.isApproved() eq true}">
-                                                <fmt:message key="profile.request_is_approved"/>
+                                                <img src="${pageContext.request.contextPath}/img/true.svg" alt="accept">
                                             </c:when>
                                             <c:otherwise>
-                                                <fmt:message key="profile.request_is_not_approved"/>
+                                                <img src="${pageContext.request.contextPath}/img/false.svg" alt="accept">
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
@@ -184,37 +184,16 @@
                                     <c:choose>
                                         <c:when test="${elem.flat.isFree() eq true}">
                                             <a class="btn-delete" href=
-                                                    "${pageContext.request.contextPath}/controller?command=SET_FLAT_IN_RENT&flatId=${elem.flat.id}">
+                                                    "${pageContext.request.contextPath}/controller?command=SET_FLAT_IN_RENT&flatId=${elem.flat.id}&advertisementId=${elem.id}">
                                                 <fmt:message key="profile.my_ads_rented_btn"/> </a>
                                         </c:when>
                                         <c:otherwise><a class="btn-update" href=
-                                                "${pageContext.request.contextPath}/controller?command=SET_FLAT_IS_NOT_IN_RENT&flatId=${elem.flat.id}">
+                                                "${pageContext.request.contextPath}/controller?command=SET_FLAT_IS_NOT_IN_RENT&flatId=${elem.flat.id}&advertisementId=${elem.id}">
                                             <fmt:message key="profile.my_ads_not_rented_btn"/> </a></c:otherwise>
                                     </c:choose>
                                 </div>
                             </div>
                         </c:forEach>
-                    </div>
-                    <div class="card-page">
-                        <div class="prevision_page bgc-page">
-                            <div class="icon">
-                                <img src="${pageContext.request.contextPath}/img/arrow2.svg" alt="">
-                            </div>
-                            <div class="prev-text">
-                                <fmt:message key="pagination.previous_page_button"/>
-                            </div>
-                        </div>
-                        <div class="number-page">
-                            1
-                        </div>
-                        <div class="next-page bgc-page">
-                            <div class="next-page-text">
-                                <fmt:message key="pagination.next_page_button"/>
-                            </div>
-                            <div class="icon">
-                                <img src="${pageContext.request.contextPath}/img/arrow1.svg" alt="">
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -225,50 +204,40 @@
                 <div class="card-profile">
                     <div class="formyads">
                         <div class="top-name-ads">
-                            #1
+
                         </div>
-                        <c:forEach var="elem" items="${usersRequestList}">
+                        <c:forEach var="elem" items="${requestsOnUsersAdvertisementsList}">
                             <div class="card-ads">
                                 <div class="card-ads-info">
                                     <div class="name">
                                         <a href="${pageContext.request.contextPath}/controller?command=ADVERTISEMENT_PAGE&advertisementId=${elem.advertisement.id}">${elem.advertisement.title}</a>
                                     </div>
                                     <div class="date-from-to">
-
+                                        <ctg:date-time value="${elem.startDate}"/>-<ctg:date-time
+                                            value="${elem.endDate}"/>
                                     </div>
                                     <div class="date-to">
-                                        03.07.2020; 17:25
+                                        <ctg:date-time value="${elem.applicationDate}"/>
                                     </div>
                                     <div class="phone">
-
+                                            ${elem.user.phone}
                                     </div>
                                 </div>
-                                <a href="#" class="btn-accept">
-                                    <img src="${pageContext.request.contextPath}/img/tick.svg" alt="accept">
-                                </a>
+                                <c:choose>
+                                    <c:when test="${elem.isApproved() ne true}">
+                                        <a href="${pageContext.request.contextPath}/controller?command=APPROVE_REQUEST&requestId=${elem.id}" class="btn-accept">
+                                            <img src="${pageContext.request.contextPath}/img/true.svg" alt="accept">
+                                        </a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="${pageContext.request.contextPath}/controller?command=DISAPPROVE_REQUEST&requestId=${elem.id}" class="btn-accept">
+                                            <img src="${pageContext.request.contextPath}/img/false.svg" alt="accept">
+                                        </a>
+                                    </c:otherwise>
+                                </c:choose>
+
                             </div>
                         </c:forEach>
-                    </div>
-                    <div class="card-page">
-                        <div class="prevision_page bgc-page">
-                            <div class="icon">
-                                <img src="${pageContext.request.contextPath}/img/arrow2.svg" alt="">
-                            </div>
-                            <div class="prev-text">
-                                <fmt:message key="pagination.previous_page_button"/>
-                            </div>
-                        </div>
-                        <div class="number-page">
-                            1
-                        </div>
-                        <div class="next-page bgc-page">
-                            <div class="next-page-text">
-                                <fmt:message key="pagination.next_page_button"/>
-                            </div>
-                            <div class="icon">
-                                <img src="${pageContext.request.contextPath}/img/arrow1.svg" alt="">
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

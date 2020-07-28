@@ -1,9 +1,10 @@
-package by.prokhorenko.rentservice.controller.command.impl;
+package by.prokhorenko.rentservice.controller.command.impl.page;
 
 import by.prokhorenko.rentservice.controller.DisPathType;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
+import by.prokhorenko.rentservice.controller.command.impl.Attribute;
 import by.prokhorenko.rentservice.dao.AdvertisementDao;
 import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 import by.prokhorenko.rentservice.entity.request.Request;
@@ -39,9 +40,11 @@ public class ProfilePageCommand implements Command {
             User user = (User) session.getAttribute(Attribute.USER);
             int usersId = user.getId();
             List<Advertisement> usersAdvertisements = advertisementService.findAdvertisementsByUserId(usersId);
-            session.setAttribute(Attribute.USERS_ADVERTISEMENT_LIST,usersAdvertisements);
             List<Request> usersRequests = requestService.findAllUsersRequests(usersId);
+            List<Request> requestsOnUsersAdvertisements = requestService.findRequestsOnUsersAdvertisement(usersId);
+            session.setAttribute(Attribute.USERS_ADVERTISEMENT_LIST,usersAdvertisements);
             session.setAttribute(Attribute.USERS_REQUEST_LIST,usersRequests);
+            session.setAttribute(Attribute.REQUESTS_ON_USERS_ADVERTISEMENTS_LIST,requestsOnUsersAdvertisements);
             session.removeAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE);
         } catch (ServiceException e) {
             LOG.error(e);

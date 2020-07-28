@@ -14,6 +14,7 @@ public class Attribute {
     public static final String ADVERTISEMENT_FILTER = "advertisementFilter";
     public static final String USERS_REQUEST_LIST = "usersRequestList";
     public static final String USERS_ADVERTISEMENT_LIST = "usersAdvertisementList";
+    public static final String REQUESTS_ON_USERS_ADVERTISEMENTS_LIST = "requestsOnUsersAdvertisementsList";
 
     private Attribute(){}
 }

@@ -1,8 +1,10 @@
-package by.prokhorenko.rentservice.controller.command.impl;
+package by.prokhorenko.rentservice.controller.command.impl.page;
 
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
+import by.prokhorenko.rentservice.controller.command.impl.Attribute;
+import by.prokhorenko.rentservice.controller.command.impl.RequestParameter;
 import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 import by.prokhorenko.rentservice.entity.flat.FlatPhoto;
 import by.prokhorenko.rentservice.exception.DaoException;

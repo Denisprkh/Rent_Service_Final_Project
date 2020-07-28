@@ -131,16 +131,37 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
         try(PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_REQUEST_APPROVED_STATUS)){
             statement.setBoolean(1,Boolean.TRUE);
             statement.setInt(2,requestsId);
-            updateEntity(statement);
-            return true;
+            return updateEntity(statement);
         } catch (SQLException e) {
             throw new DaoException(e);
         }
     }
 
     @Override
-    public List<Request> findRequestsByAdvertisementsId(int advertisementsId) throws DaoException {
-        return null;
+    public boolean disApproveRequest(int requestsId) throws DaoException {
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_REQUEST_APPROVED_STATUS)){
+            statement.setBoolean(1,Boolean.FALSE);
+            statement.setInt(2,requestsId);
+            return updateEntity(statement);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public List<Request> findRequestsByAdvertisementsAuthorId(int authorId) throws DaoException {
+        ResultSet resultSet = null;
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_REQUESTS_BY_ADVERTISEMENT_AUTHOR_ID)){
+            statement.setInt(1,authorId);
+            resultSet = statement.executeQuery();
+            List<Request> requestsOnAdvertisement = new ArrayList<>();
+            while (resultSet.next()){
+                requestsOnAdvertisement.add(buildRequestFromResultSet(resultSet));
+            }
+            return requestsOnAdvertisement;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
 }

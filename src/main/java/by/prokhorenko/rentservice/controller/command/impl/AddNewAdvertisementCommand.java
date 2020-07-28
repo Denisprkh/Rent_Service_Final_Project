@@ -44,7 +44,6 @@ public class AddNewAdvertisementCommand implements Command {
         try {
             List<InputStream> flatPhotoData = buildPhotosDataFromRequest(request);
             List<FlatPhoto> flatPhotos = buildFlatPhotosFromDataList(flatPhotoData);
-            LOG.debug(flatPhotos);
             AdvertisementDataHandler dataHandler = buildAdvertisementDataHandlerFromRequest(request);
             advertisementService.defineIncorrectData(dataHandler);
             FlatAddress flatAddress = buildFlatAddressFromDataHandler(dataHandler);
