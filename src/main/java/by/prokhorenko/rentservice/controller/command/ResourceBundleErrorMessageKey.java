@@ -14,7 +14,7 @@ public class ResourceBundleErrorMessageKey {
     public static final String ACCOUNT_IS_NOT_ACTIVATED = "sign_in_form.account_is_not_activated";
     public static final String INVALID_INPUT_VALUES = "sign_in_form.invalid_input_values";
     public static final String ADVERTISEMENT_INVALID_INPUT_VALUES = "add_an_advertisement.invalid_input_values";
-    public static final String ADVERTISEMENT_INVALID_IMG_AMOUNT = "add_an_advertisement.invalid_img_amount";
+    public static final String ADVERTISEMENT_INVALID_IMG_AMOUNT = "add_an_advertisement.img_amount_info";
 
     private ResourceBundleErrorMessageKey(){}
 }

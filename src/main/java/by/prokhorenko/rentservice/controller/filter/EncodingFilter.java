@@ -13,6 +13,7 @@ public class EncodingFilter implements Filter {
     private String encoding;
     private static final String ENCODING_PARAMETER_NAME = "encoding";
 
+    @Override
     public void init(FilterConfig config) throws ServletException {
         encoding = config.getInitParameter(ENCODING_PARAMETER_NAME);
     }
@@ -28,6 +29,7 @@ public class EncodingFilter implements Filter {
         chain.doFilter(request, response);
     }
 
+    @Override
     public void destroy() {
         encoding = null;
     }

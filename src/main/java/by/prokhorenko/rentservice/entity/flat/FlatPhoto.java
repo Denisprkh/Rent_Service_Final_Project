@@ -1,20 +1,25 @@
 package by.prokhorenko.rentservice.entity.flat;
 
 import by.prokhorenko.rentservice.builder.FlatPhotoBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
 public class FlatPhoto implements Serializable {
 
+    private static final Logger LOG = LogManager.getLogger();
     private int id;
     private int flatsId;
     private InputStream flatPhotoData;
     private String base64PhotoData;
 
-    public FlatPhoto(){}
+    public FlatPhoto() {
+    }
 
-    public FlatPhoto(FlatPhotoBuilder builder){
+    public FlatPhoto(FlatPhotoBuilder builder) {
         this.id = builder.getId();
         this.flatsId = builder.getFlatsId();
         this.flatPhotoData = builder.getFlatPhotoData();
@@ -61,8 +66,38 @@ public class FlatPhoto implements Serializable {
 
         if (id != flatPhoto.id) return false;
         if (flatsId != flatPhoto.flatsId) return false;
-        if (flatPhotoData != null ? !flatPhotoData.equals(flatPhoto.flatPhotoData) : flatPhoto.flatPhotoData != null)
-            return false;
+        if (flatPhotoData == null) {
+            if (flatPhoto.flatPhotoData != null) {
+                return false;
+            }
+        } else if (flatPhotoData != null) {
+            if (flatPhoto.flatPhotoData == null) {
+                return false;
+            } else {
+                try {
+                    while (true) {
+                        int fr = flatPhotoData.read();
+                        int tr = flatPhoto.flatPhotoData.read();
+                        if (fr != tr)
+                            return false;
+
+                        if (fr == -1)
+                            return true;
+                    }
+                } catch (IOException e) {
+                    LOG.error(e);
+                } finally {
+                    try {
+                        flatPhotoData.close();
+                        flatPhoto.flatPhotoData.close();
+                    } catch (IOException e) {
+                        LOG.error(e);
+                    }
+
+                }
+            }
+
+        }
         return base64PhotoData != null ? base64PhotoData.equals(flatPhoto.base64PhotoData) : flatPhoto.base64PhotoData == null;
     }
 

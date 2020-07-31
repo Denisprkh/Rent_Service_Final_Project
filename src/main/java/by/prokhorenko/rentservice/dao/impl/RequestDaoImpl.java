@@ -8,7 +8,6 @@ import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -161,6 +160,8 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
             return requestsOnAdvertisement;
         } catch (SQLException e) {
             throw new DaoException(e);
+        }finally {
+            closeResultSet(resultSet);
         }
     }
 

@@ -8,6 +8,8 @@ import by.prokhorenko.rentservice.dao.FlatAddressDao;
 import by.prokhorenko.rentservice.entity.flat.FlatAddress;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +28,7 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
     public static FlatAddressDao getInstance(){
         return INSTANCE;
     }
+    private static final Logger LOG = LogManager.getLogger();
 
     @Override
     public Optional<FlatAddress> add(FlatAddress flatAddress) throws DaoException {

@@ -5,6 +5,7 @@ import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
 import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 import by.prokhorenko.rentservice.entity.user.User;
+import by.prokhorenko.rentservice.entity.user.UserRole;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.advertisement.AdvertisementService;
@@ -29,13 +30,13 @@ public class DeleteAdvertisementCommand implements Command {
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(Attribute.USER);
+        UserRole userRole = (UserRole) session.getAttribute(Attribute.USER_ROLE);
         int usersId = user.getId();
 
         int advertisementsId = Integer.parseInt(request.getParameter(RequestParameter.ADVERTISEMENT_ID));
         try {
-            List<Advertisement> allUsersAdvertisements = advertisementService.findAdvertisementsByUserId(usersId);
             Advertisement advertisement = advertisementService.findAdvertisementById(advertisementsId);
-            if(allUsersAdvertisements.contains(advertisement)){
+            if(advertisement.getAuthor().getId() == usersId || UserRole.ADMIN.equals(userRole)){
                 advertisementService.deleteAdvertisement(advertisementsId);
             }
         } catch (ServiceException e) {

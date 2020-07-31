@@ -19,6 +19,7 @@ public class ServletController extends HttpServlet {
 
     private static final Logger LOG = LogManager.getLogger();
 
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request,response);

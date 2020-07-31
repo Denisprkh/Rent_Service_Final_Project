@@ -103,6 +103,9 @@
                                    accept="image/*" required/>
                             <span class="input_img_plus">+</span>
                         </label>
+                        <div class="img_info_text">
+                            <fmt:message key="add_an_advertisement.img_amount_info"/>
+                        </div>
                     </div>
 
                     <div class="row__items-title">

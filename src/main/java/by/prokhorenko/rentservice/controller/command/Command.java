@@ -15,15 +15,4 @@ public interface Command {
 
     Router execute(HttpServletRequest request, HttpServletResponse response);
 
-    default void definePaginationContext(HttpServletRequest request, int fullRecordsQuantity, int currentPage, int recordsPerPage) {
-        int allPagesAmount = fullRecordsQuantity / recordsPerPage;
-        if((fullRecordsQuantity-(allPagesAmount * recordsPerPage)) % recordsPerPage > 0){
-            allPagesAmount++;
-        }
-
-        request.setAttribute(Attribute.PAGINATION_PAGES_QUANTITY,allPagesAmount);
-        request.setAttribute(Attribute.PAGINATION_CURRENT_PAGE,currentPage);
-    }
-
-
 }

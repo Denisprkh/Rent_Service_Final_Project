@@ -15,11 +15,11 @@ public class LocaleFilter implements Filter {
     private static final String DEFAULT_LOCALE = "en";
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        setLocalisation((HttpServletRequest) req, (HttpServletResponse) resp);
+        setLocalisation((HttpServletRequest) req);
         chain.doFilter(req, resp);
     }
 
-    private void setLocalisation(HttpServletRequest request, HttpServletResponse response){
+    private void setLocalisation(HttpServletRequest request){
         HttpSession session = request.getSession();
         Object languageAttribute = session.getAttribute(Attribute.LANGUAGE);
         if(languageAttribute == null){

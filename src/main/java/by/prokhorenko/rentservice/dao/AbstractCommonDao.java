@@ -98,6 +98,7 @@ public abstract class AbstractCommonDao implements AutoCloseable{
                 return false;
             }
         } catch (SQLException e) {
+            LOG.error(e.getMessage() + " " + e.getCause());
             throw new DaoException("Updating entity error",e);
         }
         return true;

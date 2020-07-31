@@ -19,8 +19,6 @@ public class PageRedirectSecurityFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        LOG.debug(request.getParameter(RequestParameter.PARAM_COMMAND));
-        LOG.debug(request.getContextPath());
         if(request.getParameter(RequestParameter.PARAM_COMMAND) == null){
             response.sendRedirect(request.getContextPath()+DEFAULT_REDIRECT_URL);
         }

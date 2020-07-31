@@ -6,6 +6,7 @@ public class RequestParameter {
     public static final String USER_EMAIL = "email";
     public static final String USER_PASSWORD = "password";
     public static final String USER_PHONE = "phone";
+    public static final String USER_ID = "userId";
     public static final String PARAM_LANGUAGE = "language";
 
     public static final String PARAM_ID = "id";
@@ -47,6 +48,8 @@ public class RequestParameter {
     public static final String NEW_FILTER_SEARCH_FLAG = "newSearch";
     public static final String REQUEST_ID = "requestId";
     public static final String FLAT_ID = "flatId";
+    public static final String PAGINATION_PAGES_QUANTITY = "pagesQuantity";
+    public static final String PAGINATION_CURRENT_PAGE = "currentPage";
 
     private RequestParameter(){}
 

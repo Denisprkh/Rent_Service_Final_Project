@@ -8,7 +8,6 @@ import by.prokhorenko.rentservice.entity.user.User;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
 import by.prokhorenko.rentservice.util.HashGenerator;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.sql.PreparedStatement;
@@ -90,9 +89,8 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
             statement.setString(1,user.getFirstName());
             statement.setString(2,user.getLastName());
             statement.setString(3,user.getEmail());
-            statement.setString(4,HashGenerator.generateHash(user.getPassword()));
-            statement.setString(5,user.getPhone());
-            statement.setInt(6,user.getId());
+            statement.setString(4,user.getPhone());
+            statement.setInt(5,user.getId());
             statement.executeUpdate();
             return findById(user.getId());
         } catch (SQLException e) {
@@ -145,12 +143,12 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
 
     @Override
     public boolean banUser(int id) throws DaoException {
-      return updateEntityById(id, SqlQuery.UPDATE_USERS_BAN_STATUS_TRUE);
+      return updateEntityById(id, SqlQuery.UPDATE_USERS_BAN_STATUS_BY_ID_TRUE);
     }
 
     @Override
     public boolean unBanUser(int id) throws DaoException {
-        return updateEntityById(id, SqlQuery.UPDATE_USERS_BAN_STATUS_FALSE);
+        return updateEntityById(id, SqlQuery.UPDATE_USERS_BAN_STATUS_BY_ID_FALSE);
     }
 
     @Override
@@ -195,6 +193,17 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
             throw new DaoException(e);
         }finally {
             closeResultSet(resultSet);
+        }
+    }
+
+    @Override
+    public boolean updateUsersRoleById(int id, int roleId) throws DaoException {
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_USERS_ROLE)) {
+            statement.setInt(1,roleId);
+            statement.setInt(2,id);
+            return updateEntity(statement);
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
     }
 

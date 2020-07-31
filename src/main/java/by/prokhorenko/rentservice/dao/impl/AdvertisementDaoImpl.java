@@ -53,7 +53,8 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
                      Statement.RETURN_GENERATED_KEYS);
              FlatPhotoDao flatPhotoDao = DaoFactory.getInstance().getFlatPhotoDao()) {
             entityTransaction.beginTransaction(connection, (AbstractCommonDao) flatDao,
-                    (AbstractCommonDao) flatAddressDao, (AbstractCommonDao) flatDescriptionDao, (AbstractCommonDao) flatPhotoDao);
+                    (AbstractCommonDao) flatAddressDao, (AbstractCommonDao) flatDescriptionDao, (AbstractCommonDao)
+                            flatPhotoDao);
             Flat flat = advertisement.getFlat();
             FlatAddress flatAddress = flatAddressDao.add(flat.getFlatAddress()).orElseThrow(DaoException::new);
             FlatDescription flatDescription = flatDescriptionDao.add(flat.getFlatDescription()).
@@ -79,7 +80,6 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
             return Optional.of(advertisement);
         } catch (IOException | SQLException e) {
             entityTransaction.rollback(connection);
-            LOG.debug(e.getMessage() + " " + e.getCause());
             throw new DaoException(e);
         } finally {
             entityTransaction.endTransaction(connection);
@@ -93,7 +93,7 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
             photo.setFlatsId(flatsId);
             photos.add(photo);
         }
-        return flatPhotos;
+        return photos;
     }
 
     @Override
@@ -121,6 +121,8 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
         }
     }
 
+
+
     @Override
     public Optional<Advertisement> findById(int id) throws DaoException {
         ResultSet resultSet = null;
@@ -132,9 +134,12 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
             if (resultSet.next()) {
                 advertisement = buildAdvertisementFromResultSet(resultSet);
             }
-            List<FlatPhoto> flatPhotos = flatPhotoDao.findAllPhotosByFlatsId(advertisement.getFlat().getId());
-            advertisement.getFlat().setFlatPhotos(flatPhotos);
-            return Optional.of(advertisement);
+            if (advertisement != null) {
+                List<FlatPhoto> flatPhotos = flatPhotoDao.findAllPhotosByFlatsId(advertisement.getFlat().getId());
+                advertisement.getFlat().setFlatPhotos(flatPhotos);
+                return Optional.of(advertisement);
+            }
+            return Optional.empty();
         } catch (SQLException | IOException e) {
             throw new DaoException(e);
         } finally {
@@ -144,16 +149,33 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
 
     @Override
     public Optional<Advertisement> update(Advertisement advertisement) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_ADVERTISEMENT_BY_ID)) {
+        EntityTransaction entityTransaction = new EntityTransaction();
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_ADVERTISEMENT_BY_ID);
+        FlatAddressDao flatAddressDao = DaoFactory.getInstance().getFlatAddressDao();
+        FlatDescriptionDao flatDescriptionDao = DaoFactory.getInstance().getFlatDescriptionDao();
+        FlatPhotoDao flatPhotoDao = DaoFactory.getInstance().getFlatPhotoDao()) {
+            entityTransaction.beginTransaction(connection,(AbstractCommonDao) flatAddressDao,
+                    (AbstractCommonDao) flatDescriptionDao,(AbstractCommonDao) flatPhotoDao);
+            FlatDescription flatDescription = advertisement.getFlat().getFlatDescription();
+            FlatAddress flatAddress = advertisement.getFlat().getFlatAddress();
+            flatDescriptionDao.update(flatDescription);
+            flatAddressDao.update(flatAddress);
+            flatPhotoDao.UpdateAllFlatsPhotos(advertisement.getFlat().getFlatPhotos());
             statement.setString(1, advertisement.getTitle());
             statement.setBigDecimal(2, advertisement.getPrice());
             statement.setInt(3, advertisement.getId());
             if (updateEntity(statement)) {
+                entityTransaction.commit(connection);
                 return (findById(advertisement.getId()));
             }
+            entityTransaction.rollback(connection);
             throw new DaoException("Advertisement has not been updated");
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
+            LOG.error(e.getMessage() + e.getCause());
+            entityTransaction.rollback(connection);
             throw new DaoException(e);
+        }finally {
+            entityTransaction.endTransaction(connection);
         }
     }
 
@@ -179,19 +201,29 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
     @Override
     public List<Advertisement> findAllAdvertisementsByUsersId(int id) throws DaoException {
         ResultSet resultSet = null;
-        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ADVERTISEMENTS_BY_USERS_ID)) {
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ADVERTISEMENTS_BY_USERS_ID);
+             FlatPhotoDao flatPhotoDao = DaoFactory.getInstance().getFlatPhotoDao()) {
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
             List<Advertisement> usersAdvertisements = new ArrayList<>();
             while (resultSet.next()) {
-                usersAdvertisements.add(buildAdvertisementFromResultSet(resultSet));
+                Advertisement advertisement = buildAdvertisementFromResultSet(resultSet);
+                if (advertisement != null) {
+                    List<FlatPhoto> flatPhotos = flatPhotoDao.findAllPhotosByFlatsId(advertisement.getFlat().getId());
+                    advertisement.getFlat().setFlatPhotos(flatPhotos);
+                    usersAdvertisements.add(advertisement);
+                }
             }
             return usersAdvertisements;
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             throw new DaoException(e);
         } finally {
             closeResultSet(resultSet);
         }
+    }
+
+    private List<Advertisement> findAllAdvertisementsByDifferentStatement(String sql){
+
     }
 
 
@@ -256,6 +288,31 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
             }
             return quantity;
         } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            closeResultSet(resultSet);
+        }
+    }
+
+    @Override
+    public List<Advertisement> findAllNotRentedAdvertisements(int start, int total) throws DaoException {
+        ResultSet resultSet = null;
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_ADVERTISEMENTS_NOT_IN_RENT);
+             FlatPhotoDao flatPhotoDao = DaoFactory.getInstance().getFlatPhotoDao()) {
+            statement.setInt(1, start);
+            statement.setInt(2, total);
+            resultSet = statement.executeQuery();
+            List<Advertisement> allAdvertisements = new ArrayList<>();
+            while (resultSet.next()) {
+                Advertisement advertisement = buildAdvertisementFromResultSet(resultSet);
+                Flat flat = advertisement.getFlat();
+                int flatsId = flat.getId();
+                List<FlatPhoto> flatPhotos = flatPhotoDao.findAllPhotosByFlatsId(flatsId);
+                flat.setFlatPhotos(flatPhotos);
+                allAdvertisements.add(advertisement);
+            }
+            return allAdvertisements;
+        } catch (SQLException | IOException e) {
             throw new DaoException(e);
         } finally {
             closeResultSet(resultSet);

@@ -11,6 +11,10 @@ public class PagePath {
     public static final String ADMIN_PROFILE = "jsp/adminProfile.jsp";
     public static final String ADD_AN_ADVERTISEMENT = "jsp/addAnAdvertisement.jsp";
     public static final String ADVERTISEMENT = "jsp/advertisement.jsp";
+    public static final String ALL_USERS = "jsp/allUsers.jsp";
+    public static final String WRONG_REQUEST = "jsp/error404.jsp";
+    public static final String UPDATE_ADVERTISEMENT_PAGE = "jsp/updateAdvertisement.jsp";
+    public static final String ALL_ADVERTISEMENTS_PAGE = "jsp/allAdvertisements.jsp";
 
     private PagePath(){
 

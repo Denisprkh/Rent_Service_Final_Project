@@ -10,4 +10,5 @@ import java.util.List;
 public interface FlatPhotoDao extends CommonDao<FlatPhoto>{
     List<FlatPhoto> findAllPhotosByFlatsId(int flatsId) throws DaoException;
     boolean addAllPhotos(List<FlatPhoto> flatPhotos) throws  DaoException;
+    List<FlatPhoto> UpdateAllFlatsPhotos(List<FlatPhoto> flatPhotos) throws DaoException;
 }

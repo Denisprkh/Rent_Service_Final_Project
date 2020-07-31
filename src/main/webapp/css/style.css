@@ -619,6 +619,14 @@ header {
 
 }
 
+.img_info_text{
+    color:#858585;
+    font-size: 15px;
+    font-family: Roboto;
+    margin-left: 70px;
+    margin-top: 20px;
+}
+
 .row_items-input label:hover{
     cursor: pointer;
 }
@@ -820,7 +828,7 @@ header {
 }
 
 .profile .admins_profile{
-    height: 223px;
+    height: 290px;
 }
 
 .left-btn__item{
@@ -1010,12 +1018,22 @@ header {
     background: #E6E6E6;
     padding: 7px;
 }
+
+.btn-accept img{
+    padding-top: 3px;
+    padding-left: 1px;
+}
 .accept_status{
     width: 30px;
     border-left: 2px solid #fff;
     border-image: linear-gradient(180deg, #FACD68 0%, #FC76B3 100%);
     border-image-slice: 1;
     padding: 7px;
+}
+
+accept_status img{
+    padding-left: 6px;
+    padding-top: 2px;
 }
 
 .card-ads-btn{
@@ -1048,6 +1066,55 @@ header {
     font-size: 13px;
     text-align: center;
 }
+
+.admin_flat_status_info_free{
+    padding-top: 2px;
+    background: #00E492;
+    border-radius: 3px;
+    width: 85px;
+    height: 32px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.admin_flat_status_info_not_free{
+    padding-top: 2px;
+    background: #FF6073;
+    border-radius: 3px;
+    width: 85px;
+    height: 32px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.all_ads_handler{
+    width: 850px;
+    margin: 0 auto;
+    background-color:#F9F9F9;
+    margin-top: 9px;
+}
+
+.all_ads_top{
+    color:#545454;
+    font-family: Roboto;
+    font-size: 24px;
+    background-color:#fff;
+    margin-top: 100px;
+    /* margin-left: 145px; */
+    display: flex;
+}
+
+.all_ads_top a{
+    margin-right: 50px;
+    width: 95px;
+    cursor: pointer;
+    color:#545454;
+    font-family: Roboto;
+    font-size: 15px;
+    text-align: center;
+    padding-top: 4px;
+}
+
 
 .up_rights{
     width: 120px;
@@ -1100,6 +1167,7 @@ header {
     line-height: 12px;
     padding: 5px 11px;
     height: 22px;
+    color: black;
 }
 
 .next-page{
@@ -1417,4 +1485,16 @@ header {
 
 .top_name_title{
     margin-left: 70px;
+}
+
+.all_users_card{
+    margin-top: 100px;
+}
+
+.all_users{
+    width: 870px;
+}
+
+.admins_profile a{
+    color: #545454;
 }

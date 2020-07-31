@@ -2,6 +2,7 @@ package by.prokhorenko.rentservice.controller.command.util;
 
 import by.prokhorenko.rentservice.controller.command.ResourceBundleErrorMessageKey;
 import by.prokhorenko.rentservice.controller.command.impl.Attribute;
+import by.prokhorenko.rentservice.controller.command.impl.RequestParameter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ public class CommandUtil {
     private static final String PHONE_NUMBER = "phoneNumber";
     private static final String EMAIL_IS_UNIQUE = "emailIsUnique";
     private static final String PHONE_IS_UNIQUE = "phoneIsUnique";
+    public static final int RECORDS_PER_PAGE = 10;
 
     public static String extractLocalizedMessage(String lang, String key){
         Locale locale;
@@ -68,5 +70,21 @@ public class CommandUtil {
         return falseKey.get();
     }
 
+    public static void definePaginationContext(HttpServletRequest request, int fullRecordsQuantity) {
+        int currentPage = Integer.parseInt(request.getParameter(RequestParameter.PAGINATION_CURRENT_PAGE));
+        int allPagesAmount = fullRecordsQuantity / RECORDS_PER_PAGE;
+        if((fullRecordsQuantity-(allPagesAmount * RECORDS_PER_PAGE)) % RECORDS_PER_PAGE > 0){
+            allPagesAmount++;
+        }
+
+        request.getSession().setAttribute(Attribute.PAGINATION_PAGES_QUANTITY,allPagesAmount);
+        request.getSession().setAttribute(Attribute.PAGINATION_CURRENT_PAGE,currentPage);
+    }
+
+    public static int defineStartOfRecords(HttpServletRequest request){
+        int currentPage = Integer.parseInt(request.getParameter(RequestParameter.PAGINATION_CURRENT_PAGE));
+        int start = (currentPage-1) * RECORDS_PER_PAGE;
+        return start;
+    }
 
 }

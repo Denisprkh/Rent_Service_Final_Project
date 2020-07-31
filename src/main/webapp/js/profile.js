@@ -49,19 +49,64 @@ myAds.addEventListener('click', () => {addActive(myAdsAll, myAdsCard)})
 forMyAds.addEventListener('click', () => { addActive(forMyAdsAll, applicationForMyAdsCard)})
 
 
-var allUsers = document.querySelector('.btn-all_users')
-if (allUsers === null){
-    allUsers = null
+
+
+
+var allAds = document.querySelector('.btn-all_ads')
+if (allAds === null){
+    allAds = null
+
+    var allAdsCard = undefined;
+    allAdsAll = undefined;
+
 } else{
-    var allUsersAll = document.querySelectorAll('.btn-all_users')
-    allUsersCard = document.querySelector('.all_users')
-    allUsers.addEventListener('click', () => {addActive(allUsersAll, allUsersCard)})
+    var allAdsAll = document.querySelectorAll('.btn-all_ads')
+    allAdsCard = document.querySelector('.all_ads')
+    allAds.addEventListener('click', () => {addActive(allAdsAll, allAdsCard)})
+}
+
+var allRequests = document.querySelector('.btn-all_requests')
+if (allRequests === null){
+    allAds = null
+
+    var allRequestsCard = undefined;
+    allRequestsAll = undefined;
+
+} else{
+    var allRequestsAll = document.querySelectorAll('.btn-all_requests')
+    allRequestsCard = document.querySelector('.all_requests')
+    allRequests.addEventListener('click', () => {addActive(allRequestsAll, allRequestsCard)})
+}
+
+
+var btn = {
+    applicationForMyAdsCard: [forMyAdsAll, applicationForMyAdsCard],
+    myAdsCard: [myAdsAll, myAdsCard],
+    myApplicationsCard: [myApplicationsAll, myApplicationsCard],
+    myProfileCard: [profileAll, myProfileCard]
+}
+
+
+
+var numberPageAll = document.querySelectorAll('.number-page')
+var arraynimberPageAll = []
+
+for(i = 0; i < numberPageAll.length; i++) {
+    arraynimberPageAll.push(Number(numberPageAll[i].innerText))
+}
+
+for(i = 0; i < arraynimberPageAll.length; i++) {
+    if (arraynimberPageAll[i] > 1) {
+        var objName = numberPageAll[i].dataset.card
+        addActive(btn[objName][0], btn[objName][1])
+
+    }
 }
 
 var btnEditProfile = document.querySelector('#profile-edit')
 
 btnEditProfile.addEventListener('click', () => {
-    btnEditProfile.remove()
+    btnEditProfile.classList.add('none')
     addInput()
     inputValue()
     addBtn()
@@ -95,11 +140,27 @@ var addBtn = function() {
 }
 
 
-var reset = document.querySelector('[data-type = profile-reset]')
+var cancel = document.querySelector('[data-type = profile-cancel]')
 
-console.log(reset)
 
-reset.addEventListener('click', () => {
-    addInput()
-    inputValue()
+cancel.addEventListener('click', () => {
+    info = document.querySelectorAll('[data-type = profile-info]')
+    info.forEach((element) => {
+        element.classList.remove('none')
+    });
+
+    input = document.querySelectorAll('[data-type = profile-input]')
+
+    for (i = 0; i < input.length; i++) {
+        input[i].classList.add('none')
+    }
+    document.querySelectorAll('#profile-edit-btn').forEach((elem) => {
+        elem.classList.add('none')
+    })
+    btnEditProfile.classList.remove('none')
 })
+
+
+
+
+

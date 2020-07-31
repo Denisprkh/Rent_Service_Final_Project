@@ -36,11 +36,16 @@ public class UserValidator {
 
     public Map<String, Boolean> validateDataForSignUp(String email, String firstName, String lastName, String password,
                                                       String phoneNumber) {
+        Map<String, Boolean> validations = validateDataForUpdate(email,firstName,lastName,phoneNumber);
+        validations.put(PASSWORD,passwordIsCorrect(password));
+        return validations;
+    }
+
+    public Map<String, Boolean> validateDataForUpdate(String email,String firstName,String lastName,String phoneNumber) {
         Map<String, Boolean> validations = new HashMap<>();
         validations.put(EMAIL, emailIsCorrect(email));
         validations.put(FIRST_NAME, firstNameIsCorrect(firstName));
         validations.put(LAST_NAME, lastNameIsCorrect(lastName));
-        validations.put(PASSWORD, passwordIsCorrect(password));
         validations.put(PHONE_NUMBER, phoneIsCorrect(phoneNumber));
 
         return validations;

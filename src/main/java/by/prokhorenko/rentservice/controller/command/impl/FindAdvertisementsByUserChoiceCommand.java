@@ -5,6 +5,7 @@ import by.prokhorenko.rentservice.controller.DisPathType;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
+import by.prokhorenko.rentservice.controller.command.util.CommandUtil;
 import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 import by.prokhorenko.rentservice.entity.advertisement.UserChoiceDataHandler;
 import by.prokhorenko.rentservice.exception.ServiceException;
@@ -22,7 +23,6 @@ public class FindAdvertisementsByUserChoiceCommand implements Command {
 
     private static final Logger LOG = LogManager.getLogger();
     private AdvertisementService advertisementService;
-    private static final int RECORDS_PER_PAGE = 10;
 
     public FindAdvertisementsByUserChoiceCommand() {
         this.advertisementService = ServiceFactory.getInstance().getAdvertisementService();
@@ -32,12 +32,12 @@ public class FindAdvertisementsByUserChoiceCommand implements Command {
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         String newSearchFlag = request.getParameter(RequestParameter.NEW_FILTER_SEARCH_FLAG);
         UserChoiceDataHandler userChoiceDataHandler = buildDataHandlerFromRequest(request);
-        int currentPage = Integer.parseInt(request.getParameter(Attribute.PAGINATION_CURRENT_PAGE));
-        int start = ((currentPage - 1) * RECORDS_PER_PAGE);
+        int start = CommandUtil.defineStartOfRecords(request);
         HttpSession session = request.getSession();
         try {
-            definePaginationContext(request, advertisementService.findFilteredAdvertisementsQuantity(userChoiceDataHandler),
-                    currentPage, RECORDS_PER_PAGE);
+            CommandUtil.definePaginationContext(request,
+                    advertisementService.findFilteredAdvertisementsQuantity(userChoiceDataHandler));
+            LOG.debug(userChoiceDataHandler);
             UserChoiceDataHandler previousHandler = (UserChoiceDataHandler) session.
                     getAttribute(Attribute.ADVERTISEMENT_FILTER);
             UserChoiceDataHandler handlerForSearch;
@@ -48,7 +48,7 @@ public class FindAdvertisementsByUserChoiceCommand implements Command {
                 handlerForSearch = previousHandler;
             }
             List<Advertisement> advertisementList = advertisementService.findAdvertisementsByUsersChoice
-                    (handlerForSearch, start, RECORDS_PER_PAGE);
+                    (handlerForSearch, start, CommandUtil.RECORDS_PER_PAGE);
             session.setAttribute(Attribute.ADVERTISEMENT_LIST, advertisementList);
         } catch (ServiceException e) {
             LOG.error(e.getCause() + " " + e.getMessage());

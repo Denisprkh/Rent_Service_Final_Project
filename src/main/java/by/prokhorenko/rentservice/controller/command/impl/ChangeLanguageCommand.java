@@ -14,13 +14,13 @@ public class ChangeLanguageCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest req, HttpServletResponse resp) {
-        Router router = new Router();
         String targetLanguage = req.getParameter(RequestParameter.PARAM_LANGUAGE);
+        String previousPage = null;
         if (targetLanguage != null) {
             req.getSession().setAttribute(Attribute.LANGUAGE, targetLanguage);
-            String previousPage = req.getHeader(REFERER_HEADER);
-            router.setPage(previousPage);
+            previousPage= req.getHeader(REFERER_HEADER);
+
         }
-        return router;
+        return new Router(previousPage);
     }
 }

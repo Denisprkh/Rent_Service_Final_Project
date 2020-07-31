@@ -21,6 +21,7 @@ import java.util.List;
 public class ApproveRequestCommand implements Command {
 
     private static final Logger LOG = LogManager.getLogger();
+    private static final String REFERER_HEADER = "referer";
     private RequestService requestService;
     public ApproveRequestCommand(){
         this.requestService = ServiceFactory.getInstance().getRequestService();
@@ -35,7 +36,7 @@ public class ApproveRequestCommand implements Command {
         String page = null;
         try {
             if(requestService.ApproveRequestById(requestsId)){
-                page = PagePath.USER_PROFILE;
+                page = request.getHeader(REFERER_HEADER);
                 List<Request> requestsOnUsersAdvertisements = requestService.findRequestsOnUsersAdvertisement(usersId);
                 session.setAttribute(Attribute.REQUESTS_ON_USERS_ADVERTISEMENTS_LIST,requestsOnUsersAdvertisements);
             }else{

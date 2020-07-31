@@ -72,14 +72,6 @@
                                 </div>
                                 <input type="phone" class="name-botton input__profile none" name="updatedPhone"
                                        data-type="profile-input">
-                                <div class="name-top">
-                                    <fmt:message key="profile.my_profile_password"/>
-                                </div>
-                                <div class="name-botton" >
-                                        *************
-                                </div>
-                                <input  class="name-botton input__profile none" name="updatedPassword"
-                                       data-type="profile-input">
                             </div>
                             <div class="btn-profile__button flex">
                                 <div class="profile-btn-edit" id="profile-edit">
@@ -89,8 +81,7 @@
                                         value="UPDATE_PROFILE_DATA">
                                     <fmt:message key="profile.my_profile_save_button"/>
                                 </button>
-                                <div class="profile-btn-edit reset none" id="profile-edit-btn"
-                                     data-type="profile-reset">
+                                <div class="profile-btn-edit reset none" id="profile-edit-btn" data-type="profile-cancel" >
                                     <fmt:message key="profile.my_profile_cancel_button"/>
                                 </div>
                             </div>
@@ -173,7 +164,7 @@
                                             <a href="${pageContext.request.contextPath}/controller?command=ADVERTISEMENT_PAGE&advertisementId=${elem.id}">${elem.title}</a>
                                         </div>
                                         <div class="date-from-to">
-                                                ${elem.dateOfCreation}
+                                                <ctg:date-time value="${elem.dateOfCreation}"/>
                                         </div>
                                         <div class="price">
                                                 ${elem.price}$
@@ -191,6 +182,9 @@
                                                 "${pageContext.request.contextPath}/controller?command=SET_FLAT_IS_NOT_IN_RENT&flatId=${elem.flat.id}&advertisementId=${elem.id}">
                                             <fmt:message key="profile.my_ads_not_rented_btn"/> </a></c:otherwise>
                                     </c:choose>
+                                    <a class="btn-update" href="${pageContext.request.contextPath}/controller?command=UPDATE_ADVERTISEMENT_PAGE&advertisementId=${elem.id}">
+                                        <fmt:message key="profile.my_ads_update"/>
+                                    </a>
                                 </div>
                             </div>
                         </c:forEach>
@@ -244,16 +238,14 @@
         </div>
     </div>
 </section>
-<script src="${pageContext.request.contextPath}/js/usersProfile.js"></script>
+<script src="${pageContext.request.contextPath}/js/profile.js"></script>
 </body>
 </html>
 
 <script>
     var inputsTel = document.querySelectorAll('input[type="phone"]');
-
     Inputmask({
         "mask": "+375(99)999-99-99",
         showMaskOnHover: false
     }).mask(inputsTel);
-
 </script>

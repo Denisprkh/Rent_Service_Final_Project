@@ -13,4 +13,5 @@ public interface UserDao extends CommonDao<User> {
     boolean activateUser(int id) throws DaoException;
     boolean updateRole(int usersId, int roleId) throws DaoException;
     Optional<User> findByPhone(String phone) throws DaoException;
+    boolean updateUsersRoleById(int id, int roleId) throws DaoException;
 }

@@ -25,7 +25,7 @@ public class LocaleDateTimeTag extends TagSupport {
 
         String dateTime;
 
-        if (value instanceof LocalDateTime) {
+        if (value != null) {
             dateTime = value.format(DateTimeFormatter.ofPattern(DATE_FORMAT));
         } else {
             dateTime = "";

@@ -21,6 +21,7 @@ public class DisapproveRequestCommand implements Command {
 
     private static final Logger LOG = LogManager.getLogger();
     private RequestService requestService;
+    private static final String REFERER_HEADER = "referer";
     public DisapproveRequestCommand(){
         this.requestService = ServiceFactory.getInstance().getRequestService();
     }
@@ -34,7 +35,7 @@ public class DisapproveRequestCommand implements Command {
         String page = null;
         try {
             if(requestService.disApproveRequestById(requestId)){
-                page = PagePath.USER_PROFILE;
+                page = request.getHeader(REFERER_HEADER);
                 List<Request> requestsOnUsersAdvertisements = requestService.findRequestsOnUsersAdvertisement(usersId);
                 session.setAttribute(Attribute.REQUESTS_ON_USERS_ADVERTISEMENTS_LIST,requestsOnUsersAdvertisements);
             }else{

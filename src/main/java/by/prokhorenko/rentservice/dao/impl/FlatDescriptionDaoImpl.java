@@ -6,6 +6,8 @@ import by.prokhorenko.rentservice.dao.FlatDescriptionDao;
 import by.prokhorenko.rentservice.entity.flat.FlatDescription;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDescriptionDao {
 
     private static final FlatDescriptionDao INSTANCE = new FlatDescriptionDaoImpl();
+    private static final Logger LOG = LogManager.getLogger();
 
     private FlatDescriptionDaoImpl() {
         this.connection = ConnectionPool.INSTANCE.getConnection();
@@ -66,7 +69,6 @@ public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDes
         ResultSet resultSet = null;
         try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_DESCRIPTION_BY_ID)) {
             statement.setInt(1, id);
-            System.out.println(statement);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return Optional.of(buildFlatDescriptionFromResultSet(resultSet));

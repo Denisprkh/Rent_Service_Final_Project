@@ -117,4 +117,14 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         }
     }
 
+    @Override
+    public boolean updateAdvertisement(Advertisement advertisement) throws ServiceException {
+        try(AdvertisementDao advertisementDao = DaoFactory.getInstance().getAdvertisementDao()) {
+            boolean wasUpdated = advertisementDao.update(advertisement).isPresent();
+            return wasUpdated;
+        } catch (IOException | DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
 }

@@ -25,7 +25,7 @@ public class NewRequestCommand implements Command {
     private RequestService requestService;
     private static final String START_END_DATE_SPLITTER = "-";
     private static final String DATE_ON_NUMBERS_SPLITTER = "\\.";
-    private static final int DAY_INDEX = 1;
+    private static final int DAY_INDEX = 0;
     private static final int MONTH_INDEX = 1;
     private static final int YEAR_INDEX = 2;
     private static final int HOURS_DEFAULT_VALUE = 0;
@@ -49,6 +49,8 @@ public class NewRequestCommand implements Command {
         LocalDateTime endDate = buildDateFromNumbers(endDateInNumbers);
         Advertisement advertisement =(Advertisement) session.getAttribute(Attribute.ADVERTISEMENT);
         Request rentRequest = buildRequest(sender,advertisement,startDate,endDate);
+        LOG.debug(startDate);
+        LOG.debug(endDate);
         try {
             requestService.addRequest(rentRequest);
         } catch (ServiceException e) {
@@ -69,12 +71,14 @@ public class NewRequestCommand implements Command {
         for(int i = 0; i<numbers.length;i++){
             numbers[i] = Integer.parseInt(dateForParsing[i]);
         }
+        LOG.debug(Arrays.toString(numbers));
         return numbers;
     }
 
     private LocalDateTime buildDateFromNumbers(int[] numbers){
         LocalDateTime dateFromNumbers = LocalDateTime.of(numbers[YEAR_INDEX],numbers[MONTH_INDEX],numbers[DAY_INDEX],
                 HOURS_DEFAULT_VALUE,MINUTES_DEFAULT_VALUE);
+        LOG.debug(dateFromNumbers);
         return dateFromNumbers;
     }
 

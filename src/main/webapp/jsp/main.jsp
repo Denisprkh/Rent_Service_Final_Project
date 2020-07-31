@@ -102,10 +102,10 @@
                     <div class="prev-text">
                         <c:choose>
                             <c:when test="${not empty sessionScope.advertisementFilter}">
-                                <a href="controller?command=FIND_ADVERTISEMENTS_BY_FILTER&currentPage=${currentPage-1}">Previous page</a>
+                                <a href="${pageContext.request.contextPath}/controller?command=FIND_ADVERTISEMENTS_BY_FILTER&currentPage=${currentPage-1}">Previous page</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="controller?command=FIND_ALL_ADVERTISEMENTS&currentPage=${currentPage-1}">Prevision page</a>">Next page</a>
+                                <a href="${pageContext.request.contextPath}/controller?command=FIND_ALL_ADVERTISEMENTS&currentPage=${currentPage-1}">Prevision page</a>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -114,7 +114,7 @@
 
 
                 <div class="number-page">
-                    <c:if test="${pagesQuantity ne 1}">
+                    <c:if test="${pagesQuantity ne 0 && pagesQuantity ne 1}">
                         ${currentPage}
                     </c:if>
                 </div>
@@ -123,10 +123,10 @@
                     <div class="next-page-text">
                         <c:choose>
                             <c:when test="${not empty sessionScope.advertisementFilter}">
-                                <a href="controller?command=FIND_ADVERTISEMENTS_BY_FILTER&currentPage=${currentPage+1}">Next page</a>
+                                <a href="${pageContext.request.contextPath}/controller?command=FIND_ADVERTISEMENTS_BY_FILTER&currentPage=${currentPage+1}">Next page</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="controller?command=FIND_ALL_ADVERTISEMENTS&currentPage=${currentPage+1}">Next page</a>
+                                <a href="${pageContext.request.contextPath}/controller?command=FIND_ALL_ADVERTISEMENTS&currentPage=${currentPage+1}">Next page</a>
                             </c:otherwise>
                         </c:choose>
                     </div>

@@ -186,7 +186,7 @@
                     <div class="forms-contant">
                         <div class="forms-date_input">
                             <input id="mindateinp" name="rentDate" data-range="true" data-multiple-dates-separator="-"
-                                   class="datepicker-here"/>
+                                   class="datepicker-here" pattern="^([\d]{2}\.){2}[\d]{4}\-([\d]{2}\.){2}[\d]{4}$" title=""/>
                             <div class="forms-date_input__icon">
                                 <img src="${pageContext.request.contextPath}/img/Calendaricon.svg" alt="">
                             </div>

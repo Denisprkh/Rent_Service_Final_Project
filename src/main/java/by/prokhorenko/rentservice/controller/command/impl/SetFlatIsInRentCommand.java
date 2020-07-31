@@ -22,6 +22,7 @@ public class SetFlatIsInRentCommand implements Command {
     private static final Logger LOG = LogManager.getLogger();
     private FlatService flatService;
     private AdvertisementService advertisementService;
+    private static final String REFERER_HEADER = "referer";
     public SetFlatIsInRentCommand(){
         this.flatService = ServiceFactory.getInstance().getFlatService();
         this.advertisementService = ServiceFactory.getInstance().getAdvertisementService();
@@ -44,6 +45,6 @@ public class SetFlatIsInRentCommand implements Command {
         } catch (ServiceException e) {
             LOG.error(e);
         }
-        return new Router(PagePath.USER_PROFILE);
+        return new Router(request.getHeader(REFERER_HEADER));
     }
 }
