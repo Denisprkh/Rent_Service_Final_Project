@@ -66,4 +66,24 @@ public class RequestServiceImpl implements RequestService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public List<Request> findAllRequests(int start, int total) throws ServiceException {
+        try(RequestDao requestDao = DaoFactory.getInstance().getRequestDao()){
+            List<Request> allRequests = requestDao.findAll(start,total);
+            return allRequests;
+        } catch (IOException | DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int findAllRequestsQuantity() throws ServiceException {
+        try(RequestDao requestDao = DaoFactory.getInstance().getRequestDao()){
+            int allRequestsQuantity = requestDao.findQuantity();
+            return allRequestsQuantity;
+        } catch (IOException | DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

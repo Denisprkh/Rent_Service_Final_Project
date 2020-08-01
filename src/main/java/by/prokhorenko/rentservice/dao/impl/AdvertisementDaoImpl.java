@@ -98,27 +98,9 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
 
     @Override
     public List<Advertisement> findAll(int start, int total) throws DaoException {
-        ResultSet resultSet = null;
-        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_ADVERTISEMENTS);
-             FlatPhotoDao flatPhotoDao = DaoFactory.getInstance().getFlatPhotoDao()) {
-            statement.setInt(1, start);
-            statement.setInt(2, total);
-            resultSet = statement.executeQuery();
-            List<Advertisement> allAdvertisements = new ArrayList<>();
-            while (resultSet.next()) {
-                Advertisement advertisement = buildAdvertisementFromResultSet(resultSet);
-                Flat flat = advertisement.getFlat();
-                int flatsId = flat.getId();
-                List<FlatPhoto> flatPhotos = flatPhotoDao.findAllPhotosByFlatsId(flatsId);
-                flat.setFlatPhotos(flatPhotos);
-                allAdvertisements.add(advertisement);
-            }
-            return allAdvertisements;
-        } catch (SQLException | IOException e) {
-            throw new DaoException(e);
-        } finally {
-            closeResultSet(resultSet);
-        }
+        List<Advertisement> allAdvertisements = findAllAdvertisementsByDifferentSqlRequest
+                (SqlQuery.FIND_ALL_ADVERTISEMENTS,start,total);
+        return allAdvertisements;
     }
 
 
@@ -222,8 +204,29 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
         }
     }
 
-    private List<Advertisement> findAllAdvertisementsByDifferentStatement(String sql){
-
+    private List<Advertisement> findAllAdvertisementsByDifferentSqlRequest(String sql,int start, int total)
+            throws DaoException{
+        ResultSet resultSet = null;
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+             FlatPhotoDao flatPhotoDao = DaoFactory.getInstance().getFlatPhotoDao()) {
+            statement.setInt(1, start);
+            statement.setInt(2, total);
+            resultSet = statement.executeQuery();
+            List<Advertisement> allAdvertisements = new ArrayList<>();
+            while (resultSet.next()) {
+                Advertisement advertisement = buildAdvertisementFromResultSet(resultSet);
+                Flat flat = advertisement.getFlat();
+                int flatsId = flat.getId();
+                List<FlatPhoto> flatPhotos = flatPhotoDao.findAllPhotosByFlatsId(flatsId);
+                flat.setFlatPhotos(flatPhotos);
+                allAdvertisements.add(advertisement);
+            }
+            return allAdvertisements;
+        } catch (SQLException | IOException e) {
+            throw new DaoException(e);
+        } finally {
+            closeResultSet(resultSet);
+        }
     }
 
 
@@ -296,26 +299,22 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
 
     @Override
     public List<Advertisement> findAllNotRentedAdvertisements(int start, int total) throws DaoException {
-        ResultSet resultSet = null;
-        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_ADVERTISEMENTS_NOT_IN_RENT);
-             FlatPhotoDao flatPhotoDao = DaoFactory.getInstance().getFlatPhotoDao()) {
-            statement.setInt(1, start);
-            statement.setInt(2, total);
-            resultSet = statement.executeQuery();
-            List<Advertisement> allAdvertisements = new ArrayList<>();
-            while (resultSet.next()) {
-                Advertisement advertisement = buildAdvertisementFromResultSet(resultSet);
-                Flat flat = advertisement.getFlat();
-                int flatsId = flat.getId();
-                List<FlatPhoto> flatPhotos = flatPhotoDao.findAllPhotosByFlatsId(flatsId);
-                flat.setFlatPhotos(flatPhotos);
-                allAdvertisements.add(advertisement);
+        List<Advertisement> allNotInRentAdvertisements = findAllAdvertisementsByDifferentSqlRequest
+                (SqlQuery.FIND_ALL_ADVERTISEMENTS_NOT_IN_RENT,start,total);
+        return allNotInRentAdvertisements;
+    }
+
+    @Override
+    public int findNotInRentAdvertisementsQuantity() throws DaoException {
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_NOT_IN_RENT_ADVERTISEMENTS_QUANTITY);
+        ResultSet resultSet = statement.executeQuery()){
+            int notRentedAdsQuantity = 0;
+            if(resultSet.next()){
+                notRentedAdsQuantity = resultSet.getInt(1);
             }
-            return allAdvertisements;
-        } catch (SQLException | IOException e) {
+            return notRentedAdsQuantity;
+        } catch (SQLException e) {
             throw new DaoException(e);
-        } finally {
-            closeResultSet(resultSet);
         }
     }
 

@@ -77,8 +77,8 @@ public class CommandUtil {
             allPagesAmount++;
         }
 
-        request.getSession().setAttribute(Attribute.PAGINATION_PAGES_QUANTITY,allPagesAmount);
-        request.getSession().setAttribute(Attribute.PAGINATION_CURRENT_PAGE,currentPage);
+        request.setAttribute(Attribute.PAGINATION_PAGES_QUANTITY,allPagesAmount);
+        request.setAttribute(Attribute.PAGINATION_CURRENT_PAGE,currentPage);
     }
 
     public static int defineStartOfRecords(HttpServletRequest request){

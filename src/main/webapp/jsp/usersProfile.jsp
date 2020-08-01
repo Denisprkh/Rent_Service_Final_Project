@@ -124,7 +124,7 @@
                                             <c:otherwise>************</c:otherwise>
                                         </c:choose>
                                     </div>
-                                    <div class="accept_status">
+                                    <div class="btn-accept">
                                         <c:choose>
                                             <c:when test="${elem.isApproved() eq true}">
                                                 <img src="${pageContext.request.contextPath}/img/true.svg" alt="accept">

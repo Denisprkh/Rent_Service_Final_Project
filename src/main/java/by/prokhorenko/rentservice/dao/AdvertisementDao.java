@@ -13,5 +13,6 @@ public interface AdvertisementDao extends CommonDao<Advertisement> {
     boolean setAdvertisementStatusInvisible(int advertisementsId) throws DaoException;
     int findFilteredAdvertisementsQuantity(UserChoiceDataHandler dataHandler) throws DaoException;
     List<Advertisement> findAllNotRentedAdvertisements(int start, int total) throws DaoException;
+    int findNotInRentAdvertisementsQuantity() throws DaoException;
 }
 

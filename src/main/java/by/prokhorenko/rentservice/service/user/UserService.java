@@ -25,4 +25,5 @@ public interface UserService {
                                                           String phoneNumber, int usersId) throws ServiceException;
     boolean giveAdminRightsById(int usersId) throws ServiceException;
     boolean pickUpAdminRightsById(int usersId) throws ServiceException;
+    int findUsersQuantity() throws ServiceException;
 }

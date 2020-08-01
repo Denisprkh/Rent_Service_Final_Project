@@ -52,38 +52,9 @@ forMyAds.addEventListener('click', () => { addActive(forMyAdsAll, applicationFor
 
 
 
-var allAds = document.querySelector('.btn-all_ads')
-if (allAds === null){
-    allAds = null
-
-    var allAdsCard = undefined;
-    allAdsAll = undefined;
-
-} else{
-    var allAdsAll = document.querySelectorAll('.btn-all_ads')
-    allAdsCard = document.querySelector('.all_ads')
-    allAds.addEventListener('click', () => {addActive(allAdsAll, allAdsCard)})
-}
-
-var allRequests = document.querySelector('.btn-all_requests')
-if (allRequests === null){
-    allAds = null
-
-    var allRequestsCard = undefined;
-    allRequestsAll = undefined;
-
-} else{
-    var allRequestsAll = document.querySelectorAll('.btn-all_requests')
-    allRequestsCard = document.querySelector('.all_requests')
-    allRequests.addEventListener('click', () => {addActive(allRequestsAll, allRequestsCard)})
-}
-
-
 var btn = {
     applicationForMyAdsCard: [forMyAdsAll, applicationForMyAdsCard],
     myAdsCard: [myAdsAll, myAdsCard],
-    myApplicationsCard: [myApplicationsAll, myApplicationsCard],
-    myProfileCard: [profileAll, myProfileCard]
 }
 
 

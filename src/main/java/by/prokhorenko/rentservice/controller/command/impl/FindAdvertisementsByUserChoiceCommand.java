@@ -13,7 +13,6 @@ import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.advertisement.AdvertisementService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -37,7 +36,6 @@ public class FindAdvertisementsByUserChoiceCommand implements Command {
         try {
             CommandUtil.definePaginationContext(request,
                     advertisementService.findFilteredAdvertisementsQuantity(userChoiceDataHandler));
-            LOG.debug(userChoiceDataHandler);
             UserChoiceDataHandler previousHandler = (UserChoiceDataHandler) session.
                     getAttribute(Attribute.ADVERTISEMENT_FILTER);
             UserChoiceDataHandler handlerForSearch;
@@ -53,7 +51,7 @@ public class FindAdvertisementsByUserChoiceCommand implements Command {
         } catch (ServiceException e) {
             LOG.error(e.getCause() + " " + e.getMessage());
         }
-        return new Router(PagePath.INDEX);
+        return new Router(DisPathType.FORWARD,PagePath.INDEX);
     }
 
     private UserChoiceDataHandler buildDataHandlerFromRequest(HttpServletRequest request) {

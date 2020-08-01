@@ -11,4 +11,6 @@ public interface RequestService {
     boolean ApproveRequestById(int requestsId) throws ServiceException;
     boolean disApproveRequestById(int requestsId) throws ServiceException;
     List<Request> findRequestsOnUsersAdvertisement(int usersId) throws ServiceException;
+    List<Request> findAllRequests(int start,int total) throws ServiceException;
+    int findAllRequestsQuantity() throws ServiceException;
 }

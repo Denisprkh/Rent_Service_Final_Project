@@ -127,4 +127,24 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         }
     }
 
+    @Override
+    public int findNotRentedAdvertisementsQuantity() throws ServiceException {
+        try(AdvertisementDao advertisementDao = DaoFactory.getInstance().getAdvertisementDao()) {
+            int notRentedAdsQuantity = advertisementDao.findNotInRentAdvertisementsQuantity();
+            return notRentedAdsQuantity;
+        } catch (IOException | DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Advertisement> findAllNotRentedAdvertisements(int start, int total) throws ServiceException {
+        try(AdvertisementDao advertisementDao = DaoFactory.getInstance().getAdvertisementDao()) {
+            List<Advertisement> notRentedAds = advertisementDao.findAllNotRentedAdvertisements(start,total);
+            return notRentedAds;
+        } catch (IOException | DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
 }

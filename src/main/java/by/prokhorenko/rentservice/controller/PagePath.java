@@ -15,6 +15,7 @@ public class PagePath {
     public static final String WRONG_REQUEST = "jsp/error404.jsp";
     public static final String UPDATE_ADVERTISEMENT_PAGE = "jsp/updateAdvertisement.jsp";
     public static final String ALL_ADVERTISEMENTS_PAGE = "jsp/allAdvertisements.jsp";
+    public static final String ALL_REQUESTS_PAGE = "jsp/allRequests.jsp";
 
     private PagePath(){
 

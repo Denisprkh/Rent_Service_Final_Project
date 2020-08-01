@@ -19,4 +19,6 @@ public interface AdvertisementService {
     List<Advertisement> findAdvertisementsByUsersChoice(UserChoiceDataHandler userChoiceDataHandler,int start,int total)
             throws ServiceException;
     boolean updateAdvertisement(Advertisement advertisement) throws ServiceException;
+    int findNotRentedAdvertisementsQuantity() throws ServiceException;
+    List<Advertisement> findAllNotRentedAdvertisements(int start, int total) throws ServiceException;
 }

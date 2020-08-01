@@ -53,8 +53,11 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
 
     @Override
     public List<Request> findAll(int start, int total) throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_REQUESTS);
-        ResultSet resultSet = statement.executeQuery()) {
+        ResultSet resultSet = null;
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_REQUESTS)) {
+            statement.setInt(1,start);
+            statement.setInt(2,total);
+            resultSet = statement.executeQuery();
             List<Request> allRequests = new ArrayList<>();
             while(resultSet.next()){
                 allRequests.add(buildRequestFromResultSet(resultSet));
@@ -62,6 +65,8 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
             return allRequests;
         } catch (SQLException e) {
            throw new DaoException(e);
+        }finally {
+            closeResultSet(resultSet);
         }
     }
 
@@ -97,7 +102,16 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
 
     @Override
     public int findQuantity() throws DaoException {
-        return 0;
+        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_REQUESTS_QUANTITY);
+        ResultSet resultSet = statement.executeQuery()) {
+            int requestsQuantity = 0;
+            if(resultSet.next()){
+                requestsQuantity = resultSet.getInt(1);
+            }
+            return requestsQuantity;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
 

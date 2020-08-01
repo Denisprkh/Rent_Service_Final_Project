@@ -193,5 +193,15 @@ public class UserServiceImpl implements UserService {
        }
     }
 
+    @Override
+    public int findUsersQuantity() throws ServiceException {
+        try(UserDao userDao = DaoFactory.getInstance().getUserDao()) {
+            int usersQuantity = userDao.findQuantity();
+            return usersQuantity;
+        } catch (IOException | DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
 
 }
