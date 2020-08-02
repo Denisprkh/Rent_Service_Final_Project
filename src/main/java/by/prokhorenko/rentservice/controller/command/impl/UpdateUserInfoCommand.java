@@ -12,9 +12,7 @@ import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.user.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -31,7 +29,7 @@ public class UpdateUserInfoCommand implements Command {
     }
 
     @Override
-    public Router execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(Attribute.USER);
         int usersId = user.getId();
@@ -47,19 +45,17 @@ public class UpdateUserInfoCommand implements Command {
         try {
             Map<String,Boolean> usersDataValidations = userService.defineUsersIncorrectDataForUpdate(updatedEmail,
                     updatedFirstName,updatedLastName,updatedPhone,usersId);
-            LOG.debug(usersDataValidations);
-
             if(!usersDataValidations.containsValue(Boolean.FALSE)){
                 User updatedUser = buildUser(usersId,updatedFirstName,updatedLastName,
                         updatedEmail,updatedPhone);
                 updatedUser = userService.updateUserInfo(updatedUser);
                session.setAttribute(Attribute.USER,updatedUser);
-               session.removeAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE);
             }else{
                 CommandUtil.defineErrorMessageFromValidations(request,usersDataValidations);
             }
         } catch (ServiceException e) {
             if(e.getCause() instanceof DaoException){
+                router.setForward();
                 router.setPage(PagePath.SERVER_ERROR_PAGE);
             }
         }

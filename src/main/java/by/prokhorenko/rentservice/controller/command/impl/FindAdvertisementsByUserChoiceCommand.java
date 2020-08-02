@@ -14,7 +14,6 @@ import by.prokhorenko.rentservice.service.advertisement.AdvertisementService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class FindAdvertisementsByUserChoiceCommand implements Command {
     }
 
     @Override
-    public Router execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request) {
         String newSearchFlag = request.getParameter(RequestParameter.NEW_FILTER_SEARCH_FLAG);
         UserChoiceDataHandler userChoiceDataHandler = buildDataHandlerFromRequest(request);
         int start = CommandUtil.defineStartOfRecords(request);
@@ -49,7 +48,7 @@ public class FindAdvertisementsByUserChoiceCommand implements Command {
                     (handlerForSearch, start, CommandUtil.RECORDS_PER_PAGE);
             session.setAttribute(Attribute.ADVERTISEMENT_LIST, advertisementList);
         } catch (ServiceException e) {
-            LOG.error(e.getCause() + " " + e.getMessage());
+            LOG.error(e);
         }
         return new Router(DisPathType.FORWARD,PagePath.INDEX);
     }

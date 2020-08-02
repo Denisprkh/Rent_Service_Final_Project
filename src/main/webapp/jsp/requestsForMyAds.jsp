@@ -21,47 +21,42 @@
         <a class="search filters" href="${root}/controller?command=profilePage">
             <fmt:message key="admin_profile.back_button"/>
         </a>
-        <fmt:message key="profile.my_ads"/>
+        <fmt:message key="profile.requests_for_my_ads"/>
     </div>
     <div class="all_ads_handler">
         <div class="formyads">
-            <div class="btn-row-create-ads">
-                <div class="btn-create-ads">
-                    <a href="${pageContext.request.contextPath}/controller?command=addAnAdvertisementPage">
-                        <fmt:message key="profile.my_ads_create_button"/> </a>
-                </div>
-            </div>
-            <c:forEach var="elem" items="${usersAdvertisementList}">
-                <div class="card-ads-my-ads">
-                    <div class="card-ads">
-                        <div class="card-ads-info my-ads">
-                            <div class="name">
-                                <a href="${pageContext.request.contextPath}/controller?command=advertisementPage&advertisementId=${elem.id}">${elem.title}</a>
-                            </div>
-                            <div class="date-from-to">
-                                <ctg:date-time value="${elem.dateOfCreation}"/>
-                            </div>
-                            <div class="price">
-                                    ${elem.price}$
-                            </div>
+            <c:forEach var="elem" items="${requestsOnUsersAdvertisementsList}">
+                <div class="card-ads">
+                    <div class="card-ads-info">
+                        <div class="name">
+                            <a href="${pageContext.request.contextPath}/controller?command=advertisementPage&advertisementId=${elem.advertisement.id}">${elem.advertisement.title}</a>
+                        </div>
+                        <div class="date-from-to">
+                            <ctg:date-time value="${elem.startDate}"/>-<ctg:date-time
+                                value="${elem.endDate}"/>
+                        </div>
+                        <div class="date-to">
+                            <ctg:date-time value="${elem.applicationDate}"/>
+                        </div>
+                        <div class="phone">
+                                ${elem.user.phone}
                         </div>
                     </div>
-                    <div class="card-ads-btn">
-                        <c:choose>
-                            <c:when test="${elem.flat.isFree() eq true}">
-                                <a class="btn-delete" href=
-                                        "${pageContext.request.contextPath}/controller?command=setFlatInRent&flatId=${elem.flat.id}&advertisementId=${elem.id}">
-                                    <fmt:message key="profile.my_ads_rented_btn"/> </a>
-                            </c:when>
-                            <c:otherwise><a class="btn-update" href=
-                                    "${pageContext.request.contextPath}/controller?command=setFlatIsNotInRent&flatId=${elem.flat.id}&advertisementId=${elem.id}">
-                                <fmt:message key="profile.my_ads_not_rented_btn"/> </a></c:otherwise>
-                        </c:choose>
-                        <a class="btn-update"
-                           href="${pageContext.request.contextPath}/controller?command=updateAdvertisementPage&advertisementId=${elem.id}">
-                            <fmt:message key="profile.my_ads_update"/>
-                        </a>
-                    </div>
+                    <c:choose>
+                        <c:when test="${elem.isApproved() ne true}">
+                            <a href="${pageContext.request.contextPath}/controller?command=approveRequest&requestId=${elem.id}"
+                               class="btn-accept">
+                                <img src="${pageContext.request.contextPath}/img/true.svg" alt="accept">
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="${pageContext.request.contextPath}/controller?command=disapproveRequest&requestId=${elem.id}"
+                               class="btn-accept">
+                                <img src="${pageContext.request.contextPath}/img/false.svg" alt="accept">
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
+
                 </div>
             </c:forEach>
         </div>

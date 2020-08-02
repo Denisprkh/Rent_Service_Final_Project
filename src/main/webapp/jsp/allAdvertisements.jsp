@@ -16,7 +16,7 @@
 <div class="container">
 
     <div class="all_ads_top">
-        <a class="search filters" href="${root}/controller?command=PROFILE_PAGE">
+        <a class="search filters" href="${root}/controller?command=profilePage">
             <fmt:message key="admin_profile.back_button"/></a>
         <fmt:message key="admin_profile.all_ads"/>
     </div>
@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <a class="btn-delete"
-                       href="${root}/controller?command=DELETE_ADVERTISEMENT&advertisementId=${elem.id}">
+                       href="${root}/controller?command=deleteAdvertisement&advertisementId=${elem.id}">
                         <fmt:message key="advertisement.delete_button"/>
                     </a>
                     <c:choose>
@@ -55,11 +55,11 @@
                         </c:otherwise>
                     </c:choose>
                     <a class="btn-update"
-                       href="${root}/controller?command=UPDATE_ADVERTISEMENT_PAGE&advertisementId=${elem.id}">
+                       href="${root}/controller?command=updateAdvertisementPage&advertisementId=${elem.id}">
                         <fmt:message key="profile.my_ads_update"/>
                     </a>
                     <c:if test="${elem.author.id ne sessionScope.user.id}">
-                    <a class="btn-delete" href="${root}/controller?command=BAN_USER&userId=${elem.author.id}">
+                    <a class="btn-delete" href="${root}/controller?command=banUser&userId=${elem.author.id}">
                         <fmt:message key="admin_profile.ban_author_btn"/>
                     </a>
                     </c:if>
@@ -73,7 +73,7 @@
                         <img src="${pageContext.request.contextPath}/img/arrow2.svg" alt="">
                     </div>
                     <div class="prev-text">
-                        <a href="${pageContext.request.contextPath}/controller?command=ALL_ADVERTISEMENTS_PAGE&currentPage=${currentPage-1}">Previous
+                        <a href="${pageContext.request.contextPath}/controller?command=allAdvertisementsPage&currentPage=${currentPage-1}">Previous
                             page</a>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
             <c:if test="${currentPage ne pagesQuantity && pagesQuantity > 0}">
                 <div class="next-page bgc-page">
                     <div class="next-page-text">
-                        <a href="${pageContext.request.contextPath}/controller?command=ALL_ADVERTISEMENTS_PAGE&currentPage=${currentPage+1}">Next
+                        <a href="${pageContext.request.contextPath}/controller?command=allAdvertisementsPage&currentPage=${currentPage+1}">Next
                             page</a>
                     </div>
                     <div class="icon">

@@ -16,6 +16,9 @@ public class PagePath {
     public static final String UPDATE_ADVERTISEMENT_PAGE = "jsp/updateAdvertisement.jsp";
     public static final String ALL_ADVERTISEMENTS_PAGE = "jsp/allAdvertisements.jsp";
     public static final String ALL_REQUESTS_PAGE = "jsp/allRequests.jsp";
+    public static final String MY_REQUESTS_PAGE = "jsp/myRequests.jsp";
+    public static final String MY_ADS_PAGE = "jsp/myAds.jsp";
+    public static final String REQUESTS_FOR_MY_APS_PAGE = "jsp/requestsForMyAds.jsp";
 
     private PagePath(){
 

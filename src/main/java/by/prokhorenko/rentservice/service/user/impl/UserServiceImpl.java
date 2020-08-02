@@ -1,6 +1,6 @@
 package by.prokhorenko.rentservice.service.user.impl;
 
-import by.prokhorenko.rentservice.controller.command.ResourceBundleErrorMessageKey;
+import by.prokhorenko.rentservice.controller.command.ResourceBundleMessageKey;
 import by.prokhorenko.rentservice.dao.UserDao;
 import by.prokhorenko.rentservice.entity.user.User;
 import by.prokhorenko.rentservice.entity.user.UserRole;
@@ -63,19 +63,19 @@ public class UserServiceImpl implements UserService {
     public User signIn(String email, String password) throws ServiceException {
         UserValidator userValidator = UserValidator.getInstance();
         if (!userValidator.emailIsCorrect(email) || !userValidator.passwordIsCorrect(password)) {
-            throw new ServiceException(ResourceBundleErrorMessageKey.INVALID_INPUT_VALUES);
+            throw new ServiceException(ResourceBundleMessageKey.INVALID_INPUT_VALUES);
         }
         try (UserDao userDao = DaoFactory.getInstance().getUserDao()) {
             Optional<User> user = userDao.findByEmailAndPassword(email, password);
             if (!user.isPresent()) {
-                throw new ServiceException(ResourceBundleErrorMessageKey.EMAIL_OR_PASSWORD_IS_INCORRECT_ERROR_MESSAGE);
+                throw new ServiceException(ResourceBundleMessageKey.EMAIL_OR_PASSWORD_IS_INCORRECT_ERROR_MESSAGE);
             }
             User signedInUser = user.get();
             if (signedInUser.isBanned()) {
-                throw new ServiceException(ResourceBundleErrorMessageKey.ACCOUNT_IS_BLOCKED);
+                throw new ServiceException(ResourceBundleMessageKey.ACCOUNT_IS_BLOCKED);
             }
             if (!signedInUser.isActivated()) {
-                throw new ServiceException(ResourceBundleErrorMessageKey.ACCOUNT_IS_NOT_ACTIVATED);
+                throw new ServiceException(ResourceBundleMessageKey.ACCOUNT_IS_NOT_ACTIVATED);
             }
             return signedInUser;
         } catch (DaoException | IOException e) {

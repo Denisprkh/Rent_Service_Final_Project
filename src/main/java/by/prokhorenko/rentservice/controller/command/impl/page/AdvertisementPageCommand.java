@@ -13,7 +13,7 @@ import by.prokhorenko.rentservice.service.advertisement.AdvertisementService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 
 
 public class AdvertisementPageCommand implements Command {
@@ -24,13 +24,13 @@ public class AdvertisementPageCommand implements Command {
     }
 
     @Override
-    public Router execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request) {
         Router router = new Router();
         router.setForward();
         try {
             int advertisementsId = Integer.parseInt(request.getParameter(RequestParameter.ADVERTISEMENT_ID));
             Advertisement advertisement = advertisementService.findAdvertisementById(advertisementsId);
-            request.getSession().setAttribute(Attribute.ADVERTISEMENT,advertisement);
+            request.setAttribute(Attribute.ADVERTISEMENT,advertisement);
             router.setPage(PagePath.ADVERTISEMENT);
         } catch (ServiceException e) {
            LOG.error(e);

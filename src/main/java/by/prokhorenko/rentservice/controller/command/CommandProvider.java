@@ -10,9 +10,6 @@ import java.util.Optional;
 public class CommandProvider {
     private static final Logger LOG = LogManager.getLogger();
 
-    private final Map<CommandName, Command> commandMap = new EnumMap<>(CommandName.class);
-
-
     public static Optional<Command> defineCommand(String commandName){
         Optional<Command> current;
         if(commandName == null || commandName.isEmpty()){
@@ -20,12 +17,11 @@ public class CommandProvider {
         }
 
         try {
-            CommandName command = CommandName.valueOf(commandName.toUpperCase());
+            CommandName command = CommandName.findCommandByName(commandName);
             current = Optional.of(command.getCommand());
         }catch (IllegalArgumentException e){
             current = Optional.empty();
         }
-
         return current;
     }
 }

@@ -109,7 +109,7 @@
                                 "<fmt:message key="add_an_advertisement.give_more_info_text"/>"></textarea>
                     </div>
 
-                    <button class="add__adv__btn" type="submit" name="command" value="UPDATE_AN_ADVERTISEMENT">
+                    <button class="add__adv__btn" type="submit" name="command" value="updateAnAdvertisement">
                         <fmt:message key="update_advertisement.update_button"/>
                     </button>
                 </form>

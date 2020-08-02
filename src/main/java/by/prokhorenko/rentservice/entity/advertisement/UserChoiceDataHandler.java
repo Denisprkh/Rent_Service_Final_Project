@@ -2,9 +2,10 @@ package by.prokhorenko.rentservice.entity.advertisement;
 
 import by.prokhorenko.rentservice.builder.UserChoiceDataHandlerBuilder;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 
-public class UserChoiceDataHandler {
+public class UserChoiceDataHandler implements Serializable {
     private String city;
     private String district;
     private String street;

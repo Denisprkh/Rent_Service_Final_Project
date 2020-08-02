@@ -1,6 +1,6 @@
 package by.prokhorenko.rentservice.service.advertisement.impl;
 
-import by.prokhorenko.rentservice.controller.command.ResourceBundleErrorMessageKey;
+import by.prokhorenko.rentservice.controller.command.ResourceBundleMessageKey;
 import by.prokhorenko.rentservice.dao.AdvertisementDao;
 import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 import by.prokhorenko.rentservice.entity.advertisement.AdvertisementDataHandler;
@@ -60,7 +60,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         AdvertisementValidator advertisementValidator = AdvertisementValidator.getInstance();
         List<Boolean> validations = advertisementValidator.validateAdvertisementsData(handler);
         if(validations.contains(Boolean.FALSE)){
-            throw new ServiceException(ResourceBundleErrorMessageKey.ADVERTISEMENT_INVALID_INPUT_VALUES);
+            throw new ServiceException(ResourceBundleMessageKey.ADVERTISEMENT_INVALID_INPUT_VALUES);
         }
         return validations;
     }

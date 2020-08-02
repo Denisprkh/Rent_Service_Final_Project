@@ -4,13 +4,12 @@ import by.prokhorenko.rentservice.controller.DisPathType;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 
 public class SignUpPageCommand implements Command {
     @Override
-    public Router execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request) {
         return new Router(DisPathType.FORWARD,PagePath.SIGN_UP);
     }
 }

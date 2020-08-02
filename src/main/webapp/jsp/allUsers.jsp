@@ -18,7 +18,7 @@
 
 
     <div class="all_ads_top">
-        <a class="search filters" href="${root}/controller?command=PROFILE_PAGE">
+        <a class="search filters" href="${root}/controller?command=profilePage">
             <fmt:message key="admin_profile.back_button"/>
         </a>
         <fmt:message key="admin_profile.all_users"/>
@@ -47,25 +47,25 @@
                 <div class="card-ads-btn admins_all_users_btn">
                     <c:choose>
                         <c:when test="${elem.isBanned() ne true}">
-                            <a href="${root}/controller?command=BAN_USER&userId=${elem.id}"
+                            <a href="${root}/controller?command=banUser&userId=${elem.id}"
                                class="btn-delete ban"> <fmt:message key="admin_profile.ban_user"/>
                             </a>
                         </c:when>
                         <c:otherwise>
-                            <a href="${root}/controller?command=UNBAN_USER&userId=${elem.id}"
+                            <a href="${root}/controller?command=unBanUser&userId=${elem.id}"
                                class="btn-update"> <fmt:message key="admin_profile.unban_user"/>
                             </a>
                         </c:otherwise>
                     </c:choose>
                     <c:choose>
                         <c:when test="${elem.userRole == 'USER'}">
-                            <a href="${root}/controller?command=GIVE_ADMIN_RIGHTS&userId=${elem.id}"
+                            <a href="${root}/controller?command=giveAdminRights&userId=${elem.id}"
                                class="btn-update up_rights">
                                 <fmt:message key="admin_profile.give_admin_rights"/>
                             </a>
                         </c:when>
                         <c:otherwise>
-                            <a href="${root}/controller?command=PICK_UP_ADMIN_RIGHTS&userId=${elem.id}"
+                            <a href="${root}/controller?command=pickUpAdminRights&userId=${elem.id}"
                                class="btn-delete up_rights">
                                 <fmt:message key="admin_profile.pick_up_admin_rights"/>
                             </a>
@@ -84,7 +84,7 @@
                         <img src="${pageContext.request.contextPath}/img/arrow2.svg" alt="">
                     </div>
                     <div class="prev-text">
-                        <a href="${pageContext.request.contextPath}/controller?command=ALL_USERS_PAGE&currentPage=${currentPage-1}">Previous
+                        <a href="${pageContext.request.contextPath}/controller?command=allUsersPage&currentPage=${currentPage-1}">Previous
                             page</a>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
             <c:if test="${currentPage ne pagesQuantity && pagesQuantity > 0}">
                 <div class="next-page bgc-page">
                     <div class="next-page-text">
-                        <a href="${pageContext.request.contextPath}/controller?command=ALL_USERS_PAGE&currentPage=${currentPage+1}">Next
+                        <a href="${pageContext.request.contextPath}/controller?command=allUsersPage&currentPage=${currentPage+1}">Next
                             page</a>
                     </div>
                     <div class="icon">

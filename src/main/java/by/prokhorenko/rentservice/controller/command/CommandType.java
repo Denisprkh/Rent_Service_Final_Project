@@ -7,7 +7,7 @@ import static by.prokhorenko.rentservice.controller.command.CommandName.*;
 public enum CommandType {
 
     GUEST(EnumSet.of(
-            FIND_ALL_ADVERTISEMENTS,
+            MAIN_PAGE,
             FIND_ADVERTISEMENTS_BY_FILTER,
             SIGN_IN_PAGE,
             SIGN_IN,
@@ -15,10 +15,11 @@ public enum CommandType {
             SIGN_UP,
             CHANGE_LANGUAGE,
             ADVERTISEMENT_PAGE,
-            CONFIRM_REGISTRATION
+            CONFIRM_REGISTRATION,
+            ACTIVATION_INFO_PAGE
     )),
     USER(EnumSet.of(
-            FIND_ALL_ADVERTISEMENTS,
+            MAIN_PAGE,
             FIND_ADVERTISEMENTS_BY_FILTER,
             CHANGE_LANGUAGE,
             PROFILE_PAGE,
@@ -27,7 +28,12 @@ public enum CommandType {
             LOG_OUT,
             CREATE_NEW_ADVERTISEMENT,
             SEND_A_REQUEST,
+            MY_ADS_PAGE,
+            MY_REQUESTS_PAGE,
+            REQUESTS_FOR_MY_ADS_PAGE,
             UPDATE_PROFILE_DATA,
+            UPDATE_ADVERTISEMENT_PAGE,
+            UPDATE_AN_ADVERTISEMENT,
             DELETE_ADVERTISEMENT,
             SET_FLAT_IN_RENT,
             SET_FLAT_IS_NOT_IN_RENT,
@@ -35,7 +41,7 @@ public enum CommandType {
             DISAPPROVE_REQUEST
     )),
     ADMIN(EnumSet.of(
-            FIND_ALL_ADVERTISEMENTS,
+            MAIN_PAGE,
             FIND_ADVERTISEMENTS_BY_FILTER,
             CHANGE_LANGUAGE,
             PROFILE_PAGE,
@@ -46,15 +52,22 @@ public enum CommandType {
             SEND_A_REQUEST,
             UPDATE_PROFILE_DATA,
             DELETE_ADVERTISEMENT,
+            UPDATE_ADVERTISEMENT_PAGE,
+            UPDATE_AN_ADVERTISEMENT,
             SET_FLAT_IN_RENT,
             SET_FLAT_IS_NOT_IN_RENT,
             APPROVE_REQUEST,
             DISAPPROVE_REQUEST,
+            MY_ADS_PAGE,
+            MY_REQUESTS_PAGE,
+            REQUESTS_FOR_MY_ADS_PAGE,
             BAN_USER,
             UNBAN_USER,
             GIVE_ADMIN_RIGHTS,
             PICK_UP_ADMIN_RIGHTS,
-            ALL_USERS_PAGE
+            ALL_USERS_PAGE,
+            ALL_ADVERTISEMENTS_PAGE,
+            ALL_REQUESTS_PAGE
     ));
 
 

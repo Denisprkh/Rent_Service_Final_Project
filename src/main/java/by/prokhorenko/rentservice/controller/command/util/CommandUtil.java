@@ -1,6 +1,6 @@
 package by.prokhorenko.rentservice.controller.command.util;
 
-import by.prokhorenko.rentservice.controller.command.ResourceBundleErrorMessageKey;
+import by.prokhorenko.rentservice.controller.command.ResourceBundleMessageKey;
 import by.prokhorenko.rentservice.controller.command.impl.Attribute;
 import by.prokhorenko.rentservice.controller.command.impl.RequestParameter;
 
@@ -20,6 +20,7 @@ public class CommandUtil {
     private static final String EMAIL_IS_UNIQUE = "emailIsUnique";
     private static final String PHONE_IS_UNIQUE = "phoneIsUnique";
     public static final int RECORDS_PER_PAGE = 10;
+    public static final String REFERER_HEADER = "referer";
 
     public static String extractLocalizedMessage(String lang, String key){
         Locale locale;
@@ -37,26 +38,26 @@ public class CommandUtil {
         HttpSession session = request.getSession();
         String falseKey = defineFalseKey(usersDataValidations);
         switch (falseKey){
-            case EMAIL: session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
-                    ResourceBundleErrorMessageKey.EMAIL_INCORRECT_ERROR_MESSAGE);
+            case EMAIL: request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
+                    ResourceBundleMessageKey.EMAIL_INCORRECT_ERROR_MESSAGE);
                 break;
-            case FIRST_NAME: session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
-                    ResourceBundleErrorMessageKey.FIRST_NAME_INCORRECT_ERROR_MESSAGE);
+            case FIRST_NAME: request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
+                    ResourceBundleMessageKey.FIRST_NAME_INCORRECT_ERROR_MESSAGE);
                 break;
-            case LAST_NAME: session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
-                    ResourceBundleErrorMessageKey.LAST_NAME_INCORRECT_ERROR_MESSAGE);
+            case LAST_NAME: request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
+                    ResourceBundleMessageKey.LAST_NAME_INCORRECT_ERROR_MESSAGE);
                 break;
-            case PASSWORD: session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
-                    ResourceBundleErrorMessageKey.PASSWORD_INCORRECT_ERROR_MESSAGE);
+            case PASSWORD: request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
+                    ResourceBundleMessageKey.PASSWORD_INCORRECT_ERROR_MESSAGE);
                 break;
-            case PHONE_NUMBER: session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
-                    ResourceBundleErrorMessageKey.PHONE_INCORRECT_ERROR_MESSAGE);
+            case PHONE_NUMBER: request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
+                    ResourceBundleMessageKey.PHONE_INCORRECT_ERROR_MESSAGE);
                 break;
-            case EMAIL_IS_UNIQUE: session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
-                    ResourceBundleErrorMessageKey.EMAIL_IS_NOT_UNIQUE_ERROR_MESSAGE);
+            case EMAIL_IS_UNIQUE: request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
+                    ResourceBundleMessageKey.EMAIL_IS_NOT_UNIQUE_ERROR_MESSAGE);
                 break;
-            case PHONE_IS_UNIQUE: session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
-                    ResourceBundleErrorMessageKey.PHONE_IS_NOT_UNIQUE_ERROR_MESSAGE);
+            case PHONE_IS_UNIQUE: request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
+                    ResourceBundleMessageKey.PHONE_IS_NOT_UNIQUE_ERROR_MESSAGE);
                 break;
         }
     }

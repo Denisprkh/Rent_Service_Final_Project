@@ -117,7 +117,7 @@
                                 "<fmt:message key="add_an_advertisement.give_more_info_text"/>"></textarea>
                     </div>
 
-                    <button class="add__adv__btn" type="submit" name="command" value="CREATE_NEW_ADVERTISEMENT"><fmt:message key="add_an_advertisement.button"/></button>
+                    <button class="add__adv__btn" type="submit" name="command" value="createNewAdvertisement"><fmt:message key="add_an_advertisement.button"/></button>
                 </form>
                 <div class="err__message">
                     <c:if test="${not empty sessionScope.addAdvertisementErrorMessage}">

@@ -1,8 +1,8 @@
 package by.prokhorenko.rentservice.controller.command.impl;
 
-import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
+import by.prokhorenko.rentservice.controller.command.CommandName;
 import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 import by.prokhorenko.rentservice.entity.user.User;
 import by.prokhorenko.rentservice.entity.user.UserRole;
@@ -11,12 +11,9 @@ import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.advertisement.AdvertisementService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.config.AppenderRef;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
+
 
 public class DeleteAdvertisementCommand implements Command {
 
@@ -27,21 +24,23 @@ public class DeleteAdvertisementCommand implements Command {
     }
 
     @Override
-    public Router execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
+        Router router = new Router();
         User user = (User) session.getAttribute(Attribute.USER);
         UserRole userRole = (UserRole) session.getAttribute(Attribute.USER_ROLE);
         int usersId = user.getId();
-
         int advertisementsId = Integer.parseInt(request.getParameter(RequestParameter.ADVERTISEMENT_ID));
         try {
             Advertisement advertisement = advertisementService.findAdvertisementById(advertisementsId);
             if(advertisement.getAuthor().getId() == usersId || UserRole.ADMIN.equals(userRole)){
                 advertisementService.deleteAdvertisement(advertisementsId);
             }
+            String redirectUrl = buildRedirectUrl(request, CommandName.MAIN_PAGE.getCommandName());
+            router.setPage(redirectUrl);
         } catch (ServiceException e) {
             LOG.error(e);
         }
-        return new Router(PagePath.INDEX);
+        return router;
     }
 }

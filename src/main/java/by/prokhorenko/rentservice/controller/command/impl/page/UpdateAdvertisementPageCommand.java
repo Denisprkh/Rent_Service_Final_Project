@@ -27,7 +27,7 @@ public class UpdateAdvertisementPageCommand implements Command {
         this.advertisementService = ServiceFactory.getInstance().getAdvertisementService();
     }
     @Override
-    public Router execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request) {
         Router router = new Router(DisPathType.FORWARD, PagePath.INDEX);
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(Attribute.USER);

@@ -9,6 +9,7 @@ public class Attribute {
     public static final String ADVERTISEMENT_LIST = "advertisementList";
     public static final String ADD_ADVERTISEMENT_ERROR_MESSAGE = "addAdvertisementErrorMessage";
     public static final String ADVERTISEMENT = "advertisement";
+    public static final String ACTIVATION_INFO = "activationInfo";
     public static final String ADVERTISEMENT_FILTER = "advertisementFilter";
     public static final String USERS_REQUEST_LIST = "usersRequestList";
     public static final String USERS_ADVERTISEMENT_LIST = "usersAdvertisementList";

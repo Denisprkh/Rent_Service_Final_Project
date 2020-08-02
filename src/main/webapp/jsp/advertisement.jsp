@@ -166,7 +166,7 @@
             <c:if test="${sessionScope.userRole == 'ADMIN' || sessionScope.user.id eq sessionScope.advertisement.author.id}">
                 <form action="${pageContext.request.contextPath}/controller" method="post">
                     <input type="hidden" name="advertisementId" value="${sessionScope.advertisement.id}"/>
-                    <button class="main_page_btn btnt" name="command" value="delete_advertisement">
+                    <button class="main_page_btn btnt" name="command" value="deleteAdvertisement">
                         <fmt:message key="advertisement.delete_button"/>
                     </button>
                 </form>
@@ -192,7 +192,7 @@
                             </div>
                         </div>
 
-                        <button class="forms-date_btn" name="command" value="send_a_request">
+                        <button class="forms-date_btn" name="command" value="sendARequest">
                             <fmt:message key="advertisement.send_button"/>
                         </button>
                     </div>

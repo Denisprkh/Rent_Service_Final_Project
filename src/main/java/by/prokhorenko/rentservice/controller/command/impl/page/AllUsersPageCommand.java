@@ -12,9 +12,7 @@ import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.user.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -27,14 +25,13 @@ public class AllUsersPageCommand implements Command {
     }
 
     @Override
-    public Router execute(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession();
+    public Router execute(HttpServletRequest request) {
         int start = CommandUtil.defineStartOfRecords(request);
 
         try {
             CommandUtil.definePaginationContext(request,userService.findUsersQuantity());
             List<User> allUsers = userService.findAllUsers(start,CommandUtil.RECORDS_PER_PAGE);
-            session.setAttribute(Attribute.ADMIN_ALL_USERS_LIST,allUsers);
+            request.setAttribute(Attribute.ADMIN_ALL_USERS_LIST,allUsers);
         } catch (ServiceException e) {
             LOG.error(e);
         }

@@ -23,7 +23,9 @@ public class CommandMatchingSecurityFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         LOG.debug(request.getParameter(RequestParameter.PARAM_COMMAND));
-        String parameterCommand = request.getParameter(RequestParameter.PARAM_COMMAND).toUpperCase();
+        String commandName = request.getParameter(RequestParameter.PARAM_COMMAND);
+        LOG.debug(commandName);
+        CommandName command = CommandName.findCommandByName(commandName);
         HttpSession session = request.getSession();
         UserRole userRole = (UserRole) session.getAttribute(Attribute.USER_ROLE);
         Set<CommandName> commandNames;
@@ -36,13 +38,12 @@ public class CommandMatchingSecurityFilter implements Filter {
             default: commandNames = CommandType.GUEST.getCommandNames();
             break;
         }
-
-        if(!commandNames.contains(parameterCommand)){
+        LOG.debug(commandNames.contains(command));
+        if(!commandNames.contains(command)){
             request.getRequestDispatcher(PagePath.WRONG_REQUEST).forward(req,resp);
         }else{
             chain.doFilter(req, resp);
         }
-
     }
 
 }

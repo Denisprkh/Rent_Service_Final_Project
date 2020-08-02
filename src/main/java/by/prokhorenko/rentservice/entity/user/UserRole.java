@@ -1,10 +1,9 @@
 package by.prokhorenko.rentservice.entity.user;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
 
-public enum UserRole implements Serializable {
+public enum UserRole{
     ADMIN(1),
     USER(2),
     GUEST(3);
@@ -20,8 +19,8 @@ public enum UserRole implements Serializable {
     }
 
     public static Optional<UserRole> getUserRoleById(int id){
-        UserRole[] usersId = UserRole.values();
-        Optional<UserRole> role = Arrays.stream(usersId).filter(o -> o.getUserRolesId() == id).findAny();
+        UserRole[] userRoles = UserRole.values();
+        Optional<UserRole> role = Arrays.stream(userRoles).filter(o -> o.getUserRolesId() == id).findAny();
         return role;
     }
 

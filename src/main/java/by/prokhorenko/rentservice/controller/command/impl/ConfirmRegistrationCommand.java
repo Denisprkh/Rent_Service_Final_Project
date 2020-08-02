@@ -1,16 +1,17 @@
 package by.prokhorenko.rentservice.controller.command.impl;
 
+import by.prokhorenko.rentservice.controller.DisPathType;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
+import by.prokhorenko.rentservice.controller.command.ResourceBundleMessageKey;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.user.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 
 public class ConfirmRegistrationCommand implements Command {
 
@@ -22,20 +23,19 @@ public class ConfirmRegistrationCommand implements Command {
     }
 
     @Override
-    public Router execute(HttpServletRequest request, HttpServletResponse response) {
-        Router router = new Router();
+    public Router execute(HttpServletRequest request) {
+        String page = null;
         try {
             int id = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID));
-            String page;
             if (userService.activateUser(id)) {
                 page = PagePath.SIGN_IN;
-            }else {
+                request.setAttribute(Attribute.ACTIVATION_INFO, ResourceBundleMessageKey.ACCOUNT_WAS_ACTIVATED);
+            } else {
                 page = PagePath.SIGN_UP;
             }
-            router.setPage(page);
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             LOG.error(e);
         }
-        return router;
+        return new Router(DisPathType.FORWARD,page);
     }
 }

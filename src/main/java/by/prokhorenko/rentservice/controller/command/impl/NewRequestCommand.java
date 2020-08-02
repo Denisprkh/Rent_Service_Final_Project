@@ -1,9 +1,9 @@
 package by.prokhorenko.rentservice.controller.command.impl;
 
 import by.prokhorenko.rentservice.builder.RequestBuilder;
-import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
+import by.prokhorenko.rentservice.controller.command.CommandName;
 import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 import by.prokhorenko.rentservice.entity.request.Request;
 import by.prokhorenko.rentservice.entity.user.User;
@@ -12,9 +12,7 @@ import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.request.RequestService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -38,7 +36,8 @@ public class NewRequestCommand implements Command {
     }
 
     @Override
-    public Router execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request) {
+        Router router = new Router();
         HttpSession session = request.getSession();
         User sender = (User) session.getAttribute(Attribute.USER);
         String notParsedDate = request.getParameter(RequestParameter.REQUEST_RENT_DATE);
@@ -49,15 +48,15 @@ public class NewRequestCommand implements Command {
         LocalDateTime endDate = buildDateFromNumbers(endDateInNumbers);
         Advertisement advertisement =(Advertisement) session.getAttribute(Attribute.ADVERTISEMENT);
         Request rentRequest = buildRequest(sender,advertisement,startDate,endDate);
-        LOG.debug(startDate);
-        LOG.debug(endDate);
+        String redirectUrl = buildRedirectUrl(request, CommandName.MY_REQUESTS_PAGE.getCommandName());
+        router.setPage(redirectUrl);
         try {
             requestService.addRequest(rentRequest);
         } catch (ServiceException e) {
             LOG.error(e);
-            return new Router(PagePath.USER_PROFILE);
+
         }
-        return new Router(PagePath.INDEX);
+        return router;
     }
 
     private String[] parseDateToStartAndEndDate(String date){

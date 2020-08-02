@@ -27,14 +27,14 @@
                 <input required name="email" placeholder="<fmt:message key="sign_in_form.email"/>" required
                        pattern="[a-zA-z0-9_.-]{1,40}@[a-zA-z0-9_-]{2,40}\.[a-z]{2,10}" title="Email format is incorrect"/>
                 <input required name="password" type="password" placeholder="<fmt:message key="sign_in_form.password"/>"/>
-                <button class="form_btn" type="submit" name="command" value="SIGN_IN">
+                <button class="form_btn" type="submit" name="command" value="signIn">
                     <fmt:message key="sign_in_form.button"/>
                 </button>
             </form>
         </div>
         <div class="err__message">
-            <c:if test="${not empty sessionScope.signInErrorMessage}">
-                <fmt:message key="${sessionScope.signInErrorMessage}"/>
+            <c:if test="${not empty signInErrorMessage}">
+                <fmt:message key="${signInErrorMessage}"/>
             </c:if>
         </div>
     </div>

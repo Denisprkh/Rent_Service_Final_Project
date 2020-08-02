@@ -1,8 +1,10 @@
-package by.prokhorenko.rentservice.controller.command.impl;
+package by.prokhorenko.rentservice.controller.command.impl.page;
 
+import by.prokhorenko.rentservice.controller.DisPathType;
+import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
-import by.prokhorenko.rentservice.controller.command.util.CommandUtil;
+import by.prokhorenko.rentservice.controller.command.impl.Attribute;
 import by.prokhorenko.rentservice.entity.request.Request;
 import by.prokhorenko.rentservice.entity.user.User;
 import by.prokhorenko.rentservice.exception.ServiceException;
@@ -11,34 +13,26 @@ import by.prokhorenko.rentservice.service.request.RequestService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class DisapproveRequestCommand implements Command {
+public class RequestsForMyAdsPageCommand implements Command {
 
     private static final Logger LOG = LogManager.getLogger();
     private RequestService requestService;
-
-    public DisapproveRequestCommand() {
+    public RequestsForMyAdsPageCommand(){
         this.requestService = ServiceFactory.getInstance().getRequestService();
     }
 
     @Override
     public Router execute(HttpServletRequest request) {
-        int requestId = Integer.parseInt(request.getParameter(RequestParameter.REQUEST_ID));
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute(Attribute.USER);
+        User user = (User) request.getSession().getAttribute(Attribute.USER);
         int usersId = user.getId();
-        String page = null;
         try {
-            requestService.disApproveRequestById(requestId);
-            page = request.getHeader(CommandUtil.REFERER_HEADER);
-            List<Request> requestsOnUsersAdvertisements = requestService.findRequestsOnUsersAdvertisement(usersId);
-            session.setAttribute(Attribute.REQUESTS_ON_USERS_ADVERTISEMENTS_LIST, requestsOnUsersAdvertisements);
-
+            List<Request> requestsOnUsersAds = requestService.findRequestsOnUsersAdvertisement(usersId);
+            request.setAttribute(Attribute.REQUESTS_ON_USERS_ADVERTISEMENTS_LIST,requestsOnUsersAds);
         } catch (ServiceException e) {
             LOG.error(e);
         }
-        return new Router(page);
+        return new Router(DisPathType.FORWARD, PagePath.REQUESTS_FOR_MY_APS_PAGE);
     }
 }

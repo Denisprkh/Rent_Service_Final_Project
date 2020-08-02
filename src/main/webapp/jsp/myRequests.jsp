@@ -16,15 +16,23 @@
 <jsp:include page="header.jsp"/>
 <div class="container">
 
+
     <div class="all_ads_top">
         <a class="search filters" href="${root}/controller?command=profilePage">
             <fmt:message key="admin_profile.back_button"/>
         </a>
-        <fmt:message key="admin_profile.all_requests"/>
+        <fmt:message key="profile.my_requests"/>
     </div>
     <div class="all_ads_handler">
         <div class="formyads">
-                    <c:forEach var="elem" items="${adminAllRequestsList}">
+            <c:choose>
+                <c:when test="${empty usersRequestList}">
+                    <div class="request_info_text">
+                        Вы не оставили ни одной заявки
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <c:forEach var="elem" items="${usersRequestList}">
                         <div class="card-ads">
                             <div class="card-ads-info">
                                 <div class="name">
@@ -38,7 +46,10 @@
                                     <ctg:date-time value="${elem.applicationDate}"/>
                                 </div>
                                 <div class="phone">
-                                    ${elem.advertisement.author.phone}
+                                    <c:choose>
+                                        <c:when test="${elem.isApproved() eq true}">${elem.advertisement.author.phone}</c:when>
+                                        <c:otherwise>************</c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                             <c:choose>
@@ -59,39 +70,42 @@
 
                         </div>
                     </c:forEach>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
-        <div class="card-page">
-            <c:if test="${currentPage != 1 && pagesQuantity > 0}">
-                <div class="prevision_page bgc-page">
-                    <div class="icon">
-                        <img src="${pageContext.request.contextPath}/img/arrow2.svg" alt="">
-                    </div>
-                    <div class="prev-text">
-                        <a href="${pageContext.request.contextPath}/controller?command=allRequestsPage&currentPage=${currentPage-1}">Previous
-                            page</a>
-                    </div>
+    <div class="card-page">
+        <c:if test="${currentPage != 1 && pagesQuantity > 0}">
+            <div class="prevision_page bgc-page">
+                <div class="icon">
+                    <img src="${pageContext.request.contextPath}/img/arrow2.svg" alt="">
                 </div>
-            </c:if>
-
-
-            <div class="number-page">
-                <c:if test="${pagesQuantity ne 0 && pagesQuantity ne 1}">
-                    ${currentPage}
-                </c:if>
+                <div class="prev-text">
+                    <a href="${pageContext.request.contextPath}/controller?command=ALL_USERS_PAGE&currentPage=${currentPage-1}">Previous
+                        page</a>
+                </div>
             </div>
-            <c:if test="${currentPage ne pagesQuantity && pagesQuantity > 0}">
-                <div class="next-page bgc-page">
-                    <div class="next-page-text">
-                        <a href="${pageContext.request.contextPath}/controller?command=allRequestsPage&currentPage=${currentPage+1}">Next
-                            page</a>
-                    </div>
-                    <div class="icon">
-                        <img src="${root}/img/arrow1.svg" alt="">
-                    </div>
-                </div>
+        </c:if>
+
+
+        <div class="number-page">
+            <c:if test="${pagesQuantity ne 0 && pagesQuantity ne 1}">
+                ${currentPage}
             </c:if>
         </div>
+        <c:if test="${currentPage ne pagesQuantity && pagesQuantity > 0}">
+            <div class="next-page bgc-page">
+                <div class="next-page-text">
+                    <a href="${pageContext.request.contextPath}/controller?command=ALL_USERS_PAGE&currentPage=${currentPage+1}">Next
+                        page</a>
+                </div>
+                <div class="icon">
+                    <img src="${root}/img/arrow1.svg" alt="">
+                </div>
+            </div>
+        </c:if>
+    </div>
+
 </div>
 </body>
 </html>

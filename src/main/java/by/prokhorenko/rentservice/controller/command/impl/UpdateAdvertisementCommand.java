@@ -4,7 +4,8 @@ import by.prokhorenko.rentservice.builder.*;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
-import by.prokhorenko.rentservice.controller.command.ResourceBundleErrorMessageKey;
+import by.prokhorenko.rentservice.controller.command.CommandName;
+import by.prokhorenko.rentservice.controller.command.ResourceBundleMessageKey;
 import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 import by.prokhorenko.rentservice.entity.advertisement.AdvertisementDataHandler;
 import by.prokhorenko.rentservice.entity.flat.Flat;
@@ -17,16 +18,13 @@ import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.advertisement.AdvertisementService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +37,7 @@ public class UpdateAdvertisementCommand implements Command {
     }
 
     @Override
-    public Router execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request) {
         Router router = new Router();
         HttpSession session = request.getSession();
         User author = (User) request.getSession().getAttribute(Attribute.USER);
@@ -58,11 +56,13 @@ public class UpdateAdvertisementCommand implements Command {
             Flat flat = buildFlat(flatDescription, flatAddress, flatPhotos,flatsId);
             Advertisement updatedAdvertisement = buildAdvertisementFromDataHandler(advertisementId,author,dataHandler,flat);
             advertisementService.updateAdvertisement(updatedAdvertisement);
-            router.setPage(PagePath.USER_PROFILE);
+            String redirectUrl = buildRedirectUrl(request, CommandName.MY_ADS_PAGE.getCommandName());
+            router.setPage(redirectUrl);
         } catch (ServiceException e) {
             LOG.error(e);
             router.setPage(PagePath.ADD_AN_ADVERTISEMENT);
-            session.setAttribute(Attribute.ADD_ADVERTISEMENT_ERROR_MESSAGE, e.getMessage() + " " + e.getCause());
+            router.setForward();
+            request.setAttribute(Attribute.ADD_ADVERTISEMENT_ERROR_MESSAGE, e.getMessage() + " " + e.getCause());
         }
         return router;
     }
@@ -78,7 +78,7 @@ public class UpdateAdvertisementCommand implements Command {
             photosData.add(thirdImgData.getInputStream());
         } catch (IOException | ServletException e) {
             request.getSession().setAttribute(Attribute.ADD_ADVERTISEMENT_ERROR_MESSAGE,
-                    ResourceBundleErrorMessageKey.ADVERTISEMENT_INVALID_IMG_AMOUNT);
+                    ResourceBundleMessageKey.ADVERTISEMENT_INVALID_IMG_AMOUNT);
         }
         return photosData;
     }

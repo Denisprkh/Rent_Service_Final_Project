@@ -1,6 +1,6 @@
 package by.prokhorenko.rentservice.controller.command;
 
-public class ResourceBundleErrorMessageKey {
+public class ResourceBundleMessageKey {
 
     public static final String FIRST_NAME_INCORRECT_ERROR_MESSAGE = "sign_up_form.invalid_first_name_forma";
     public static final String LAST_NAME_INCORRECT_ERROR_MESSAGE = "sign_up_form.invalid_last_name_format";
@@ -15,6 +15,7 @@ public class ResourceBundleErrorMessageKey {
     public static final String INVALID_INPUT_VALUES = "sign_in_form.invalid_input_values";
     public static final String ADVERTISEMENT_INVALID_INPUT_VALUES = "add_an_advertisement.invalid_input_values";
     public static final String ADVERTISEMENT_INVALID_IMG_AMOUNT = "add_an_advertisement.img_amount_info";
+    public static final String ACCOUNT_WAS_ACTIVATED = "activation_info.account_was_activated";
 
-    private ResourceBundleErrorMessageKey(){}
+    private ResourceBundleMessageKey(){}
 }

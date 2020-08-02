@@ -19,7 +19,7 @@
 <header class="header">
     <div class="container">
         <div class="header_items"  >
-            <a class="header_logo" href="${pageContext.request.contextPath}/controller?command=FIND_ALL_ADVERTISEMENTS&currentPage=1">
+            <a class="header_logo" href="${pageContext.request.contextPath}/controller?command=mainPage&currentPage=1">
                 <div class="header_logo__img">
                     <img src="${pageContext.request.contextPath}/img/logo.svg" alt="logo">
                 </div>
@@ -30,20 +30,20 @@
                 <c:if test="${sessionScope.userRole == 'GUEST'}">
             <div class="header_btn">
                     <div class="header_signin btnt">
-                        <a href="${pageContext.request.contextPath}/controller?command=SIGN_IN_PAGE"><fmt:message key="nav_bar.sign_in"/></a>
+                        <a href="${pageContext.request.contextPath}/controller?command=signInPage"><fmt:message key="nav_bar.sign_in"/></a>
                     </div>
                     <div class="header_register btnt">
-                        <a href="${pageContext.request.contextPath}/controller?command=SIGN_UP_PAGE"><fmt:message key="nav_bar.sign_up"/></a>
+                        <a href="${pageContext.request.contextPath}/controller?command=signUpPage"><fmt:message key="nav_bar.sign_up"/></a>
                     </div>
                 </c:if>
                 <c:if test="${sessionScope.userRole == 'USER' || sessionScope.userRole == 'ADMIN'}">
                     <div class="header_profile_logo">
-                        <a href="${pageContext.request.contextPath}/controller?command=PROFILE_PAGE">
+                        <a href="${pageContext.request.contextPath}/controller?command=profilePage">
                             <img src="${pageContext.request.contextPath}/img/userProfileLogo.svg"></a>
                     </div>
                 <div class="header_btn">
                     <div class="header_register btnt">
-                        <a href="${pageContext.request.contextPath}/controller?command=LOG_OUT">
+                        <a href="${pageContext.request.contextPath}/controller?command=logOut">
                             <fmt:message key="nav_bar.log_out"/></a>
                     </div>
                 </c:if>
@@ -52,10 +52,10 @@
                         <a class="menu__title" href="#"><fmt:message key="nav_bar.language"/></a>
                         <div class="menu__down">
                             <div class="menu__section">
-                                <a href="${pageContext.request.contextPath}/controller?command=CHANGE_LANGUAGE&language=en">
+                                <a href="${pageContext.request.contextPath}/controller?command=changeLanguage&language=en">
                                     <img src="${pageContext.request.contextPath}/img/eng.svg" alt=""></a></div>
                             <div class="menu__section">
-                                <a href="${pageContext.request.contextPath}/controller?command=CHANGE_LANGUAGE&language=ru">
+                                <a href="${pageContext.request.contextPath}/controller?command=changeLanguage&language=ru">
                                     <img src="${pageContext.request.contextPath}/img/ru.svg" alt=""></a></div>
                         </div>
                     </div>

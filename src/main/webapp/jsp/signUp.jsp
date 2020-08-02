@@ -45,12 +45,12 @@
                 <input type ="phone" required name="phone" placeholder="<fmt:message key="reg_form.phone_number"/>"required
                        pattern="^(\+375\([\d]{2}\)[\d]{3}\-[\d]{2}\-[\d]{2})$" title="
                         <fmt:message key="sign_up_form.invalid_phone_number_format"/>"/>
-                <button class="form_btn" type="submit" name="command" value="SIGN_UP">
+                <button class="form_btn" type="submit" name="command" value="signUp">
                          <fmt:message key="reg_form.button"/>
                 </button>
                 <div class="sign_up__err__message">
-                    <c:if test="${not empty sessionScope.incorrectDataErrorMessage}">
-                        <fmt:message key="${sessionScope.incorrectDataErrorMessage}"/>
+                    <c:if test="${not empty incorrectDataErrorMessage}">
+                        <fmt:message key="${incorrectDataErrorMessage}"/>
                     </c:if>
                 </div>
             </form>

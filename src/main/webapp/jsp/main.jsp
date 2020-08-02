@@ -26,7 +26,7 @@
                 <input type="hidden" name="newSearch" value="" id="newSearch"/>
                 <input type="hidden" name="currentPage" value="1">
                 <input type="number" min="1" name="filterPrice" placeholder="<fmt:message key="main_page_filter.price"/>" class="price filters">
-                <button class="search filters" id="filterBtn"type="submit" name="command" value="FIND_ADVERTISEMENTS_BY_FILTER">
+                <button class="search filters" id="filterBtn"type="submit" name="command" value="findAdvertisementsByFilter">
                 <fmt:message key="main_page_filter.search"/></button>
             </div>
         </div>
@@ -68,7 +68,7 @@
                 </div>
             </c:if>
         <c:forEach var="elem" items="${advertisementList}">
-            <a href="${pageContext.request.contextPath}/controller?command=advertisement_page&advertisementId=${elem.getId()}">
+            <a href="${pageContext.request.contextPath}/controller?command=advertisementPage&advertisementId=${elem.getId()}">
             <div class="list-flat__item">
                 <img src="data:image/jpg;base64,${elem.flat.flatPhotos.get(0).base64PhotoData}" alt="flat_one" class="List-flat__img">
                 <div class="list-flat__text">
@@ -102,10 +102,10 @@
                     <div class="prev-text">
                         <c:choose>
                             <c:when test="${not empty sessionScope.advertisementFilter}">
-                                <a href="${pageContext.request.contextPath}/controller?command=FIND_ADVERTISEMENTS_BY_FILTER&currentPage=${currentPage-1}">Previous page</a>
+                                <a href="${pageContext.request.contextPath}/controller?command=findAdvertisementsByFilter&currentPage=${currentPage-1}">Previous page</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="${pageContext.request.contextPath}/controller?command=FIND_ALL_ADVERTISEMENTS&currentPage=${currentPage-1}">Prevision page</a>
+                                <a href="${pageContext.request.contextPath}/controller?command=findAllAdvertisements&currentPage=${currentPage-1}">Prevision page</a>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -123,10 +123,10 @@
                     <div class="next-page-text">
                         <c:choose>
                             <c:when test="${not empty sessionScope.advertisementFilter}">
-                                <a href="${pageContext.request.contextPath}/controller?command=FIND_ADVERTISEMENTS_BY_FILTER&currentPage=${currentPage+1}">Next page</a>
+                                <a href="${pageContext.request.contextPath}/controller?command=findAdvertisementsByFilter&currentPage=${currentPage+1}">Next page</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="${pageContext.request.contextPath}/controller?command=FIND_ALL_ADVERTISEMENTS&currentPage=${currentPage+1}">Next page</a>
+                                <a href="${pageContext.request.contextPath}/controller?command=findAllAdvertisements&currentPage=${currentPage+1}">Next page</a>
                             </c:otherwise>
                         </c:choose>
                     </div>
