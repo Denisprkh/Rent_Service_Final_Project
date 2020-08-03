@@ -16,7 +16,6 @@ public class LocaleFilter implements Filter {
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         setLocalisation((HttpServletRequest) req);
-
         chain.doFilter(req, resp);
     }
 

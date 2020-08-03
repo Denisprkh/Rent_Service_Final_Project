@@ -1,7 +1,7 @@
 package by.prokhorenko.rentservice.builder;
 
-import by.prokhorenko.rentservice.entity.user.User;
-import by.prokhorenko.rentservice.entity.user.UserRole;
+import by.prokhorenko.rentservice.entity.User;
+import by.prokhorenko.rentservice.entity.UserRole;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

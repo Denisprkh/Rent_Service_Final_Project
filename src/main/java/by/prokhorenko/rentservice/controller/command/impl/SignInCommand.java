@@ -4,7 +4,7 @@ import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
 import by.prokhorenko.rentservice.controller.command.CommandName;
-import by.prokhorenko.rentservice.entity.user.User;
+import by.prokhorenko.rentservice.entity.User;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.user.UserService;
@@ -33,7 +33,6 @@ public class SignInCommand implements Command {
             session.setAttribute(Attribute.USER_ROLE,user.getUserRole());
             String redirectUrl = buildRedirectUrl(request, CommandName.MAIN_PAGE.getCommandName());
             router.setPage(redirectUrl);
-            LOG.debug(request.getServerName()+request.getServerPort()+request.getContextPath()+request.getServletPath());
         } catch (ServiceException e) {
             LOG.error(e);
             request.setAttribute(Attribute.SIGN_IN_ERROR_MESSAGE,e.getMessage());

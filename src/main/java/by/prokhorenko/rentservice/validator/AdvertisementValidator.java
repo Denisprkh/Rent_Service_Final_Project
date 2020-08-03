@@ -1,6 +1,6 @@
 package by.prokhorenko.rentservice.validator;
 
-import by.prokhorenko.rentservice.entity.advertisement.AdvertisementDataHandler;
+import by.prokhorenko.rentservice.entity.AdvertisementDataHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

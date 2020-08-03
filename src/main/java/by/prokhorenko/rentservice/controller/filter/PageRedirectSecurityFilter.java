@@ -1,5 +1,6 @@
 package by.prokhorenko.rentservice.controller.filter;
 
+import by.prokhorenko.rentservice.controller.command.CommandName;
 import by.prokhorenko.rentservice.controller.command.impl.RequestParameter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,14 +14,14 @@ import java.io.IOException;
 @WebFilter(filterName = "PageRedirectSecurityFilter")
 public class PageRedirectSecurityFilter implements Filter {
 
-    private static final String DEFAULT_REDIRECT_URL = "/controller?command=FIND_ALL_ADVERTISEMENTS&currentPage=1";
     private static final Logger LOG = LogManager.getLogger();
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
         if(request.getParameter(RequestParameter.PARAM_COMMAND) == null){
-            response.sendRedirect(request.getContextPath()+DEFAULT_REDIRECT_URL);
+            response.sendRedirect(request.getContextPath()+request.getServletPath()+"?"+RequestParameter.PARAM_COMMAND
+            + "=" + CommandName.MAIN_PAGE);
         }
         chain.doFilter(req, resp);
     }

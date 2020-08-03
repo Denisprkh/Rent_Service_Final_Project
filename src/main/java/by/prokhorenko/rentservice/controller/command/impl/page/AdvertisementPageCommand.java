@@ -5,7 +5,7 @@ import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
 import by.prokhorenko.rentservice.controller.command.impl.Attribute;
 import by.prokhorenko.rentservice.controller.command.impl.RequestParameter;
-import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
+import by.prokhorenko.rentservice.entity.Advertisement;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
@@ -30,7 +30,7 @@ public class AdvertisementPageCommand implements Command {
         try {
             int advertisementsId = Integer.parseInt(request.getParameter(RequestParameter.ADVERTISEMENT_ID));
             Advertisement advertisement = advertisementService.findAdvertisementById(advertisementsId);
-            request.setAttribute(Attribute.ADVERTISEMENT,advertisement);
+            request.getSession().setAttribute(Attribute.ADVERTISEMENT,advertisement);
             router.setPage(PagePath.ADVERTISEMENT);
         } catch (ServiceException e) {
            LOG.error(e);

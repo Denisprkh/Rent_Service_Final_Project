@@ -1,6 +1,6 @@
 package by.prokhorenko.rentservice.builder;
 
-import by.prokhorenko.rentservice.entity.advertisement.AdvertisementDataHandler;
+import by.prokhorenko.rentservice.entity.AdvertisementDataHandler;
 
 public class AdvertisementDataHandlerBuilder {
 

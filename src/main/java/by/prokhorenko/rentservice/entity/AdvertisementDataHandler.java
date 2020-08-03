@@ -1,7 +1,13 @@
-package by.prokhorenko.rentservice.entity.advertisement;
+package by.prokhorenko.rentservice.entity;
 
 import by.prokhorenko.rentservice.builder.AdvertisementDataHandlerBuilder;
+import by.prokhorenko.rentservice.builder.UserChoiceDataHandlerBuilder;
 
+/**
+ * Auxiliary class for building ad validating advertisement from request,
+ * contains properties from {@link FlatAddress}, {@link FlatDescription},
+ * {@link Advertisement} entities;
+ */
 public class AdvertisementDataHandler {
     private String city;
     private String district;
@@ -18,17 +24,19 @@ public class AdvertisementDataHandler {
     private boolean possibleWithPets;
     private String usersDescription;
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
+    /**
+     * Initializes a newly created {@code AdvertisementDataHandler} object so that it represents
+     * an empty AdvertisementDataHandler entity.
+     */
     public AdvertisementDataHandler() {
     }
 
+    /**
+     * Initializes a newly created {@code AdvertisementDataHandler} object with
+     * fields which have been built with {@link AdvertisementDataHandlerBuilder}
+     *
+     * @param advertisementDataHandlerBuilder
+     */
     public AdvertisementDataHandler(AdvertisementDataHandlerBuilder advertisementDataHandlerBuilder) {
         this.city = advertisementDataHandlerBuilder.getCity();
         this.district = advertisementDataHandlerBuilder.getDistrict();
@@ -44,6 +52,14 @@ public class AdvertisementDataHandler {
         this.possibleWithChildren = advertisementDataHandlerBuilder.isPossibleWithChildren();
         this.possibleWithPets = advertisementDataHandlerBuilder.isPossibleWithPets();
         this.usersDescription = advertisementDataHandlerBuilder.getUsersDescription();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getCity() {
@@ -150,6 +166,16 @@ public class AdvertisementDataHandler {
         this.usersDescription = usersDescription;
     }
 
+    /**
+     * Compares this advertisementDataHandler to the specified object.  The result is {@code
+     * true} if and only if the argument is not {@code null} and is a {@code
+     * AdvertisementDataHandler} object that represents the same sequence of parameters as this
+     * object.
+     *
+     * @param o The object to compare this {@code AdvertisementDataHandler} against
+     * @return {@code true} if the given object represents a {@code AdvertisementDataHandler}
+     * equivalent to this advertisementDataHandler, {@code false} otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -173,6 +199,11 @@ public class AdvertisementDataHandler {
         return usersDescription != null ? usersDescription.equals(that.usersDescription) : that.usersDescription == null;
     }
 
+    /**
+     * Returns a hash code for this {@code AdvertisementDataHandler} object
+     *
+     * @return hashCode
+     */
     @Override
     public int hashCode() {
         int result = city != null ? city.hashCode() : 0;
@@ -192,9 +223,14 @@ public class AdvertisementDataHandler {
         return result;
     }
 
+    /**
+     * Returns a {@code String} representation for this {@code AdvertisementDataHandler} object
+     *
+     * @return String
+     */
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("UserAdvertisementDataHandler{");
+        final StringBuilder sb = new StringBuilder("AdvertisementDataHandler{");
         sb.append("city='").append(city).append('\'');
         sb.append(", district='").append(district).append('\'');
         sb.append(", street='").append(street).append('\'');

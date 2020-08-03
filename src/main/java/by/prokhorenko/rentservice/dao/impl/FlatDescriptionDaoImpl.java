@@ -1,9 +1,9 @@
 package by.prokhorenko.rentservice.dao.impl;
 
 import by.prokhorenko.rentservice.dao.AbstractCommonDao;
-import by.prokhorenko.rentservice.dao.constant.SqlQuery;
+import by.prokhorenko.rentservice.dao.SqlQuery;
 import by.prokhorenko.rentservice.dao.FlatDescriptionDao;
-import by.prokhorenko.rentservice.entity.flat.FlatDescription;
+import by.prokhorenko.rentservice.entity.FlatDescription;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;

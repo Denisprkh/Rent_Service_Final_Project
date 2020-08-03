@@ -1,5 +1,6 @@
-package by.prokhorenko.rentservice.entity.flat;
+package by.prokhorenko.rentservice.entity;
 
+import by.prokhorenko.rentservice.builder.FlatDescriptionBuilder;
 import by.prokhorenko.rentservice.builder.FlatPhotoBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,55 +9,139 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+/**
+ * FlatPhoto entity. Has next properties:
+ * <b>LOG</b>,<b>id</b>,<b>flatsId</b>,<b>flatPhotoData</b>,<b>base64PhotoData</b>
+ */
 public class FlatPhoto implements Serializable {
 
+    /**
+     * Property - LOG is for logging errors
+     */
     private static final Logger LOG = LogManager.getLogger();
+
+    /**
+     * Property - id
+     */
     private int id;
+
+    /**
+     * Property - flatsId for storing photo in database according to flat
+     * to which it belongs
+     */
     private int flatsId;
+
+    /**
+     * Property - flatPhotoData, the data from which the photo consists of
+     */
     private InputStream flatPhotoData;
+
+    /**
+     * Property - base64PhotoData, data for displaying photo on the web page
+     */
     private String base64PhotoData;
 
+    /**
+     * Initializes a newly created {@code FlatPhoto} object so that it represents
+     * an empty FlatPhoto entity.
+     */
     public FlatPhoto() {
     }
 
-    public FlatPhoto(FlatPhotoBuilder builder) {
-        this.id = builder.getId();
-        this.flatsId = builder.getFlatsId();
-        this.flatPhotoData = builder.getFlatPhotoData();
+    /**
+     * Initializes a newly created {@code FlatPhoto} object with
+     * fields which have been built with {@link FlatPhotoBuilder}
+     *
+     * @param flatPhotoBuilder
+     */
+    public FlatPhoto(FlatPhotoBuilder flatPhotoBuilder) {
+        this.id = flatPhotoBuilder.getId();
+        this.flatsId = flatPhotoBuilder.getFlatsId();
+        this.flatPhotoData = flatPhotoBuilder.getFlatPhotoData();
     }
 
+    /**
+     * Returns id of the {@code FlatPhoto} object
+     *
+     * @return id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Sets id to the {@code FlatPhoto} object
+     *
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Returns id of the flat, which photo belongs to ,to the {@code FlatPhoto} object
+     *
+     * @return flatsId
+     */
     public int getFlatsId() {
         return flatsId;
     }
 
+    /**
+     * Sets id of the flat, which photo belongs to, of the {@code FlatPhoto} object
+     *
+     * @param flatsId
+     */
     public void setFlatsId(int flatsId) {
         this.flatsId = flatsId;
     }
 
+    /**
+     * Returns data which the photo consists of, of the {@code FlatPhoto} object
+     *
+     * @return flatPhotoData
+     */
     public InputStream getFlatPhotoData() {
         return flatPhotoData;
     }
 
+    /**
+     * Sets data which the photo consists of, of the {@code FlatPhoto} object
+     *
+     * @param flatPhotoData
+     */
     public void setFlatPhotoData(InputStream flatPhotoData) {
         this.flatPhotoData = flatPhotoData;
     }
 
+    /**
+     * Returns the data for displaying photo on a webPage of the {@code FlatPhoto} object
+     *
+     * @return base64PhotoData
+     */
     public String getBase64PhotoData() {
         return base64PhotoData;
     }
 
+    /**
+     * Sets the data for displaying photo on a webPage to the {@code FlatPhoto} object
+     *
+     * @param base64PhotoData
+     */
     public void setBase64PhotoData(String base64PhotoData) {
         this.base64PhotoData = base64PhotoData;
     }
 
+    /**
+     * Compares this flatPhoto to the specified object.  The result is {@code
+     * true} if and only if the argument is not {@code null} and is a {@code
+     * FlatPhoto} object that represents the same sequence of parameters as this
+     * object.
+     *
+     * @param o The object to compare this {@code FlatPhoto} against
+     * @return {@code true} if the given object represents a {@code FlatPhoto}
+     * equivalent to this flatPhoto, {@code false} otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -101,6 +186,11 @@ public class FlatPhoto implements Serializable {
         return base64PhotoData != null ? base64PhotoData.equals(flatPhoto.base64PhotoData) : flatPhoto.base64PhotoData == null;
     }
 
+    /**
+     * Returns a hash code for this {@code FlatPhoto} object
+     *
+     * @return hashCode
+     */
     @Override
     public int hashCode() {
         int result = id;
@@ -110,6 +200,11 @@ public class FlatPhoto implements Serializable {
         return result;
     }
 
+    /**
+     * Returns a {@code String} representation for this {@code FlatPhoto} object
+     *
+     * @return String
+     */
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("FlatPhoto{");

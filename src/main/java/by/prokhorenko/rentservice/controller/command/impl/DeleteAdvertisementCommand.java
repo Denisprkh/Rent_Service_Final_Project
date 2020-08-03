@@ -2,10 +2,10 @@ package by.prokhorenko.rentservice.controller.command.impl;
 
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
-import by.prokhorenko.rentservice.controller.command.CommandName;
-import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
-import by.prokhorenko.rentservice.entity.user.User;
-import by.prokhorenko.rentservice.entity.user.UserRole;
+import by.prokhorenko.rentservice.controller.command.util.CommandUtil;
+import by.prokhorenko.rentservice.entity.Advertisement;
+import by.prokhorenko.rentservice.entity.User;
+import by.prokhorenko.rentservice.entity.UserRole;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.advertisement.AdvertisementService;
@@ -36,8 +36,8 @@ public class DeleteAdvertisementCommand implements Command {
             if(advertisement.getAuthor().getId() == usersId || UserRole.ADMIN.equals(userRole)){
                 advertisementService.deleteAdvertisement(advertisementsId);
             }
-            String redirectUrl = buildRedirectUrl(request, CommandName.MAIN_PAGE.getCommandName());
-            router.setPage(redirectUrl);
+            String page = request.getHeader(CommandUtil.REFERER_HEADER);
+            router.setPage(page);
         } catch (ServiceException e) {
             LOG.error(e);
         }

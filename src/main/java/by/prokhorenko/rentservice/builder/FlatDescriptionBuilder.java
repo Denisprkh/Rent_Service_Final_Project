@@ -1,6 +1,6 @@
 package by.prokhorenko.rentservice.builder;
 
-import by.prokhorenko.rentservice.entity.flat.FlatDescription;
+import by.prokhorenko.rentservice.entity.FlatDescription;
 
 public class FlatDescriptionBuilder {
 

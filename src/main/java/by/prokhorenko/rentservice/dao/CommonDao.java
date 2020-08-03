@@ -6,7 +6,7 @@ import java.io.Closeable;
 import java.util.List;
 import java.util.Optional;
 
-public interface CommonDao<T> extends AutoCloseable, Closeable{
+public interface CommonDao<T> extends Closeable,AutoCloseable{
     Optional<T> add(T t) throws DaoException;
     List<T> findAll(int start, int total) throws DaoException;
     Optional<T> findById(int id) throws DaoException;

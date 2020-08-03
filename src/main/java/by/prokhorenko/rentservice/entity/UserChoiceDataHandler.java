@@ -1,10 +1,15 @@
-package by.prokhorenko.rentservice.entity.advertisement;
+package by.prokhorenko.rentservice.entity;
 
+import by.prokhorenko.rentservice.builder.FlatDescriptionBuilder;
 import by.prokhorenko.rentservice.builder.UserChoiceDataHandlerBuilder;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
 
+/**
+ * Auxiliary class for handling users chosen data from filters to build regex for search,
+ * contains properties and get and set methods from {@link FlatAddress}, {@link FlatDescription},
+ * {@link Advertisement} entities;
+ */
 public class UserChoiceDataHandler implements Serializable {
     private String city;
     private String district;
@@ -17,9 +22,19 @@ public class UserChoiceDataHandler implements Serializable {
     private String possibleWithPets;
     private String price;
 
+    /**
+     * Initializes a newly created {@code UserChoiceDataHandler} object so that it represents
+     * an empty UserChoiceDataHandler entity.
+     */
     public UserChoiceDataHandler() {
     }
 
+    /**
+     * Initializes a newly created {@code UserChoiceDataHandler} object with
+     * fields which have been built with {@link UserChoiceDataHandlerBuilder}
+     *
+     * @param userChoiceDataHandlerBuilder
+     */
     public UserChoiceDataHandler(UserChoiceDataHandlerBuilder userChoiceDataHandlerBuilder) {
         this.city = userChoiceDataHandlerBuilder.getCity();
         this.district = userChoiceDataHandlerBuilder.getDistrict();
@@ -113,6 +128,16 @@ public class UserChoiceDataHandler implements Serializable {
         this.price = price;
     }
 
+    /**
+     * Compares this userChoiceDataHandler to the specified object.  The result is {@code
+     * true} if and only if the argument is not {@code null} and is a {@code
+     * UserChoiceDataHandler} object that represents the same sequence of parameters as this
+     * object.
+     *
+     * @param o The object to compare this {@code UserChoiceDataHandler} against
+     * @return {@code true} if the given object represents a {@code UserChoiceDataHandler}
+     * equivalent to this userChoiceDataHandler, {@code false} otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -135,6 +160,11 @@ public class UserChoiceDataHandler implements Serializable {
         return price != null ? price.equals(that.price) : that.price == null;
     }
 
+    /**
+     * Returns a hash code for this {@code UserChoiceDataHandler} object
+     *
+     * @return hashCode
+     */
     @Override
     public int hashCode() {
         int result = city != null ? city.hashCode() : 0;
@@ -150,6 +180,10 @@ public class UserChoiceDataHandler implements Serializable {
         return result;
     }
 
+    /**
+     * Returns a {@code String} representation for this {@code UserChoiceDataHandler} object
+     * @return String
+     */
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("UserChoiceDataHandler{");

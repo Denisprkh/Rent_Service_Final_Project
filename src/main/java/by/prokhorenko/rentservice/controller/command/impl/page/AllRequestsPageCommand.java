@@ -6,14 +6,13 @@ import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
 import by.prokhorenko.rentservice.controller.command.impl.Attribute;
 import by.prokhorenko.rentservice.controller.command.util.CommandUtil;
-import by.prokhorenko.rentservice.entity.request.Request;
+import by.prokhorenko.rentservice.entity.Request;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.request.RequestService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class AllRequestsPageCommand implements Command {

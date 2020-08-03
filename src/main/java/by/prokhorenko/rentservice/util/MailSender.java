@@ -24,7 +24,7 @@ public class MailSender {
         try {
             props.load(this.getClass().getClassLoader().getResourceAsStream(MAIL_PROPERTIES));
         } catch (IOException e) {
-            LOG.error("Loading properties for mail sending error");
+            LOG.error("Loading properties for mail sending error",e);
         }
     }
 
@@ -45,7 +45,7 @@ public class MailSender {
             message.setText(text);
             Transport.send(message);
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+           LOG.error(e);
         }
     }
 

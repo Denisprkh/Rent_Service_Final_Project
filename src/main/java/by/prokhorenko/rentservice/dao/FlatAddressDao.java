@@ -1,12 +1,6 @@
 package by.prokhorenko.rentservice.dao;
 
-import by.prokhorenko.rentservice.dao.CommonDao;
-import by.prokhorenko.rentservice.entity.flat.FlatAddress;
-import by.prokhorenko.rentservice.exception.DaoException;
-
-import javax.mail.Address;
-import java.util.List;
-import java.util.Optional;
+import by.prokhorenko.rentservice.entity.FlatAddress;
 
 public interface FlatAddressDao extends CommonDao<FlatAddress> {
 

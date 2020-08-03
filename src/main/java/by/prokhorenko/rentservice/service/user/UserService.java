@@ -1,6 +1,6 @@
 package by.prokhorenko.rentservice.service.user;
 
-import by.prokhorenko.rentservice.entity.user.User;
+import by.prokhorenko.rentservice.entity.User;
 import by.prokhorenko.rentservice.exception.ServiceException;
 
 import java.util.List;

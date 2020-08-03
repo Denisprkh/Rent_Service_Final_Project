@@ -163,7 +163,12 @@
                     <fmt:message key="advertisement.send_request_button"/>
                 </button>
             </c:if>
-            <c:if test="${sessionScope.userRole == 'ADMIN' || sessionScope.user.id eq sessionScope.advertisement.author.id}">
+            <c:if test="${sessionScope.userRole == 'GUEST'}">
+                <div class="request_info_text">
+                    <fmt:message key="advertisement.request_info"/>
+                </div>
+            </c:if>
+            <c:if test="${sessionScope.userRole == 'ADMIN' || sessionScope.user.id == advertisement.author.id}">
                 <form action="${pageContext.request.contextPath}/controller" method="post">
                     <input type="hidden" name="advertisementId" value="${sessionScope.advertisement.id}"/>
                     <button class="main_page_btn btnt" name="command" value="deleteAdvertisement">

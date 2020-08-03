@@ -5,7 +5,7 @@ import by.prokhorenko.rentservice.controller.command.CommandName;
 import by.prokhorenko.rentservice.controller.command.CommandType;
 import by.prokhorenko.rentservice.controller.command.impl.Attribute;
 import by.prokhorenko.rentservice.controller.command.impl.RequestParameter;
-import by.prokhorenko.rentservice.entity.user.UserRole;
+import by.prokhorenko.rentservice.entity.UserRole;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,14 +22,12 @@ public class CommandMatchingSecurityFilter implements Filter {
     private static final Logger LOG = LogManager.getLogger();
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
-        LOG.debug(request.getParameter(RequestParameter.PARAM_COMMAND));
         String commandName = request.getParameter(RequestParameter.PARAM_COMMAND);
-        LOG.debug(commandName);
         CommandName command = CommandName.findCommandByName(commandName);
         HttpSession session = request.getSession();
         UserRole userRole = (UserRole) session.getAttribute(Attribute.USER_ROLE);
         Set<CommandName> commandNames;
-
+        LOG.debug(request.getHeader("referer"));
         switch (userRole){
             case USER: commandNames = CommandType.USER.getCommandNames();
             break;

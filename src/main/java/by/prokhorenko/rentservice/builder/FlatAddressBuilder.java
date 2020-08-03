@@ -1,6 +1,6 @@
 package by.prokhorenko.rentservice.builder;
 
-import by.prokhorenko.rentservice.entity.flat.FlatAddress;
+import by.prokhorenko.rentservice.entity.FlatAddress;
 
 public class FlatAddressBuilder {
 

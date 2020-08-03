@@ -1,10 +1,9 @@
 package by.prokhorenko.rentservice.builder;
 
-import by.prokhorenko.rentservice.entity.flat.Flat;
-import by.prokhorenko.rentservice.entity.flat.FlatAddress;
-import by.prokhorenko.rentservice.entity.flat.FlatDescription;
-import by.prokhorenko.rentservice.entity.flat.FlatPhoto;
-import by.prokhorenko.rentservice.entity.user.User;
+import by.prokhorenko.rentservice.entity.Flat;
+import by.prokhorenko.rentservice.entity.FlatAddress;
+import by.prokhorenko.rentservice.entity.FlatDescription;
+import by.prokhorenko.rentservice.entity.FlatPhoto;
 
 import java.util.List;
 

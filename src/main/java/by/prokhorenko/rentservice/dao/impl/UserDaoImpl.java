@@ -1,10 +1,10 @@
 package by.prokhorenko.rentservice.dao.impl;
 
 import by.prokhorenko.rentservice.dao.AbstractCommonDao;
-import by.prokhorenko.rentservice.dao.constant.SqlColumnName;
-import by.prokhorenko.rentservice.dao.constant.SqlQuery;
+import by.prokhorenko.rentservice.dao.SqlColumnName;
+import by.prokhorenko.rentservice.dao.SqlQuery;
 import by.prokhorenko.rentservice.dao.UserDao;
-import by.prokhorenko.rentservice.entity.user.User;
+import by.prokhorenko.rentservice.entity.User;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
 import by.prokhorenko.rentservice.util.HashGenerator;

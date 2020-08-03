@@ -34,9 +34,12 @@ public class ServiceFactory {
     public UserService getUserService(){
         return userService;
     }
+
     public AdvertisementService getAdvertisementService(){
         return advertisementService;
     }
+
     public RequestService getRequestService(){return  requestService; }
+
     public FlatService getFlatService(){return flatService;}
 }

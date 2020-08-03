@@ -2,8 +2,8 @@ package by.prokhorenko.rentservice.service.user.impl;
 
 import by.prokhorenko.rentservice.controller.command.ResourceBundleMessageKey;
 import by.prokhorenko.rentservice.dao.UserDao;
-import by.prokhorenko.rentservice.entity.user.User;
-import by.prokhorenko.rentservice.entity.user.UserRole;
+import by.prokhorenko.rentservice.entity.User;
+import by.prokhorenko.rentservice.entity.UserRole;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.DaoFactory;
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
             return signedUpUser;
         } catch (DaoException | IOException e) {
             LOG.debug(e);
-            throw new ServiceException("Signing user up error" + e.getMessage(), e);
+            throw new ServiceException(e);
         }
     }
 
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
         }
         try (UserDao userDao = DaoFactory.getInstance().getUserDao()) {
             Optional<User> user = userDao.findByEmailAndPassword(email, password);
-            if (!user.isPresent()) {
+            if (user.isEmpty()) {
                 throw new ServiceException(ResourceBundleMessageKey.EMAIL_OR_PASSWORD_IS_INCORRECT_ERROR_MESSAGE);
             }
             User signedInUser = user.get();
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
             allUsers = userDao.findAll(start,total);
             return allUsers;
         } catch (IOException | DaoException e) {
-            throw new ServiceException("Finding all users error", e);
+            throw new ServiceException(e);
         }
     }
 
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
             boolean banned = userDao.banUser(id);
             return banned;
         } catch (DaoException | IOException e) {
-            throw new ServiceException("Banning user error", e);
+            throw new ServiceException(e);
         }
     }
 
@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
             boolean unbanned = userDao.unBanUser(id);
             return unbanned;
         } catch (DaoException | IOException e) {
-            throw new ServiceException("Unbanning user error", e);
+            throw new ServiceException(e);
         }
     }
 
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
         try (UserDao userDao = DaoFactory.getInstance().getUserDao()) {
             return userDao.findById(id);
         } catch (DaoException | IOException e) {
-            throw new ServiceException("Finding user by id error", e);
+            throw new ServiceException(e);
         }
     }
 
@@ -128,7 +128,7 @@ public class UserServiceImpl implements UserService {
         try (UserDao userDao = DaoFactory.getInstance().getUserDao()) {
             return userDao.findByEmail(email);
         } catch (DaoException | IOException e) {
-            throw new ServiceException("Finding user by email error", e);
+            throw new ServiceException(e);
         }
     }
 
@@ -137,7 +137,7 @@ public class UserServiceImpl implements UserService {
         try (UserDao userDao = DaoFactory.getInstance().getUserDao()) {
             return userDao.findByPhone(phone);
         } catch (DaoException | IOException e) {
-            throw new ServiceException("Finding user by phone error", e);
+            throw new ServiceException(e);
         }
     }
 
@@ -146,7 +146,7 @@ public class UserServiceImpl implements UserService {
         try (UserDao userDao = DaoFactory.getInstance().getUserDao()) {
             return userDao.activateUser(id);
         } catch (DaoException | IOException e) {
-            throw new ServiceException("Activating user error", e);
+            throw new ServiceException(e);
         }
     }
 
@@ -202,6 +202,5 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
     }
-
 
 }

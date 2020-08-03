@@ -2,9 +2,9 @@ package by.prokhorenko.rentservice.service.advertisement.impl;
 
 import by.prokhorenko.rentservice.controller.command.ResourceBundleMessageKey;
 import by.prokhorenko.rentservice.dao.AdvertisementDao;
-import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
-import by.prokhorenko.rentservice.entity.advertisement.AdvertisementDataHandler;
-import by.prokhorenko.rentservice.entity.advertisement.UserChoiceDataHandler;
+import by.prokhorenko.rentservice.entity.Advertisement;
+import by.prokhorenko.rentservice.entity.AdvertisementDataHandler;
+import by.prokhorenko.rentservice.entity.UserChoiceDataHandler;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.DaoFactory;
@@ -31,7 +31,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             List<Advertisement> allAdvertisements = advertisementDao.findAll(start,total);
             return allAdvertisements;
         } catch (IOException | DaoException e) {
-            throw new ServiceException("Finding",e);
+            throw new ServiceException(e);
         }
     }
 
@@ -41,7 +41,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             int advertisementsQuantity = advertisementDao.findQuantity();
             return advertisementsQuantity;
         } catch (IOException | DaoException e) {
-            throw new ServiceException("Finding",e);
+            throw new ServiceException(e);
         }
     }
 
@@ -50,8 +50,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         try(AdvertisementDao advertisementDao = DaoFactory.getInstance().getAdvertisementDao()) {
             return advertisementDao.add(advertisement).isPresent();
         } catch (IOException | DaoException e) {
-            LOG.debug(e.getMessage() + " " + e.getCause());
-            throw new ServiceException("Adding error",e);
+            throw new ServiceException(e);
         }
     }
 

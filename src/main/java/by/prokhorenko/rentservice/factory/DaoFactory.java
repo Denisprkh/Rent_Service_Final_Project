@@ -2,7 +2,6 @@ package by.prokhorenko.rentservice.factory;
 
 import by.prokhorenko.rentservice.dao.*;
 import by.prokhorenko.rentservice.dao.impl.*;
-import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
 
 public class DaoFactory {
 

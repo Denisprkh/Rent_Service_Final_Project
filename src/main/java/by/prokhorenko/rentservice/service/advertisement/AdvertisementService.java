@@ -1,8 +1,8 @@
 package by.prokhorenko.rentservice.service.advertisement;
 
-import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
-import by.prokhorenko.rentservice.entity.advertisement.AdvertisementDataHandler;
-import by.prokhorenko.rentservice.entity.advertisement.UserChoiceDataHandler;
+import by.prokhorenko.rentservice.entity.Advertisement;
+import by.prokhorenko.rentservice.entity.AdvertisementDataHandler;
+import by.prokhorenko.rentservice.entity.UserChoiceDataHandler;
 import by.prokhorenko.rentservice.exception.ServiceException;
 
 import java.util.List;

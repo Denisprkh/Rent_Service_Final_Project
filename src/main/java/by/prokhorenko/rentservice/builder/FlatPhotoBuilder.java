@@ -1,6 +1,6 @@
 package by.prokhorenko.rentservice.builder;
 
-import by.prokhorenko.rentservice.entity.flat.FlatPhoto;
+import by.prokhorenko.rentservice.entity.FlatPhoto;
 
 import java.io.InputStream;
 

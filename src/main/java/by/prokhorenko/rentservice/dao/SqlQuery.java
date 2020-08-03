@@ -1,4 +1,4 @@
-package by.prokhorenko.rentservice.dao.constant;
+package by.prokhorenko.rentservice.dao;
 
 public class SqlQuery {
 

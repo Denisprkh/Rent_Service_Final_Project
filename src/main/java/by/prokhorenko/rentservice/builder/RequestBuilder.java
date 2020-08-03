@@ -1,8 +1,8 @@
 package by.prokhorenko.rentservice.builder;
 
-import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
-import by.prokhorenko.rentservice.entity.request.Request;
-import by.prokhorenko.rentservice.entity.user.User;
+import by.prokhorenko.rentservice.entity.Advertisement;
+import by.prokhorenko.rentservice.entity.Request;
+import by.prokhorenko.rentservice.entity.User;
 
 import java.time.LocalDateTime;
 

@@ -1,8 +1,8 @@
 package by.prokhorenko.rentservice.controller.filter;
 
 import by.prokhorenko.rentservice.controller.command.impl.Attribute;
-import by.prokhorenko.rentservice.entity.user.User;
-import by.prokhorenko.rentservice.entity.user.UserRole;
+import by.prokhorenko.rentservice.entity.User;
+import by.prokhorenko.rentservice.entity.UserRole;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.user.UserService;

@@ -1050,7 +1050,7 @@ accept_status img{
 .card-ads-btn{
     display: flex;
     justify-content: space-between;
-    width: 190px;
+    width: 300px;
     margin-left: 20px;
 }
 
@@ -1144,6 +1144,7 @@ accept_status img{
     font-size: 13px;
     text-align: center;
     padding-top: 2px;
+    margin-bottom: 25px;
 }
 
 .card-page{

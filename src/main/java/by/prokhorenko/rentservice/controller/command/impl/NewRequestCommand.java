@@ -4,9 +4,9 @@ import by.prokhorenko.rentservice.builder.RequestBuilder;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
 import by.prokhorenko.rentservice.controller.command.CommandName;
-import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
-import by.prokhorenko.rentservice.entity.request.Request;
-import by.prokhorenko.rentservice.entity.user.User;
+import by.prokhorenko.rentservice.entity.Advertisement;
+import by.prokhorenko.rentservice.entity.Request;
+import by.prokhorenko.rentservice.entity.User;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.request.RequestService;
@@ -15,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 public class NewRequestCommand implements Command {
 
@@ -70,7 +69,6 @@ public class NewRequestCommand implements Command {
         for(int i = 0; i<numbers.length;i++){
             numbers[i] = Integer.parseInt(dateForParsing[i]);
         }
-        LOG.debug(Arrays.toString(numbers));
         return numbers;
     }
 

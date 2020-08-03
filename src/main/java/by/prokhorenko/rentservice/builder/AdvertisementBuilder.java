@@ -1,13 +1,11 @@
 package by.prokhorenko.rentservice.builder;
 
-import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
-import by.prokhorenko.rentservice.entity.flat.Flat;
-import by.prokhorenko.rentservice.entity.flat.FlatPhoto;
-import by.prokhorenko.rentservice.entity.user.User;
+import by.prokhorenko.rentservice.entity.Advertisement;
+import by.prokhorenko.rentservice.entity.Flat;
+import by.prokhorenko.rentservice.entity.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class AdvertisementBuilder {
     private int id;

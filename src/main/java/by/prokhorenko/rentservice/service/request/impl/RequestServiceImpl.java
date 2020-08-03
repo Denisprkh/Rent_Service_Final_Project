@@ -1,7 +1,7 @@
 package by.prokhorenko.rentservice.service.request.impl;
 
 import by.prokhorenko.rentservice.dao.RequestDao;
-import by.prokhorenko.rentservice.entity.request.Request;
+import by.prokhorenko.rentservice.entity.Request;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.DaoFactory;

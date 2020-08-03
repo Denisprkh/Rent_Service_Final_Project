@@ -47,6 +47,9 @@
                         </div>
                     </div>
                     <div class="card-ads-btn">
+                        <a  class="btn-delete" href="${pageContext.request.contextPath}/controller?command=deleteAdvertisement&advertisementId=${elem.id}">
+                            <fmt:message key="advertisement.delete_button"/>
+                        </a>
                         <c:choose>
                             <c:when test="${elem.flat.isFree() eq true}">
                                 <a class="btn-delete" href=

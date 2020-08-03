@@ -1,8 +1,8 @@
 package by.prokhorenko.rentservice.controller.filter;
 
 import by.prokhorenko.rentservice.controller.command.impl.Attribute;
-import by.prokhorenko.rentservice.entity.user.User;
-import by.prokhorenko.rentservice.entity.user.UserRole;
+import by.prokhorenko.rentservice.entity.User;
+import by.prokhorenko.rentservice.entity.UserRole;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.user.UserService;
@@ -12,11 +12,9 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
-import java.util.OptionalLong;
 
 @WebFilter(filterName = "UserBlockFilter")
 public class UserBlockFilter implements Filter {

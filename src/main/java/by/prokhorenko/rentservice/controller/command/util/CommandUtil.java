@@ -3,9 +3,7 @@ package by.prokhorenko.rentservice.controller.command.util;
 import by.prokhorenko.rentservice.controller.command.ResourceBundleMessageKey;
 import by.prokhorenko.rentservice.controller.command.impl.Attribute;
 import by.prokhorenko.rentservice.controller.command.impl.RequestParameter;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.*;
 
 public class CommandUtil {
@@ -35,7 +33,6 @@ public class CommandUtil {
     }
 
     public static void defineErrorMessageFromValidations(HttpServletRequest request, Map<String,Boolean> usersDataValidations){
-        HttpSession session = request.getSession();
         String falseKey = defineFalseKey(usersDataValidations);
         switch (falseKey){
             case EMAIL: request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,

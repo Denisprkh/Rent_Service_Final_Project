@@ -1,13 +1,10 @@
 package by.prokhorenko.rentservice.service.flat.impl;
 
 import by.prokhorenko.rentservice.dao.FlatDao;
-import by.prokhorenko.rentservice.entity.flat.Flat;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.DaoFactory;
 import by.prokhorenko.rentservice.service.flat.FlatService;
-import by.prokhorenko.rentservice.service.request.RequestService;
-import by.prokhorenko.rentservice.service.request.impl.RequestServiceImpl;
 
 import java.io.IOException;
 
@@ -24,7 +21,7 @@ public class FlatServiceImpl implements FlatService {
         try(FlatDao flatDao = DaoFactory.getInstance().getFlatDao()){
             return flatDao.updateFlatFreeStatusFalse(flatsId);
         } catch (IOException | DaoException e) {
-            throw new ServiceException();
+            throw new ServiceException(e);
         }
     }
 
@@ -33,7 +30,7 @@ public class FlatServiceImpl implements FlatService {
         try(FlatDao flatDao = DaoFactory.getInstance().getFlatDao()){
             return flatDao.updateFlatFreeStatusTrue(flatsId);
         } catch (IOException | DaoException e) {
-            throw new ServiceException();
+            throw new ServiceException(e);
         }
     }
 }

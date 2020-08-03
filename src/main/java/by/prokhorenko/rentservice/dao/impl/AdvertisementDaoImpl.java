@@ -2,13 +2,13 @@ package by.prokhorenko.rentservice.dao.impl;
 
 
 import by.prokhorenko.rentservice.dao.*;
-import by.prokhorenko.rentservice.dao.constant.SqlQuery;
-import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
-import by.prokhorenko.rentservice.entity.advertisement.UserChoiceDataHandler;
-import by.prokhorenko.rentservice.entity.flat.Flat;
-import by.prokhorenko.rentservice.entity.flat.FlatAddress;
-import by.prokhorenko.rentservice.entity.flat.FlatDescription;
-import by.prokhorenko.rentservice.entity.flat.FlatPhoto;
+import by.prokhorenko.rentservice.dao.SqlQuery;
+import by.prokhorenko.rentservice.entity.Advertisement;
+import by.prokhorenko.rentservice.entity.UserChoiceDataHandler;
+import by.prokhorenko.rentservice.entity.Flat;
+import by.prokhorenko.rentservice.entity.FlatAddress;
+import by.prokhorenko.rentservice.entity.FlatDescription;
+import by.prokhorenko.rentservice.entity.FlatPhoto;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.factory.DaoFactory;
 import by.prokhorenko.rentservice.pool.ConnectionPool;

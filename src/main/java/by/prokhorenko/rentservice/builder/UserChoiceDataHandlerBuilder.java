@@ -1,6 +1,6 @@
 package by.prokhorenko.rentservice.builder;
 
-import by.prokhorenko.rentservice.entity.advertisement.UserChoiceDataHandler;
+import by.prokhorenko.rentservice.entity.UserChoiceDataHandler;
 
 public class UserChoiceDataHandlerBuilder {
     private String city;

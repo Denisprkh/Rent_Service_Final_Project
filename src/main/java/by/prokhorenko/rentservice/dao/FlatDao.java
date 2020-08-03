@@ -1,7 +1,7 @@
 package by.prokhorenko.rentservice.dao;
 
 
-import by.prokhorenko.rentservice.entity.flat.Flat;
+import by.prokhorenko.rentservice.entity.Flat;
 import by.prokhorenko.rentservice.exception.DaoException;
 
 

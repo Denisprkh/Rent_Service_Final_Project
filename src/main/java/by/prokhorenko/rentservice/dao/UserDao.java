@@ -1,6 +1,6 @@
 package by.prokhorenko.rentservice.dao;
 
-import by.prokhorenko.rentservice.entity.user.User;
+import by.prokhorenko.rentservice.entity.User;
 import by.prokhorenko.rentservice.exception.DaoException;
 
 import java.util.Optional;

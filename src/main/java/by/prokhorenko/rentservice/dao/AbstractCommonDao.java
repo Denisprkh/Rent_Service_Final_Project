@@ -1,18 +1,17 @@
 package by.prokhorenko.rentservice.dao;
 
 import by.prokhorenko.rentservice.builder.*;
-import by.prokhorenko.rentservice.dao.constant.SqlColumnName;
-import by.prokhorenko.rentservice.entity.advertisement.Advertisement;
-import by.prokhorenko.rentservice.entity.flat.*;
-import by.prokhorenko.rentservice.entity.request.Request;
-import by.prokhorenko.rentservice.entity.user.User;
-import by.prokhorenko.rentservice.entity.user.UserRole;
+import by.prokhorenko.rentservice.entity.*;
+import by.prokhorenko.rentservice.entity.Request;
+import by.prokhorenko.rentservice.entity.User;
+import by.prokhorenko.rentservice.entity.UserRole;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.factory.DaoFactory;
 import by.prokhorenko.rentservice.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.sql.*;
 import java.time.Instant;
@@ -20,7 +19,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 
-public abstract class AbstractCommonDao implements AutoCloseable{
+public abstract class AbstractCommonDao{
     protected ProxyConnection connection;
     private static final Logger LOG = LogManager.getLogger();
     private static final int ONE_ROW_COUNT = 1;
@@ -98,7 +97,6 @@ public abstract class AbstractCommonDao implements AutoCloseable{
                 return false;
             }
         } catch (SQLException e) {
-            LOG.error(e.getMessage() + " " + e.getCause());
             throw new DaoException("Updating entity error",e);
         }
         return true;

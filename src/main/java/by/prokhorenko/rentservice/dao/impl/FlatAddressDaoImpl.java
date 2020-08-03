@@ -1,16 +1,13 @@
 package by.prokhorenko.rentservice.dao.impl;
 
-import by.prokhorenko.rentservice.builder.FlatAddressBuilder;
 import by.prokhorenko.rentservice.dao.AbstractCommonDao;
-import by.prokhorenko.rentservice.dao.constant.SqlColumnName;
-import by.prokhorenko.rentservice.dao.constant.SqlQuery;
+import by.prokhorenko.rentservice.dao.SqlQuery;
 import by.prokhorenko.rentservice.dao.FlatAddressDao;
-import by.prokhorenko.rentservice.entity.flat.FlatAddress;
+import by.prokhorenko.rentservice.entity.FlatAddress;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

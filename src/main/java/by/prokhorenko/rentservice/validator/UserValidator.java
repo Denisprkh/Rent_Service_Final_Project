@@ -1,9 +1,5 @@
 package by.prokhorenko.rentservice.validator;
 
-import by.prokhorenko.rentservice.entity.user.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
