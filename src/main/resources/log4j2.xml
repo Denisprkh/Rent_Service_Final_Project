@@ -12,7 +12,7 @@
         </Console>
 
 
-        <RollingFile name="FileRolling" fileName="log/log4j.log" append="true"
+        <RollingFile name="FileRolling" fileName="./RentSetviceProkhorenkoDM/log/log4j.log" append="true"
                      filePattern=
                              "log/${date:yyyy-MM-dd}/%d{yyyy-MM-dd_HH-mm}_%i.log">
             <PatternLayout pattern="${pattern_file}"/>
@@ -35,7 +35,7 @@
 
         <Root level="debug">
             <Appender-ref ref="Console" level="trace"/>
-            <Appender-ref ref="FileRolling"/>
+            <Appender-ref ref="FileRolling" level="trace"/>
         </Root>
 
     </Loggers>

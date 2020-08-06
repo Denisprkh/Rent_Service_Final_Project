@@ -2,7 +2,8 @@ package by.prokhorenko.rentservice.controller;
 
 public class PagePath {
 
-    public static final String INDEX = "jsp/main.jsp";
+    public static final String INDEX = "index.jsp";
+    public static final String MAIN = "jsp/main.jsp";
     public static final String SIGN_UP = "jsp/signUp.jsp";
     public static final String ACTIVATION_INFO = "jsp/activationInfoPage.jsp";
     public static final String SIGN_IN = "jsp/signIn.jsp";
@@ -18,7 +19,7 @@ public class PagePath {
     public static final String ALL_REQUESTS_PAGE = "jsp/allRequests.jsp";
     public static final String MY_REQUESTS_PAGE = "jsp/myRequests.jsp";
     public static final String MY_ADS_PAGE = "jsp/myAds.jsp";
-    public static final String REQUESTS_FOR_MY_APS_PAGE = "jsp/requestsForMyAds.jsp";
+    public static final String REQUESTS_FOR_MY_ADS_PAGE = "jsp/requestsForMyAds.jsp";
 
     private PagePath(){
 

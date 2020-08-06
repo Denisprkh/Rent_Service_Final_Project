@@ -25,7 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
+/**
+ * Implementation of {@link AdvertisementDao}
+ */
 public class AdvertisementDaoImpl extends AbstractCommonDao implements AdvertisementDao {
 
     private static final String USER_CHOICE_DEFAULT_REGEX = ".*";
@@ -45,7 +47,6 @@ public class AdvertisementDaoImpl extends AbstractCommonDao implements Advertise
     @Override
     public Optional<Advertisement> add(Advertisement advertisement) throws DaoException {
         EntityTransaction entityTransaction = new EntityTransaction();
-        LOG.debug(advertisement);
         try (FlatDao flatDao = DaoFactory.getInstance().getFlatDao();
              FlatAddressDao flatAddressDao = DaoFactory.getInstance().getFlatAddressDao();
              FlatDescriptionDao flatDescriptionDao = DaoFactory.getInstance().getFlatDescriptionDao();

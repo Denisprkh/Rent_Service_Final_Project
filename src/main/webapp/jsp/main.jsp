@@ -38,7 +38,7 @@
             <span><fmt:message key="main_page_filter.filter_title"/></span>
             <div class="filters-right-top__items">
                 <input type="district" name="filterDistrict" placeholder="<fmt:message key="main_page_filter.district"/>" class="filters"/>
-                <input type="text"  name="filterStreet" placeholder="<fmt:message key="main_page_filter.floor"/>" class="filters"/>
+                <input type="text"  name="filterStreet" placeholder="<fmt:message key="main_page_filter.street"/>" class="filters"/>
                 <input type="number" name="filterLivingArea" placeholder="<fmt:message key="main_page_filter.living_area"/>" class="filters"/>
             </div>
             <div class="filters-right-bottom__items">

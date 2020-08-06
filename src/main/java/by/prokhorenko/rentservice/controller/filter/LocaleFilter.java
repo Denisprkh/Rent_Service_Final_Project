@@ -1,12 +1,11 @@
 package by.prokhorenko.rentservice.controller.filter;
 
-import by.prokhorenko.rentservice.controller.command.impl.Attribute;
-import by.prokhorenko.rentservice.controller.command.impl.RequestParameter;
+import by.prokhorenko.rentservice.controller.command.Attribute;
+import by.prokhorenko.rentservice.controller.command.RequestParameter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 

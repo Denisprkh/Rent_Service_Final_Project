@@ -1,4 +1,4 @@
-package by.prokhorenko.rentservice.service.user.impl;
+package by.prokhorenko.rentservice.service.impl;
 
 import by.prokhorenko.rentservice.controller.command.ResourceBundleMessageKey;
 import by.prokhorenko.rentservice.dao.UserDao;
@@ -7,7 +7,7 @@ import by.prokhorenko.rentservice.entity.UserRole;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.DaoFactory;
-import by.prokhorenko.rentservice.service.user.UserService;
+import by.prokhorenko.rentservice.service.UserService;
 import by.prokhorenko.rentservice.util.MailSender;
 import by.prokhorenko.rentservice.validator.UserValidator;
 import org.apache.logging.log4j.LogManager;
@@ -18,12 +18,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Implementation of {@link UserService}
+ */
 public class UserServiceImpl implements UserService {
 
     private static final Logger LOG = LogManager.getLogger();
     private static final UserService INSTANCE = new UserServiceImpl();
-    private static final String ACTIVATION_LINK = "http://localhost:8080/RentSetviceProkhorenkoDM_war/controller?" +
-            "command=CONFIRM_REGISTRATION&id=";
+    private static final String ACTIVATION_LINK = "/controller?command=confirmRegistration&id=";
     private static final String ACTIVATION_MESSAGE_TITLE = "Confirmation of registration";
     private static final String EMAIL_IS_UNIQUE = "emailIsUnique";
     private static final String PHONE_IS_UNIQUE = "phoneIsUnique";
@@ -36,14 +38,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User signUp(User user) throws ServiceException {
+    public User signUp(User user,String contextPath) throws ServiceException {
         MailSender mailSender = new MailSender();
         try(UserDao userDao = DaoFactory.getInstance().getUserDao()) {
             User signedUpUser = userDao.add(user).orElseThrow(ServiceException::new);
-            mailSender.send(ACTIVATION_MESSAGE_TITLE, ACTIVATION_LINK + user.getId(), user.getEmail());
+            mailSender.send(ACTIVATION_MESSAGE_TITLE, contextPath + ACTIVATION_LINK + user.getId(), user.getEmail());
             return signedUpUser;
         } catch (DaoException | IOException e) {
-            LOG.debug(e);
             throw new ServiceException(e);
         }
     }
@@ -79,7 +80,7 @@ public class UserServiceImpl implements UserService {
             }
             return signedInUser;
         } catch (DaoException | IOException e) {
-            throw new ServiceException("Signing user in error", e);
+            throw new ServiceException(e);
         }
     }
 

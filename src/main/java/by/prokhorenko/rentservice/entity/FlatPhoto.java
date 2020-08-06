@@ -1,6 +1,5 @@
 package by.prokhorenko.rentservice.entity;
 
-import by.prokhorenko.rentservice.builder.FlatDescriptionBuilder;
 import by.prokhorenko.rentservice.builder.FlatPhotoBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

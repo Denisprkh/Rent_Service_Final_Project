@@ -19,7 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
+/**
+ * Implementation of {@link UserDao}
+ */
 public class UserDaoImpl extends AbstractCommonDao implements UserDao {
 
     private static final Logger LOG = LogManager.getLogger();
@@ -210,17 +212,6 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
             throw new DaoException(e);
         } finally {
             closeResultSet(resultSet);
-        }
-    }
-
-    @Override
-    public boolean updateUsersRoleById(int id, int roleId) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_USERS_ROLE)) {
-            statement.setInt(1, roleId);
-            statement.setInt(2, id);
-            return updateEntity(statement);
-        } catch (SQLException e) {
-            throw new DaoException(e);
         }
     }
 

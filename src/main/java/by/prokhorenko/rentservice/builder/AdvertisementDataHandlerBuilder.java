@@ -2,6 +2,12 @@ package by.prokhorenko.rentservice.builder;
 
 import by.prokhorenko.rentservice.entity.AdvertisementDataHandler;
 
+/**
+ * Class for building auxiliary class {@link AdvertisementDataHandler}, fields in that class are
+ * from {@link FlatAddressBuilder},{@link FlatDescriptionBuilder},{@link AdvertisementBuilder}, methods do
+ * same things, but build methods return {@see AdvertisementDataHandlerBuilder}, entity construct method returns
+ *  * {@link AdvertisementDataHandler}
+ */
 public class AdvertisementDataHandlerBuilder {
 
     private String city;
@@ -18,8 +24,6 @@ public class AdvertisementDataHandlerBuilder {
     private boolean possibleWithChildren;
     private boolean possibleWithPets;
     private String usersDescription;
-
-
 
     public String getCity() {
         return city;
@@ -148,7 +152,7 @@ public class AdvertisementDataHandlerBuilder {
         return this;
     }
 
-    public AdvertisementDataHandler buildUserChoiceHandler(){
+    public AdvertisementDataHandler buildUserChoiceHandler() {
 
         return new AdvertisementDataHandler(this);
     }

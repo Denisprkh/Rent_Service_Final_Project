@@ -177,6 +177,11 @@
                 </form>
             </c:if>
         </div>
+        <div class="err__message">
+            <c:if test="${not empty incorrectDataErrorMessage}">
+                <fmt:message key="${incorrectDataErrorMessage}"/>
+            </c:if>
+        </div>
     </div>
     <form action="${pageContext.request.contextPath}/controller" method="post">
         <div class="popup_container none">
@@ -191,7 +196,7 @@
                     <div class="forms-contant">
                         <div class="forms-date_input">
                             <input id="mindateinp" name="rentDate" data-range="true" data-multiple-dates-separator="-"
-                                   class="datepicker-here" pattern="^([\d]{2}\.){2}[\d]{4}\-([\d]{2}\.){2}[\d]{4}$" title=""/>
+                                   class="datepicker-here" required pattern="^([\\d]{2}.){2}[\\d]{4}-([\\d]{2}.){2}[\\d]{4}$" title=""/>
                             <div class="forms-date_input__icon">
                                 <img src="${pageContext.request.contextPath}/img/Calendaricon.svg" alt="">
                             </div>

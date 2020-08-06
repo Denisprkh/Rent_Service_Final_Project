@@ -1,7 +1,9 @@
 package by.prokhorenko.rentservice.controller.command.impl;
 
 import by.prokhorenko.rentservice.controller.Router;
+import by.prokhorenko.rentservice.controller.command.Attribute;
 import by.prokhorenko.rentservice.controller.command.Command;
+import by.prokhorenko.rentservice.controller.command.RequestParameter;
 import by.prokhorenko.rentservice.controller.command.util.CommandUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +20,6 @@ public class ChangeLanguageCommand implements Command {
         if (targetLanguage != null) {
             request.getSession().setAttribute(Attribute.LANGUAGE, targetLanguage);
             previousPage= request.getHeader(CommandUtil.REFERER_HEADER);
-
         }
         return new Router(previousPage);
     }

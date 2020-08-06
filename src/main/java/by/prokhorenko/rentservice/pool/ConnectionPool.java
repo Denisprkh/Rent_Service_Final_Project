@@ -24,7 +24,7 @@ public enum ConnectionPool {
     private static final int DEFAULT_POOL_SIZE = 32;
     private BlockingQueue<ProxyConnection> availableConnections;
     private Queue<ProxyConnection> busyConnections;
-    private static final Logger LOG = LogManager.getLogger();
+    private static final Logger LOG = LogManager.getLogger(ConnectionPool.class);
 
     ConnectionPool(){
         availableConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);

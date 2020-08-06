@@ -4,14 +4,14 @@ import by.prokhorenko.rentservice.controller.DisPathType;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
-import by.prokhorenko.rentservice.controller.command.impl.Attribute;
-import by.prokhorenko.rentservice.controller.command.impl.RequestParameter;
+import by.prokhorenko.rentservice.controller.command.Attribute;
+import by.prokhorenko.rentservice.controller.command.RequestParameter;
 import by.prokhorenko.rentservice.entity.Advertisement;
 import by.prokhorenko.rentservice.entity.User;
 import by.prokhorenko.rentservice.entity.UserRole;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
-import by.prokhorenko.rentservice.service.advertisement.AdvertisementService;
+import by.prokhorenko.rentservice.service.AdvertisementService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,21 +26,24 @@ public class UpdateAdvertisementPageCommand implements Command {
     }
     @Override
     public Router execute(HttpServletRequest request) {
-        Router router = new Router(DisPathType.FORWARD, PagePath.INDEX);
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(Attribute.USER);
         UserRole userRole = (UserRole) session.getAttribute(Attribute.USER_ROLE);
         int usersId = user.getId();
         int advertisementsId = Integer.parseInt(request.getParameter(RequestParameter.ADVERTISEMENT_ID));
+        String page;
         try {
             Advertisement advertisement = advertisementService.findAdvertisementById(advertisementsId);
             if(advertisement.getAuthor().getId() == usersId || UserRole.ADMIN.equals(userRole)){
-                router.setPage(PagePath.UPDATE_ADVERTISEMENT_PAGE);
                 session.setAttribute(Attribute.ADVERTISEMENT,advertisement);
+                page = PagePath.UPDATE_ADVERTISEMENT_PAGE;
+            }else{
+                page = PagePath.WRONG_REQUEST;
             }
         } catch (ServiceException e) {
             LOG.error(e);
+            page = PagePath.SERVER_ERROR_PAGE;
         }
-        return router;
+        return new Router(DisPathType.FORWARD,page);
     }
 }

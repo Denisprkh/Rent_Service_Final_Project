@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of {@link FlatDescription}
+ */
 public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDescriptionDao {
 
     private static final FlatDescriptionDao INSTANCE = new FlatDescriptionDaoImpl();

@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of {@link FlatAddress}
+ */
 public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddressDao {
 
     private static final FlatAddressDao INSTANCE = new FlatAddressDaoImpl();

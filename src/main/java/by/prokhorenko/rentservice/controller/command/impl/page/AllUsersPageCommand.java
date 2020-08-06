@@ -4,12 +4,12 @@ import by.prokhorenko.rentservice.controller.DisPathType;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
-import by.prokhorenko.rentservice.controller.command.impl.Attribute;
+import by.prokhorenko.rentservice.controller.command.Attribute;
 import by.prokhorenko.rentservice.controller.command.util.CommandUtil;
 import by.prokhorenko.rentservice.entity.User;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
-import by.prokhorenko.rentservice.service.user.UserService;
+import by.prokhorenko.rentservice.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -26,14 +26,16 @@ public class AllUsersPageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         int start = CommandUtil.defineStartOfRecords(request);
-
+        String page;
         try {
             CommandUtil.definePaginationContext(request,userService.findUsersQuantity());
             List<User> allUsers = userService.findAllUsers(start,CommandUtil.RECORDS_PER_PAGE);
             request.setAttribute(Attribute.ADMIN_ALL_USERS_LIST,allUsers);
+            page = PagePath.ALL_USERS;
         } catch (ServiceException e) {
             LOG.error(e);
+            page = PagePath.SERVER_ERROR_PAGE;
         }
-        return new Router(DisPathType.FORWARD,PagePath.ALL_USERS);
+        return new Router(DisPathType.FORWARD,page);
     }
 }

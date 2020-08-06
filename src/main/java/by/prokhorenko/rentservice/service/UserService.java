@@ -1,4 +1,4 @@
-package by.prokhorenko.rentservice.service.user;
+package by.prokhorenko.rentservice.service;
 
 import by.prokhorenko.rentservice.entity.User;
 import by.prokhorenko.rentservice.exception.ServiceException;
@@ -9,7 +9,13 @@ import java.util.Optional;
 
 public interface UserService {
 
-    User signUp(User user) throws ServiceException;
+    /**
+     *
+     * @param user
+     * @return
+     * @throws ServiceException
+     */
+    User signUp(User user, String contextPath) throws ServiceException;
     User signIn(String email, String password) throws ServiceException;
     List<User> findAllUsers(int start,int total) throws ServiceException;
     Map<String,Boolean> defineUsersIncorrectData(String email, String firstName, String lastName, String password,

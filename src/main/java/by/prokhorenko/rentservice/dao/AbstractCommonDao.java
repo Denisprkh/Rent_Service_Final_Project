@@ -11,67 +11,87 @@ import by.prokhorenko.rentservice.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.sql.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+/**
+ * Abstract dao class, base for all dao.
+ */
+public abstract class AbstractCommonDao {
 
-public abstract class AbstractCommonDao{
+    /**
+     * Proxy connection object.
+     */
     protected ProxyConnection connection;
+
+    /**
+     * Logger.
+     */
     private static final Logger LOG = LogManager.getLogger();
+
+    /**
+     * Expected number of rows which were affected after updating.
+     */
     private static final int ONE_ROW_COUNT = 1;
+
+    /**
+     * Number of the row where the generated id is stored.
+     */
     private static final int GENERATED_ID_ROW_NUMBER = 1;
 
-    public void setConnection(ProxyConnection connection){
-        if(this.connection != null){
+    /**
+     * Sets connection.
+     *
+     * @param connection
+     */
+    public void setConnection(ProxyConnection connection) {
+        if (this.connection != null) {
             closeConnection(this.connection);
         }
         this.connection = connection;
     }
 
-    protected void closeStatement(Statement statement) {
+    /**
+     * Closes connection.
+     *
+     * @param connection
+     */
+    protected void closeConnection(Connection connection) {
         try {
-            if (statement != null) {
-                statement.close();
-            }
-            } catch(SQLException e){
-            LOG.error("Closing statement error",e);
-            }
-        }
-
-    protected void closeConnection(Connection connection){
-        try{
-            if(connection != null){
+            if (connection != null) {
                 connection.close();
             }
-        }catch(SQLException e){
-            LOG.error("Closing connection error",e);
+        } catch (SQLException e) {
+            LOG.error("Closing connection error", e);
         }
     }
 
-    protected void closeResultSet(ResultSet resultSet){
-        try{
-            if(resultSet != null){
+
+    /**
+     * Closes {@code ResultSet}
+     * @param resultSet
+     * @throws DaoException if an SQLException occurs
+     */
+    protected void closeResultSet(ResultSet resultSet) throws DaoException {
+        try {
+            if (resultSet != null) {
                 resultSet.close();
             }
-        }catch(SQLException e){
-            LOG.error("Closing resultSet error",e);
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
     }
 
-    protected void rollbackTransaction(Connection connection){
-        if(connection != null){
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                LOG.error("Transaction rollback error",e);
-            }
-        }
-    }
-
+    /**
+     * Executes update and returns generated id
+     *
+     * @param statement
+     * @return id generated id
+     * @throws DaoException if an SQLException occurs
+     */
     protected int executeUpdateAndGetGeneratedId(PreparedStatement statement) throws DaoException {
         ResultSet generatedId = null;
         try {
@@ -90,31 +110,53 @@ public abstract class AbstractCommonDao{
         }
     }
 
+    /**
+     * Updates entity and return the boolean result successfully or not
+     *
+     * @param statement
+     * @return boolean true if successfully and vice versa
+     * @throws DaoException if an SQLException occurs
+     */
     protected boolean updateEntity(PreparedStatement statement) throws DaoException {
-        try{
+        try {
             int updatedRows = statement.executeUpdate();
-            if(updatedRows != 1){
+            if (updatedRows != 1) {
                 return false;
             }
         } catch (SQLException e) {
-            throw new DaoException("Updating entity error",e);
+            throw new DaoException("Updating entity error", e);
         }
         return true;
     }
 
+    /**
+     * Updates entity by id and return the boolean result successfully or not
+     *
+     * @param id
+     * @param sqlQuery
+     * @return boolean true if successfully and vice versa
+     * @throws DaoException if an SQLException occurs
+     */
     protected boolean updateEntityById(int id, String sqlQuery) throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
-            statement.setInt(1,id);
+        try (PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
+            statement.setInt(1, id);
             int updatedRows = statement.executeUpdate();
-            if(updatedRows != 1){
+            if (updatedRows != 1) {
                 return false;
             }
         } catch (SQLException e) {
-            throw new DaoException("Updating entity by id error",e);
+            throw new DaoException("Updating entity by id error", e);
         }
         return true;
     }
 
+    /**
+     * Builds {@link User} from {@code ResultSet}
+     *
+     * @param resultSet
+     * @return {@link User}
+     * @throws DaoException if an SQLException occurs
+     */
     protected User buildUserFromResultSet(ResultSet resultSet) throws DaoException {
 
         try {
@@ -131,11 +173,17 @@ public abstract class AbstractCommonDao{
                     .buildIsBanned(resultSet.getBoolean(SqlColumnName.USERS_IS_BANNED_COLUMN_NAME))
                     .buildUser();
         } catch (SQLException e) {
-            throw new DaoException("Building user from resultSet error",e);
+            throw new DaoException("Building user from resultSet error", e);
         }
     }
 
-
+    /**
+     * Builds {@link FlatPhoto} from {@code ResultSet}
+     *
+     * @param resultSet
+     * @return {@link FlatPhoto}
+     * @throws DaoException if an SQLException occurs
+     */
     protected FlatPhoto buildFlatPhotoFromResultSet(ResultSet resultSet) throws DaoException {
         try {
             return new FlatPhotoBuilder()
@@ -144,10 +192,17 @@ public abstract class AbstractCommonDao{
                     .buildFlatPhotoData(resultSet.getBinaryStream(SqlColumnName.FLAT_PHOTO_PHOTO_COLUMN_NAME))
                     .buildFlatPhoto();
         } catch (SQLException e) {
-            throw new DaoException("Building flatPhoto from resultSet error",e);
+            throw new DaoException("Building flatPhoto from resultSet error", e);
         }
     }
 
+    /**
+     * Builds {@link FlatDescription} from {@code ResultSet}
+     *
+     * @param resultSet
+     * @return {@link FlatDescription}
+     * @throws DaoException if an SQLException occurs
+     */
     protected FlatDescription buildFlatDescriptionFromResultSet(ResultSet resultSet) throws DaoException {
         try {
             return new FlatDescriptionBuilder()
@@ -165,10 +220,17 @@ public abstract class AbstractCommonDao{
                     .buildUsersDescription(resultSet.getString(SqlColumnName.FLAT_DESCRIPTION_USERS_DESCRIPTION_COLUMN_NAME))
                     .buildFlatDescription();
         } catch (SQLException e) {
-            throw new DaoException("Building flats description from resultSet error",e);
+            throw new DaoException("Building flats description from resultSet error", e);
         }
     }
 
+    /**
+     * Builds {@link FlatAddress} from {@code ResultSet}
+     *
+     * @param resultSet
+     * @return {@link FlatAddress}
+     * @throws DaoException if an SQLException occurs
+     */
     protected FlatAddress buildFlatAddressFromResultSet(ResultSet resultSet) throws DaoException {
         try {
             return new FlatAddressBuilder().buildId(resultSet.getInt(SqlColumnName.FLAT_ADDRESS_ID_COLUMN_NAME))
@@ -178,10 +240,17 @@ public abstract class AbstractCommonDao{
                     .buildHouse(resultSet.getString(SqlColumnName.FLAT_ADDRESS_HOUSE_COLUMN_NAME))
                     .buildFlatAddress();
         } catch (SQLException e) {
-            throw new DaoException("Building flats address from resultSet error",e);
+            throw new DaoException("Building flats address from resultSet error", e);
         }
     }
 
+    /**
+     * Builds {@link Flat} from {@code ResultSet}
+     *
+     * @param resultSet
+     * @return {@link Flat}
+     * @throws DaoException if an SQLException occurs
+     */
     protected Flat buildFlatFromResultSet(ResultSet resultSet) throws DaoException {
         try {
             return new FlatBuilder()
@@ -191,12 +260,19 @@ public abstract class AbstractCommonDao{
                     .buildFlatAddress(buildFlatAddressFromResultSet(resultSet))
                     .buildFlat();
         } catch (SQLException e) {
-            throw new DaoException("Building flat from resultSet error",e);
+            throw new DaoException("Building flat from resultSet error", e);
         }
     }
 
+    /**
+     * Builds {@link Advertisement} from {@code ResultSet}
+     *
+     * @param resultSet
+     * @return {@link Advertisement}
+     * @throws DaoException if an SQLException occurs
+     */
     public Advertisement buildAdvertisementFromResultSet(ResultSet resultSet) throws DaoException {
-        try{
+        try {
             return new AdvertisementBuilder()
                     .buildId(resultSet.getInt(SqlColumnName.ADVERTISEMENT_ADVERTISEMENTS_ID_COLUMN_NAME))
                     .buildAuthor(buildUserFromResultSet(resultSet))
@@ -209,13 +285,20 @@ public abstract class AbstractCommonDao{
                             (SqlColumnName.ADVERTISEMENT_IS_VISIBLE_COLUMN_NAME)))
                     .buildAdvertisement();
         } catch (SQLException e) {
-            throw new DaoException("Building advertisement from resultSet error",e);
+            throw new DaoException("Building advertisement from resultSet error", e);
         }
     }
 
-    protected Request buildRequestFromResultSet(ResultSet resultSet) throws DaoException{
+    /**
+     * Builds {@link Request} from {@code ResultSet}
+     *
+     * @param resultSet
+     * @return {@code ResultSet}
+     * @throws DaoException if an SQLException or IOException occurs
+     */
+    protected Request buildRequestFromResultSet(ResultSet resultSet) throws DaoException {
         DaoFactory daoFactory = DaoFactory.getInstance();
-        try(AdvertisementDao advertisementDao = daoFactory.getAdvertisementDao()) {
+        try (AdvertisementDao advertisementDao = daoFactory.getAdvertisementDao()) {
             return new RequestBuilder()
                     .buildId(resultSet.getInt(SqlColumnName.REQUEST_REQUESTS_ID_COLUMN_NAME))
                     .buildUser(buildUserFromResultSet(resultSet))
@@ -228,12 +311,18 @@ public abstract class AbstractCommonDao{
                     .buildApproved(resultSet.getBoolean(SqlColumnName.REQUEST_IS_APPROVED_COLUMN_NAME))
                     .buildRequest();
         } catch (SQLException | IOException e) {
-            throw new DaoException("Building request from resultSet error"+ e.getCause() + " "+e.getMessage(),e);
+            throw new DaoException("Building request from resultSet error", e);
         }
     }
 
-    private LocalDateTime convertLongToDate(long millis){
-        LocalDateTime dateFromMillis =  Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDateTime();
+    /**
+     * Converts {@code long} to {@code LocalDateTime}
+     *
+     * @param millis
+     * @return LocalDateTime form millis
+     */
+    private LocalDateTime convertLongToDate(long millis) {
+        LocalDateTime dateFromMillis = Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDateTime();
         return dateFromMillis;
     }
 }

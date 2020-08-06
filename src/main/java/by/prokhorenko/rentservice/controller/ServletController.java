@@ -2,7 +2,7 @@ package by.prokhorenko.rentservice.controller;
 
 import by.prokhorenko.rentservice.controller.command.Command;
 import by.prokhorenko.rentservice.controller.command.CommandProvider;
-import by.prokhorenko.rentservice.controller.command.impl.RequestParameter;
+import by.prokhorenko.rentservice.controller.command.RequestParameter;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

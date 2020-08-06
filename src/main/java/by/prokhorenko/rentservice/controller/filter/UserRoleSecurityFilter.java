@@ -1,11 +1,11 @@
 package by.prokhorenko.rentservice.controller.filter;
 
-import by.prokhorenko.rentservice.controller.command.impl.Attribute;
+import by.prokhorenko.rentservice.controller.command.Attribute;
 import by.prokhorenko.rentservice.entity.User;
 import by.prokhorenko.rentservice.entity.UserRole;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
-import by.prokhorenko.rentservice.service.user.UserService;
+import by.prokhorenko.rentservice.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

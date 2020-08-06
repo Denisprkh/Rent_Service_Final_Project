@@ -4,13 +4,15 @@ import by.prokhorenko.rentservice.builder.UserChoiceDataHandlerBuilder;
 import by.prokhorenko.rentservice.controller.DisPathType;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
+import by.prokhorenko.rentservice.controller.command.Attribute;
 import by.prokhorenko.rentservice.controller.command.Command;
+import by.prokhorenko.rentservice.controller.command.RequestParameter;
 import by.prokhorenko.rentservice.controller.command.util.CommandUtil;
 import by.prokhorenko.rentservice.entity.Advertisement;
 import by.prokhorenko.rentservice.entity.UserChoiceDataHandler;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
-import by.prokhorenko.rentservice.service.advertisement.AdvertisementService;
+import by.prokhorenko.rentservice.service.AdvertisementService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -32,9 +34,8 @@ public class FindAdvertisementsByUserChoiceCommand implements Command {
         UserChoiceDataHandler userChoiceDataHandler = buildDataHandlerFromRequest(request);
         int start = CommandUtil.defineStartOfRecords(request);
         HttpSession session = request.getSession();
+        String page;
         try {
-            CommandUtil.definePaginationContext(request,
-                    advertisementService.findFilteredAdvertisementsQuantity(userChoiceDataHandler));
             UserChoiceDataHandler previousHandler = (UserChoiceDataHandler) session.
                     getAttribute(Attribute.ADVERTISEMENT_FILTER);
             UserChoiceDataHandler handlerForSearch;
@@ -44,13 +45,17 @@ public class FindAdvertisementsByUserChoiceCommand implements Command {
             }else{
                 handlerForSearch = previousHandler;
             }
+            CommandUtil.definePaginationContext(request,
+                    advertisementService.findFilteredAdvertisementsQuantity(handlerForSearch));
             List<Advertisement> advertisementList = advertisementService.findAdvertisementsByUsersChoice
                     (handlerForSearch, start, CommandUtil.RECORDS_PER_PAGE);
             session.setAttribute(Attribute.ADVERTISEMENT_LIST, advertisementList);
+            page = PagePath.MAIN;
         } catch (ServiceException e) {
             LOG.error(e);
+            page = PagePath.SERVER_ERROR_PAGE;
         }
-        return new Router(DisPathType.FORWARD,PagePath.INDEX);
+        return new Router(DisPathType.FORWARD,page);
     }
 
     private UserChoiceDataHandler buildDataHandlerFromRequest(HttpServletRequest request) {

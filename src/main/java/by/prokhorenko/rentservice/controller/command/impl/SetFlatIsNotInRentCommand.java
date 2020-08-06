@@ -1,13 +1,18 @@
 package by.prokhorenko.rentservice.controller.command.impl;
 
+import by.prokhorenko.rentservice.controller.DisPathType;
+import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
+import by.prokhorenko.rentservice.controller.command.Attribute;
 import by.prokhorenko.rentservice.controller.command.Command;
+import by.prokhorenko.rentservice.controller.command.CommandName;
+import by.prokhorenko.rentservice.controller.command.RequestParameter;
 import by.prokhorenko.rentservice.entity.Advertisement;
 import by.prokhorenko.rentservice.entity.User;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
-import by.prokhorenko.rentservice.service.advertisement.AdvertisementService;
-import by.prokhorenko.rentservice.service.flat.FlatService;
+import by.prokhorenko.rentservice.service.AdvertisementService;
+import by.prokhorenko.rentservice.service.FlatService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -32,16 +37,20 @@ public class SetFlatIsNotInRentCommand implements Command {
         User user = (User) session.getAttribute(Attribute.USER);
         int usersId = user.getId();
         int advertisementId = Integer.parseInt(request.getParameter(RequestParameter.ADVERTISEMENT_ID));
+        Router router;
         try {
             Advertisement advertisement = advertisementService.findAdvertisementById(advertisementId);
             if(advertisement.getAuthor().getId() == usersId) {
                 flatService.setFlatIsNotInRent(flatsId);
+                String redirectUrl = buildRedirectUrl(request, CommandName.MY_ADS_PAGE.getCommandName());
+                router = new Router(redirectUrl);
+            }else {
+                router = new Router(DisPathType.FORWARD, PagePath.WRONG_REQUEST);
             }
-            List<Advertisement> usersAdvertisements = advertisementService.findAdvertisementsByUserId(usersId);
-            session.setAttribute(Attribute.USERS_ADVERTISEMENT_LIST,usersAdvertisements);
         } catch (ServiceException e) {
             LOG.error(e);
+            router = new Router(DisPathType.FORWARD,PagePath.SERVER_ERROR_PAGE);
         }
-        return new Router(request.getHeader(REFERER_HEADER));
+        return router;
     }
 }

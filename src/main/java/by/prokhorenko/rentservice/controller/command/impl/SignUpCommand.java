@@ -3,13 +3,15 @@ package by.prokhorenko.rentservice.controller.command.impl;
 import by.prokhorenko.rentservice.builder.UserBuilder;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
+import by.prokhorenko.rentservice.controller.command.Attribute;
 import by.prokhorenko.rentservice.controller.command.Command;
 import by.prokhorenko.rentservice.controller.command.CommandName;
+import by.prokhorenko.rentservice.controller.command.RequestParameter;
 import by.prokhorenko.rentservice.controller.command.util.CommandUtil;
 import by.prokhorenko.rentservice.entity.User;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
-import by.prokhorenko.rentservice.service.user.UserService;
+import by.prokhorenko.rentservice.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -39,19 +41,20 @@ public class SignUpCommand implements Command {
                     password,phone);
             if(!usersDataValidations.containsValue(Boolean.FALSE)){
                 User user = buildUser(firstName,lastName,email,password,phone);
-                userService.signUp(user);
+                userService.signUp(user,request.getContextPath());
+                session.setAttribute(Attribute.ACTIVATION_USERS_ID,user.getId());
                 String redirectUrl = buildRedirectUrl(request, CommandName.ACTIVATION_INFO_PAGE.getCommandName());
                 router.setPage(redirectUrl);
                 session.removeAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE);
             }else{
-               CommandUtil.defineErrorMessageFromValidations(request,usersDataValidations);
-               router.setForward();
-               router.setPage(PagePath.SIGN_UP);
+               CommandUtil.defineErrorMessageFromUsersDataValidations(request,usersDataValidations);
+               String redirectUrl = buildRedirectUrl(request,CommandName.SIGN_UP_PAGE.getCommandName());
+               router.setPage(redirectUrl);
             }
         } catch (ServiceException e) {
             LOG.error(e);
             router.setForward();
-            router.setPage(PagePath.SIGN_UP);
+            router.setPage(PagePath.SERVER_ERROR_PAGE);
         }
         return router;
     }

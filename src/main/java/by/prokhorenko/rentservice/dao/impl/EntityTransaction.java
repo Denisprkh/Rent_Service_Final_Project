@@ -8,6 +8,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 
+/**
+ * Class for working with dao with transaction support
+ */
 public class EntityTransaction {
 
     private static final Logger LOG = LogManager.getLogger();
@@ -22,9 +25,8 @@ public class EntityTransaction {
             for(AbstractCommonDao dao : daos){
                 dao.setConnection(connection);
             }
-            LOG.debug("beginning transaction");
         } catch (SQLException e) {
-            LOG.error("Setting connection autoCommit false error"+e.getMessage() + e.getCause(),e);
+            LOG.error("Setting connection autoCommit false error",e);
         }
     }
 
@@ -32,27 +34,24 @@ public class EntityTransaction {
         try {
             connection.setAutoCommit(true);
             connection.close();
-            LOG.debug("ending transaction");
         } catch (SQLException e) {
-            LOG.error("Setting connection autoCommit true error"+e.getMessage() + e.getCause(),e);
+            LOG.error("Setting connection autoCommit true error",e);
         }
     }
 
      void commit(ProxyConnection connection){
         try {
             connection.commit();
-            LOG.debug("Committing transaction");
         } catch (SQLException e) {
-            LOG.error("Connection commit error"+e.getMessage() + e.getCause(),e);
+            LOG.error("Connection commit error",e);
         }
     }
 
     void rollback(ProxyConnection connection){
         try {
             connection.rollback();
-            LOG.debug("Rollback transaction");
         } catch (SQLException e) {
-            LOG.error("Connection rollback error"+e.getMessage() + e.getCause(),e);
+            LOG.error("Connection rollback error",e);
         }
     }
 }

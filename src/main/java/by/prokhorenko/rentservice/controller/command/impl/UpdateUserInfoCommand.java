@@ -3,13 +3,16 @@ package by.prokhorenko.rentservice.controller.command.impl;
 import by.prokhorenko.rentservice.builder.UserBuilder;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
+import by.prokhorenko.rentservice.controller.command.Attribute;
 import by.prokhorenko.rentservice.controller.command.Command;
+import by.prokhorenko.rentservice.controller.command.CommandName;
+import by.prokhorenko.rentservice.controller.command.RequestParameter;
 import by.prokhorenko.rentservice.controller.command.util.CommandUtil;
 import by.prokhorenko.rentservice.entity.User;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
-import by.prokhorenko.rentservice.service.user.UserService;
+import by.prokhorenko.rentservice.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -51,12 +54,15 @@ public class UpdateUserInfoCommand implements Command {
                 updatedUser = userService.updateUserInfo(updatedUser);
                session.setAttribute(Attribute.USER,updatedUser);
             }else{
-                CommandUtil.defineErrorMessageFromValidations(request,usersDataValidations);
+                CommandUtil.defineErrorMessageFromUsersDataValidations(request,usersDataValidations);
             }
         } catch (ServiceException e) {
             if(e.getCause() instanceof DaoException){
                 router.setForward();
                 router.setPage(PagePath.SERVER_ERROR_PAGE);
+            }else{
+                String redirectUrl = buildRedirectUrl(request, CommandName.PROFILE_PAGE.getCommandName());
+                router.setPage(redirectUrl);
             }
         }
         return router;

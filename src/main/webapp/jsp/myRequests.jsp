@@ -28,7 +28,7 @@
             <c:choose>
                 <c:when test="${empty usersRequestList}">
                     <div class="request_info_text">
-                        Вы не оставили ни одной заявки
+                        <fmt:message key="profile.my_requests_no_requests_info"/>
                     </div>
                 </c:when>
                 <c:otherwise>
@@ -67,7 +67,9 @@
                                     </a>
                                 </c:otherwise>
                             </c:choose>
-
+                        </div>
+                        <div class="card-ads-btn">
+                            <a class="btn-delete" href=""></a>
                         </div>
                     </c:forEach>
                 </c:otherwise>

@@ -3,9 +3,7 @@ package by.prokhorenko.rentservice.controller.command.impl;
 import by.prokhorenko.rentservice.builder.*;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
-import by.prokhorenko.rentservice.controller.command.Command;
-import by.prokhorenko.rentservice.controller.command.CommandName;
-import by.prokhorenko.rentservice.controller.command.ResourceBundleMessageKey;
+import by.prokhorenko.rentservice.controller.command.*;
 import by.prokhorenko.rentservice.entity.Advertisement;
 import by.prokhorenko.rentservice.entity.AdvertisementDataHandler;
 import by.prokhorenko.rentservice.entity.Flat;
@@ -13,9 +11,10 @@ import by.prokhorenko.rentservice.entity.FlatAddress;
 import by.prokhorenko.rentservice.entity.FlatDescription;
 import by.prokhorenko.rentservice.entity.FlatPhoto;
 import by.prokhorenko.rentservice.entity.User;
+import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
-import by.prokhorenko.rentservice.service.advertisement.AdvertisementService;
+import by.prokhorenko.rentservice.service.AdvertisementService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.ServletException;
@@ -60,9 +59,14 @@ public class UpdateAdvertisementCommand implements Command {
             router.setPage(redirectUrl);
         } catch (ServiceException e) {
             LOG.error(e);
-            router.setPage(PagePath.ADD_AN_ADVERTISEMENT);
-            router.setForward();
-            request.setAttribute(Attribute.ADD_ADVERTISEMENT_ERROR_MESSAGE, e.getMessage() + " " + e.getCause());
+            if(e.getCause() instanceof DaoException){
+                router.setForward();
+                router.setPage(PagePath.SERVER_ERROR_PAGE);
+            }else{
+                String redirectUrl = buildRedirectUrl(request,CommandName.UPDATE_ADVERTISEMENT_PAGE.getCommandName());
+                router.setPage(redirectUrl);
+                session.setAttribute(Attribute.UPDATE_AN_ADVERTISEMENT_ERROR_MESSAGE,e.getMessage());
+            }
         }
         return router;
     }
@@ -77,7 +81,7 @@ public class UpdateAdvertisementCommand implements Command {
             photosData.add(secondImgData.getInputStream());
             photosData.add(thirdImgData.getInputStream());
         } catch (IOException | ServletException e) {
-            request.getSession().setAttribute(Attribute.ADD_ADVERTISEMENT_ERROR_MESSAGE,
+            request.getSession().setAttribute(Attribute.ADD_AN_ADVERTISEMENT_ERROR_MESSAGE,
                     ResourceBundleMessageKey.ADVERTISEMENT_INVALID_IMG_AMOUNT);
         }
         return photosData;

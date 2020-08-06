@@ -1,7 +1,9 @@
 package by.prokhorenko.rentservice.dao;
 
 
-
+/**
+ * Class for storing tables columns names
+ */
 public class SqlColumnName {
 
     private SqlColumnName(){}

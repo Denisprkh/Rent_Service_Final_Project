@@ -1,13 +1,16 @@
-package by.prokhorenko.rentservice.service.flat.impl;
+package by.prokhorenko.rentservice.service.impl;
 
 import by.prokhorenko.rentservice.dao.FlatDao;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.DaoFactory;
-import by.prokhorenko.rentservice.service.flat.FlatService;
+import by.prokhorenko.rentservice.service.FlatService;
 
 import java.io.IOException;
 
+/**
+ * Implementation of {@link FlatService}
+ */
 public class FlatServiceImpl implements FlatService {
 
     private static final FlatService INSTANCE = new FlatServiceImpl();

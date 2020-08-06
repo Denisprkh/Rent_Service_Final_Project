@@ -1,5 +1,8 @@
 package by.prokhorenko.rentservice.dao;
 
+/**
+ * Class for storing sql queries
+ */
 public class SqlQuery {
 
     public static final String ADD_USER = "INSERT INTO users (first_name,last_name,email,password,phone) " +
@@ -105,8 +108,8 @@ public class SqlQuery {
             "advertisements WHERE flats.flats_description_id = flats_description.flats_description_id AND" +
             " flats.flats_description_id = flats_description.flats_description_id AND flats.flats_address_id = " +
             "flats_address.flats_address_id AND flats.flats_id = advertisements.flats_id AND users.users_id = " +
-            "advertisements.author_id AND advertisements.is_visible = TRUE AND flats.is_free = TRUE AND users.is_banned = FALSE" +
-            " LIMIT ?, ?";
+            "advertisements.author_id AND advertisements.is_visible = TRUE AND flats.is_free = TRUE AND " +
+            "users.is_banned = FALSE LIMIT ?, ?";
     public static final String FIND_ADVERTISEMENT_BY_ID = "SELECT flats.flats_id, flats.is_free, flats.flats_description_id," +
             "flats.flats_address_id, flats_address.flats_address_id,flats_address.city," +
             "flats_address.district, flats_address.street, flats_address.house, flats_description.flats_description_id," +
@@ -156,36 +159,35 @@ public class SqlQuery {
             "users.password, users.phone, users.users_role_id, users.is_activated, users.is_banned, " +
             "advertisements.advertisements_id, advertisements.author_id, advertisements.flats_id, advertisements.title," +
             "advertisements.price, advertisements.date_of_creation, advertisements.is_visible FROM flats,flats_address, " +
-            "flats_description,users, advertisements WHERE flats.flats_description_id = flats_description.flats_description_id AND" +
-            " flats.flats_description_id = flats_description.flats_description_id AND flats.flats_address_id = " +
-            "flats_address.flats_address_id AND flats.flats_id = advertisements.flats_id AND users.users_id = " +
-            "advertisements.author_id AND flats_address.city REGEXP ? AND flats_address.district REGEXP ? AND " +
-            "flats_address.street REGEXP ? AND flats_description.rooms REGEXP ? AND " +
-            "flats_description.living_area REGEXP ?  AND flats_description.has_furniture REGEXP ? AND " +
-            "flats_description.has_home_appliciances REGEXP ? AND flats_description.possible_with_pets REGEXP ? " +
-            "AND flats_description.possible_with_childs REGEXP ? AND advertisements.price REGEXP ? " +
-            "AND advertisements.is_visible = TRUE AND flats.is_free = TRUE AND users.is_banned = FALSE LIMIT ?,?";
+            "flats_description,users, advertisements WHERE flats.flats_description_id = flats_description.flats_description_id " +
+            "AND flats.flats_address_id = flats_address.flats_address_id AND flats.flats_id = advertisements.flats_id AND " +
+            "users.users_id = advertisements.author_id AND flats_address.city REGEXP ? AND flats_address.district REGEXP " +
+            "? AND flats_address.street REGEXP ? AND flats_description.rooms REGEXP ? AND flats_description.living_area" +
+            " REGEXP ?  AND flats_description.has_furniture REGEXP ? AND flats_description.has_home_appliciances REGEXP ? " +
+            "AND flats_description.possible_with_pets REGEXP ? AND flats_description.possible_with_childs REGEXP ? AND " +
+            "advertisements.price REGEXP ? AND advertisements.is_visible = TRUE AND flats.is_free = TRUE AND " +
+            "users.is_banned = FALSE LIMIT ?,?";
 
     public static final String FIND_ADVERTISEMENT_BY_USERS_CHOICE_QUANTITY = "SELECT COUNT(*) FROM flats,flats_address, " +
-            "flats_description,users, advertisements WHERE flats.flats_description_id = flats_description.flats_description_id AND" +
-            " flats.flats_description_id = flats_description.flats_description_id AND flats.flats_address_id = " +
-            "flats_address.flats_address_id AND flats.flats_id = advertisements.flats_id AND users.users_id = " +
-            "advertisements.author_id AND flats_address.city REGEXP ? AND flats_address.district REGEXP ? AND " +
-            "flats_address.street REGEXP ? AND flats_description.rooms REGEXP ? AND " +
-            "flats_description.living_area REGEXP ?  AND flats_description.has_furniture REGEXP ? AND " +
+            "flats_description,users, advertisements WHERE flats.flats_description_id = " +
+            "flats_description.flats_description_id AND flats.flats_address_id = flats_address.flats_address_id AND " +
+            "flats.flats_id = advertisements.flats_id AND users.users_id = advertisements.author_id AND flats_address.city " +
+            "REGEXP ? AND flats_address.district REGEXP ? AND flats_address.street REGEXP ? AND flats_description.rooms " +
+            "REGEXP ? AND flats_description.living_area REGEXP ?  AND flats_description.has_furniture REGEXP ? AND " +
             "flats_description.has_home_appliciances REGEXP ? AND flats_description.possible_with_pets REGEXP ? " +
             "AND flats_description.possible_with_childs REGEXP ? AND advertisements.price REGEXP ? " +
             "AND advertisements.is_visible = TRUE AND flats.is_free = TRUE AND users.is_banned = FALSE";
 
     public static final String ADD_REQUEST = "INSERT INTO requests (users_id,start_date,end_date,application_date," +
             "advertisements_id) VALUES (?,?,?,?,?)";
-    public static final String FIND_ALL_REQUESTS = "SELECT  users.users_id, users.first_name, users.last_name, users.email," +
+    public static final String FIND_ALL_REQUESTS = "SELECT users.users_id, users.first_name, users.last_name, users.email," +
             "users.password, users.phone, users.users_role_id, users.is_activated, users.is_banned, " +
             "requests.requests_id, requests.users_id, requests.start_date,requests.end_date,requests.advertisements_id," +
-            "requests.application_date,requests.is_approved FROM requests JOIN users ON requests.users_id = " +
+            "requests.application_date,requests.is_approved  FROM requests JOIN users ON requests.users_id = " +
             "users.users_id JOIN advertisements ON advertisements.advertisements_id = requests.advertisements_id " +
             "WHERE advertisements.is_visible = TRUE LIMIT ?,?";
-    public static final String FIND_ALL_REQUESTS_QUANTITY = "SELECT COUNT(*) FROM requests";
+    public static final String FIND_ALL_REQUESTS_QUANTITY = "SELECT COUNT(*) FROM requests JOIN advertisements ON" +
+            " requests.advertisements_id = advertisements.advertisements_id WHERE advertisements.is_visible = TRUE";
     public static final String FIND_REQUEST_BY_ID = "SELECT  users.users_id, users.first_name, users.last_name, users.email," +
             "users.password, users.phone, users.users_role_id, users.is_activated, users.is_banned, " +
             "requests.requests_id, requests.users_id, requests.start_date,requests.end_date,requests.advertisements_id," +

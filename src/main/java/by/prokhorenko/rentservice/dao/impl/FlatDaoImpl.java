@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of {@link FlatDao}
+ */
 public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
 
     private static final Logger LOG = LogManager.getLogger();

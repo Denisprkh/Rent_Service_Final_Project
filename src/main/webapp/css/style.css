@@ -963,6 +963,7 @@ header {
     border-right: 2px solid #fff;
     border-image: linear-gradient(180deg, #FACD68 0%, #FC76B3 100%);
     border-image-slice: 1;
+    max-width: 620px;
 }
 
 .card-ads .name_ads{
@@ -973,7 +974,7 @@ header {
 .card-ads-info{
     display: flex;
     justify-content: space-around;
-    width: 620px;
+    max-width: 620px;
 
 }
 
@@ -1179,6 +1180,7 @@ accept_status img{
     line-height: 12px;
     padding: 5px 11px;
     height: 22px;
+    color:black;
 }
 
 .next-page{

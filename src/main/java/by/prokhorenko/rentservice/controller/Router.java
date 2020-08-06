@@ -2,7 +2,7 @@ package by.prokhorenko.rentservice.controller;
 
 public class Router {
 
-    private String page = PagePath.INDEX;
+    private String page = PagePath.MAIN;
     private DisPathType disPathType = DisPathType.REDIRECT;
     public Router(){
 

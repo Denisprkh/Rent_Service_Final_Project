@@ -1,13 +1,13 @@
 package by.prokhorenko.rentservice.factory;
 
-import by.prokhorenko.rentservice.service.advertisement.AdvertisementService;
-import by.prokhorenko.rentservice.service.advertisement.impl.AdvertisementServiceImpl;
-import by.prokhorenko.rentservice.service.flat.FlatService;
-import by.prokhorenko.rentservice.service.flat.impl.FlatServiceImpl;
-import by.prokhorenko.rentservice.service.request.RequestService;
-import by.prokhorenko.rentservice.service.request.impl.RequestServiceImpl;
-import by.prokhorenko.rentservice.service.user.UserService;
-import by.prokhorenko.rentservice.service.user.impl.UserServiceImpl;
+import by.prokhorenko.rentservice.service.AdvertisementService;
+import by.prokhorenko.rentservice.service.impl.AdvertisementServiceImpl;
+import by.prokhorenko.rentservice.service.FlatService;
+import by.prokhorenko.rentservice.service.impl.FlatServiceImpl;
+import by.prokhorenko.rentservice.service.RequestService;
+import by.prokhorenko.rentservice.service.impl.RequestServiceImpl;
+import by.prokhorenko.rentservice.service.UserService;
+import by.prokhorenko.rentservice.service.impl.UserServiceImpl;
 
 public class ServiceFactory {
 

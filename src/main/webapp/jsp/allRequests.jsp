@@ -60,7 +60,6 @@
                         </div>
                     </c:forEach>
         </div>
-    </div>
         <div class="card-page">
             <c:if test="${currentPage != 1 && pagesQuantity > 0}">
                 <div class="prevision_page bgc-page">
@@ -92,6 +91,8 @@
                 </div>
             </c:if>
         </div>
+    </div>
+
 </div>
 </body>
 </html>

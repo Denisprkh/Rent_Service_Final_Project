@@ -1,15 +1,20 @@
-package by.prokhorenko.rentservice.service.request.impl;
+package by.prokhorenko.rentservice.service.impl;
 
+import by.prokhorenko.rentservice.controller.command.ResourceBundleMessageKey;
 import by.prokhorenko.rentservice.dao.RequestDao;
 import by.prokhorenko.rentservice.entity.Request;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.DaoFactory;
-import by.prokhorenko.rentservice.service.request.RequestService;
+import by.prokhorenko.rentservice.service.RequestService;
+import by.prokhorenko.rentservice.validator.RequestValidator;
 
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Implementation of {@link RequestService}
+ */
 public class RequestServiceImpl implements RequestService {
 
     private static final RequestService INSTANCE = new RequestServiceImpl();
@@ -38,7 +43,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public boolean ApproveRequestById(int requestsId) throws ServiceException {
+    public boolean approveRequestById(int requestsId) throws ServiceException {
         try(RequestDao requestDao = DaoFactory.getInstance().getRequestDao()) {
             boolean isApproved = requestDao.approveRequest(requestsId);
             return isApproved;
@@ -84,6 +89,24 @@ public class RequestServiceImpl implements RequestService {
             return allRequestsQuantity;
         } catch (IOException | DaoException e) {
             throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Request findRequestById(int requestsId) throws ServiceException {
+        try(RequestDao requestDao = DaoFactory.getInstance().getRequestDao()){
+            Request request = requestDao.findById(requestsId).orElseThrow(ServiceException::new);
+            return request;
+        } catch (IOException | DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void checkDataForRentDateIsCorrect(String data) throws ServiceException {
+        RequestValidator requestValidator = RequestValidator.getInstance();
+        if(!requestValidator.dataForDateIsCorrect(data)){
+            throw new ServiceException(ResourceBundleMessageKey.INVALID_DATE_FORMAT);
         }
     }
 }

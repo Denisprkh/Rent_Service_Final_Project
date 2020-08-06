@@ -4,12 +4,12 @@ import by.prokhorenko.rentservice.controller.DisPathType;
 import by.prokhorenko.rentservice.controller.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
-import by.prokhorenko.rentservice.controller.command.impl.Attribute;
+import by.prokhorenko.rentservice.controller.command.Attribute;
 import by.prokhorenko.rentservice.controller.command.util.CommandUtil;
 import by.prokhorenko.rentservice.entity.Advertisement;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
-import by.prokhorenko.rentservice.service.advertisement.AdvertisementService;
+import by.prokhorenko.rentservice.service.AdvertisementService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -29,15 +29,18 @@ public class MainPageCommand implements Command {
     public Router execute(HttpServletRequest request){
         int start = CommandUtil.defineStartOfRecords(request);
         HttpSession session = request.getSession();
+        String page;
         try {
             CommandUtil.definePaginationContext(request,advertisementService.findNotRentedAdvertisementsQuantity());
             List<Advertisement> advertisementList = advertisementService.findAllNotRentedAdvertisements(start,
                     CommandUtil.RECORDS_PER_PAGE);
             session.setAttribute(Attribute.ADVERTISEMENT_LIST,advertisementList);
             session.removeAttribute(Attribute.ADVERTISEMENT_FILTER);
+            page = PagePath.MAIN;
         } catch (ServiceException e) {
             LOG.error(e);
+            page = PagePath.SERVER_ERROR_PAGE;
         }
-        return new Router(DisPathType.FORWARD,PagePath.INDEX);
+        return new Router(DisPathType.FORWARD,page);
     }
 }

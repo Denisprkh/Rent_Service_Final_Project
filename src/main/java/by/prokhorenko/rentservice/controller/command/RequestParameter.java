@@ -1,4 +1,4 @@
-package by.prokhorenko.rentservice.controller.command.impl;
+package by.prokhorenko.rentservice.controller.command;
 
 public class RequestParameter {
     public static final String USER_FIRST_NAME = "firstName";
@@ -29,12 +29,10 @@ public class RequestParameter {
     public static final String SECOND_IMG_PART = "secondImg";
     public static final String THIRD_IMG_PART = "thirdImg";
     public static final String ADVERTISEMENT_ID = "advertisementId";
-    public static final String ADVERTISEMENT = "advertisement";
     public static final String REQUEST_RENT_DATE = "rentDate";
     public static final String UPDATED_USER_FULL_NAME = "updatedFullName";
     public static final String UPDATED_USER_EMAIL = "updatedEmail";
     public static final String UPDATED_USER_PHONE = "updatedPhone";
-    public static final String UPDATED_USER_PASSWORD = "updatedPassword";
     public static final String FILTER_CITY = "filterCity";
     public static final String FILTER_DISTRICT = "filterDistrict";
     public static final String FILTER_STREET = "filterStreet";
@@ -48,7 +46,6 @@ public class RequestParameter {
     public static final String NEW_FILTER_SEARCH_FLAG = "newSearch";
     public static final String REQUEST_ID = "requestId";
     public static final String FLAT_ID = "flatId";
-    public static final String PAGINATION_PAGES_QUANTITY = "pagesQuantity";
     public static final String PAGINATION_CURRENT_PAGE = "currentPage";
 
     private RequestParameter(){}

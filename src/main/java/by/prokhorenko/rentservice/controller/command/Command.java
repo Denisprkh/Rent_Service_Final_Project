@@ -1,7 +1,6 @@
 package by.prokhorenko.rentservice.controller.command;
 
 import by.prokhorenko.rentservice.controller.Router;
-import by.prokhorenko.rentservice.controller.command.impl.RequestParameter;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -8,6 +8,7 @@ import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +21,9 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of {@link FlatPhotoDao}
+ */
 public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao {
 
     private static final FlatPhotoDao INSTANCE = new FlatPhotoDaoImpl();
@@ -103,7 +107,6 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
             statement.setBlob(2, photo.getFlatPhotoData());
             int id = executeUpdateAndGetGeneratedId(statement);
             photo.setId(id);
-            LOG.debug("photo was added");
             return Optional.of(photo);
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -149,9 +152,9 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
     @Override
     public int findQuantity() throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_PHOTOS_QUANTITY);
-        ResultSet resultSet = statement.executeQuery()) {
+             ResultSet resultSet = statement.executeQuery()) {
             int flatPhotosQuantity = 0;
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 flatPhotosQuantity = resultSet.getInt(1);
             }
             return flatPhotosQuantity;
