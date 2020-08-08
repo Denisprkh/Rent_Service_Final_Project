@@ -6,6 +6,7 @@ import by.prokhorenko.rentservice.controller.command.RequestParameter;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,28 +18,25 @@ import java.util.Optional;
 @WebServlet("/controller")
 public class ServletController extends HttpServlet {
 
-    private static final Logger LOG = LogManager.getLogger();
-
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request,response);
+        processRequest(request, response);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request,response);
+        processRequest(request, response);
 
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Optional<Command> commandOptional = CommandProvider.defineCommand(
                 request.getParameter(RequestParameter.PARAM_COMMAND));
         Command command = commandOptional.orElseThrow(IllegalArgumentException::new);
         Router router = command.execute(request);
-        if(DisPathType.FORWARD.equals(router.getDisPathType())){
-            request.getRequestDispatcher(router.getPage()).forward(request,response);
-        }else{
+        if (DisPathType.FORWARD.equals(router.getDisPathType())) {
+            request.getRequestDispatcher(router.getPage()).forward(request, response);
+        } else {
             response.sendRedirect(router.getPage());
         }
 

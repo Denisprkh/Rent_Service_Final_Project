@@ -6,7 +6,7 @@ import by.prokhorenko.rentservice.entity.AdvertisementDataHandler;
  * Class for building auxiliary class {@link AdvertisementDataHandler}, fields in that class are
  * from {@link FlatAddressBuilder},{@link FlatDescriptionBuilder},{@link AdvertisementBuilder}, methods do
  * same things, but build methods return {@see AdvertisementDataHandlerBuilder}, entity construct method returns
- *  * {@link AdvertisementDataHandler}
+ *  * {@link AdvertisementDataHandler}.
  */
 public class AdvertisementDataHandlerBuilder {
 

@@ -1,6 +1,5 @@
 package by.prokhorenko.rentservice.entity;
 
-import by.prokhorenko.rentservice.builder.FlatDescriptionBuilder;
 import by.prokhorenko.rentservice.builder.RequestBuilder;
 
 import java.io.Serializable;
@@ -9,49 +8,49 @@ import java.time.LocalDateTime;
 /**
  * Request entity. Has next properties:
  * <b>id</b>,<b>user</b>,<b>startDate</b>,<b>endDate</b>,
- * <b>applicationDate</b>,<b>isApproved</b>
+ * <b>applicationDate</b>,<b>isApproved</b>.
  */
 public class Request implements Serializable {
     /**
-     * Property - id
+     * Property - id.
      */
     private int id;
 
     /**
-     * Property - {@link User} who has sent a request
+     * Property - {@link User} who has sent a request.
      */
     private User user;
 
     /**
-     * Property - startDate represents the start date of start
+     * Property - startDate represents the start date of start.
      */
     private LocalDateTime startDate;
 
     /**
-     * Property - endDate represents the end date of renting
+     * Property - endDate represents the end date of renting.
      */
     private LocalDateTime endDate;
 
     /**
-     * Property - applicationDate
+     * Property - applicationDate.
      */
     private LocalDateTime applicationDate;
 
     /**
-     * Property - {@link Advertisement}, advertisement for which the request was sent
+     * Property - {@link Advertisement}, advertisement for which the request was sent.
      */
     private Advertisement advertisement;
 
     /**
-     * Property - isApproved, status of approving rhe request
+     * Property - isApproved, status of approving rhe request.
      */
     private boolean isApproved;
 
     /**
      * Initializes a newly created {@code Request} object with
-     * fields which have been built with {@link RequestBuilder}
+     * fields which have been built with {@link RequestBuilder}.
      *
-     * @param requestBuilder
+     * @param requestBuilder {@link RequestBuilder}
      */
     public Request(RequestBuilder requestBuilder) {
         this.id = requestBuilder.getId();
@@ -72,7 +71,7 @@ public class Request implements Serializable {
     }
 
     /**
-     * Returns id of the {@code Request} object
+     * Returns id of the {@code Request} object.
      *
      * @return id
      */
@@ -81,16 +80,16 @@ public class Request implements Serializable {
     }
 
     /**
-     * Sets id to the {@code Request} object
+     * Sets id to the {@code Request} object.
      *
-     * @param id
+     * @param id requests id
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * Returns {@link User} who has sent a request of the {@code Request} object
+     * Returns {@link User} who has sent a request of the {@code Request} object.
      *
      * @return user
      */
@@ -99,16 +98,16 @@ public class Request implements Serializable {
     }
 
     /**
-     * Sets {@link User} who has sent a request to the {@code Request} object
+     * Sets {@link User} who has sent a request to the {@code Request} object.
      *
-     * @param user
+     * @param user {@link User}
      */
     public void setUser(User user) {
         this.user = user;
     }
 
     /**
-     * Returns startDate of the {@code Request} object
+     * Returns startDate of the {@code Request} object.
      *
      * @return startDate
      */
@@ -117,16 +116,16 @@ public class Request implements Serializable {
     }
 
     /**
-     * Sets startDate to the {@code Request} object
+     * Sets startDate to the {@code Request} object.
      *
-     * @param startDate
+     * @param startDate start date
      */
     public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
     /**
-     * Returns endDate of the {@code Request} object
+     * Returns endDate of the {@code Request} object.
      *
      * @return endDate
      */
@@ -135,16 +134,16 @@ public class Request implements Serializable {
     }
 
     /**
-     * Sets endDate to the {@code Request} object
+     * Sets endDate to the {@code Request} object.
      *
-     * @param endDate
+     * @param endDate end date
      */
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
     /**
-     * Returns applicationDate of the {@code Request} object
+     * Returns applicationDate of the {@code Request} object.
      *
      * @return applicationDate
      */
@@ -153,9 +152,9 @@ public class Request implements Serializable {
     }
 
     /**
-     * Sets applicationDate to the {@code Request} object
+     * Sets applicationDate to the {@code Request} object.
      *
-     * @param applicationDate
+     * @param applicationDate application date
      */
     public void setApplicationDate(LocalDateTime applicationDate) {
         this.applicationDate = applicationDate;
@@ -163,7 +162,7 @@ public class Request implements Serializable {
 
     /**
      * Returns {@link Advertisement} for which the request was sent,
-     * of the {@code Request} object
+     * of the {@code Request} object.
      *
      * @return advertisement
      */
@@ -173,16 +172,16 @@ public class Request implements Serializable {
 
     /**
      * Sets {@link Advertisement} for which the request was sent,
-     * to the {@code Request} object
+     * to the {@code Request} object.
      *
-     * @param advertisement
+     * @param advertisement {@link Advertisement}
      */
     public void setAdvertisement(Advertisement advertisement) {
         this.advertisement = advertisement;
     }
 
     /**
-     * Returns isApproved of the {@code Request} object
+     * Returns isApproved of the {@code Request} object.
      *
      * @return isApproved
      */
@@ -191,9 +190,9 @@ public class Request implements Serializable {
     }
 
     /**
-     * Sets isApproved to the {@code Request} object
+     * Sets isApproved to the {@code Request} object.
      *
-     * @param approved
+     * @param approved approve status
      */
     public void setApproved(boolean approved) {
         isApproved = approved;
@@ -227,7 +226,7 @@ public class Request implements Serializable {
     }
 
     /**
-     * Returns a hash code for this {@code Request} object
+     * Returns a hash code for this {@code Request} object.
      *
      * @return hashCode
      */
@@ -244,7 +243,7 @@ public class Request implements Serializable {
     }
 
     /**
-     * Returns a {@code String} representation for this {@code Request} object
+     * Returns a {@code String} representation for this {@code Request} object.
      *
      * @return String
      */

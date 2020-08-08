@@ -1,7 +1,7 @@
 package by.prokhorenko.rentservice.controller.command.impl;
 
 import by.prokhorenko.rentservice.controller.DisPathType;
-import by.prokhorenko.rentservice.controller.PagePath;
+import by.prokhorenko.rentservice.controller.command.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Attribute;
 import by.prokhorenko.rentservice.controller.command.Command;
@@ -14,6 +14,7 @@ import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.RequestService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -37,18 +38,18 @@ public class DisapproveRequestCommand implements Command {
         Router router;
         try {
             Request disApprovingRequest = requestService.findRequestById(requestId);
-            if(disApprovingRequest.getAdvertisement().getAuthor().getId() == usersId) {
+            if (disApprovingRequest.getAdvertisement().getAuthor().getId() == usersId) {
                 requestService.disApproveRequestById(requestId);
                 redirectUrl = buildRedirectUrl(request, CommandName.REQUESTS_FOR_MY_ADS_PAGE.getCommandName());
                 router = new Router(redirectUrl);
                 List<Request> requestsOnUsersAdvertisements = requestService.findRequestsOnUsersAdvertisement(usersId);
                 session.setAttribute(Attribute.REQUESTS_ON_USERS_ADVERTISEMENTS_LIST, requestsOnUsersAdvertisements);
-            }else{
-                router = new Router(DisPathType.FORWARD,PagePath.WRONG_REQUEST);
+            } else {
+                router = new Router(DisPathType.FORWARD, PagePath.WRONG_REQUEST);
             }
         } catch (ServiceException e) {
             LOG.error(e);
-            router = new Router(DisPathType.FORWARD,PagePath.SERVER_ERROR_PAGE);
+            router = new Router(DisPathType.FORWARD, PagePath.SERVER_ERROR_PAGE);
         }
         return router;
     }

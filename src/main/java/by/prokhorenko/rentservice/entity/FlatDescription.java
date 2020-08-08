@@ -8,61 +8,61 @@ import java.io.Serializable;
 /**
  * FlatDescription entity. Has next properties:
  * <b>id</b>,<b>rooms</b>,<b>livingArea</b>,<b>hsFurniture</b>,<b>hasHomeAppliances</b>,
- * <b>hasTheInternet</b>,<b>possibleWithChild</b>,<b>possibleWithPets</b>,<b>usersDescription</b>
+ * <b>hasTheInternet</b>,<b>possibleWithChild</b>,<b>possibleWithPets</b>,<b>usersDescription</b>.
  */
 public class FlatDescription implements Serializable {
 
     /**
-     * Property - flat descriptions id
+     * Property - flat descriptions id.
      */
     private int id;
 
     /**
-     * Property - rooms represents rooms amount of {@code FlatDescription} object
+     * Property - rooms represents rooms amount of {@code FlatDescription} object.
      */
     private int rooms;
 
     /**
-     * Property - livingArea represents livingArea of {@code FlatDescription} object
+     * Property - livingArea represents livingArea of {@code FlatDescription} object.
      */
     private float livingArea;
 
     /**
-     * Property - hasFurniture represents whether {@code FlatDescription} object has furniture
+     * Property - hasFurniture represents whether {@code FlatDescription} object has furniture.
      */
     private boolean hasFurniture;
 
     /**
-     * Property - hasHomeAppliances represents whether {@code FlatDescription} object has home appliances
+     * Property - hasHomeAppliances represents whether {@code FlatDescription} object has home appliances.
      */
     private boolean hasHomeAppliances;
 
     /**
-     * Property - hasTheInternet represents whether {@code FlatDescription} object has the Internet
+     * Property - hasTheInternet represents whether {@code FlatDescription} object has the Internet.
      */
     private boolean hasTheInternet;
 
     /**
-     * Property - possibleWithChild represents whether is it possible to live with child
+     * Property - possibleWithChild represents whether is it possible to live with child.
      */
     private boolean possibleWithChild;
 
 
     /**
-     * Property - possibleWithPets represents whether is it possible to live with pets
+     * Property - possibleWithPets represents whether is it possible to live with pets.
      */
     private boolean possibleWithPets;
 
     /**
-     * Property - usersDescription, is a description of flat that user gives himself
+     * Property - usersDescription, is a description of flat that user gives himself.
      */
     private String usersDescription;
 
     /**
      * Initializes a newly created {@code FlatDescription} object with
-     * fields which have been built with {@link FlatDescriptionBuilder}
+     * fields which have been built with {@link FlatDescriptionBuilder}.
      *
-     * @param flatDescriptionBuilder
+     * @param flatDescriptionBuilder {@link FlatDescriptionBuilder}
      */
     public FlatDescription(FlatDescriptionBuilder flatDescriptionBuilder) {
         this.id = flatDescriptionBuilder.getId();
@@ -86,7 +86,7 @@ public class FlatDescription implements Serializable {
 
 
     /**
-     * Returns flat descriptions id of an {@code FlatDescription} object
+     * Returns flat descriptions id of an {@code FlatDescription} object.
      *
      * @return id
      */
@@ -95,7 +95,7 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Sets flat descriptions id to an {@code FlatDescription} object
+     * Sets flat descriptions id to an {@code FlatDescription} object.
      *
      * @param id
      */
@@ -104,7 +104,7 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Returns flat descriptions rooms of an {@code FlatDescription} object
+     * Returns flat descriptions rooms of an {@code FlatDescription} object.
      *
      * @return rooms
      */
@@ -113,16 +113,16 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Sets flat descriptions rooms to an {@code FlatDescription} object
+     * Sets flat descriptions rooms to an {@code FlatDescription} object.
      *
-     * @param rooms
+     * @param rooms amount of rooms
      */
     public void setRooms(int rooms) {
         this.rooms = rooms;
     }
 
     /**
-     * Returns flat descriptions livingArea of an {@code FlatDescription} object
+     * Returns flat descriptions livingArea of an {@code FlatDescription} object.
      *
      * @return livingArea
      */
@@ -131,16 +131,16 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Sets flat descriptions livingArea to an {@code FlatDescription} object
+     * Sets flat descriptions livingArea to an {@code FlatDescription} object.
      *
-     * @param livingArea
+     * @param livingArea living area
      */
     public void setLivingArea(float livingArea) {
         this.livingArea = livingArea;
     }
 
     /**
-     * Returns whether flat description hasFurniture to an {@code FlatDescription} object
+     * Returns whether flat description hasFurniture to an {@code FlatDescription} object.
      *
      * @return hasFurniture
      */
@@ -149,7 +149,7 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Sets whether flat description has furniture to an {@code FlatDescription} object
+     * Sets whether flat description has furniture to an {@code FlatDescription} object.
      *
      * @param hasFurniture
      */
@@ -158,7 +158,7 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Returns whether flat description has home appliacnes to an {@code FlatDescription} object
+     * Returns whether flat description has home appliacnes to an {@code FlatDescription} object.
      *
      * @return hasHomeAppliances
      */
@@ -167,7 +167,7 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Sets whether flat description has home appliances to an {@code FlatDescription} object
+     * Sets whether flat description has home appliances to an {@code FlatDescription} object.
      *
      * @param hasHomeAppliances
      */
@@ -176,7 +176,7 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Returns whether flat description hasHomeAppliances of the {@code FlatDescription} object
+     * Returns whether flat description hasHomeAppliances of the {@code FlatDescription} object.
      *
      * @return hasHomeAppliances
      */
@@ -185,7 +185,7 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Sets whether flat description hasTheInternet to an {@code FlatDescription} object
+     * Sets whether flat description hasTheInternet to an {@code FlatDescription} object.
      *
      * @param hasTheInternet
      */
@@ -194,7 +194,7 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Returns  flat description possibleWithChild of the {@code FlatDescription} object
+     * Returns  flat description possibleWithChild of the {@code FlatDescription} object.
      *
      * @return possibleWithChild
      */
@@ -203,7 +203,7 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Sets flat description possibleWithChild to an {@code FlatDescription} object
+     * Sets flat description possibleWithChild to an {@code FlatDescription} object.
      *
      * @param possibleWithChild
      */
@@ -212,7 +212,7 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Returns  flat description possibleWithPets of the {@code FlatDescription} object
+     * Returns  flat description possibleWithPets of the {@code FlatDescription} object.
      *
      * @return possibleWithPets
      */
@@ -221,7 +221,7 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Sets flat description possibleWithPets to an {@code FlatDescription} object
+     * Sets flat description possibleWithPets to an {@code FlatDescription} object.
      *
      * @param possibleWithPets
      */
@@ -230,7 +230,7 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Returns  flat description usersDescription of the {@code FlatDescription} object
+     * Returns  flat description usersDescription of the {@code FlatDescription} object.
      *
      * @return usersDescription
      */
@@ -239,7 +239,7 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Sets flat description usersDescription to an {@code FlatDescription} object
+     * Sets flat description usersDescription to an {@code FlatDescription} object.
      *
      * @param usersDescription
      */
@@ -276,7 +276,7 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Returns a hash code for this {@code FlatDescription} object
+     * Returns a hash code for this {@code FlatDescription} object.
      *
      * @return hashCode
      */
@@ -295,7 +295,7 @@ public class FlatDescription implements Serializable {
     }
 
     /**
-     * Returns a {@code String} representation for this {@code FlatDescription} object
+     * Returns a {@code String} representation for this {@code FlatDescription} object.
      *
      * @return String
      */

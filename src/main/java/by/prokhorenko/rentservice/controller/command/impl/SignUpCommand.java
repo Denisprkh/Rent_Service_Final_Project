@@ -1,7 +1,7 @@
 package by.prokhorenko.rentservice.controller.command.impl;
 
 import by.prokhorenko.rentservice.builder.UserBuilder;
-import by.prokhorenko.rentservice.controller.PagePath;
+import by.prokhorenko.rentservice.controller.command.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Attribute;
 import by.prokhorenko.rentservice.controller.command.Command;
@@ -12,6 +12,8 @@ import by.prokhorenko.rentservice.entity.User;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.UserService;
+import by.prokhorenko.rentservice.util.MailBodyBuilder;
+import by.prokhorenko.rentservice.util.MailSender;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -41,11 +43,13 @@ public class SignUpCommand implements Command {
                     password,phone);
             if(!usersDataValidations.containsValue(Boolean.FALSE)){
                 User user = buildUser(firstName,lastName,email,password,phone);
-                userService.signUp(user,request.getContextPath());
+                User signedUpUser = userService.signUp(user);
                 session.setAttribute(Attribute.ACTIVATION_USERS_ID,user.getId());
                 String redirectUrl = buildRedirectUrl(request, CommandName.ACTIVATION_INFO_PAGE.getCommandName());
                 router.setPage(redirectUrl);
                 session.removeAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE);
+                String locale = (String) session.getAttribute(Attribute.LANGUAGE);
+                constructAndSendEmail(locale,signedUpUser);
             }else{
                CommandUtil.defineErrorMessageFromUsersDataValidations(request,usersDataValidations);
                String redirectUrl = buildRedirectUrl(request,CommandName.SIGN_UP_PAGE.getCommandName());
@@ -68,6 +72,13 @@ public class SignUpCommand implements Command {
                 .buildPhone(phone)
                 .buildUser();
         return user;
+    }
+
+    private void constructAndSendEmail(String locale, User user){
+        MailSender mailSender = new MailSender();
+        String emailSubject = MailBodyBuilder.buildEmailSubject(locale);
+        String emailBody = MailBodyBuilder.buildEmailBody(user,locale);
+        mailSender.send(emailSubject,emailBody,user.getEmail());
     }
 }
 

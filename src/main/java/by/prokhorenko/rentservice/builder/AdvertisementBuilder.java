@@ -8,42 +8,42 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * Class for building {@link Advertisement} entity
+ * Class for building {@link Advertisement} entity.
  */
 public class AdvertisementBuilder {
 
     /**
-     * Id
+     * Id.
      */
     private int id;
 
     /**
-     * Author
+     * Author.
      */
     private User author;
 
     /**
-     * Flat
+     * Flat.
      */
     private Flat flat;
 
     /**
-     * Title
+     * Title.
      */
     private String title;
 
     /**
-     * Price
+     * Price.
      */
     private BigDecimal price;
 
     /**
-     * Date of creation
+     * Date of creation.
      */
     private LocalDateTime dateOfCreation;
 
     /**
-     * Visible status
+     * Visible status.
      */
     private boolean isVisible;
 
@@ -56,7 +56,7 @@ public class AdvertisementBuilder {
     }
 
     /**
-     * Returns id
+     * Returns id.
      *
      * @return id
      */
@@ -65,7 +65,7 @@ public class AdvertisementBuilder {
     }
 
     /**
-     * Sets id and returns {@code AdvertisementBuilder} object with built field
+     * Sets id and returns {@code AdvertisementBuilder} object with built field.
      *
      * @param id
      * @return {@see AdvertisementBuilder}
@@ -76,7 +76,7 @@ public class AdvertisementBuilder {
     }
 
     /**
-     * Returns visibility status
+     * Returns visibility status.
      *
      * @return isVisible
      */
@@ -85,7 +85,7 @@ public class AdvertisementBuilder {
     }
 
     /**
-     * Sets visibility status and returns {@code AdvertisementBuilder} object with built field
+     * Sets visibility status and returns {@code AdvertisementBuilder} object with built field.
      *
      * @param visible
      * @return {@see AdvertisementBuilder}
@@ -96,7 +96,7 @@ public class AdvertisementBuilder {
     }
 
     /**
-     * Returns author
+     * Returns author.
      *
      * @return author
      */
@@ -105,7 +105,7 @@ public class AdvertisementBuilder {
     }
 
     /**
-     * Sets author and returns {@code AdvertisementBuilder} object with built field
+     * Sets author and returns {@code AdvertisementBuilder} object with built field.
      *
      * @param author
      * @return {@see AdvertisementBuilder}
@@ -116,7 +116,7 @@ public class AdvertisementBuilder {
     }
 
     /**
-     * Returns flat
+     * Returns flat.
      *
      * @return flat
      */
@@ -125,7 +125,7 @@ public class AdvertisementBuilder {
     }
 
     /**
-     * Sets flat and returns {@code AdvertisementBuilder} object with built field
+     * Sets flat and returns {@code AdvertisementBuilder} object with built field.
      *
      * @param flat
      * @return {@see AdvertisementBuilder}
@@ -136,7 +136,7 @@ public class AdvertisementBuilder {
     }
 
     /**
-     * Returns title
+     * Returns title.
      *
      * @return title
      */
@@ -145,7 +145,7 @@ public class AdvertisementBuilder {
     }
 
     /**
-     * Sets advertisement and returns {@code AdvertisementBuilder} object with built field
+     * Sets advertisement and returns {@code AdvertisementBuilder} object with built field.
      *
      * @param title
      * @return {@see AdvertisementBuilder}
@@ -156,7 +156,7 @@ public class AdvertisementBuilder {
     }
 
     /**
-     * Returns price
+     * Returns price.
      *
      * @return price
      */
@@ -165,7 +165,7 @@ public class AdvertisementBuilder {
     }
 
     /**
-     * Sets price and returns {@code AdvertisementBuilder} object with built field
+     * Sets price and returns {@code AdvertisementBuilder} object with built field.
      *
      * @param price
      * @return {@see AdvertisementBuilder}
@@ -176,7 +176,7 @@ public class AdvertisementBuilder {
     }
 
     /**
-     * Returns dateOfCreation
+     * Returns dateOfCreation.
      *
      * @return dateOfCreation
      */
@@ -185,7 +185,7 @@ public class AdvertisementBuilder {
     }
 
     /**
-     * Sets dateOfCreation and returns {@code AdvertisementBuilder} object with built field
+     * Sets dateOfCreation and returns {@code AdvertisementBuilder} object with built field.
      *
      * @param dateOfCreation
      * @return {@see AdvertisementBuilder}
@@ -196,7 +196,7 @@ public class AdvertisementBuilder {
     }
 
     /**
-     * Returns a newly created {@link Advertisement} object with fields, built with {@code AdvertisementBuilder}
+     * Returns a newly created {@link Advertisement} object with fields, built with {@code AdvertisementBuilder}.
      *
      * @return {@see Advertisement}
      */

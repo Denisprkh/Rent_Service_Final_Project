@@ -4,12 +4,12 @@ import by.prokhorenko.rentservice.entity.User;
 import by.prokhorenko.rentservice.entity.UserRole;
 
 /**
- * Class for building {@link User} entity
+ * Class for building {@link User} entity.
  */
 public class UserBuilder {
 
     /**
-     * Id
+     * Id.
      */
     private int id;
 
@@ -19,37 +19,37 @@ public class UserBuilder {
     private String firstName;
 
     /**
-     * Last name
+     * Last name.
      */
     private String lastName;
 
     /**
-     * Email
+     * Email.
      */
     private String email;
 
     /**
-     * Password
+     * Password.
      */
     private String password;
 
     /**
-     * Phone
+     * Phone.
      */
     private String phone;
 
     /**
-     * User role
+     * User role.
      */
     private UserRole userRole;
 
     /**
-     * Activation status
+     * Activation status.
      */
     private boolean isActivated;
 
     /**
-     * Ban status
+     * Ban status.
      */
     private boolean isBanned;
 
@@ -61,7 +61,7 @@ public class UserBuilder {
     }
 
     /**
-     * Returns ban status
+     * Returns ban status.
      *
      * @return isBanned
      */
@@ -70,7 +70,7 @@ public class UserBuilder {
     }
 
     /**
-     * Sets ban status and returns {@code UserBuilder} object with built field
+     * Sets ban status and returns {@code UserBuilder} object with built field.
      *
      * @param isBanned
      * @return {@see UserBuilder}
@@ -81,7 +81,7 @@ public class UserBuilder {
     }
 
     /**
-     * Returns id
+     * Returns id.
      *
      * @return id
      */
@@ -90,7 +90,7 @@ public class UserBuilder {
     }
 
     /**
-     * Sets id and returns {@code UserBuilder} object with built field
+     * Sets id and returns {@code UserBuilder} object with built field.
      *
      * @param id
      * @return {@see UserBuilder}
@@ -101,7 +101,7 @@ public class UserBuilder {
     }
 
     /**
-     * Returns firstName
+     * Returns firstName.
      *
      * @return firstName
      */
@@ -110,7 +110,7 @@ public class UserBuilder {
     }
 
     /**
-     * Sets firstName and returns {@code UserBuilder} object with built field
+     * Sets firstName and returns {@code UserBuilder} object with built field.
      *
      * @param firstName
      * @return {@see UserBuilder}
@@ -121,7 +121,7 @@ public class UserBuilder {
     }
 
     /**
-     * Returns lastName
+     * Returns lastName.
      *
      * @return lastName
      */
@@ -130,7 +130,7 @@ public class UserBuilder {
     }
 
     /**
-     * Sets lastName and returns {@code UserBuilder} object with built field
+     * Sets lastName and returns {@code UserBuilder} object with built field.
      *
      * @param lastName
      * @return {@see UserBuilder}
@@ -141,7 +141,7 @@ public class UserBuilder {
     }
 
     /**
-     * Returns email
+     * Returns email.
      *
      * @return email
      */
@@ -150,7 +150,7 @@ public class UserBuilder {
     }
 
     /**
-     * Sets email and returns {@code UserBuilder} object with built field
+     * Sets email and returns {@code UserBuilder} object with built field.
      *
      * @param email
      * @return {@see UserBuilder}
@@ -161,7 +161,7 @@ public class UserBuilder {
     }
 
     /**
-     * Returns password
+     * Returns password.
      *
      * @return password
      */
@@ -170,7 +170,7 @@ public class UserBuilder {
     }
 
     /**
-     * Sets password and returns {@code UserBuilder} object with built field
+     * Sets password and returns {@code UserBuilder} object with built field.
      *
      * @param password
      * @return {@see UserBuilder}
@@ -181,7 +181,7 @@ public class UserBuilder {
     }
 
     /**
-     * Returns phone
+     * Returns phone.
      *
      * @return phone
      */
@@ -190,7 +190,7 @@ public class UserBuilder {
     }
 
     /**
-     * Sets phone and returns {@code UserBuilder} object with built field
+     * Sets phone and returns {@code UserBuilder} object with built field.
      *
      * @param phone
      * @return {@see UserBuilder}
@@ -201,7 +201,7 @@ public class UserBuilder {
     }
 
     /**
-     * Returns userRole
+     * Returns userRole.
      *
      * @return userRole
      */
@@ -210,7 +210,7 @@ public class UserBuilder {
     }
 
     /**
-     * Sets userRole and returns {@code UserBuilder} object with built field
+     * Sets userRole and returns {@code UserBuilder} object with built field.
      *
      * @param userRole
      * @return {@see UserBuilder}
@@ -221,7 +221,7 @@ public class UserBuilder {
     }
 
     /**
-     * Returns activation status
+     * Returns activation status.
      *
      * @return isActivated
      */
@@ -230,7 +230,7 @@ public class UserBuilder {
     }
 
     /**
-     * Sets isActivated and returns {@code UserBuilder} object with built field
+     * Sets isActivated and returns {@code UserBuilder} object with built field.
      *
      * @param isActivated
      * @return {@see UserBuilder}
@@ -241,7 +241,7 @@ public class UserBuilder {
     }
 
     /**
-     * Returns newly created @see User with built fields
+     * Returns newly created @see User with built fields.
      *
      * @return {@see User}
      */

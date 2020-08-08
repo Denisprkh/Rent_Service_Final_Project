@@ -24,13 +24,15 @@
                 <p class="adv__title">
                     <fmt:message key="add_an_advertisement.form_title"/>
                 </p>
-                <form action="${pageContext.request.contextPath}/UploadController" enctype="multipart/form-data" method="post">
+                <form action="${pageContext.request.contextPath}/UploadController" enctype="multipart/form-data"
+                      method="post">
                     <div class="row__items-title">
                         <p><fmt:message key="add_an_advertisement.advertisement_description"/></p>
                     </div>
                     <div class="row_items-input">
                         <input class="input__item first" name="title" placeholder=
-                                "<fmt:message key="add_an_advertisement.advertisement_title"/>" required pattern="^[a-zA-Zа-яА-Я]{2,45}$"/>
+                                "<fmt:message key="add_an_advertisement.advertisement_title"/>" required
+                               pattern="^[a-zA-Zа-яА-Я]{2,45}$"/>
                         <input class="input__item" name="price" placeholder=
                                 "<fmt:message key="add_an_advertisement.price"/>" required pattern="^[0-9.]{1,45}$"/>
 
@@ -40,28 +42,35 @@
                     </div>
                     <div class="row_items-input">
                         <input class="input__item first" name="city" placeholder=
-                                "<fmt:message key="add_an_advertisement.location_city"/>" required pattern="^[a-zA-Zа-яА-Я.-]{2,45}$"/>
+                                "<fmt:message key="add_an_advertisement.location_city"/>" required
+                               pattern="^[a-zA-Zа-яА-Я.-]{2,45}$"/>
                         <input class="input__item" name="district" placeholder=
-                                "<fmt:message key="add_an_advertisement.location_district"/>" required pattern="^[a-zA-Zа-яА-Я.-]{2,45}$"/>
+                                "<fmt:message key="add_an_advertisement.location_district"/>" required
+                               pattern="^[a-zA-Zа-яА-Я.-]{2,45}$"/>
                         <input class="input__item" name="street" placeholder=
-                                "<fmt:message key="add_an_advertisement.location_street"/>" required pattern="^[a-zA-Zа-яА-Я.-]{2,45}$"/>
+                                "<fmt:message key="add_an_advertisement.location_street"/>" required
+                               pattern="^[a-zA-Zа-яА-Я.-]{2,45}$"/>
                         <input class="input__item end" name="house" placeholder=
-                                "<fmt:message key="add_an_advertisement.location_house"/>" required pattern="^[a-zA-Z0-9_\\-.]{2,40}$"/>
+                                "<fmt:message key="add_an_advertisement.location_house"/>" required
+                               pattern="^[a-zA-Z0-9_\\-.]{2,40}$"/>
                     </div>
                     <div class="row__items-title">
                         <p><fmt:message key="add_an_advertisement.flat_description_title"/></p>
                     </div>
                     <div class="row_items-input">
                         <input class="input__item first" name="rooms" placeholder=
-                                "<fmt:message key="add_an_advertisement.flat_description_rooms"/>" required pattern="^[0-9]{1,10}$"/>
+                                "<fmt:message key="add_an_advertisement.flat_description_rooms"/>" required
+                               pattern="^[0-9]{1,10}$"/>
                         <input class="input__item" name="area" placeholder=
-                                "<fmt:message key="add_an_advertisement.flat_description_area"/>" required pattern="^[0-9.]{1,45}$"/>
+                                "<fmt:message key="add_an_advertisement.flat_description_area"/>" required
+                               pattern="^[0-9.]{1,45}$"/>
                     </div>
 
                     <div class="check-box__items">
                         <label class="check-box__item first">
                             <input type="checkbox" name="furniture" value="true"/>
-                            <span class="check-box__title"><fmt:message key="add_an_advertisement.flat_description_furniture"/></span>
+                            <span class="check-box__title"><fmt:message
+                                    key="add_an_advertisement.flat_description_furniture"/></span>
                         </label>
                         <label class="check-box__item">
                             <input type="checkbox" name="children" value="true"/>
@@ -87,19 +96,19 @@
                     <div class="row_items-input">
                         <label>
                             <img class="output__img none" src="" alt="">
-                            <input class="input__items-file dbf"type="file" name="firstImg" id="id_files"
+                            <input class="input__items-file dbf" type="file" name="firstImg" id="id_files"
                                    accept="image/*" required/>
                             <span class="input_img_plus">+</span>
                         </label>
                         <label>
                             <img class="output__img none" src="" alt="">
-                            <input class="input__items-file dbf"type="file" name="secondImg" id="id_files"
+                            <input class="input__items-file dbf" type="file" name="secondImg" id="id_files"
                                    accept="image/*" required/>
                             <span class="input_img_plus">+</span>
                         </label>
                         <label>
                             <img class="output__img none" src="" alt="">
-                            <input class="input__items-file dbf"type="file"  name="thirdImg" id="id_files"
+                            <input class="input__items-file dbf" type="file" name="thirdImg" id="id_files"
                                    accept="image/*" required/>
                             <span class="input_img_plus">+</span>
                         </label>
@@ -117,7 +126,8 @@
                                 "<fmt:message key="add_an_advertisement.give_more_info_text"/>"></textarea>
                     </div>
 
-                    <button class="add__adv__btn" type="submit" name="command" value="createNewAdvertisement"><fmt:message key="add_an_advertisement.button"/></button>
+                    <button class="add__adv__btn" type="submit" name="command" value="createNewAdvertisement">
+                        <fmt:message key="add_an_advertisement.button"/></button>
                 </form>
                 <div class="err__message">
                     <c:if test="${not empty sessionScope.addAdvertisementErrorMessage}">
@@ -129,20 +139,6 @@
         </div>
     </div>
 </section>
+<script src="${pageContext.request.contextPath}/js/xssProtection.js"></script>
 </body>
 </html>
-
-<script>
-    [].forEach.call(document.querySelectorAll('input[id="id_files"]'), function(inp) {
-        inp.addEventListener('change', function() {
-            var reader = new FileReader(),
-                img = this.previousElementSibling;
-            this.nextElementSibling.classList.add('none')
-            img.classList.remove('none')
-            reader.onload = function() {
-                img.src = reader.result;
-            };
-            reader.readAsDataURL(this.files[0]);
-        }, false);
-    });
-</script>

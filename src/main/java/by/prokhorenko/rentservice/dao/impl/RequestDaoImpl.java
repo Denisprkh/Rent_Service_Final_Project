@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Implementation of {@link RequestDao}
+ * Implementation of {@link RequestDao}.
  */
 public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
 
@@ -137,7 +137,6 @@ public class RequestDaoImpl extends AbstractCommonDao implements RequestDao {
             while (resultSet.next()) {
                 usersRequests.add(buildRequestFromResultSet(resultSet));
             }
-            LOG.debug(usersRequests);
             return usersRequests;
         } catch (SQLException e) {
             throw new DaoException(e);

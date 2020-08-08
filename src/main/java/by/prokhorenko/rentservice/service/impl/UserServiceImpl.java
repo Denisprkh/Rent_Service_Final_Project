@@ -19,14 +19,12 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Implementation of {@link UserService}
+ * Implementation of {@link UserService}.
  */
 public class UserServiceImpl implements UserService {
 
     private static final Logger LOG = LogManager.getLogger();
     private static final UserService INSTANCE = new UserServiceImpl();
-    private static final String ACTIVATION_LINK = "/controller?command=confirmRegistration&id=";
-    private static final String ACTIVATION_MESSAGE_TITLE = "Confirmation of registration";
     private static final String EMAIL_IS_UNIQUE = "emailIsUnique";
     private static final String PHONE_IS_UNIQUE = "phoneIsUnique";
 
@@ -38,11 +36,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User signUp(User user,String contextPath) throws ServiceException {
-        MailSender mailSender = new MailSender();
+    public User signUp(User user) throws ServiceException {
         try(UserDao userDao = DaoFactory.getInstance().getUserDao()) {
             User signedUpUser = userDao.add(user).orElseThrow(ServiceException::new);
-            mailSender.send(ACTIVATION_MESSAGE_TITLE, contextPath + ACTIVATION_LINK + user.getId(), user.getEmail());
             return signedUpUser;
         } catch (DaoException | IOException e) {
             throw new ServiceException(e);
@@ -202,6 +198,15 @@ public class UserServiceImpl implements UserService {
         } catch (IOException | DaoException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public void fullNameIsCorrect(String fullName) throws ServiceException {
+        UserValidator userValidator = UserValidator.getInstance();
+        if(!userValidator.fullNameIsCorrect(fullName)){
+            throw new ServiceException(ResourceBundleMessageKey.INVALID_FULL_NAME_FORMAT);
+        }
+
     }
 
 }

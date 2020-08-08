@@ -7,41 +7,41 @@ import by.prokhorenko.rentservice.exception.DaoException;
 import java.util.List;
 
 /**
- * Request dao interface
+ * Request dao interface.
  */
 public interface RequestDao extends CommonDao<Request> {
 
     /**
-     * Returns List of {@link Request} found by users id
+     * Returns List of {@link Request} found by users id.
      *
-     * @param usersId
+     * @param usersId who has sent a request
      * @return List of {@link Request}
      * @throws DaoException if an SQLException occurs
      */
     List<Request> findRequestsByUsersId(int usersId) throws DaoException;
 
     /**
-     * Sets approve status of {@link Request} object {@code true}
+     * Sets approve status of {@link Request} object {@code true}.
      *
-     * @param requestsId
+     * @param requestsId requests id
      * @return {@code true} if status is updated successfully and vice versa
      * @throws DaoException if an SQLException occurs
      */
     boolean approveRequest(int requestsId) throws DaoException;
 
     /**
-     * Sets approve status of {@link Request} object {@code false}
+     * Sets approve status of {@link Request} object {@code false}.
      *
-     * @param requestsId
+     * @param requestsId requests id
      * @return {@code true} if  status is updated successfully and vice versa
      * @throws DaoException if an SQLException occurs
      */
     boolean disApproveRequest(int requestsId) throws DaoException;
 
     /**
-     * Returns List of {@link Request} sent for an {@link Advertisement} object
+     * Returns List of {@link Request} sent for an {@link Advertisement} object.
      *
-     * @param authorId
+     * @param authorId id of the author of the advertisement for which the application is being submitted
      * @return List of {@link Request}
      * @throws DaoException if an SQLException occurs
      */

@@ -3,32 +3,32 @@ package by.prokhorenko.rentservice.builder;
 import by.prokhorenko.rentservice.entity.FlatAddress;
 
 /**
- * Class for building {@link FlatAddress}
+ * Class for building {@link FlatAddress}.
  */
 public class FlatAddressBuilder {
 
     /**
-     * Id
+     * Id.
      */
     private int id;
 
     /**
-     * City
+     * City.
      */
     private String city;
 
     /**
-     * District
+     * District.
      */
     private String district;
 
     /**
-     * Street
+     * Street.
      */
     private String street;
 
     /**
-     * House
+     * House.
      */
     private String house;
 
@@ -40,7 +40,7 @@ public class FlatAddressBuilder {
     }
 
     /**
-     * Returns id
+     * Returns id.
      *
      * @return id
      */
@@ -49,9 +49,9 @@ public class FlatAddressBuilder {
     }
 
     /**
-     * Sets id and returns {@code FlatAddressBuilder} object with built field
+     * Sets id and returns {@code FlatAddressBuilder} object with built field.
      *
-     * @param id
+     * @param id flat addresses id
      * @return {@see FlatAddressBuilder}
      */
     public FlatAddressBuilder buildId(int id) {
@@ -60,7 +60,7 @@ public class FlatAddressBuilder {
     }
 
     /**
-     * Returns city
+     * Returns city.
      *
      * @return city
      */
@@ -69,9 +69,9 @@ public class FlatAddressBuilder {
     }
 
     /**
-     * Sets city and returns {@code FlatAddressBuilder} object with built field
+     * Sets city and returns {@code FlatAddressBuilder} object with built field.
      *
-     * @param city
+     * @param city city
      * @return {@see FlatAddressBuilder}
      */
     public FlatAddressBuilder buildCity(String city) {
@@ -89,9 +89,9 @@ public class FlatAddressBuilder {
     }
 
     /**
-     * Sets district and returns {@code FlatAddressBuilder} object with built field
+     * Sets district and returns {@code FlatAddressBuilder} object with built field.
      *
-     * @param district
+     * @param district districts name
      * @return {@see FlatAddressBuilder}
      */
     public FlatAddressBuilder buildDistrict(String district) {
@@ -100,7 +100,7 @@ public class FlatAddressBuilder {
     }
 
     /**
-     * Returns street
+     * Returns street.
      *
      * @return street
      */
@@ -109,9 +109,9 @@ public class FlatAddressBuilder {
     }
 
     /**
-     * Sets street and returns {@code FlatAddressBuilder} object with built field
+     * Sets street and returns {@code FlatAddressBuilder} object with built field.
      *
-     * @param street
+     * @param street streets name
      * @return {@see FlatAddressBuilder}
      */
     public FlatAddressBuilder buildStreet(String street) {
@@ -120,7 +120,7 @@ public class FlatAddressBuilder {
     }
 
     /**
-     * Returns house
+     * Returns house.
      *
      * @return house
      */
@@ -129,7 +129,7 @@ public class FlatAddressBuilder {
     }
 
     /**
-     * Sets house and returns {@code FlatAddressBuilder} object with built field
+     * Sets house and returns {@code FlatAddressBuilder} object with built field.
      *
      * @param house
      * @return {@see FlatAddressBuilder}
@@ -140,7 +140,7 @@ public class FlatAddressBuilder {
     }
 
     /**
-     * Returns newly created {@link FlatAddress} with fields, built in builder
+     * Returns newly created {@link FlatAddress} with fields, built in builder.
      *
      * @return {@see FlatAddress}
      */

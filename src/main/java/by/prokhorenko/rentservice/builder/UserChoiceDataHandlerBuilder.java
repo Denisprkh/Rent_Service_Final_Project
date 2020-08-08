@@ -6,7 +6,7 @@ import by.prokhorenko.rentservice.entity.UserChoiceDataHandler;
  * Class for building auxiliary class {@link UserChoiceDataHandler}, fields in that class are
  * from {@link FlatAddressBuilder},{@link FlatDescriptionBuilder},{@link AdvertisementBuilder}, methods do
  * same things, but build methods return {@see UserChoiceDataHandlerBuilder}, entity construct method returns
- * {@link UserChoiceDataHandler}
+ * {@link UserChoiceDataHandler}.
  */
 
 public class UserChoiceDataHandlerBuilder {

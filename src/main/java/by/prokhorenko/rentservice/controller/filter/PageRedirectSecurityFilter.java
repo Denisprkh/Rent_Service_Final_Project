@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Page redirect security filter
+ */
 @WebFilter(filterName = "PageRedirectSecurityFilter")
 public class PageRedirectSecurityFilter implements Filter {
 
@@ -19,8 +22,8 @@ public class PageRedirectSecurityFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        if(request.getParameter(RequestParameter.PARAM_COMMAND) == null){
-            response.sendRedirect(request.getContextPath()+ REDIRECT_URL);
+        if (request.getParameter(RequestParameter.PARAM_COMMAND) == null) {
+            response.sendRedirect(request.getContextPath() + REDIRECT_URL);
         }
         chain.doFilter(req, resp);
     }

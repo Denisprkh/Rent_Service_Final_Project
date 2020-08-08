@@ -2,7 +2,7 @@ package by.prokhorenko.rentservice.dao;
 
 
 /**
- * Class for storing tables columns names
+ * Class for storing tables columns names.
  */
 public class SqlColumnName {
 

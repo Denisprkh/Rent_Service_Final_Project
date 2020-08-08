@@ -9,6 +9,7 @@ import by.prokhorenko.rentservice.factory.DaoFactory;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,25 +20,27 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Implementation of {@link FlatDao}
+ * Implementation of {@link FlatDao}.
  */
 public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
 
     private static final Logger LOG = LogManager.getLogger();
     private static final FlatDao INSTANCE = new FlatDaoImpl();
-    private FlatDaoImpl(){
+
+    private FlatDaoImpl() {
         this.connection = ConnectionPool.INSTANCE.getConnection();
     }
-    public static FlatDao getInstance(){
+
+    public static FlatDao getInstance() {
         return INSTANCE;
     }
 
     @Override
     public Optional<Flat> add(Flat flat) throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.ADD_FLAT,
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.ADD_FLAT,
                 Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1,flat.getFlatDescription().getId());
-            statement.setInt(2,flat.getFlatAddress().getId());
+            statement.setInt(1, flat.getFlatDescription().getId());
+            statement.setInt(2, flat.getFlatAddress().getId());
             int flatsId = executeUpdateAndGetGeneratedId(statement);
             flat.setId(flatsId);
             return Optional.of(flat);
@@ -47,13 +50,12 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
     }
 
 
-
     @Override
     public List<Flat> findAll(int start, int total) throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_FLATS);
-            ResultSet resultSet = statement.executeQuery()) {
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_FLATS);
+             ResultSet resultSet = statement.executeQuery()) {
             List<Flat> allFlats = new ArrayList<>();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 allFlats.add(buildFlatFromResultSet(resultSet));
             }
             return allFlats;
@@ -65,12 +67,12 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
     @Override
     public Optional<Flat> findById(int id) throws DaoException {
         ResultSet resultSet = null;
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_BY_ID);
-         FlatPhotoDao flatPhotoDao = DaoFactory.getInstance().getFlatPhotoDao()){
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_BY_ID);
+             FlatPhotoDao flatPhotoDao = DaoFactory.getInstance().getFlatPhotoDao()) {
             List<FlatPhoto> flatPhotos = flatPhotoDao.findAllPhotosByFlatsId(id);
-            statement.setInt(1,id);
+            statement.setInt(1, id);
             resultSet = statement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 Flat flat = buildFlatFromResultSet(resultSet);
                 flat.setFlatPhotos(flatPhotos);
                 return Optional.of(flat);
@@ -78,20 +80,20 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
             return Optional.empty();
         } catch (SQLException | IOException e) {
             throw new DaoException(e);
-        }finally {
+        } finally {
             closeResultSet(resultSet);
         }
     }
 
     @Override
     public Optional<Flat> update(Flat flat) throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_FLAT_BY_ID)) {
-           statement.setBoolean(1,flat.isFree());
-           statement.setInt(2,flat.getFlatDescription().getId());
-           statement.setInt(3,flat.getFlatAddress().getId());
-           statement.setInt(4,flat.getId());
-           updateEntity(statement);
-           return findById(flat.getId());
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_FLAT_BY_ID)) {
+            statement.setBoolean(1, flat.isFree());
+            statement.setInt(2, flat.getFlatDescription().getId());
+            statement.setInt(3, flat.getFlatAddress().getId());
+            statement.setInt(4, flat.getId());
+            updateEntity(statement);
+            return findById(flat.getId());
         } catch (SQLException e) {
             throw new DaoException(e);
         }
@@ -99,7 +101,16 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
 
     @Override
     public int findQuantity() throws DaoException {
-        return 0;
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_FLATS_QUANTITY);
+             ResultSet resultSet = statement.executeQuery()) {
+            int allFlatsQuantity = 0;
+            if (resultSet.next()) {
+                allFlatsQuantity = resultSet.getInt(1);
+            }
+            return allFlatsQuantity;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override
@@ -109,18 +120,18 @@ public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
 
     @Override
     public boolean updateFlatFreeStatusFalse(int flatsId) throws DaoException {
-       try(PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_FLAT_FREE_STATUS_FALSE)) {
-           statement.setInt(1,flatsId);
-           return updateEntity(statement);
-       } catch (SQLException e) {
-           throw new DaoException(e);
-       }
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_FLAT_FREE_STATUS_FALSE)) {
+            statement.setInt(1, flatsId);
+            return updateEntity(statement);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override
     public boolean updateFlatFreeStatusTrue(int flatsId) throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_FLAT_FREE_STATUS_TRUE)) {
-            statement.setInt(1,flatsId);
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_FLAT_FREE_STATUS_TRUE)) {
+            statement.setInt(1, flatsId);
             return updateEntity(statement);
         } catch (SQLException e) {
             throw new DaoException(e);

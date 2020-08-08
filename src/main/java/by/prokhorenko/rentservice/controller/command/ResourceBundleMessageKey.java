@@ -17,6 +17,9 @@ public class ResourceBundleMessageKey {
     public static final String ADVERTISEMENT_INVALID_IMG_AMOUNT = "add_an_advertisement.img_amount_info";
     public static final String ACCOUNT_WAS_ACTIVATED = "activation_info.account_was_activated";
     public static final String INVALID_DATE_FORMAT = "request_error.invalid_date_format";
+    public static final String INVALID_FULL_NAME_FORMAT = "profile.my_profile_invalid_full_name_format";
+    public static final String EMAIL_SUBJECT = "email.subject";
+    public static final String EMAIL_BODY = "email.body";
 
     private ResourceBundleMessageKey(){}
 }

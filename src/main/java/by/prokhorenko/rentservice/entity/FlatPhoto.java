@@ -10,33 +10,33 @@ import java.io.Serializable;
 
 /**
  * FlatPhoto entity. Has next properties:
- * <b>LOG</b>,<b>id</b>,<b>flatsId</b>,<b>flatPhotoData</b>,<b>base64PhotoData</b>
+ * <b>LOG</b>,<b>id</b>,<b>flatsId</b>,<b>flatPhotoData</b>,<b>base64PhotoData</b>.
  */
 public class FlatPhoto implements Serializable {
 
     /**
-     * Property - LOG is for logging errors
+     * Property - LOG is for logging errors.
      */
     private static final Logger LOG = LogManager.getLogger();
 
     /**
-     * Property - id
+     * Property - id.
      */
     private int id;
 
     /**
      * Property - flatsId for storing photo in database according to flat
-     * to which it belongs
+     * to which it belongs.
      */
     private int flatsId;
 
     /**
-     * Property - flatPhotoData, the data from which the photo consists of
+     * Property - flatPhotoData, the data from which the photo consists of.
      */
     private InputStream flatPhotoData;
 
     /**
-     * Property - base64PhotoData, data for displaying photo on the web page
+     * Property - base64PhotoData, data for displaying photo on the web page.
      */
     private String base64PhotoData;
 
@@ -49,9 +49,9 @@ public class FlatPhoto implements Serializable {
 
     /**
      * Initializes a newly created {@code FlatPhoto} object with
-     * fields which have been built with {@link FlatPhotoBuilder}
+     * fields which have been built with {@link FlatPhotoBuilder}.
      *
-     * @param flatPhotoBuilder
+     * @param flatPhotoBuilder {@link FlatPhotoBuilder}
      */
     public FlatPhoto(FlatPhotoBuilder flatPhotoBuilder) {
         this.id = flatPhotoBuilder.getId();
@@ -60,7 +60,7 @@ public class FlatPhoto implements Serializable {
     }
 
     /**
-     * Returns id of the {@code FlatPhoto} object
+     * Returns id of the {@code FlatPhoto} object.
      *
      * @return id
      */
@@ -69,7 +69,7 @@ public class FlatPhoto implements Serializable {
     }
 
     /**
-     * Sets id to the {@code FlatPhoto} object
+     * Sets id to the {@code FlatPhoto} object.
      *
      * @param id
      */
@@ -78,7 +78,7 @@ public class FlatPhoto implements Serializable {
     }
 
     /**
-     * Returns id of the flat, which photo belongs to ,to the {@code FlatPhoto} object
+     * Returns id of the flat, which photo belongs to ,to the {@code FlatPhoto} object.
      *
      * @return flatsId
      */
@@ -87,7 +87,7 @@ public class FlatPhoto implements Serializable {
     }
 
     /**
-     * Sets id of the flat, which photo belongs to, of the {@code FlatPhoto} object
+     * Sets id of the flat, which photo belongs to, of the {@code FlatPhoto} object.
      *
      * @param flatsId
      */
@@ -96,7 +96,7 @@ public class FlatPhoto implements Serializable {
     }
 
     /**
-     * Returns data which the photo consists of, of the {@code FlatPhoto} object
+     * Returns data which the photo consists of, of the {@code FlatPhoto} object.
      *
      * @return flatPhotoData
      */
@@ -105,16 +105,16 @@ public class FlatPhoto implements Serializable {
     }
 
     /**
-     * Sets data which the photo consists of, of the {@code FlatPhoto} object
+     * Sets data which the photo consists of, of the {@code FlatPhoto} object.
      *
-     * @param flatPhotoData
+     * @param flatPhotoData inputStream
      */
     public void setFlatPhotoData(InputStream flatPhotoData) {
         this.flatPhotoData = flatPhotoData;
     }
 
     /**
-     * Returns the data for displaying photo on a webPage of the {@code FlatPhoto} object
+     * Returns the data for displaying photo on a webPage of the {@code FlatPhoto} object.
      *
      * @return base64PhotoData
      */
@@ -123,7 +123,7 @@ public class FlatPhoto implements Serializable {
     }
 
     /**
-     * Sets the data for displaying photo on a webPage to the {@code FlatPhoto} object
+     * Sets the data for displaying photo on a webPage to the {@code FlatPhoto} object.
      *
      * @param base64PhotoData
      */
@@ -186,7 +186,7 @@ public class FlatPhoto implements Serializable {
     }
 
     /**
-     * Returns a hash code for this {@code FlatPhoto} object
+     * Returns a hash code for this {@code FlatPhoto} object.
      *
      * @return hashCode
      */
@@ -200,7 +200,7 @@ public class FlatPhoto implements Serializable {
     }
 
     /**
-     * Returns a {@code String} representation for this {@code FlatPhoto} object
+     * Returns a {@code String} representation for this {@code FlatPhoto} object.
      *
      * @return String
      */

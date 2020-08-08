@@ -1,5 +1,8 @@
-package by.prokhorenko.rentservice.controller;
+package by.prokhorenko.rentservice.controller.command;
 
+/**
+ * Class for storing pages url
+ */
 public class PagePath {
 
     public static final String INDEX = "index.jsp";

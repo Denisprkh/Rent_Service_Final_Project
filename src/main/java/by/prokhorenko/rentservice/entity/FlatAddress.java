@@ -1,44 +1,45 @@
 package by.prokhorenko.rentservice.entity;
 
 import by.prokhorenko.rentservice.builder.FlatAddressBuilder;
+
 import java.io.Serializable;
 
 /**
  * FlatAddress entity. Has next properties:
- * <b>id</b>,<b>city</b>,<b>district</b>,<b>street</b>,<b>house</b>
+ * <b>id</b>,<b>city</b>,<b>district</b>,<b>street</b>,<b>house</b>.
  */
 public class FlatAddress implements Serializable {
 
     /**
-     * Property - flatAddress id
+     * Property - flatAddress id.
      */
     private int id;
 
     /**
-     * Property - flatAddress city
+     * Property - flatAddress city.
      */
     private String city;
 
     /**
-     * Property - flatAddress district
+     * Property - flatAddress district.
      */
     private String district;
 
     /**
-     * Property - flatAddress street
+     * Property - flatAddress street.
      */
     private String street;
 
     /**
-     * Property - flatAddress house
+     * Property - flatAddress house.
      */
     private String house;
 
     /**
      * Initializes a newly created {@code FlatAddress} object with
-     * fields which have been built with {@link FlatAddressBuilder}
+     * fields which have been built with {@link FlatAddressBuilder}.
      *
-     * @param flatAddressBuilder
+     * @param flatAddressBuilder {@link FlatAddressBuilder}
      */
     public FlatAddress(FlatAddressBuilder flatAddressBuilder) {
         this.id = flatAddressBuilder.getId();
@@ -49,48 +50,15 @@ public class FlatAddress implements Serializable {
     }
 
     /**
-     * Initializes a newly created {@code FlatAddress} object with
-     * parameters:
-     *
-     * @param city
-     * @param district
-     * @param street
-     * @param house
-     */
-    public FlatAddress(String city, String district, String street, String house) {
-        this.city = city;
-        this.district = district;
-        this.street = street;
-        this.house = house;
-    }
-
-    /**
-     * Initializes a newly created {@code FlatAddress} object with
-     * parameters:
-     *
-     * @param city
-     * @param district
-     * @param street
-     * @param house
-     */
-    public FlatAddress(int id, String city, String district, String street, String house) {
-        this.id = id;
-        this.city = city;
-        this.district = district;
-        this.street = street;
-        this.house = house;
-    }
-
-    /**
      * Initializes a newly created {@code FlatAddress} object so that it represents
      * an empty FlatAddress entity.
      */
-    public FlatAddress(){
+    public FlatAddress() {
 
     }
 
     /**
-     * Returns flat addresses id of an {@code FlatAddress} object
+     * Returns flat addresses id of an {@code FlatAddress} object.
      *
      * @return id
      */
@@ -99,16 +67,16 @@ public class FlatAddress implements Serializable {
     }
 
     /**
-     * Sets flat addresses id to an {@code FlatAddress} object
+     * Sets flat addresses id to an {@code FlatAddress} object.
      *
-     * @param id
+     * @param id flat addresses id
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * Returns flat addresses city of an {@code FlatAddress} object
+     * Returns flat addresses city of an {@code FlatAddress} object.
      *
      * @return city
      */
@@ -117,16 +85,16 @@ public class FlatAddress implements Serializable {
     }
 
     /**
-     * Sets flat addresses city to an {@code FlatAddress} object
+     * Sets flat addresses city to an {@code FlatAddress} object.
      *
-     * @param city
+     * @param city city
      */
     public void setCity(String city) {
         this.city = city;
     }
 
     /**
-     * Returns flat addresses district of an {@code FlatAddress} object
+     * Returns flat addresses district of an {@code FlatAddress} object.
      *
      * @return district
      */
@@ -135,16 +103,16 @@ public class FlatAddress implements Serializable {
     }
 
     /**
-     * Sets flat addresses district to an {@code FlatAddress} object
+     * Sets flat addresses district to an {@code FlatAddress} object.
      *
-     * @param district
+     * @param district districts name
      */
     public void setDistrict(String district) {
         this.district = district;
     }
 
     /**
-     * Returns flat addresses street of an {@code FlatAddress} object
+     * Returns flat addresses street of an {@code FlatAddress} object.
      *
      * @return
      */
@@ -153,16 +121,16 @@ public class FlatAddress implements Serializable {
     }
 
     /**
-     * Sets flat addresses street to an {@code FlatAddress} object
+     * Sets flat addresses street to an {@code FlatAddress} object.
      *
-     * @param street
+     * @param street streets name
      */
     public void setStreet(String street) {
         this.street = street;
     }
 
     /**
-     * Returns flat addresses house of an {@code FlatAddress} object
+     * Returns flat addresses house of an {@code FlatAddress} object.
      *
      * @return
      */
@@ -171,9 +139,9 @@ public class FlatAddress implements Serializable {
     }
 
     /**
-     * Sets flat addresses house to an {@code FlatAddress} object
+     * Sets flat addresses house to an {@code FlatAddress} object.
      *
-     * @param house
+     * @param house house number
      */
     public void setHouse(String house) {
         this.house = house;
@@ -204,7 +172,7 @@ public class FlatAddress implements Serializable {
     }
 
     /**
-     * Returns a hash code for this {@code FlatAddress} object
+     * Returns a hash code for this {@code FlatAddress} object.
      *
      * @return hashCode
      */
@@ -219,7 +187,7 @@ public class FlatAddress implements Serializable {
     }
 
     /**
-     * Returns a {@code String} representation for this {@code FlatAddress} object
+     * Returns a {@code String} representation for this {@code FlatAddress} object.
      *
      * @return String
      */

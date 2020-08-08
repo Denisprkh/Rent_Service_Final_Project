@@ -1,7 +1,7 @@
 package by.prokhorenko.rentservice.controller.command.impl;
 
 import by.prokhorenko.rentservice.controller.DisPathType;
-import by.prokhorenko.rentservice.controller.PagePath;
+import by.prokhorenko.rentservice.controller.command.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Attribute;
 import by.prokhorenko.rentservice.controller.command.Command;
@@ -14,6 +14,7 @@ import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.RequestService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -22,7 +23,8 @@ public class ApproveRequestCommand implements Command {
 
     private static final Logger LOG = LogManager.getLogger();
     private RequestService requestService;
-    public ApproveRequestCommand(){
+
+    public ApproveRequestCommand() {
         this.requestService = ServiceFactory.getInstance().getRequestService();
     }
 
@@ -35,18 +37,18 @@ public class ApproveRequestCommand implements Command {
         Router router;
         try {
             Request approvingRequest = requestService.findRequestById(requestsId);
-            if(approvingRequest.getAdvertisement().getAuthor().getId() == usersId){
+            if (approvingRequest.getAdvertisement().getAuthor().getId() == usersId) {
                 requestService.approveRequestById(requestsId);
                 String redirectUrl = buildRedirectUrl(request, CommandName.REQUESTS_FOR_MY_ADS_PAGE.getCommandName());
                 router = new Router(redirectUrl);
                 List<Request> requestsOnUsersAdvertisements = requestService.findRequestsOnUsersAdvertisement(usersId);
-                session.setAttribute(Attribute.REQUESTS_ON_USERS_ADVERTISEMENTS_LIST,requestsOnUsersAdvertisements);
-            }else{
-                router = new Router(DisPathType.FORWARD,PagePath.WRONG_REQUEST);
+                session.setAttribute(Attribute.REQUESTS_ON_USERS_ADVERTISEMENTS_LIST, requestsOnUsersAdvertisements);
+            } else {
+                router = new Router(DisPathType.FORWARD, PagePath.WRONG_REQUEST);
             }
         } catch (ServiceException e) {
             LOG.error(e);
-            router = new Router(DisPathType.FORWARD,PagePath.SERVER_ERROR_PAGE);
+            router = new Router(DisPathType.FORWARD, PagePath.SERVER_ERROR_PAGE);
         }
         return router;
     }

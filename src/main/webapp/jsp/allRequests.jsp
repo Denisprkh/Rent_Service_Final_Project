@@ -24,41 +24,41 @@
     </div>
     <div class="all_ads_handler">
         <div class="formyads">
-                    <c:forEach var="elem" items="${adminAllRequestsList}">
-                        <div class="card-ads">
-                            <div class="card-ads-info">
-                                <div class="name">
-                                    <a href="${pageContext.request.contextPath}/controller?command=advertisementPage&advertisementId=${elem.advertisement.id}">${elem.advertisement.title}</a>
-                                </div>
-                                <div class="date-from-to">
-                                    <ctg:date-time value="${elem.startDate}"/>-<ctg:date-time
-                                        value="${elem.endDate}"/>
-                                </div>
-                                <div class="date-to">
-                                    <ctg:date-time value="${elem.applicationDate}"/>
-                                </div>
-                                <div class="phone">
-                                    ${elem.advertisement.author.phone}
-                                </div>
-                            </div>
-                            <c:choose>
-                                <c:when test="${elem.isApproved() ne true}">
-                                    <a href="#"
-                                       class="btn-accept">
-                                        <img src="${pageContext.request.contextPath}/img/false.svg" alt="accept">
-                                    </a>
-                                </c:when>
-                                <c:otherwise>
-                                    <a href="#"
-                                       class="btn-accept">
-                                        <img src="${pageContext.request.contextPath}/img/true.svg"
-                                             alt="accept">
-                                    </a>
-                                </c:otherwise>
-                            </c:choose>
-
+            <c:forEach var="elem" items="${adminAllRequestsList}">
+                <div class="card-ads">
+                    <div class="card-ads-info">
+                        <div class="name">
+                            <a href="${pageContext.request.contextPath}/controller?command=advertisementPage&advertisementId=${elem.advertisement.id}">${elem.advertisement.title}</a>
                         </div>
-                    </c:forEach>
+                        <div class="date-from-to">
+                            <ctg:date-time value="${elem.startDate}"/>-<ctg:date-time
+                                value="${elem.endDate}"/>
+                        </div>
+                        <div class="date-to">
+                            <ctg:date-time value="${elem.applicationDate}"/>
+                        </div>
+                        <div class="phone">
+                                ${elem.advertisement.author.phone}
+                        </div>
+                    </div>
+                    <c:choose>
+                        <c:when test="${elem.isApproved() ne true}">
+                            <a href="#"
+                               class="btn-accept">
+                                <img src="${pageContext.request.contextPath}/img/false.svg" alt="accept">
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="#"
+                               class="btn-accept">
+                                <img src="${pageContext.request.contextPath}/img/true.svg"
+                                     alt="accept">
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
+
+                </div>
+            </c:forEach>
         </div>
         <div class="card-page">
             <c:if test="${currentPage != 1 && pagesQuantity > 0}">

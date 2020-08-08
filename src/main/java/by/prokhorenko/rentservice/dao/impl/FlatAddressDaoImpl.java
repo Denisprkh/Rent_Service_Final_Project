@@ -8,6 +8,7 @@ import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,27 +18,30 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Implementation of {@link FlatAddress}
+ * Implementation of {@link FlatAddress}.
  */
 public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddressDao {
 
     private static final FlatAddressDao INSTANCE = new FlatAddressDaoImpl();
-    private FlatAddressDaoImpl(){
+
+    private FlatAddressDaoImpl() {
         this.connection = ConnectionPool.INSTANCE.getConnection();
     }
-    public static FlatAddressDao getInstance(){
+
+    public static FlatAddressDao getInstance() {
         return INSTANCE;
     }
+
     private static final Logger LOG = LogManager.getLogger();
 
     @Override
     public Optional<FlatAddress> add(FlatAddress flatAddress) throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.ADD_FLAT_ADDRESS,
-                Statement.RETURN_GENERATED_KEYS)){
-            statement.setString(1,flatAddress.getCity());
-            statement.setString(2,flatAddress.getDistrict());
-            statement.setString(3,flatAddress.getStreet());
-            statement.setString(4,flatAddress.getHouse());
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.ADD_FLAT_ADDRESS,
+                Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, flatAddress.getCity());
+            statement.setString(2, flatAddress.getDistrict());
+            statement.setString(3, flatAddress.getStreet());
+            statement.setString(4, flatAddress.getHouse());
             int id = executeUpdateAndGetGeneratedId(statement);
             flatAddress.setId(id);
             return Optional.of(flatAddress);
@@ -48,10 +52,10 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
 
     @Override
     public List<FlatAddress> findAll(int start, int total) throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_FLAT_ADDRESSES);
-            ResultSet resultSet = statement.executeQuery()) {
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_FLAT_ADDRESSES);
+             ResultSet resultSet = statement.executeQuery()) {
             List<FlatAddress> flatAddresses = new ArrayList<>();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 flatAddresses.add(buildFlatAddressFromResultSet(resultSet));
             }
             return flatAddresses;
@@ -63,38 +67,47 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
     @Override
     public Optional<FlatAddress> findById(int id) throws DaoException {
         ResultSet resultSet = null;
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_ADDRESS_BY_ID)) {
-            statement.setInt(1,id);
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_FLAT_ADDRESS_BY_ID)) {
+            statement.setInt(1, id);
             resultSet = statement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 return Optional.of(buildFlatAddressFromResultSet(resultSet));
             }
             return Optional.empty();
         } catch (SQLException e) {
             throw new DaoException(e);
-        }finally {
+        } finally {
             closeResultSet(resultSet);
         }
     }
 
     @Override
     public Optional<FlatAddress> update(FlatAddress flatAddress) throws DaoException {
-        try(PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_FLAT_ADDRESS_BY_ID)) {
-            statement.setString(1,flatAddress.getCity());
-            statement.setString(2,flatAddress.getDistrict());
-            statement.setString(3,flatAddress.getStreet());
-            statement.setString(4,flatAddress.getHouse());
-            statement.setInt(5,flatAddress.getId());
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_FLAT_ADDRESS_BY_ID)) {
+            statement.setString(1, flatAddress.getCity());
+            statement.setString(2, flatAddress.getDistrict());
+            statement.setString(3, flatAddress.getStreet());
+            statement.setString(4, flatAddress.getHouse());
+            statement.setInt(5, flatAddress.getId());
             updateEntity(statement);
             return findById(flatAddress.getId());
         } catch (SQLException e) {
-           throw new DaoException(e);
+            throw new DaoException(e);
         }
     }
 
     @Override
     public int findQuantity() throws DaoException {
-        return 0;
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_FLAT_ADDRESSES_QUANTITY);
+             ResultSet resultSet = statement.executeQuery()) {
+            int flatAddressesQuantity = 0;
+            if (resultSet.next()) {
+                resultSet.getInt(1);
+            }
+            return flatAddressesQuantity;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override

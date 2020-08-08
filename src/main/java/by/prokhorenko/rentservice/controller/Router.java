@@ -1,5 +1,7 @@
 package by.prokhorenko.rentservice.controller;
 
+import by.prokhorenko.rentservice.controller.command.PagePath;
+
 public class Router {
 
     private String page = PagePath.MAIN;

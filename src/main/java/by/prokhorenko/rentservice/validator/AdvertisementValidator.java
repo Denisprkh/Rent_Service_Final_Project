@@ -1,20 +1,25 @@
 package by.prokhorenko.rentservice.validator;
 
+import by.prokhorenko.rentservice.entity.Advertisement;
 import by.prokhorenko.rentservice.entity.AdvertisementDataHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * Class for validating data for building {@link Advertisement}.
+ */
 public class AdvertisementValidator {
 
     private static final String COMMON_STRING_DATA_REGEX = "^[a-zA-Zа-яА-Я]{2,45}$";
     private static final String PRICE_REGEX = "^[0-9.]{1,45}$";
     private static final String LOCATION_REGEX = "^[a-zA-Zа-яА-Я.-]{2,45}$";
-    private static final String HOUSE_NUMBER_REGEX = "^\\d+[a-z/\\d]*$";
+    private static final String HOUSE_NUMBER_REGEX = "^\\d+[a-zа-я\\/\\d]{0,10}$";
     private static final String ROOMS_REGEX = "^[0-9]{1,10}$";
     private static final String AREA_REGEX = "^[0-9.]{1,45}$";
     private static final Logger LOG = LogManager.getLogger();
+
     private AdvertisementValidator() {
 
     }
@@ -23,10 +28,16 @@ public class AdvertisementValidator {
         private static AdvertisementValidator INSTANCE = new AdvertisementValidator();
     }
 
-    public static AdvertisementValidator getInstance(){
+    public static AdvertisementValidator getInstance() {
         return AdvertisementValidatorHolder.INSTANCE;
     }
 
+    /**
+     * Returns List of {@code Boolean} which represents if data is correct.
+     *
+     * @param handler {@link AdvertisementDataHandler}
+     * @return List of {@code Boolean}
+     */
     public List<Boolean> validateAdvertisementsData(AdvertisementDataHandler handler) {
         List<Boolean> validations = List.of(
                 advertisementTitleDataIsValid(handler.getTitle()),
@@ -38,7 +49,6 @@ public class AdvertisementValidator {
                 roomsDataIsValid(handler.getRooms()),
                 areaDataIsValid(handler.getArea())
         );
-        LOG.debug(validations);
         return validations;
     }
 

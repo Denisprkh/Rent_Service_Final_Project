@@ -57,7 +57,7 @@ public abstract class AbstractCommonDao {
     /**
      * Closes connection.
      *
-     * @param connection
+     * @param connection connection
      */
     protected void closeConnection(Connection connection) {
         try {
@@ -132,7 +132,7 @@ public abstract class AbstractCommonDao {
     /**
      * Updates entity by id and return the boolean result successfully or not
      *
-     * @param id
+     * @param id entities id
      * @param sqlQuery
      * @return boolean true if successfully and vice versa
      * @throws DaoException if an SQLException occurs
@@ -318,7 +318,7 @@ public abstract class AbstractCommonDao {
     /**
      * Converts {@code long} to {@code LocalDateTime}
      *
-     * @param millis
+     * @param millis date in millis
      * @return LocalDateTime form millis
      */
     private LocalDateTime convertLongToDate(long millis) {

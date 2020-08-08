@@ -2,7 +2,7 @@ package by.prokhorenko.rentservice.controller.command.impl;
 
 
 import by.prokhorenko.rentservice.controller.DisPathType;
-import by.prokhorenko.rentservice.controller.PagePath;
+import by.prokhorenko.rentservice.controller.command.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
 import by.prokhorenko.rentservice.controller.command.RequestParameter;
@@ -35,7 +35,7 @@ public class BanUserCommand implements Command {
             router = new Router(redirectUrl);
         } catch (ServiceException e) {
             LOG.error(e);
-            router = new Router(DisPathType.FORWARD,PagePath.SERVER_ERROR_PAGE);
+            router = new Router(DisPathType.FORWARD, PagePath.SERVER_ERROR_PAGE);
         }
         return router;
     }

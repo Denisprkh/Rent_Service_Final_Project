@@ -9,47 +9,47 @@ import by.prokhorenko.rentservice.entity.FlatPhoto;
 public class FlatDescriptionBuilder {
 
     /**
-     * Id
+     * Id.
      */
     private int id;
 
     /**
-     * Rooms
+     * Rooms.
      */
     private int rooms;
 
     /**
-     * Living area
+     * Living area.
      */
     private float livingArea;
 
     /**
-     * Whether has furniture
+     * Whether has furniture.
      */
     private boolean hasFurniture;
 
     /**
-     * Whether has home appliances
+     * Whether has home appliances.
      */
     private boolean hasHomeAppliances;
 
     /**
-     * Whether has the Internet
+     * Whether has the Internet.
      */
     private boolean hasTheInternet;
 
     /**
-     * Whether possible with child
+     * Whether possible with child.
      */
     private boolean possibleWithChild;
 
     /**
-     * Whether possible with pets
+     * Whether possible with pets.
      */
     private boolean possibleWithPets;
 
     /**
-     * Users own description
+     * Users own description.
      */
     private String usersDescription;
 
@@ -62,7 +62,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Returns id
+     * Returns id.
      *
      * @return id
      */
@@ -71,7 +71,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Sets id and returns {@code FlatDescriptionBuilder} object with built field
+     * Sets id and returns {@code FlatDescriptionBuilder} object with built field.
      *
      * @param id
      * @return {@see FlatDescriptionBuilder}
@@ -82,7 +82,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Returns rooms
+     * Returns rooms.
      *
      * @return rooms
      */
@@ -91,7 +91,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Sets rooms and returns {@code FlatDescriptionBuilder} object with built field
+     * Sets rooms and returns {@code FlatDescriptionBuilder} object with built field.
      *
      * @param rooms
      * @return {@see FlatDescriptionBuilder}
@@ -102,7 +102,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Returns living area
+     * Returns living area.
      *
      * @return livingArea
      */
@@ -111,7 +111,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Sets living area and returns {@code FlatDescriptionBuilder} object with built field
+     * Sets living area and returns {@code FlatDescriptionBuilder} object with built field.
      *
      * @param livingArea
      * @return {@see FlatDescriptionBuilder}
@@ -122,7 +122,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Returns whether has furniture
+     * Returns whether has furniture.
      *
      * @return hasFurniture
      */
@@ -131,7 +131,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Sets whether has furniture and returns {@code FlatDescriptionBuilder} object with built field
+     * Sets whether has furniture and returns {@code FlatDescriptionBuilder} object with built field.
      *
      * @param hasFurniture
      * @return {@see FlatDescriptionBuilder}
@@ -142,7 +142,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Returns whether has home appliances
+     * Returns whether has home appliances.
      *
      * @return hasHomeAppliacnes
      */
@@ -151,7 +151,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Sets whether has home appliances and returns {@code FlatDescriptionBuilder} object with built field
+     * Sets whether has home appliances and returns {@code FlatDescriptionBuilder} object with built field.
      *
      * @param hasHomeAppliances
      * @return {@see FlatDescriptionBuilder}
@@ -162,7 +162,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Returns whether has the Internet
+     * Returns whether has the Internet.
      *
      * @return hasTheInternet
      */
@@ -171,7 +171,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Sets whether has the Internet and returns {@code FlatDescriptionBuilder} object with built field
+     * Sets whether has the Internet and returns {@code FlatDescriptionBuilder} object with built field.
      *
      * @param hasTheInternet
      * @return {@see FlatDescriptionBuilder}
@@ -182,7 +182,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Returns whether is it possible with child
+     * Returns whether is it possible with child.
      *
      * @return possibleWithChild
      */
@@ -191,7 +191,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Sets whether is it possible with child and returns {@code FlatDescriptionBuilder} object with built field
+     * Sets whether is it possible with child and returns {@code FlatDescriptionBuilder} object with built field.
      *
      * @param possibleWithChild
      * @return {@see FlatDescriptionBuilder}
@@ -202,7 +202,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Returns whether is it possible with pets
+     * Returns whether is it possible with pets.
      *
      * @return possibleWithPets
      */
@@ -211,7 +211,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Sets whether is it possible with pets and returns {@code FlatDescriptionBuilder} object with built field
+     * Sets whether is it possible with pets and returns {@code FlatDescriptionBuilder} object with built field.
      *
      * @param possibleWithPets
      * @return {@see FlatDescriptionBuilder}
@@ -222,7 +222,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Returns users description
+     * Returns users description.
      *
      * @return usersDescription
      */
@@ -231,7 +231,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Sets users description and returns {@code FlatDescriptionBuilder} object with built field
+     * Sets users description and returns {@code FlatDescriptionBuilder} object with built field.
      *
      * @param usersDescription
      * @return {@see FlatDescriptionBuilder}
@@ -242,7 +242,7 @@ public class FlatDescriptionBuilder {
     }
 
     /**
-     * Returns newly created {@link FlatDescription} with fields, built in builder
+     * Returns newly created {@link FlatDescription} with fields, built in builder.
      *
      * @return {@see FlatDescription}
      */

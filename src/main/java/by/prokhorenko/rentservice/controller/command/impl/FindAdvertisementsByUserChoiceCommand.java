@@ -2,7 +2,7 @@ package by.prokhorenko.rentservice.controller.command.impl;
 
 import by.prokhorenko.rentservice.builder.UserChoiceDataHandlerBuilder;
 import by.prokhorenko.rentservice.controller.DisPathType;
-import by.prokhorenko.rentservice.controller.PagePath;
+import by.prokhorenko.rentservice.controller.command.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Attribute;
 import by.prokhorenko.rentservice.controller.command.Command;
@@ -15,6 +15,7 @@ import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.AdvertisementService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -42,7 +43,7 @@ public class FindAdvertisementsByUserChoiceCommand implements Command {
             if (previousHandler == null || newSearchFlag != null) {
                 session.setAttribute(Attribute.ADVERTISEMENT_FILTER, userChoiceDataHandler);
                 handlerForSearch = userChoiceDataHandler;
-            }else{
+            } else {
                 handlerForSearch = previousHandler;
             }
             CommandUtil.definePaginationContext(request,
@@ -55,7 +56,7 @@ public class FindAdvertisementsByUserChoiceCommand implements Command {
             LOG.error(e);
             page = PagePath.SERVER_ERROR_PAGE;
         }
-        return new Router(DisPathType.FORWARD,page);
+        return new Router(DisPathType.FORWARD, page);
     }
 
     private UserChoiceDataHandler buildDataHandlerFromRequest(HttpServletRequest request) {

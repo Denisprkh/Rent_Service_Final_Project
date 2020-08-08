@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Implementation of {@link AdvertisementDao}
+ * Implementation of {@link AdvertisementDao}.
  */
 public class AdvertisementDaoImpl extends AbstractCommonDao implements AdvertisementDao {
 

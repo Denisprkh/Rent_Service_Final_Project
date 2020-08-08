@@ -10,6 +10,8 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/dependencyLibs/inputmask.dependencyLib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/inputmask.min.js"></script>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -22,25 +24,25 @@
                 </div>
             </div>
             <a href="${pageContext.request.contextPath}/controller?command=myRequestsPage">
-            <div class="left-btn__item btn-my_application">
-                <div class="left-btn__item_text btn-my_application">
-                    <fmt:message key="profile.my_requests"/>
+                <div class="left-btn__item btn-my_application">
+                    <div class="left-btn__item_text btn-my_application">
+                        <fmt:message key="profile.my_requests"/>
+                    </div>
                 </div>
-            </div>
             </a>
             <a href="${pageContext.request.contextPath}/controller?command=myAdsPage">
-            <div class="left-btn__item btn-my_ads">
-                <div class="left-btn__item_text btn-my_ads">
-                    <fmt:message key="profile.my_ads"/>
+                <div class="left-btn__item btn-my_ads">
+                    <div class="left-btn__item_text btn-my_ads">
+                        <fmt:message key="profile.my_ads"/>
+                    </div>
                 </div>
-            </div>
             </a>
             <a href="${pageContext.request.contextPath}/controller?command=requestsForMyAdsPage">
-            <div class="left-btn__item btn-my_formyads">
-                <div class="left-btn__item_text btn-my_formyads">
-                    <fmt:message key="profile.requests_for_my_ads"/>
+                <div class="left-btn__item btn-my_formyads">
+                    <div class="left-btn__item_text btn-my_formyads">
+                        <fmt:message key="profile.requests_for_my_ads"/>
+                    </div>
                 </div>
-            </div>
             </a>
             <a href="${pageContext.request.contextPath}/controller?command=allUsersPage&currentPage=1">
                 <div class="left-btn__item btn-all_users">
@@ -57,11 +59,11 @@
                 </div>
             </a>
             <a href="${pageContext.request.contextPath}/controller?command=allRequestsPage&currentPage=1">
-            <div class="left-btn__item btn-all_requests">
-                <div class="left-btn__item_text btn-all_requests">
-                    <fmt:message key="admin_profile.all_requests"/>
+                <div class="left-btn__item btn-all_requests">
+                    <div class="left-btn__item_text btn-all_requests">
+                        <fmt:message key="admin_profile.all_requests"/>
+                    </div>
                 </div>
-            </div>
             </a>
         </div>
         <div class="right-profile">
@@ -80,7 +82,8 @@
                                     ${user.firstName} ${user.lastName}
                                 </div>
                                 <input type="text" class="name-botton input__profile none" name="updatedFullName"
-                                       data-type="profile-input">
+                                       data-type="profile-input" required pattern="^[a-zA-Z-а-яА-Я]{2,45}\s[a-zA-Z-а-яА-Я]{2,45}$"
+                                       title="<fmt:message key="profile.my_profile_invalid_full_name_format"/>"/>
                                 <div class="name-top">
                                     <fmt:message key="profile.my_profile_email"/>
                                 </div>
@@ -88,7 +91,8 @@
                                     ${user.email}
                                 </div>
                                 <input type="text" class="name-botton input__profile none" name="updatedEmail"
-                                       data-type="profile-input">
+                                       data-type="profile-input" required pattern="[a-zA-z0-9_.-]{1,35}@[a-zA-z0-9_-]{2,15}\.[a-z]{2,10}"
+                                       title="<fmt:message key="sign_up_form.invalid_email_format"/>"/>
                                 <div class="name-top">
                                     <fmt:message key="profile.my_profile_phone_number"/>
                                 </div>
@@ -96,7 +100,9 @@
                                     ${user.phone}
                                 </div>
                                 <input type="phone" class="name-botton input__profile none" name="updatedPhone"
-                                       data-type="profile-input">
+                                       data-type="profile-input" required
+                                       pattern="^(\+375\([\d]{2}\)[\d]{3}\-[\d]{2}\-[\d]{2})$" title="
+                        <fmt:message key="sign_up_form.invalid_phone_number_format"/>"/>
                             </div>
                             <div class="btn-profile__button flex">
                                 <div class="profile-btn-edit" id="profile-edit">
@@ -121,165 +127,10 @@
                 </div>
             </div>
         </div>
-<%--        <div class="my_applications card-btn none">--%>
-<%--            <div class="profile-top">--%>
-<%--                <fmt:message key="profile.my_requests"/>--%>
-<%--            </div>--%>
-<%--            <div class="card-profile">--%>
-<%--                <div class="formyads">--%>
-<%--                    <div class="top-name-ads">--%>
-
-<%--                    </div>--%>
-<%--                    <c:choose>--%>
-<%--                        <c:when test="${empty usersRequestList}">--%>
-<%--                            <div class="request_info_text">--%>
-<%--                                Вы не оставили ни одной заявки--%>
-<%--                            </div>--%>
-<%--                        </c:when>--%>
-<%--                        <c:otherwise>--%>
-<%--                            <c:forEach var="elem" items="${usersRequestList}">--%>
-<%--                                <div class="card-ads">--%>
-<%--                                    <div class="card-ads-info">--%>
-<%--                                        <div class="name">--%>
-<%--                                            <a href="${pageContext.request.contextPath}/controller?command=ADVERTISEMENT_PAGE&advertisementId=${elem.advertisement.id}">${elem.advertisement.title}</a>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="date-from-to">--%>
-<%--                                            <ctg:date-time value="${elem.startDate}"/>-<ctg:date-time--%>
-<%--                                                value="${elem.endDate}"/>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="date-to">--%>
-<%--                                            <ctg:date-time value="${elem.applicationDate}"/>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="phone">--%>
-<%--                                            <c:choose>--%>
-<%--                                                <c:when test="${elem.isApproved() eq true}">${elem.advertisement.author.phone}</c:when>--%>
-<%--                                                <c:otherwise>************</c:otherwise>--%>
-<%--                                            </c:choose>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                    <c:choose>--%>
-<%--                                        <c:when test="${elem.isApproved() ne true}">--%>
-<%--                                            <a href="#"--%>
-<%--                                               class="btn-accept">--%>
-<%--                                                <img src="${pageContext.request.contextPath}/img/false.svg" alt="accept">--%>
-<%--                                            </a>--%>
-<%--                                        </c:when>--%>
-<%--                                        <c:otherwise>--%>
-<%--                                            <a href="#"--%>
-<%--                                               class="btn-accept">--%>
-<%--                                                <img src="${pageContext.request.contextPath}/img/true.svg"--%>
-<%--                                                     alt="accept">--%>
-<%--                                            </a>--%>
-<%--                                        </c:otherwise>--%>
-<%--                                    </c:choose>--%>
-
-<%--                                </div>--%>
-<%--                            </c:forEach>--%>
-<%--                        </c:otherwise>--%>
-<%--                    </c:choose>--%>
-
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div class="my_ads card-btn none">--%>
-<%--            <div class="profile-top">--%>
-<%--                <fmt:message key="profile.my_ads"/>--%>
-<%--            </div>--%>
-<%--            <div class="card-profile">--%>
-<%--                <div class="formyads">--%>
-<%--                    <div class="btn-row-create-ads">--%>
-<%--                        <div class="btn-create-ads">--%>
-<%--                            <a href="${pageContext.request.contextPath}/controller?command=add_an_advertisement_page">--%>
-<%--                                <fmt:message key="profile.my_ads_create_button"/> </a>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="top-name-ads">--%>
-
-<%--                    </div>--%>
-<%--                    <c:forEach var="elem" items="${sessionScope.usersAdvertisementList}">--%>
-<%--                        <div class="card-ads-my-ads">--%>
-<%--                            <div class="card-ads">--%>
-<%--                                <div class="card-ads-info my-ads">--%>
-<%--                                    <div class="name">--%>
-<%--                                        <a href="${pageContext.request.contextPath}/controller?command=ADVERTISEMENT_PAGE&advertisementId=${elem.id}">${elem.title}</a>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="date-from-to">--%>
-<%--                                        <ctg:date-time value="${elem.dateOfCreation}"/>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="price">--%>
-<%--                                            ${elem.price}$--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="card-ads-btn">--%>
-<%--                                <c:choose>--%>
-<%--                                    <c:when test="${elem.flat.isFree() eq true}">--%>
-<%--                                        <a class="btn-delete" href=--%>
-<%--                                                "${pageContext.request.contextPath}/controller?command=SET_FLAT_IN_RENT&flatId=${elem.flat.id}&advertisementId=${elem.id}">--%>
-<%--                                            <fmt:message key="profile.my_ads_rented_btn"/> </a>--%>
-<%--                                    </c:when>--%>
-<%--                                    <c:otherwise><a class="btn-update" href=--%>
-<%--                                            "${pageContext.request.contextPath}/controller?command=SET_FLAT_IS_NOT_IN_RENT&flatId=${elem.flat.id}&advertisementId=${elem.id}">--%>
-<%--                                        <fmt:message key="profile.my_ads_not_rented_btn"/> </a></c:otherwise>--%>
-<%--                                </c:choose>--%>
-<%--                                <a class="btn-update"--%>
-<%--                                   href="${pageContext.request.contextPath}/controller?command=UPDATE_ADVERTISEMENT_PAGE&advertisementId=${elem.id}">--%>
-<%--                                    <fmt:message key="profile.my_ads_update"/>--%>
-<%--                                </a>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </c:forEach>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div class="application_for_my_ads card-btn none">--%>
-<%--            <div class="profile-top">--%>
-<%--                <fmt:message key="profile.requests_for_my_ads"/>--%>
-<%--            </div>--%>
-<%--            <div class="card-profile">--%>
-<%--                <div class="formyads">--%>
-<%--                    <div class="top-name-ads">--%>
-
-<%--                    </div>--%>
-<%--                    <c:forEach var="elem" items="${requestsOnUsersAdvertisementsList}">--%>
-<%--                        <div class="card-ads">--%>
-<%--                            <div class="card-ads-info">--%>
-<%--                                <div class="name">--%>
-<%--                                    <a href="${pageContext.request.contextPath}/controller?command=ADVERTISEMENT_PAGE&advertisementId=${elem.advertisement.id}">${elem.advertisement.title}</a>--%>
-<%--                                </div>--%>
-<%--                                <div class="date-from-to">--%>
-<%--                                    <ctg:date-time value="${elem.startDate}"/>-<ctg:date-time--%>
-<%--                                        value="${elem.endDate}"/>--%>
-<%--                                </div>--%>
-<%--                                <div class="date-to">--%>
-<%--                                    <ctg:date-time value="${elem.applicationDate}"/>--%>
-<%--                                </div>--%>
-<%--                                <div class="phone">--%>
-<%--                                        ${elem.user.phone}--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <c:choose>--%>
-<%--                                <c:when test="${elem.isApproved() ne true}">--%>
-<%--                                    <a href="${pageContext.request.contextPath}/controller?command=APPROVE_REQUEST&requestId=${elem.id}"--%>
-<%--                                       class="btn-accept">--%>
-<%--                                        <img src="${pageContext.request.contextPath}/img/true.svg" alt="accept">--%>
-<%--                                    </a>--%>
-<%--                                </c:when>--%>
-<%--                                <c:otherwise>--%>
-<%--                                    <a href="${pageContext.request.contextPath}/controller?command=DISAPPROVE_REQUEST&requestId=${elem.id}"--%>
-<%--                                       class="btn-accept">--%>
-<%--                                        <img src="${pageContext.request.contextPath}/img/false.svg" alt="accept">--%>
-<%--                                    </a>--%>
-<%--                                </c:otherwise>--%>
-<%--                            </c:choose>--%>
-
-<%--                        </div>--%>
-<%--                    </c:forEach>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
     </div>
 </section>
 <script src="${pageContext.request.contextPath}/js/profile.js"></script>
+<script src="${pageContext.request.contextPath}/js/signUp.js"></script>
+<script src="${pageContext.request.contextPath}/js/xssProtection.js"></script>
 </body>
 </html>

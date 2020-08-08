@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Implementation of {@link AdvertisementService}
+ * Implementation of {@link AdvertisementService}.
  */
 public class AdvertisementServiceImpl implements AdvertisementService {
 

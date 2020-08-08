@@ -1,7 +1,7 @@
 package by.prokhorenko.rentservice.controller.command.impl;
 
 import by.prokhorenko.rentservice.builder.*;
-import by.prokhorenko.rentservice.controller.PagePath;
+import by.prokhorenko.rentservice.controller.command.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.*;
 import by.prokhorenko.rentservice.entity.*;
@@ -12,6 +12,7 @@ import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.AdvertisementService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -45,20 +46,20 @@ public class AddNewAdvertisementCommand implements Command {
             FlatAddress flatAddress = buildFlatAddressFromDataHandler(dataHandler);
             FlatDescription flatDescription = buildFlatDescriptionFromDataHandler(dataHandler);
             Flat flat = buildFlat(flatDescription, flatAddress, flatPhotos);
-            Advertisement advertisement = buildAdvertisementFromDataHandler(author,dataHandler,flat);
+            Advertisement advertisement = buildAdvertisementFromDataHandler(author, dataHandler, flat);
             advertisementService.addAnAdvertisement(advertisement);
             session.removeAttribute(Attribute.ADD_AN_ADVERTISEMENT_ERROR_MESSAGE);
             String redirectUrl = buildRedirectUrl(request, CommandName.MY_ADS_PAGE.getCommandName());
             router.setPage(redirectUrl);
         } catch (ServiceException e) {
             LOG.error(e);
-            if(e.getCause() instanceof DaoException){
+            if (e.getCause() instanceof DaoException) {
                 router.setForward();
                 router.setPage(PagePath.SERVER_ERROR_PAGE);
-            }else{
-                String redirectUrl = buildRedirectUrl(request,CommandName.ADD_AN_ADVERTISEMENT_PAGE.getCommandName());
+            } else {
+                String redirectUrl = buildRedirectUrl(request, CommandName.ADD_AN_ADVERTISEMENT_PAGE.getCommandName());
                 router.setPage(redirectUrl);
-                session.setAttribute(Attribute.ADD_AN_ADVERTISEMENT_ERROR_MESSAGE,e.getMessage());
+                session.setAttribute(Attribute.ADD_AN_ADVERTISEMENT_ERROR_MESSAGE, e.getMessage());
             }
         }
         return router;

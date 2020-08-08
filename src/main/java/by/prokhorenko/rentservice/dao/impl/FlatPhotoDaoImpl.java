@@ -144,7 +144,6 @@ public class FlatPhotoDaoImpl extends AbstractCommonDao implements FlatPhotoDao 
             }
             return Optional.empty();
         } catch (SQLException e) {
-            LOG.error(e.getMessage() + e.getCause());
             throw new DaoException(e);
         }
     }

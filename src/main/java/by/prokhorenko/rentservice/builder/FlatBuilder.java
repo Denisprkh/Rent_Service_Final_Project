@@ -8,32 +8,32 @@ import by.prokhorenko.rentservice.entity.FlatPhoto;
 import java.util.List;
 
 /**
- * Class for building {@link Flat}
+ * Class for building {@link Flat}.
  */
 public class FlatBuilder {
 
     /**
-     * Id
+     * Id.
      */
     private int id;
 
     /**
-     * Flat status
+     * Flat status.
      */
     private boolean isFree;
 
     /**
-     * Flat description
+     * Flat description.
      */
     private FlatDescription flatDescription;
 
     /**
-     * Flat address
+     * Flat address.
      */
     private FlatAddress flatAddress;
 
     /**
-     * Flat photos
+     * Flat photos.
      */
     private List<FlatPhoto> flatPhotos;
 
@@ -46,7 +46,7 @@ public class FlatBuilder {
     }
 
     /**
-     * Returns id
+     * Returns id.
      *
      * @return id
      */
@@ -55,7 +55,7 @@ public class FlatBuilder {
     }
 
     /**
-     * Sets id and returns {@code FlatBuilder} object with built field
+     * Sets id and returns {@code FlatBuilder} object with built field.
      *
      * @param id
      * @return {@see FlatBuilder}
@@ -66,7 +66,7 @@ public class FlatBuilder {
     }
 
     /**
-     * Returns flat free status
+     * Returns flat free status.
      *
      * @return isFree
      */
@@ -75,7 +75,7 @@ public class FlatBuilder {
     }
 
     /**
-     * Sets flats status and returns {@code FlatBuilder} object with built field
+     * Sets flats status and returns {@code FlatBuilder} object with built field.
      *
      * @param free
      * @return {@see FlatBuilder}
@@ -86,7 +86,7 @@ public class FlatBuilder {
     }
 
     /**
-     * Returns all flatPhotos
+     * Returns all flatPhotos.
      *
      * @return flatPhotos
      */
@@ -95,7 +95,7 @@ public class FlatBuilder {
     }
 
     /**
-     * Sets flats photos and returns {@code FlatBuilder} object with built field
+     * Sets flats photos and returns {@code FlatBuilder} object with built field.
      *
      * @param flatPhotos
      * @return {@see FlatBuilder}
@@ -106,7 +106,7 @@ public class FlatBuilder {
     }
 
     /**
-     * Returns flats description
+     * Returns flats description.
      *
      * @return flatDescription
      */
@@ -115,7 +115,7 @@ public class FlatBuilder {
     }
 
     /**
-     * Sets flats description and returns {@code FlatBuilder} object with built field
+     * Sets flats description and returns {@code FlatBuilder} object with built field.
      *
      * @param flatDescription
      * @return {@see FlatBuilder}
@@ -126,7 +126,7 @@ public class FlatBuilder {
     }
 
     /**
-     * Returns flats address
+     * Returns flats address.
      *
      * @return flatAddress
      */
@@ -135,7 +135,7 @@ public class FlatBuilder {
     }
 
     /**
-     * Sets flats address and returns {@code FlatBuilder} object with built field
+     * Sets flats address and returns {@code FlatBuilder} object with built field.
      *
      * @param flatAddress
      * @return {@see FlatBuilder}
@@ -146,7 +146,7 @@ public class FlatBuilder {
     }
 
     /**
-     * Returns newly created {@link Flat} with fields, built in builder
+     * Returns newly created {@link Flat} with fields, built in builder.
      *
      * @return {@see Flat}
      */

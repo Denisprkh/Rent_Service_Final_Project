@@ -1,5 +1,8 @@
 package by.prokhorenko.rentservice.controller.command;
 
+/**
+ * Class for storing request parameters names
+ */
 public class RequestParameter {
     public static final String USER_FIRST_NAME = "firstName";
     public static final String USER_LAST_NAME = "lastName";
@@ -8,7 +11,6 @@ public class RequestParameter {
     public static final String USER_PHONE = "phone";
     public static final String USER_ID = "userId";
     public static final String PARAM_LANGUAGE = "language";
-
     public static final String PARAM_ID = "id";
     public static final String PARAM_COMMAND = "command";
     public static final String ADVERTISEMENT_TITLE = "title";
@@ -48,8 +50,7 @@ public class RequestParameter {
     public static final String FLAT_ID = "flatId";
     public static final String PAGINATION_CURRENT_PAGE = "currentPage";
 
-    private RequestParameter(){}
-
-
+    private RequestParameter() {
+    }
 
 }

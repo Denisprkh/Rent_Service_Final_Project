@@ -1,7 +1,7 @@
 package by.prokhorenko.rentservice.controller.command.impl;
 
 import by.prokhorenko.rentservice.builder.RequestBuilder;
-import by.prokhorenko.rentservice.controller.PagePath;
+import by.prokhorenko.rentservice.controller.command.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Attribute;
 import by.prokhorenko.rentservice.controller.command.Command;
@@ -60,11 +60,11 @@ public class NewRequestCommand implements Command {
             requestService.addRequest(rentRequest);
         } catch (ServiceException e) {
             LOG.error(e);
-            if(e.getCause() instanceof DaoException){
+            if (e.getCause() instanceof DaoException) {
                 router.setForward();
                 router.setPage(PagePath.SERVER_ERROR_PAGE);
-            }else{
-                session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,e.getMessage());
+            } else {
+                session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE, e.getMessage());
                 String redirectUrl = request.getHeader(CommandUtil.REFERER_HEADER);
                 router.setPage(redirectUrl);
             }

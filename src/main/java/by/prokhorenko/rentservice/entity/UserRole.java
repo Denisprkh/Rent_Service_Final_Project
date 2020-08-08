@@ -37,7 +37,7 @@ public enum UserRole{
     }
 
     /**
-     * Returns role by id
+     * Returns role by id.
      * @param id
      * @return Optional<UserRole>
      */

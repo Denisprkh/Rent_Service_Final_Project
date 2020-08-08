@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Implementation of {@link RequestService}
+ * Implementation of {@link RequestService}.
  */
 public class RequestServiceImpl implements RequestService {
 

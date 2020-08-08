@@ -9,7 +9,7 @@ import by.prokhorenko.rentservice.service.FlatService;
 import java.io.IOException;
 
 /**
- * Implementation of {@link FlatService}
+ * Implementation of {@link FlatService}.
  */
 public class FlatServiceImpl implements FlatService {
 

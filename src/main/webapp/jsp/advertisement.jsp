@@ -10,12 +10,12 @@
 <fmt:setBundle basename="pagecontent.pagecontent"/>
 <html>
 <head>
+    <meta charset="UTF-8"/>
     <title>Title</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/js/dist/css/datepicker.css">
     <script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
             crossorigin="anonymous"></script>
-    <script src="${pageContext.request.contextPath}/js/dist/js/datepicker.min.js"></script>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -164,7 +164,7 @@
                 </button>
             </c:if>
             <c:if test="${sessionScope.userRole == 'GUEST'}">
-                <div class="request_info_text">
+                <div class="info_text">
                     <fmt:message key="advertisement.request_info"/>
                 </div>
             </c:if>
@@ -196,7 +196,9 @@
                     <div class="forms-contant">
                         <div class="forms-date_input">
                             <input id="mindateinp" name="rentDate" data-range="true" data-multiple-dates-separator="-"
-                                   class="datepicker-here" required pattern="^([\\d]{2}.){2}[\\d]{4}-([\\d]{2}.){2}[\\d]{4}$" title=""/>
+                                   class="datepicker-here" required
+                                   pattern="^([\d]{2}.){2}[\d]{4}-([\d]{2}.){2}[\d]{4}$"
+                                   title="<fmt:message key="request_error.invalid_date_format"/> "/>
                             <div class="forms-date_input__icon">
                                 <img src="${pageContext.request.contextPath}/img/Calendaricon.svg" alt="">
                             </div>
@@ -212,5 +214,8 @@
     </form>
 </section>
 <script src="${pageContext.request.contextPath}/js/form.js"></script>
+<script src="${pageContext.request.contextPath}/js/xssProtection.js"></script>
+<script src="${pageContext.request.contextPath}/js/advertisement.js"></script>
+<script src="${pageContext.request.contextPath}/js/dist/js/datepicker.js"></script>
 </body>
 </html>

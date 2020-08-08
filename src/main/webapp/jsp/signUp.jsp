@@ -26,21 +26,20 @@
             <div class="reg_form__title">
                 <fmt:message key="reg_form.title"/>
             </div>
-            <script type="text/javascript">jQuery(function($){$(".phon").mask("+375 (99) 999-99-99");});</script>
             <form action="${pageContext.request.contextPath}/controller" method="post">
-                <input required name="firstName" placeholder="<fmt:message key="reg_form.first_name"/>"
+                <input type="text" required name="firstName" placeholder="<fmt:message key="reg_form.first_name"/>"
                        required pattern="^[a-zA-Zа-яА-Я]{2,45}$"
                        title="<fmt:message key="sign_up_form.invalid_first_name_format"/>"/>
-                <input required name="lastName" placeholder="<fmt:message key="reg_form.last_name"/>"
+                <input type="text" required name="lastName" placeholder="<fmt:message key="reg_form.last_name"/>"
                        required pattern="^[a-zA-Zа-яА-Я]{2,45}$"
                        title="<fmt:message key="sign_up_form.invalid_last_name_format"/>"
                         <fmt:message key="sign_up_form.invalid_last_name_format"/>/>
-                <input required name="email" placeholder="<fmt:message key="reg_form.email"/>" required
-                       pattern="[a-zA-z0-9_.-]{1,40}@[a-zA-z0-9_-]{2,40}\.[a-z]{2,10}"
+                <input type="text" required name="email" placeholder="<fmt:message key="reg_form.email"/>" required
+                       pattern="[a-zA-z0-9_.-]{1,35}@[a-zA-z0-9_-]{2,15}\.[a-z]{2,10}"
                        title="<fmt:message key="sign_up_form.invalid_email_format"/>"/>
-                <input required name="password" id="password"  type="password"
+                <input  required name="password" id="password"  type="password"
                        placeholder="<fmt:message key="reg_form.password"/>"/>
-                <input required name="passwordTwo" id="password_confirm" type="password" placeholder="<fmt:message
+                <input  required name="passwordTwo" id="password_confirm" type="password" placeholder="<fmt:message
                 key="reg_form.confirm_password"/>"/>
                 <input type ="phone" required name="phone" placeholder="<fmt:message key="reg_form.phone_number"/>"required
                        pattern="^(\+375\([\d]{2}\)[\d]{3}\-[\d]{2}\-[\d]{2})$" title="
@@ -57,15 +56,8 @@
         </div>
     </div>
 </div>
+<script src="${pageContext.request.contextPath}/js/signUp.js"></script>
+<script src="${pageContext.request.contextPath}/js/xssProtection.js"></script>
 </body>
 </html>
 
-<script>
-    var inputsTel = document.querySelectorAll('input[type="phone"]');
-
-    Inputmask({
-        "mask": "+375(99)999-99-99",
-        showMaskOnHover: false
-    }).mask(inputsTel);
-
-</script>

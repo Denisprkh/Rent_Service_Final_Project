@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Auxiliary class for handling users chosen data from filters to build regex for search,
  * contains properties and get and set methods from {@link FlatAddress}, {@link FlatDescription},
- * {@link Advertisement} entities;
+ * {@link Advertisement} entities.
  */
 public class UserChoiceDataHandler implements Serializable {
     private String city;
@@ -31,7 +31,7 @@ public class UserChoiceDataHandler implements Serializable {
 
     /**
      * Initializes a newly created {@code UserChoiceDataHandler} object with
-     * fields which have been built with {@link UserChoiceDataHandlerBuilder}
+     * fields which have been built with {@link UserChoiceDataHandlerBuilder}.
      *
      * @param userChoiceDataHandlerBuilder
      */

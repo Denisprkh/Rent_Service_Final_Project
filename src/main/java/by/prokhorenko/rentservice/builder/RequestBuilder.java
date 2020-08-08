@@ -7,32 +7,32 @@ import by.prokhorenko.rentservice.entity.User;
 import java.time.LocalDateTime;
 
 /**
- * Class for building {@link Request} entity
+ * Class for building {@link Request} entity.
  */
 public class RequestBuilder {
 
     /**
-     * Id
+     * Id.
      */
     private int id;
 
     /**
-     * User
+     * User.
      */
     private User user;
 
     /**
-     * Start date
+     * Start date.
      */
     private LocalDateTime startDate;
 
     /**
-     * End date
+     * End date.
      */
     private LocalDateTime endDate;
 
     /**
-     * Application Date
+     * Application Date.
      */
     private LocalDateTime applicationDate;
 
@@ -42,7 +42,7 @@ public class RequestBuilder {
     private Advertisement advertisement;
 
     /**
-     * Approved status
+     * Approved status.
      */
     private boolean isApproved;
 
@@ -55,7 +55,7 @@ public class RequestBuilder {
     }
 
     /**
-     * Returns approved status
+     * Returns approved status.
      *
      * @return isApproved
      */
@@ -64,7 +64,7 @@ public class RequestBuilder {
     }
 
     /**
-     * Sets approved status and returns {@code RequestBuilder} object with built field
+     * Sets approved status and returns {@code RequestBuilder} object with built field.
      *
      * @param approved
      * @return {@see RequestBuilder}
@@ -75,7 +75,7 @@ public class RequestBuilder {
     }
 
     /**
-     * Returns id
+     * Returns id.
      *
      * @return id
      */
@@ -84,7 +84,7 @@ public class RequestBuilder {
     }
 
     /**
-     * Sets id and returns {@code RequestBuilder} object with built field
+     * Sets id and returns {@code RequestBuilder} object with built field.
      *
      * @param id
      * @return {@see RequestBuilder}
@@ -95,7 +95,7 @@ public class RequestBuilder {
     }
 
     /**
-     * Returns user
+     * Returns user.
      *
      * @return user
      */
@@ -104,7 +104,7 @@ public class RequestBuilder {
     }
 
     /**
-     * Sets user and returns {@code RequestBuilder} object with built field
+     * Sets user and returns {@code RequestBuilder} object with built field.
      *
      * @param user
      * @return {@see RequestBuilder}
@@ -115,7 +115,7 @@ public class RequestBuilder {
     }
 
     /**
-     * Returns startDate
+     * Returns startDate.
      *
      * @return startDate
      */
@@ -124,7 +124,7 @@ public class RequestBuilder {
     }
 
     /**
-     * Sets startDate and returns {@code RequestBuilder} object with built field
+     * Sets startDate and returns {@code RequestBuilder} object with built field.
      *
      * @param startDate
      * @return {@see RequestBuilder}
@@ -135,7 +135,7 @@ public class RequestBuilder {
     }
 
     /**
-     * Returns endDate
+     * Returns endDate.
      *
      * @return endDate
      */
@@ -144,7 +144,7 @@ public class RequestBuilder {
     }
 
     /**
-     * Sets endDate and returns {@code RequestBuilder} object with built field
+     * Sets endDate and returns {@code RequestBuilder} object with built field.
      *
      * @param endDate
      * @return {@see RequestBuilder}
@@ -155,7 +155,7 @@ public class RequestBuilder {
     }
 
     /**
-     * Returns applicationDate
+     * Returns applicationDate.
      *
      * @return applicationDate
      */
@@ -164,7 +164,7 @@ public class RequestBuilder {
     }
 
     /**
-     * Sets applicationDate and returns {@code RequestBuilder} object with built field
+     * Sets applicationDate and returns {@code RequestBuilder} object with built field.
      *
      * @param applicationDate
      * @return {@see RequestBuilder}
@@ -175,7 +175,7 @@ public class RequestBuilder {
     }
 
     /**
-     * Returns advertisement
+     * Returns advertisement.
      *
      * @return advertisement
      */
@@ -184,7 +184,7 @@ public class RequestBuilder {
     }
 
     /**
-     * Sets advertisement and returns {@code RequestBuilder} object with built field
+     * Sets advertisement and returns {@code RequestBuilder} object with built field.
      *
      * @param advertisement
      * @return {@see RequestBuilder}
@@ -195,7 +195,7 @@ public class RequestBuilder {
     }
 
     /**
-     * Returns newly created {@link Request} with fields, built in builder
+     * Returns newly created {@link Request} with fields, built in builder.
      *
      * @return {@see Request}
      */

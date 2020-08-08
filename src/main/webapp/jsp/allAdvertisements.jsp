@@ -59,9 +59,9 @@
                         <fmt:message key="profile.my_ads_update"/>
                     </a>
                     <c:if test="${elem.author.id ne sessionScope.user.id}">
-                    <a class="btn-delete" href="${root}/controller?command=banUser&userId=${elem.author.id}">
-                        <fmt:message key="admin_profile.ban_author_btn"/>
-                    </a>
+                        <a class="btn-delete" href="${root}/controller?command=banUser&userId=${elem.author.id}">
+                            <fmt:message key="admin_profile.ban_author_btn"/>
+                        </a>
                     </c:if>
                 </div>
             </c:forEach>

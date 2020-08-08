@@ -1,17 +1,16 @@
 package by.prokhorenko.rentservice.controller.command.impl;
 
 import by.prokhorenko.rentservice.controller.DisPathType;
-import by.prokhorenko.rentservice.controller.PagePath;
+import by.prokhorenko.rentservice.controller.command.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.*;
-import by.prokhorenko.rentservice.entity.User;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import javax.servlet.http.HttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 
 public class ConfirmRegistrationCommand implements Command {
 
@@ -34,11 +33,11 @@ public class ConfirmRegistrationCommand implements Command {
                 router = new Router(redirectUrl);
                 request.setAttribute(Attribute.ACTIVATION_INFO, ResourceBundleMessageKey.ACCOUNT_WAS_ACTIVATED);
             } else {
-               router = new Router(DisPathType.FORWARD,PagePath.WRONG_REQUEST);
+                router = new Router(DisPathType.FORWARD, PagePath.WRONG_REQUEST);
             }
         } catch (ServiceException e) {
             LOG.error(e);
-            router = new Router(DisPathType.FORWARD,PagePath.SERVER_ERROR_PAGE);
+            router = new Router(DisPathType.FORWARD, PagePath.SERVER_ERROR_PAGE);
         }
         return router;
     }

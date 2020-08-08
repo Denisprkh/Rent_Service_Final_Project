@@ -1,7 +1,7 @@
 package by.prokhorenko.rentservice.dao;
 
 /**
- * Class for storing sql queries
+ * Class for storing sql queries.
  */
 public class SqlQuery {
 
@@ -32,6 +32,7 @@ public class SqlQuery {
             "VALUES (?,?,?,?)";
     public static final String FIND_ALL_FLAT_ADDRESSES = "SELECT flats_address_id,city,district,street,house " +
             "FROM flats_address";
+    public static final String FIND_ALL_FLAT_ADDRESSES_QUANTITY = "SELECT COUNT(*) FROM flats_address";
     public static final String FIND_FLAT_ADDRESS_BY_ID = "SELECT flats_address_id,city,district,street,house " +
             "FROM flats_address WHERE flats_address_id = ?";
     public static final String UPDATE_FLAT_ADDRESS_BY_ID = "UPDATE flats_address fa SET fa.city = ?, " +
@@ -43,6 +44,7 @@ public class SqlQuery {
     public static final String FIND_ALL_FLAT_DESCRIPTIONS = "SELECT (flats_description_id,rooms,living_area," +
             "has_furniture, has_home_appliciances,has_the_internet,possible_with_childs,possible_with_pets," +
             "users_description) FROM flats_description";
+    public static final String FIND_ALL_FLAT_DESCRIPTIONS_QUANTITY = "SELECT COUNT(*) FROM flats_description";
     public static final String FIND_FLAT_DESCRIPTION_BY_ID = "SELECT flats_description_id,rooms,living_area," +
             "has_furniture, has_home_appliciances,has_the_internet,possible_with_childs,possible_with_pets," +
             "users_description FROM flats_description WHERE flats_description_id = ?";
@@ -60,6 +62,7 @@ public class SqlQuery {
             "flats_description.users_description FROM flats,flats_address,flats_description WHERE " +
             "flats.flats_description_id = flats_description.flats_description_id AND " +
             "flats.flats_address_id = flats_address.flats_address_id ";
+    public static final String FIND_ALL_FLATS_QUANTITY = "SELECT COUNT(*) FROM flats";
     public static final String FIND_FLAT_BY_ID = "SELECT flats.flats_id, flats.is_free, flats.flats_description_id," +
             "flats.flats_address_id, flats_address.flats_address_id,flats_address.city," +
             "flats_address.district, flats_address.street, flats_address.house, flats_description.flats_description_id," +

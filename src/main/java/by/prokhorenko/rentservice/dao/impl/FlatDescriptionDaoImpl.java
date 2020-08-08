@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Implementation of {@link FlatDescription}
+ * Implementation of {@link FlatDescription}.
  */
 public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDescriptionDao {
 
@@ -105,7 +105,16 @@ public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDes
 
     @Override
     public int findQuantity() throws DaoException {
-        return 0;
+        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.FIND_ALL_FLAT_DESCRIPTIONS_QUANTITY);
+             ResultSet resultSet = statement.executeQuery()) {
+            int flatsDescriptionsQuantity = 0;
+            if (resultSet.next()) {
+                flatsDescriptionsQuantity = resultSet.getInt(1);
+            }
+            return flatsDescriptionsQuantity;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override

@@ -1,7 +1,7 @@
 package by.prokhorenko.rentservice.controller.command.impl.page;
 
 import by.prokhorenko.rentservice.controller.DisPathType;
-import by.prokhorenko.rentservice.controller.PagePath;
+import by.prokhorenko.rentservice.controller.command.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Command;
 import by.prokhorenko.rentservice.controller.command.Attribute;
@@ -21,9 +21,11 @@ import javax.servlet.http.HttpSession;
 public class UpdateAdvertisementPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger();
     private AdvertisementService advertisementService;
-    public UpdateAdvertisementPageCommand(){
+
+    public UpdateAdvertisementPageCommand() {
         this.advertisementService = ServiceFactory.getInstance().getAdvertisementService();
     }
+
     @Override
     public Router execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -34,16 +36,16 @@ public class UpdateAdvertisementPageCommand implements Command {
         String page;
         try {
             Advertisement advertisement = advertisementService.findAdvertisementById(advertisementsId);
-            if(advertisement.getAuthor().getId() == usersId || UserRole.ADMIN.equals(userRole)){
-                session.setAttribute(Attribute.ADVERTISEMENT,advertisement);
+            if (advertisement.getAuthor().getId() == usersId || UserRole.ADMIN.equals(userRole)) {
+                session.setAttribute(Attribute.ADVERTISEMENT, advertisement);
                 page = PagePath.UPDATE_ADVERTISEMENT_PAGE;
-            }else{
+            } else {
                 page = PagePath.WRONG_REQUEST;
             }
         } catch (ServiceException e) {
             LOG.error(e);
             page = PagePath.SERVER_ERROR_PAGE;
         }
-        return new Router(DisPathType.FORWARD,page);
+        return new Router(DisPathType.FORWARD, page);
     }
 }

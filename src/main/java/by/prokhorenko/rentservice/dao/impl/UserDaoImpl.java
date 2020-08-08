@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Implementation of {@link UserDao}
+ * Implementation of {@link UserDao}.
  */
 public class UserDaoImpl extends AbstractCommonDao implements UserDao {
 

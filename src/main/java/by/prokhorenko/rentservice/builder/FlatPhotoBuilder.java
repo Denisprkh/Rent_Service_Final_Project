@@ -1,27 +1,26 @@
 package by.prokhorenko.rentservice.builder;
 
 import by.prokhorenko.rentservice.entity.FlatPhoto;
-import by.prokhorenko.rentservice.entity.Request;
 
 import java.io.InputStream;
 
 /**
- * Class for building {@link FlatPhoto} entity
+ * Class for building {@link FlatPhoto} entity.
  */
 public class FlatPhotoBuilder {
 
     /**
-     * Id
+     * Id.
      */
     private int id;
 
     /**
-     * Flats id
+     * Flats id.
      */
     private int flatsId;
 
     /**
-     * Data which photo consists of
+     * Data which photo consists of.
      */
     private InputStream flatPhotoData;
 
@@ -29,10 +28,12 @@ public class FlatPhotoBuilder {
      * Initializes a newly created {@code FlatPhotoBuilder} object so that it represents
      * an empty FlatPhotoBuilder entity.
      */
-    public FlatPhotoBuilder(){}
+    public FlatPhotoBuilder() {
+    }
 
     /**
-     * Returns id
+     * Returns id.
+     *
      * @return id
      */
     public int getId() {
@@ -40,8 +41,9 @@ public class FlatPhotoBuilder {
     }
 
     /**
-     * Sets id and returns {@code FlatPhotoBuilder} object with built field
-     * @param id
+     * Sets id and returns {@code FlatPhotoBuilder} object with built field.
+     *
+     * @param id photos id
      * @return {@see FlatPhotoBuilder}
      */
     public FlatPhotoBuilder buildId(int id) {
@@ -50,7 +52,8 @@ public class FlatPhotoBuilder {
     }
 
     /**
-     * Returns flats id
+     * Returns flats id.
+     *
      * @return flatsId
      */
     public int getFlatsId() {
@@ -58,8 +61,9 @@ public class FlatPhotoBuilder {
     }
 
     /**
-     * Sets flats id and returns {@code FlatPhotoBuilder} object with built field
-     * @param flatsId
+     * Sets flats id and returns {@code FlatPhotoBuilder} object with built field.
+     *
+     * @param flatsId flats id
      * @return {@see FlatPhotoBuilder}
      */
     public FlatPhotoBuilder buildFlatsId(int flatsId) {
@@ -68,7 +72,8 @@ public class FlatPhotoBuilder {
     }
 
     /**
-     * Returns data which photo consists of
+     * Returns data which photo consists of.
+     *
      * @return flatPhotoData
      */
     public InputStream getFlatPhotoData() {
@@ -76,8 +81,9 @@ public class FlatPhotoBuilder {
     }
 
     /**
-     * Sets photo data and returns {@code FlatPhotoBuilder} object with built field
-     * @param flatPhotoData
+     * Sets photo data and returns {@code FlatPhotoBuilder} object with built field.
+     *
+     * @param flatPhotoData inputStream
      * @return {@see FlatPhotoBuilder}
      */
     public FlatPhotoBuilder buildFlatPhotoData(InputStream flatPhotoData) {
@@ -86,11 +92,11 @@ public class FlatPhotoBuilder {
     }
 
     /**
-     * Returns newly created {@link FlatPhoto} with fields, built in builder
+     * Returns newly created {@link FlatPhoto} with fields, built in builder.
      *
      * @return {@see FlatPhoto}
      */
-    public FlatPhoto buildFlatPhoto(){
+    public FlatPhoto buildFlatPhoto() {
         return new FlatPhoto(this);
     }
 }

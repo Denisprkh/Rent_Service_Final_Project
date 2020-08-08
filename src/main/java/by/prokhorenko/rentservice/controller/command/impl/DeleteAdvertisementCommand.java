@@ -1,7 +1,7 @@
 package by.prokhorenko.rentservice.controller.command.impl;
 
 import by.prokhorenko.rentservice.controller.DisPathType;
-import by.prokhorenko.rentservice.controller.PagePath;
+import by.prokhorenko.rentservice.controller.command.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Attribute;
 import by.prokhorenko.rentservice.controller.command.Command;
@@ -15,15 +15,16 @@ import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.AdvertisementService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 
 public class DeleteAdvertisementCommand implements Command {
 
     private static final Logger LOG = LogManager.getLogger();
     private AdvertisementService advertisementService;
-    public DeleteAdvertisementCommand(){
+
+    public DeleteAdvertisementCommand() {
         this.advertisementService = ServiceFactory.getInstance().getAdvertisementService();
     }
 
@@ -37,17 +38,17 @@ public class DeleteAdvertisementCommand implements Command {
         int advertisementsId = Integer.parseInt(request.getParameter(RequestParameter.ADVERTISEMENT_ID));
         try {
             Advertisement advertisement = advertisementService.findAdvertisementById(advertisementsId);
-            if(advertisement.getAuthor().getId() == usersId || UserRole.ADMIN.equals(userRole)){
+            if (advertisement.getAuthor().getId() == usersId || UserRole.ADMIN.equals(userRole)) {
                 advertisementService.deleteAdvertisement(advertisementsId);
                 String page = request.getHeader(CommandUtil.REFERER_HEADER);
                 router = new Router(page);
-            }else{
+            } else {
                 router = new Router(DisPathType.FORWARD, PagePath.WRONG_REQUEST);
             }
 
         } catch (ServiceException e) {
             LOG.error(e);
-            router = new Router(DisPathType.FORWARD,PagePath.SERVER_ERROR_PAGE);
+            router = new Router(DisPathType.FORWARD, PagePath.SERVER_ERROR_PAGE);
         }
         return router;
     }

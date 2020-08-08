@@ -6,7 +6,7 @@ import by.prokhorenko.rentservice.builder.UserChoiceDataHandlerBuilder;
 /**
  * Auxiliary class for building ad validating advertisement from request,
  * contains properties from {@link FlatAddress}, {@link FlatDescription},
- * {@link Advertisement} entities;
+ * {@link Advertisement} entities.
  */
 public class AdvertisementDataHandler {
     private String city;
@@ -33,9 +33,9 @@ public class AdvertisementDataHandler {
 
     /**
      * Initializes a newly created {@code AdvertisementDataHandler} object with
-     * fields which have been built with {@link AdvertisementDataHandlerBuilder}
+     * fields which have been built with {@link AdvertisementDataHandlerBuilder}.
      *
-     * @param advertisementDataHandlerBuilder
+     * @param advertisementDataHandlerBuilder {@link AdvertisementDataHandlerBuilder}
      */
     public AdvertisementDataHandler(AdvertisementDataHandlerBuilder advertisementDataHandlerBuilder) {
         this.city = advertisementDataHandlerBuilder.getCity();

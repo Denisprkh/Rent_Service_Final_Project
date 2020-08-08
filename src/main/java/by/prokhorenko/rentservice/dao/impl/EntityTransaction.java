@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.SQLException;
 
 /**
- * Class for working with dao with transaction support
+ * Class for working with dao with transaction support.
  */
 public class EntityTransaction {
 

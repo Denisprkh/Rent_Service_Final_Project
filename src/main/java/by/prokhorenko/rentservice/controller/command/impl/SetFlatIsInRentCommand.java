@@ -1,7 +1,7 @@
 package by.prokhorenko.rentservice.controller.command.impl;
 
 import by.prokhorenko.rentservice.controller.DisPathType;
-import by.prokhorenko.rentservice.controller.PagePath;
+import by.prokhorenko.rentservice.controller.command.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.Attribute;
 import by.prokhorenko.rentservice.controller.command.Command;
@@ -15,16 +15,17 @@ import by.prokhorenko.rentservice.service.AdvertisementService;
 import by.prokhorenko.rentservice.service.FlatService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 public class SetFlatIsInRentCommand implements Command {
 
     private static final Logger LOG = LogManager.getLogger();
     private FlatService flatService;
     private AdvertisementService advertisementService;
-    public SetFlatIsInRentCommand(){
+
+    public SetFlatIsInRentCommand() {
         this.flatService = ServiceFactory.getInstance().getFlatService();
         this.advertisementService = ServiceFactory.getInstance().getAdvertisementService();
     }
@@ -39,11 +40,11 @@ public class SetFlatIsInRentCommand implements Command {
         Router router;
         try {
             Advertisement advertisement = advertisementService.findAdvertisementById(advertisementId);
-            if(advertisement.getAuthor().getId() == usersId) {
+            if (advertisement.getAuthor().getId() == usersId) {
                 flatService.setFlatIsInRent(flatsId);
                 String redirectUrl = buildRedirectUrl(request, CommandName.MY_ADS_PAGE.getCommandName());
                 router = new Router(redirectUrl);
-            }else{
+            } else {
                 router = new Router(DisPathType.FORWARD, PagePath.WRONG_REQUEST);
             }
         } catch (ServiceException e) {

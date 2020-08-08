@@ -7,58 +7,58 @@ import java.io.Serializable;
 /**
  * Class for User entity. Has next properties:
  * <b>id</b>,<b>firstName</b>,<b>lastName</b>,<b>email</b>,<b>password</b>,<b>phone</b>,<b>userRole</b>
- * <b>isActivated</b>,<b>isBanned</b>
+ * <b>isActivated</b>,<b>isBanned</b>.
  */
 public class User implements Serializable {
 
     /**
-     * Property - users id
+     * Property - users id.
      */
     private int id;
 
     /**
-     * Property - users first name
+     * Property - users first name.
      */
     private String firstName;
 
     /**
-     * Property - users last name
+     * Property - users last name.
      */
     private String lastName;
 
     /**
-     * Property - users email
+     * Property - users email.
      */
     private String email;
 
     /**
-     * Property - users password
+     * Property - users password.
      */
     private String password;
 
     /**
-     * Property - users phone
+     * Property - users phone.
      */
     private String phone;
 
     /**
-     * Property - userRole
+     * Property - userRole.
      */
     private UserRole userRole;
 
     /**
-     * Property - users activation status
+     * Property - users activation status.
      */
     private boolean isActivated;
 
     /**
-     * Property - user ban status
+     * Property - user ban status.
      */
     private boolean isBanned;
 
     /**
      * Initializes a newly created {@code User} object with
-     * fields which have been built with {@link UserBuilder}
+     * fields which have been built with {@link UserBuilder}.
      *
      * @param userBuilder
      */
@@ -76,7 +76,7 @@ public class User implements Serializable {
     }
 
     /**
-     * Initializes a newly created {@code User} object with parameters
+     * Initializes a newly created {@code User} object with parameters.
      *
      * @param firstName
      * @param lastName
@@ -93,7 +93,7 @@ public class User implements Serializable {
     }
 
     /**
-     * Initializes a newly created {@code User} object with parameters
+     * Initializes a newly created {@code User} object with parameters.
      *
      * @param id
      * @param firstName
@@ -120,7 +120,7 @@ public class User implements Serializable {
     }
 
     /**
-     * Returns user ID of an {@code User} object
+     * Returns user ID of an {@code User} object.
      *
      * @return id
      */
@@ -129,16 +129,16 @@ public class User implements Serializable {
     }
 
     /**
-     * Sets user ID to an {@code User} object
+     * Sets user ID to an {@code User} object.
      *
-     * @param id
+     * @param id users id
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * Returns user firstName of an {@code User} object
+     * Returns user firstName of an {@code User} object.
      *
      * @return firstName
      */
@@ -147,16 +147,16 @@ public class User implements Serializable {
     }
 
     /**
-     * Sets user firsName to an {@code User} object
+     * Sets user firsName to an {@code User} object.
      *
-     * @param firstName
+     * @param firstName users first name
      */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
     /**
-     * Returns user lastName of an {@code User} object
+     * Returns user lastName of an {@code User} object.
      *
      * @return lastName
      */
@@ -165,16 +165,16 @@ public class User implements Serializable {
     }
 
     /**
-     * Sets user lastName to an {@code User} object
+     * Sets user lastName to an {@code User} object.
      *
-     * @param lastName
+     * @param lastName users last name
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
     /**
-     * Returns user email of an {@code User} object
+     * Returns user email of an {@code User} object.
      *
      * @return email
      */
@@ -183,16 +183,16 @@ public class User implements Serializable {
     }
 
     /**
-     * Sets user email to an {@code User} object
+     * Sets user email to an {@code User} object.
      *
-     * @param email
+     * @param email users email
      */
     public void setEmail(String email) {
         this.email = email;
     }
 
     /**
-     * Returns user password of an {@code User} object
+     * Returns user password of an {@code User} object.
      *
      * @return password
      */
@@ -201,16 +201,16 @@ public class User implements Serializable {
     }
 
     /**
-     * Sets user password to an {@code User} object
+     * Sets user password to an {@code User} object.
      *
-     * @param password
+     * @param password users password
      */
     public void setPassword(String password) {
         this.password = password;
     }
 
     /**
-     * Returns user phone of an {@code User} object
+     * Returns user phone of an {@code User} object.
      *
      * @return phone
      */
@@ -219,16 +219,16 @@ public class User implements Serializable {
     }
 
     /**
-     * Sets user phone to an {@code User} object
+     * Sets user phone to an {@code User} object.
      *
-     * @param phone
+     * @param phone users phone
      */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
     /**
-     * Returns user userRole of an {@code User} object
+     * Returns user userRole of an {@code User} object.
      *
      * @return userRole
      */
@@ -237,16 +237,16 @@ public class User implements Serializable {
     }
 
     /**
-     * Sets userRole to an {@code User} object
+     * Sets userRole to an {@code User} object.
      *
-     * @param userRole
+     * @param userRole {@link UserRole}
      */
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
     }
 
     /**
-     * Returns whether user is activated of an {@code User} object
+     * Returns whether user is activated of an {@code User} object.
      *
      * @return isActivated
      */
@@ -255,16 +255,16 @@ public class User implements Serializable {
     }
 
     /**
-     * Sets whether user is activated to an {@code User} object
+     * Sets whether user is activated to an {@code User} object.
      *
-     * @param activated
+     * @param activated {@code boolean}
      */
     public void setActivated(boolean activated) {
         this.isActivated = activated;
     }
 
     /**
-     * Returns whether user is banned of an {@code User} object
+     * Returns whether user is banned of an {@code User} object.
      *
      * @return isBanned
      */
@@ -273,9 +273,9 @@ public class User implements Serializable {
     }
 
     /**
-     * Sets whether user is banned to an {@code User} object
+     * Sets whether user is banned to an {@code User} object.
      *
-     * @param banned
+     * @param banned {@code boolean}
      */
     public void setBanned(boolean banned) {
         isBanned = banned;
@@ -310,7 +310,7 @@ public class User implements Serializable {
     }
 
     /**
-     * Returns a hash code for this {@code User} object
+     * Returns a hash code for this {@code User} object.
      * @return hashCode
      */
     @Override
@@ -328,7 +328,7 @@ public class User implements Serializable {
     }
 
     /**
-     * Returns a {@code String} representation for this {@code User} object
+     * Returns a {@code String} representation for this {@code User} object.
      * @return String
      */
     @Override

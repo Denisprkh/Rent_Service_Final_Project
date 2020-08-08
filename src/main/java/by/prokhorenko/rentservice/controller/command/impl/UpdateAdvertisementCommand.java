@@ -1,7 +1,7 @@
 package by.prokhorenko.rentservice.controller.command.impl;
 
 import by.prokhorenko.rentservice.builder.*;
-import by.prokhorenko.rentservice.controller.PagePath;
+import by.prokhorenko.rentservice.controller.command.PagePath;
 import by.prokhorenko.rentservice.controller.Router;
 import by.prokhorenko.rentservice.controller.command.*;
 import by.prokhorenko.rentservice.entity.Advertisement;
@@ -17,6 +17,7 @@ import by.prokhorenko.rentservice.factory.ServiceFactory;
 import by.prokhorenko.rentservice.service.AdvertisementService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,7 +32,8 @@ public class UpdateAdvertisementCommand implements Command {
 
     private static final Logger LOG = LogManager.getLogger();
     private AdvertisementService advertisementService;
-    public UpdateAdvertisementCommand(){
+
+    public UpdateAdvertisementCommand() {
         this.advertisementService = ServiceFactory.getInstance().getAdvertisementService();
     }
 
@@ -42,30 +44,30 @@ public class UpdateAdvertisementCommand implements Command {
         User author = (User) request.getSession().getAttribute(Attribute.USER);
         Advertisement advertisement = (Advertisement) session.getAttribute(Attribute.ADVERTISEMENT);
         int advertisementId = advertisement.getId();
-        int flatAddressId= advertisement.getFlat().getFlatAddress().getId();
+        int flatAddressId = advertisement.getFlat().getFlatAddress().getId();
         int flatDescriptionId = advertisement.getFlat().getFlatDescription().getId();
         int flatsId = advertisement.getFlat().getId();
         try {
             List<InputStream> flatPhotoData = buildPhotosDataFromRequest(request);
-            List<FlatPhoto> flatPhotos = buildFlatPhotosFromDataList(flatPhotoData,flatsId);
+            List<FlatPhoto> flatPhotos = buildFlatPhotosFromDataList(flatPhotoData, flatsId);
             AdvertisementDataHandler dataHandler = buildAdvertisementDataHandlerFromRequest(request);
             advertisementService.defineIncorrectData(dataHandler);
-            FlatAddress flatAddress = buildFlatAddressFromDataHandler(dataHandler,flatAddressId);
-            FlatDescription flatDescription = buildFlatDescriptionFromDataHandler(dataHandler,flatDescriptionId);
-            Flat flat = buildFlat(flatDescription, flatAddress, flatPhotos,flatsId);
-            Advertisement updatedAdvertisement = buildAdvertisementFromDataHandler(advertisementId,author,dataHandler,flat);
+            FlatAddress flatAddress = buildFlatAddressFromDataHandler(dataHandler, flatAddressId);
+            FlatDescription flatDescription = buildFlatDescriptionFromDataHandler(dataHandler, flatDescriptionId);
+            Flat flat = buildFlat(flatDescription, flatAddress, flatPhotos, flatsId);
+            Advertisement updatedAdvertisement = buildAdvertisementFromDataHandler(advertisementId, author, dataHandler, flat);
             advertisementService.updateAdvertisement(updatedAdvertisement);
             String redirectUrl = buildRedirectUrl(request, CommandName.MY_ADS_PAGE.getCommandName());
             router.setPage(redirectUrl);
         } catch (ServiceException e) {
             LOG.error(e);
-            if(e.getCause() instanceof DaoException){
+            if (e.getCause() instanceof DaoException) {
                 router.setForward();
                 router.setPage(PagePath.SERVER_ERROR_PAGE);
-            }else{
-                String redirectUrl = buildRedirectUrl(request,CommandName.UPDATE_ADVERTISEMENT_PAGE.getCommandName());
+            } else {
+                String redirectUrl = buildRedirectUrl(request, CommandName.UPDATE_ADVERTISEMENT_PAGE.getCommandName());
                 router.setPage(redirectUrl);
-                session.setAttribute(Attribute.UPDATE_AN_ADVERTISEMENT_ERROR_MESSAGE,e.getMessage());
+                session.setAttribute(Attribute.UPDATE_AN_ADVERTISEMENT_ERROR_MESSAGE, e.getMessage());
             }
         }
         return router;
@@ -162,7 +164,7 @@ public class UpdateAdvertisementCommand implements Command {
         return flat;
     }
 
-    private Advertisement buildAdvertisementFromDataHandler(int id,User author, AdvertisementDataHandler handler, Flat flat) {
+    private Advertisement buildAdvertisementFromDataHandler(int id, User author, AdvertisementDataHandler handler, Flat flat) {
         Advertisement advertisement = new AdvertisementBuilder()
                 .buildId(id)
                 .buildPrice(new BigDecimal(handler.getPrice()))

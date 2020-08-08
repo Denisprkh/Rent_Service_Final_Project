@@ -1,5 +1,8 @@
 package by.prokhorenko.rentservice.controller.command;
 
+/**
+ *  Class for storing attributes names
+ */
 public class Attribute {
 
     public static final String ACTIVATION_USERS_ID = "activationUsersId";

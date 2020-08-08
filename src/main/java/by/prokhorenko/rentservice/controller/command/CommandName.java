@@ -42,8 +42,8 @@ public enum CommandName {
     MY_ADS_PAGE(new MyAdsPageCommand(), "myAdsPage"),
     REQUESTS_FOR_MY_ADS_PAGE(new RequestsForMyAdsPageCommand(), "requestsForMyAdsPage");
 
-    private String commandName;
-    private Command command;
+    private final String commandName;
+    private final Command command;
 
     CommandName(Command command, String commandName) {
         this.command = command;
