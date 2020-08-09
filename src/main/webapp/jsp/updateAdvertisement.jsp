@@ -29,25 +29,33 @@
                         <p><fmt:message key="add_an_advertisement.advertisement_description"/></p>
                     </div>
                     <div class="row_items-input">
-                        <input class="input__item first" name="title" value="${advertisement.title}" required pattern="^[a-zA-Zа-яА-Я]{2,45}$"/>
-                        <input class="input__item" name="price" value="${advertisement.price}" required pattern="^[0-9.]{1,45}$"/>
+                        <input type="text" class="input__item first" name="title" value="${advertisement.title}" required
+                               pattern="^[a-zA-Zа-яА-Я]{2,45}$" title="<fmt:message key="add_an_advertisement.incorrect_title"/>"/>
+                        <input type="text" class="input__item" name="price" value="${advertisement.price}"
+                               required pattern="^[0-9.]{1,45}$" title="<fmt:message key="add_an_advertisement.incorrect_price"/>"/>
 
                     </div>
                     <div class="row__items-title">
                         <p><fmt:message key="add_an_advertisement.location_title"/></p>
                     </div>
                     <div class="row_items-input">
-                        <input class="input__item first" name="city" value="${advertisement.flat.flatAddress.city}" required pattern="^[a-zA-Zа-яА-Я.-]{2,45}$"/>
-                        <input class="input__item" name="district" value="${advertisement.flat.flatAddress.district}" required pattern="^[a-zA-Zа-яА-Я.-]{2,45}$"/>
-                        <input class="input__item" name="street" value="${advertisement.flat.flatAddress.street}" required pattern="^[a-zA-Zа-яА-Я.-]{2,45}$"/>
-                        <input class="input__item end" name="house" value="${advertisement.flat.flatAddress.house}" required pattern="^[a-zA-Z0-9_\\-.]{2,40}$"/>
+                        <input type="text" class="input__item first" name="city" value="${advertisement.flat.flatAddress.city}"
+                               required pattern="^[a-zA-Zа-яА-Я.-]{2,45}$" title="<fmt:message key="add_an_advertisement.incorrect_city"/>"/>
+                        <input type="text" class="input__item" name="district" value="${advertisement.flat.flatAddress.district}"
+                               required pattern="^[a-zA-Zа-яА-Я.-]{2,45}$" title="<fmt:message key="add_an_advertisement.incorrect_district"/> "/>
+                        <input type="text" class="input__item" name="street" value="${advertisement.flat.flatAddress.street}"
+                               required pattern="^[a-zA-Zа-яА-Я.-]{2,45}$" title="<fmt:message key="add_an_advertisement.incorrect_street"/>"/>
+                        <input type="text" class="input__item end" name="house" value="${advertisement.flat.flatAddress.house}"
+                               required pattern="^[a-zA-Z0-9_\\-.]{2,10}$" title="<fmt:message key="add_an_advertisement.incorrect_house"/>"/>
                     </div>
                     <div class="row__items-title">
                         <p><fmt:message key="add_an_advertisement.flat_description_title"/></p>
                     </div>
                     <div class="row_items-input">
-                        <input class="input__item first" name="rooms" value="${advertisement.flat.flatDescription.rooms}" required pattern="^[0-9]{1,10}$"/>
-                        <input class="input__item" name="area" value="${advertisement.flat.flatDescription.livingArea}"  required pattern="^[0-9.]{1,45}$"/>
+                        <input type="text" class="input__item first" name="rooms" value="${advertisement.flat.flatDescription.rooms}"
+                               required pattern="^[0-9]{1,10}$" title="<fmt:message key="add_an_advertisement.incorrect_rooms"/>"/>
+                        <input type="text" class="input__item" name="area" value="${advertisement.flat.flatDescription.livingArea}"
+                               required pattern="^[0-9.]{1,45}$" title="<fmt:message key="add_an_advertisement.incorrect_living_area"/>"/>
                     </div>
 
                     <div class="check-box__items">

@@ -67,8 +67,9 @@
                         <img src="${pageContext.request.contextPath}/img/arrow2.svg" alt="">
                     </div>
                     <div class="prev-text">
-                        <a href="${pageContext.request.contextPath}/controller?command=allRequestsPage&currentPage=${currentPage-1}">Previous
-                            page</a>
+                        <a href="${pageContext.request.contextPath}/controller?command=allRequestsPage&currentPage=${currentPage-1}">
+                            <fmt:message key="pagination.previous_page_button"/>
+                        </a>
                     </div>
                 </div>
             </c:if>
@@ -82,8 +83,9 @@
             <c:if test="${currentPage ne pagesQuantity && pagesQuantity > 0}">
                 <div class="next-page bgc-page">
                     <div class="next-page-text">
-                        <a href="${pageContext.request.contextPath}/controller?command=allRequestsPage&currentPage=${currentPage+1}">Next
-                            page</a>
+                        <a href="${pageContext.request.contextPath}/controller?command=allRequestsPage&currentPage=${currentPage+1}">
+                            <fmt:message key="pagination.next_page_button"/>
+                        </a>
                     </div>
                     <div class="icon">
                         <img src="${root}/img/arrow1.svg" alt="">

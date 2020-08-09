@@ -77,8 +77,6 @@ public class CommandUtil {
         if ((fullRecordsQuantity - (allPagesAmount * RECORDS_PER_PAGE)) % RECORDS_PER_PAGE > 0) {
             allPagesAmount++;
         }
-        LOG.debug(fullRecordsQuantity);
-        LOG.debug(allPagesAmount);
         request.setAttribute(Attribute.PAGINATION_PAGES_QUANTITY, allPagesAmount);
         request.setAttribute(Attribute.PAGINATION_CURRENT_PAGE, currentPage);
     }

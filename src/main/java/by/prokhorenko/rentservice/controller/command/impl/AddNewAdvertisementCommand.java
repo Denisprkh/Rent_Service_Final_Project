@@ -103,7 +103,7 @@ public class AddNewAdvertisementCommand implements Command {
                         (RequestParameter.ADVERTISEMENT_FLAT_DESCRIPTION_PETS)))
                 .buildUsersDescription(request.getParameter
                         (RequestParameter.ADVERTISEMENT_FLAT_DESCRIPTION_USERS_DESCRIPTION))
-                .buildUserChoiceHandler();
+                .buildAdvertisementDataHandler();
 
         return dataHandler;
     }

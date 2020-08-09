@@ -30,40 +30,41 @@
                         <p><fmt:message key="add_an_advertisement.advertisement_description"/></p>
                     </div>
                     <div class="row_items-input">
-                        <input class="input__item first" name="title" placeholder=
+                        <input type="text" class="input__item first" name="title" placeholder=
                                 "<fmt:message key="add_an_advertisement.advertisement_title"/>" required
-                               pattern="^[a-zA-Zа-яА-Я]{2,45}$"/>
-                        <input class="input__item" name="price" placeholder=
-                                "<fmt:message key="add_an_advertisement.price"/>" required pattern="^[0-9.]{1,45}$"/>
+                               pattern="^[a-zA-Zа-яА-Я\s]{2,45}$" title="<fmt:message key="add_an_advertisement.incorrect_title"/>"/>
+                        <input type="text" class="input__item" name="price" placeholder=
+                                "<fmt:message key="add_an_advertisement.price"/>" required pattern="^[0-9.]{1,45}$"
+                        title="<fmt:message key="add_an_advertisement.incorrect_price"/>"/>
 
                     </div>
                     <div class="row__items-title">
                         <p><fmt:message key="add_an_advertisement.location_title"/></p>
                     </div>
                     <div class="row_items-input">
-                        <input class="input__item first" name="city" placeholder=
+                        <input type="text" class="input__item first" name="city" placeholder=
                                 "<fmt:message key="add_an_advertisement.location_city"/>" required
-                               pattern="^[a-zA-Zа-яА-Я.-]{2,45}$"/>
-                        <input class="input__item" name="district" placeholder=
+                               pattern="^[a-zA-Zа-яА-Я\s.-]{2,45}$" title="<fmt:message key="add_an_advertisement.incorrect_city"/>"/>
+                        <input type="text" class="input__item" name="district" placeholder=
                                 "<fmt:message key="add_an_advertisement.location_district"/>" required
-                               pattern="^[a-zA-Zа-яА-Я.-]{2,45}$"/>
-                        <input class="input__item" name="street" placeholder=
+                               pattern="^[a-zA-Zа-яА-Я\s.-]{2,45}$" title="<fmt:message key="add_an_advertisement.incorrect_district"/> "/>
+                        <input type="text" class="input__item" name="street" placeholder=
                                 "<fmt:message key="add_an_advertisement.location_street"/>" required
-                               pattern="^[a-zA-Zа-яА-Я.-]{2,45}$"/>
-                        <input class="input__item end" name="house" placeholder=
+                               pattern="^[a-zA-Zа-яА-Я\s.-]{2,45}$" title="<fmt:message key="add_an_advertisement.incorrect_street"/> "/>
+                        <input type="text" class="input__item end" name="house" placeholder=
                                 "<fmt:message key="add_an_advertisement.location_house"/>" required
-                               pattern="^[a-zA-Z0-9_\\-.]{2,40}$"/>
+                               pattern="^\d+[a-zа-я\/\d]{0,10}$" title="<fmt:message key="add_an_advertisement.incorrect_house"/> "/>
                     </div>
                     <div class="row__items-title">
                         <p><fmt:message key="add_an_advertisement.flat_description_title"/></p>
                     </div>
                     <div class="row_items-input">
-                        <input class="input__item first" name="rooms" placeholder=
+                        <input type="text" class="input__item first" name="rooms" placeholder=
                                 "<fmt:message key="add_an_advertisement.flat_description_rooms"/>" required
-                               pattern="^[0-9]{1,10}$"/>
-                        <input class="input__item" name="area" placeholder=
+                               pattern="^[0-9]{1,10}$" title="<fmt:message key="add_an_advertisement.incorrect_rooms"/> "/>
+                        <input type="text" class="input__item" name="area" placeholder=
                                 "<fmt:message key="add_an_advertisement.flat_description_area"/>" required
-                               pattern="^[0-9.]{1,45}$"/>
+                               pattern="^[0-9.]{1,45}$" title="<fmt:message key="add_an_advertisement.incorrect_living_area"/>"/>
                     </div>
 
                     <div class="check-box__items">
@@ -140,5 +141,6 @@
     </div>
 </section>
 <script src="${pageContext.request.contextPath}/js/xssProtection.js"></script>
+<script src="${pageContext.request.contextPath}/js/advertisement.js"></script>
 </body>
 </html>

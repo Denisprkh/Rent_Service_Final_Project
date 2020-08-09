@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class UserValidator {
 
-    private static final String EMAIL_REGEX = "[a-zA-z0-9_.-]{1,40}@[a-zA-Z0-9_-]{2,40}\\.[a-z]{2,10}";
+    private static final String EMAIL_REGEX = "[a-zA-z0-9_.-]{1,35}@[a-zA-z0-9_-]{2,15}\\.[a-z]{2,10}";
     private static final String FIRST_NAME_REGEX = "^[a-zA-Zа-яА-Я]{2,45}$";
     private static final String LAST_NAME_REGEX = "^[a-zA-Zа-яА-Я]{2,45}$";
     private static final String PASSWORD_REGEX = ".{1,32}";

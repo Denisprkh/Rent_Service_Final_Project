@@ -764,7 +764,6 @@
                 offset = this.opts.offset,
                 main = pos[0],
                 secondary = pos[1];
-
             switch (main) {
                 case 'top':
                     top = dims.top - selfDims.height - offset;

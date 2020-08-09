@@ -152,7 +152,7 @@ public class AdvertisementDataHandlerBuilder {
         return this;
     }
 
-    public AdvertisementDataHandler buildUserChoiceHandler() {
+    public AdvertisementDataHandler buildAdvertisementDataHandler() {
 
         return new AdvertisementDataHandler(this);
     }

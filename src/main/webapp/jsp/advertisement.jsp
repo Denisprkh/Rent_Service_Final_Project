@@ -197,7 +197,7 @@
                         <div class="forms-date_input">
                             <input id="mindateinp" name="rentDate" data-range="true" data-multiple-dates-separator="-"
                                    class="datepicker-here" required
-                                   pattern="^([\d]{2}.){2}[\d]{4}-([\d]{2}.){2}[\d]{4}$"
+                                   pattern="^([\d]{2}\/){2}[\d]{4}-([\d]{2}\/){2}[\d]{4}$"
                                    title="<fmt:message key="request_error.invalid_date_format"/> "/>
                             <div class="forms-date_input__icon">
                                 <img src="${pageContext.request.contextPath}/img/Calendaricon.svg" alt="">

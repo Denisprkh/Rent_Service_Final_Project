@@ -2,8 +2,6 @@ package by.prokhorenko.rentservice.validator;
 
 import by.prokhorenko.rentservice.entity.Advertisement;
 import by.prokhorenko.rentservice.entity.AdvertisementDataHandler;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -12,13 +10,12 @@ import java.util.List;
  */
 public class AdvertisementValidator {
 
-    private static final String COMMON_STRING_DATA_REGEX = "^[a-zA-Zа-яА-Я]{2,45}$";
+    private static final String COMMON_STRING_DATA_REGEX = "^[a-zA-Zа-яА-Я\\s]{2,45}$";
     private static final String PRICE_REGEX = "^[0-9.]{1,45}$";
-    private static final String LOCATION_REGEX = "^[a-zA-Zа-яА-Я.-]{2,45}$";
+    private static final String LOCATION_REGEX = "^[a-zA-Zа-яА-Я\\s.-]{2,45}$";
     private static final String HOUSE_NUMBER_REGEX = "^\\d+[a-zа-я\\/\\d]{0,10}$";
     private static final String ROOMS_REGEX = "^[0-9]{1,10}$";
     private static final String AREA_REGEX = "^[0-9.]{1,45}$";
-    private static final Logger LOG = LogManager.getLogger();
 
     private AdvertisementValidator() {
 
@@ -33,7 +30,8 @@ public class AdvertisementValidator {
     }
 
     /**
-     * Returns List of {@code Boolean} which represents if data is correct.
+     * Returns List of {@code Boolean} which represents if data is correct. If List contains
+     * {@code false} values, user will get information about them.
      *
      * @param handler {@link AdvertisementDataHandler}
      * @return List of {@code Boolean}

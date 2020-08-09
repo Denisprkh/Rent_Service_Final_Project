@@ -27,7 +27,7 @@ public class NewRequestCommand implements Command {
     private static final Logger LOG = LogManager.getLogger();
     private RequestService requestService;
     private static final String START_END_DATE_SPLITTER = "-";
-    private static final String DATE_ON_NUMBERS_SPLITTER = "\\.";
+    private static final String DATE_ON_NUMBERS_SPLITTER = "\\/";
     private static final int DAY_INDEX = 0;
     private static final int MONTH_INDEX = 1;
     private static final int YEAR_INDEX = 2;
