@@ -4,93 +4,92 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-<display-name>Archetype Created Web Application</display-name>
+    <display-name>Archetype Created Web Application</display-name>
 
-  <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 
-<!--  <error-page>-->
-<!--    <error-code>404</error-code>-->
-<!--    <location>/jsp/error404.jsp</location>-->
-<!--  </error-page>-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/jsp/error404.jsp</location>
+    </error-page>
 
-<!--  <error-page>-->
-<!--    <error-code>500</error-code>-->
-<!--    <location>/jsp/error500.jsp</location>-->
-<!--  </error-page>-->
+    <error-page>
+        <error-code>500</error-code>
+        <location>/jsp/error500.jsp</location>
+    </error-page>
 
-  <filter>
-    <filter-name>EncodingFilter</filter-name>
-    <filter-class>by.prokhorenko.rentservice.controller.filter.EncodingFilter</filter-class>
-    <init-param>
-      <param-name>encoding</param-name>
-      <param-value>UTF-8</param-value>
-    </init-param>
-  </filter>
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>by.prokhorenko.rentservice.controller.filter.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
 
-  <filter>
-    <filter-name>UserRoleSecurityFilter</filter-name>
-    <filter-class>by.prokhorenko.rentservice.controller.filter.UserRoleSecurityFilter</filter-class>
-  </filter>
+    <filter>
+        <filter-name>UserRoleSecurityFilter</filter-name>
+        <filter-class>by.prokhorenko.rentservice.controller.filter.UserRoleSecurityFilter</filter-class>
+    </filter>
 
-  <filter>
-    <filter-name>LocaleFilter</filter-name>
-    <filter-class>by.prokhorenko.rentservice.controller.filter.LocaleFilter</filter-class>
-  </filter>
+    <filter>
+        <filter-name>LocaleFilter</filter-name>
+        <filter-class>by.prokhorenko.rentservice.controller.filter.LocaleFilter</filter-class>
+    </filter>
 
-  <filter>
-    <filter-name>UserBlockFilter</filter-name>
-    <filter-class>by.prokhorenko.rentservice.controller.filter.UserBlockFilter</filter-class>
-  </filter>
+    <filter>
+        <filter-name>UserBlockFilter</filter-name>
+        <filter-class>by.prokhorenko.rentservice.controller.filter.UserBlockFilter</filter-class>
+    </filter>
 
-  <filter>
-    <filter-name>CommandMatchingSecurityFilter</filter-name>
-    <filter-class>by.prokhorenko.rentservice.controller.filter.CommandMatchingSecurityFilter</filter-class>
-  </filter>
+    <filter>
+        <filter-name>CommandMatchingSecurityFilter</filter-name>
+        <filter-class>by.prokhorenko.rentservice.controller.filter.CommandMatchingSecurityFilter</filter-class>
+    </filter>
 
-  <filter>
-    <filter-name>PageRedirectSecurityFilter</filter-name>
-    <filter-class>by.prokhorenko.rentservice.controller.filter.PageRedirectSecurityFilter</filter-class>
-  </filter>
+    <filter>
+        <filter-name>PageRedirectSecurityFilter</filter-name>
+        <filter-class>by.prokhorenko.rentservice.controller.filter.PageRedirectSecurityFilter</filter-class>
+    </filter>
 
 
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
-  <filter-mapping>
-    <filter-name>EncodingFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
+    <filter-mapping>
+        <filter-name>UserRoleSecurityFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
-  <filter-mapping>
-    <filter-name>UserRoleSecurityFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
+    <filter-mapping>
+        <filter-name>LocaleFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
-  <filter-mapping>
-    <filter-name>LocaleFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
+    <filter-mapping>
+        <filter-name>UserBlockFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
-  <filter-mapping>
-    <filter-name>UserBlockFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
+    <filter-mapping>
+        <filter-name>CommandMatchingSecurityFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
-  <filter-mapping>
-    <filter-name>CommandMatchingSecurityFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
+    <filter-mapping>
+        <filter-name>PageRedirectSecurityFilter</filter-name>
+        <url-pattern>/jsp/*</url-pattern>
+    </filter-mapping>
 
-  <filter-mapping>
-    <filter-name>PageRedirectSecurityFilter</filter-name>
-    <url-pattern>/jsp/*</url-pattern>
-  </filter-mapping>
-
-  <jsp-config>
-    <taglib>
-      <taglib-uri>customtags</taglib-uri>
-      <taglib-location>/WEB-INF/tld/custom.tld</taglib-location>
-    </taglib>
-  </jsp-config>
+    <jsp-config>
+        <taglib>
+            <taglib-uri>customtags</taglib-uri>
+            <taglib-location>/WEB-INF/tld/custom.tld</taglib-location>
+        </taglib>
+    </jsp-config>
 
 </web-app>

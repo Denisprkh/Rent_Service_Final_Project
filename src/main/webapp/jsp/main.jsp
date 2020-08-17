@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>rigister</title>
+    <title><fmt:message key="main_page.title"/></title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 </head>
@@ -73,7 +73,7 @@
                 <img src="data:image/jpg;base64,${elem.flat.flatPhotos.get(0).base64PhotoData}" alt="flat_one" class="List-flat__img">
                 <div class="list-flat__text">
                     <div class="text-top">
-                        ${elem.title}  ${elem.id}
+                        ${elem.title}
                     </div>
                     <div class="list-flat__place">
                         <div class="icon-place">

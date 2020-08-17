@@ -9,7 +9,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>Title</title>
+    <title><fmt:message key="admin_profile.all_users"/></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 </head>
 <body>
@@ -45,18 +45,21 @@
                     </div>
                     <c:if test="${elem.id ne sessionScope.user.id}">
                         <div class="card-ads-btn admins_all_users_btn">
-                            <c:choose>
-                                <c:when test="${elem.isBanned() ne true}">
-                                    <a href="${root}/controller?command=banUser&userId=${elem.id}"
-                                       class="btn-delete ban"> <fmt:message key="admin_profile.ban_user"/>
-                                    </a>
-                                </c:when>
-                                <c:otherwise>
-                                    <a href="${root}/controller?command=unBanUser&userId=${elem.id}"
-                                       class="btn-update"> <fmt:message key="admin_profile.unban_user"/>
-                                    </a>
-                                </c:otherwise>
-                            </c:choose>
+                            <form action="${root}/controller" method="post">
+                                <input type="hidden" name="userId" value="${elem.id}">
+                                <c:choose>
+                                    <c:when test="${elem.isBanned() ne true}">
+                                        <button class="btn-delete" name="command" value="banUser">
+                                            <fmt:message key="admin_profile.ban_user"/>
+                                        </button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button class="btn-update" name="command" value="unBanUser">
+                                            <fmt:message key="admin_profile.unban_user"/>
+                                        </button>
+                                    </c:otherwise>
+                                </c:choose>
+                            </form>
                             <c:choose>
                                 <c:when test="${elem.userRole == 'USER'}">
                                     <a href="${root}/controller?command=giveAdminRights&userId=${elem.id}"

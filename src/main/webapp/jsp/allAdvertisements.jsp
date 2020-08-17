@@ -9,7 +9,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>Title</title>
+    <title><fmt:message key="admin_profile.all_ads"/></title>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -38,10 +38,12 @@
                             </div>
                         </div>
                     </div>
-                    <a class="btn-delete"
-                       href="${root}/controller?command=deleteAdvertisement&advertisementId=${elem.id}">
-                        <fmt:message key="advertisement.delete_button"/>
-                    </a>
+                    <form action="${root}/controller" method="post">
+                        <input type="hidden" name="advertisementId" value="${elem.id}">
+                        <button class="btn-delete" name="command" value="deleteAdvertisement">
+                            <fmt:message key="advertisement.delete_button"/>
+                        </button>
+                    </form>
                     <c:choose>
                         <c:when test="${elem.flat.isFree() eq true}">
                             <div class="admin_flat_status_info_free">
@@ -59,9 +61,12 @@
                         <fmt:message key="profile.my_ads_update"/>
                     </a>
                     <c:if test="${elem.author.id ne sessionScope.user.id}">
-                        <a class="btn-delete" href="${root}/controller?command=banUser&userId=${elem.author.id}">
-                            <fmt:message key="admin_profile.ban_author_btn"/>
-                        </a>
+                        <form action="${root}/controller" method="post">
+                            <input type="hidden" name="userId" value="${elem.author.id}">
+                            <button class="btn-delete" name="command" value="banUser">
+                                <fmt:message key="admin_profile.ban_author_btn"/>
+                            </button>
+                        </form>
                     </c:if>
                 </div>
             </c:forEach>

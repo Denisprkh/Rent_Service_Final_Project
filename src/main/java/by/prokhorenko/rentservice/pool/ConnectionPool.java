@@ -104,7 +104,6 @@ public enum ConnectionPool {
                 Thread.currentThread().interrupt();
             }
             busyConnections.add(connection);
-            LOG.debug(availableConnections.size());
         }
         return connection;
     }
@@ -130,7 +129,6 @@ public enum ConnectionPool {
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
                 availableConnections.take().closeToDestroy();
-                LOG.debug("closing");
             } catch (SQLException | InterruptedException e) {
                 LOG.error("Pool hasn't been destroyed", e);
             }
@@ -142,7 +140,6 @@ public enum ConnectionPool {
      * Deregister drivers.
      */
     private void deregisterDrivers() {
-        LOG.debug("dereg");
         Enumeration<Driver> drivers = DriverManager.getDrivers();
         while (drivers.hasMoreElements()) {
             Driver driver = drivers.nextElement();

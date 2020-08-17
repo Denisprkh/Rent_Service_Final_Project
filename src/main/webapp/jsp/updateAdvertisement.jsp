@@ -11,7 +11,7 @@
 
 <html>
 <head>
-    <title><fmt:message key="add_an_advertisement.title"/></title>
+    <title><fmt:message key="update_advertisement.title"/></title>
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <meta charset="UTF-8">
 </head>

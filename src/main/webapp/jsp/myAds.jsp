@@ -9,7 +9,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>Title</title>
+    <title><fmt:message key="profile.my_ads"/> </title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 </head>
 <body>
@@ -54,20 +54,28 @@
                                 </div>
                             </div>
                             <div class="card-ads-btn">
-                                <a class="btn-delete"
-                                   href="${pageContext.request.contextPath}/controller?command=deleteAdvertisement&advertisementId=${elem.id}">
-                                    <fmt:message key="advertisement.delete_button"/>
-                                </a>
-                                <c:choose>
-                                    <c:when test="${elem.flat.isFree() eq true}">
-                                        <a class="btn-delete" href=
-                                                "${pageContext.request.contextPath}/controller?command=setFlatInRent&flatId=${elem.flat.id}&advertisementId=${elem.id}">
-                                            <fmt:message key="profile.my_ads_rented_btn"/> </a>
-                                    </c:when>
-                                    <c:otherwise><a class="btn-update" href=
-                                            "${pageContext.request.contextPath}/controller?command=setFlatIsNotInRent&flatId=${elem.flat.id}&advertisementId=${elem.id}">
-                                        <fmt:message key="profile.my_ads_not_rented_btn"/> </a></c:otherwise>
-                                </c:choose>
+                                <form action="${pageContext.request.contextPath}/controller" method="post">
+                                    <input type="hidden" name="advertisementId" value="${elem.id}"/>
+                                    <button class="btn-delete" name="command" value="deleteAdvertisement">
+                                        <fmt:message key="advertisement.delete_button"/>
+                                    </button>
+                                </form>
+                                <form action="${pageContext.request.contextPath}/controller" method="post">
+                                    <input type="hidden" name="flatId" value="${elem.flat.id}"/>
+                                    <input type="hidden" name="advertisementId" value="${elem.id}">
+                                    <c:choose>
+                                        <c:when test="${elem.flat.isFree() eq true}">
+                                            <button class="btn-delete" name="command" value="setFlatInRent">
+                                                <fmt:message key="profile.my_ads_rented_btn"/>
+                                            </button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button class="btn-update" name="command" value="setFlatIsNotInRent">
+                                                <fmt:message key="profile.my_ads_not_rented_btn"/>
+                                            </button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </form>
                                 <a class="btn-update"
                                    href="${pageContext.request.contextPath}/controller?command=updateAdvertisementPage&advertisementId=${elem.id}">
                                     <fmt:message key="profile.my_ads_update"/>

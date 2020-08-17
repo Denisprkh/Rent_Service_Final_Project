@@ -16,7 +16,7 @@ public class RequestValidatorTest {
 
     @Test
     public void dataForDateIsCorrectTestAssertTrue() {
-        String data = "12.12.2020-12.12.2030";
+        String data = "12/12/2020-12/02/2030";
         boolean result = requestValidator.dataForDateIsCorrect(data);
         Assert.assertTrue(result);
     }

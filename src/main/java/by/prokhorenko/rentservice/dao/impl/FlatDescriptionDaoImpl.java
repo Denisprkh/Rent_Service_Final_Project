@@ -23,7 +23,6 @@ import java.util.Optional;
 public class FlatDescriptionDaoImpl extends AbstractCommonDao implements FlatDescriptionDao {
 
     private static final FlatDescriptionDao INSTANCE = new FlatDescriptionDaoImpl();
-    private static final Logger LOG = LogManager.getLogger();
 
     private FlatDescriptionDaoImpl() {
         this.connection = ConnectionPool.INSTANCE.getConnection();

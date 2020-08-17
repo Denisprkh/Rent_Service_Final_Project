@@ -25,6 +25,7 @@ public class PageRedirectSecurityFilter implements Filter {
         if (request.getParameter(RequestParameter.PARAM_COMMAND) == null) {
             response.sendRedirect(request.getContextPath() + REDIRECT_URL);
         }
+        LOG.debug(request.getParameter(RequestParameter.FLAT_ID));
         chain.doFilter(req, resp);
     }
 

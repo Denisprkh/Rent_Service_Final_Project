@@ -32,8 +32,6 @@ public class FlatAddressDaoImpl extends AbstractCommonDao implements FlatAddress
         return INSTANCE;
     }
 
-    private static final Logger LOG = LogManager.getLogger();
-
     @Override
     public Optional<FlatAddress> add(FlatAddress flatAddress) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SqlQuery.ADD_FLAT_ADDRESS,

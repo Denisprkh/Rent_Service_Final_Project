@@ -24,7 +24,6 @@ import java.util.Optional;
  */
 public class FlatDaoImpl extends AbstractCommonDao implements FlatDao {
 
-    private static final Logger LOG = LogManager.getLogger();
     private static final FlatDao INSTANCE = new FlatDaoImpl();
 
     private FlatDaoImpl() {

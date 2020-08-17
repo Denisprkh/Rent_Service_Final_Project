@@ -8,7 +8,7 @@
 <fmt:setBundle basename="pagecontent.pagecontent"/>
 <html>
 <head>
-    <title>Title</title>
+    <title><fmt:message key="profile.my_profile"/></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/dependencyLibs/inputmask.dependencyLib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/inputmask.min.js"></script>

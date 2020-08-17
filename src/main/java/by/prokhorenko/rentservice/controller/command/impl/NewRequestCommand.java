@@ -28,8 +28,8 @@ public class NewRequestCommand implements Command {
     private RequestService requestService;
     private static final String START_END_DATE_SPLITTER = "-";
     private static final String DATE_ON_NUMBERS_SPLITTER = "\\/";
-    private static final int DAY_INDEX = 0;
-    private static final int MONTH_INDEX = 1;
+    private static final int DAY_INDEX = 1;
+    private static final int MONTH_INDEX = 0;
     private static final int YEAR_INDEX = 2;
     private static final int HOURS_DEFAULT_VALUE = 0;
     private static final int MINUTES_DEFAULT_VALUE = 0;
