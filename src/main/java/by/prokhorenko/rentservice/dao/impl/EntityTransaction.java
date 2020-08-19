@@ -1,6 +1,7 @@
 package by.prokhorenko.rentservice.dao.impl;
 
 import by.prokhorenko.rentservice.dao.AbstractCommonDao;
+import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,39 +20,39 @@ public class EntityTransaction {
 
     }
 
-     void beginTransaction(ProxyConnection connection, AbstractCommonDao ... daos){
+     void beginTransaction(ProxyConnection connection, AbstractCommonDao ... daos) throws DaoException {
         try {
             connection.setAutoCommit(false);
             for(AbstractCommonDao dao : daos){
                 dao.setConnection(connection);
             }
         } catch (SQLException e) {
-            LOG.error("Setting connection autoCommit false error",e);
+           throw new DaoException(e);
         }
     }
 
-     void endTransaction(ProxyConnection connection){
+     void endTransaction(ProxyConnection connection) throws DaoException {
         try {
             connection.setAutoCommit(true);
             connection.close();
         } catch (SQLException e) {
-            LOG.error("Setting connection autoCommit true error",e);
+            throw new DaoException(e);
         }
     }
 
-     void commit(ProxyConnection connection){
+     void commit(ProxyConnection connection) throws DaoException {
         try {
             connection.commit();
         } catch (SQLException e) {
-            LOG.error("Connection commit error",e);
+            throw new DaoException(e);
         }
     }
 
-    void rollback(ProxyConnection connection){
+    void rollback(ProxyConnection connection) throws DaoException {
         try {
             connection.rollback();
         } catch (SQLException e) {
-            LOG.error("Connection rollback error",e);
+            throw new DaoException(e);
         }
     }
 }

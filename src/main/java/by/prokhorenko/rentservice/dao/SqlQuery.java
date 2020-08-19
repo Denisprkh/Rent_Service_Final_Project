@@ -22,11 +22,11 @@ public class SqlQuery {
             " TRUE WHERE us.users_id = ?";
     public static final String UPDATE_USERS_BAN_STATUS_BY_ID_FALSE = "UPDATE users us SET us.is_banned =" +
             " FALSE WHERE us.users_id = ?";
-    public static final String UPDATE_USERS_RIGHTS = "UPDATE users SET users_role_id = ? WHERE users_id = ?";
     public static final String FIND_USER_BY_PHONE = "SELECT users_id,first_name,last_name,email,password,phone," +
             "users_role_id,is_activated,is_banned FROM users WHERE phone = ? ";
     public static final String FIND_USERS_QUANTITY = "SELECT COUNT(*) FROM users";
     public static final String ACTIVATE_USER = "UPDATE users SET is_activated = true WHERE users_id = ?";
+
 
     public static final String ADD_FLAT_ADDRESS = "INSERT INTO flats_address (city,district,street,house) " +
             "VALUES (?,?,?,?)";
@@ -37,6 +37,7 @@ public class SqlQuery {
             "FROM flats_address WHERE flats_address_id = ?";
     public static final String UPDATE_FLAT_ADDRESS_BY_ID = "UPDATE flats_address fa SET fa.city = ?, " +
             "fa.district = ?, fa.street = ?, fa.house = ? WHERE fa.flats_address_id = ?";
+
 
     public static final String ADD_FLAT_DESCRIPTION = "INSERT INTO flats_description (rooms,living_area,has_furniture," +
             "has_home_appliciances,has_the_internet,possible_with_childs,possible_with_pets,users_description)" +
@@ -52,6 +53,8 @@ public class SqlQuery {
             "fd.living_area = ?, fd.has_furniture = ?, fd.has_home_appliciances = ?, fd.has_the_internet = ?," +
             " fd.possible_with_childs = ?, fd.possible_with_pets = ?, fd.users_description = ? " +
             "WHERE fd.flats_description_id = ?";
+
+
     public static final String ADD_FLAT = "INSERT INTO flats (flats_description_id,flats_address_id) VALUES (?,?)";
     public static final String FIND_ALL_FLATS = "SELECT flats.flats_id, flats.is_free, flats.flats_description_id," +
             "flats.flats_address_id, flats_address.flats_address_id,flats_address.city," +
@@ -76,12 +79,16 @@ public class SqlQuery {
             "flats_address_id = ? WHERE flats_id = ?";
     public static final String UPDATE_FLAT_FREE_STATUS_FALSE = "UPDATE flats SET is_free = FALSE WHERE flats_id = ?";
     public static final String UPDATE_FLAT_FREE_STATUS_TRUE = "UPDATE flats SET is_free = TRUE WHERE flats_id = ?";
+
+
     public static final String ADD_FLATS_PHOTO = "INSERT INTO flats_photo(flats_id,photo) VALUES (?,?)";
     public static final String FIND_FLAT_PHOTO_BY_FLATS_ID = "SELECT flats_photo_id,flats_id,photo FROM flats_photo " +
             "WHERE flats_id = ?";
     public static final String FIND_FLAT_PHOTOS_QUANTITY = "SELECT COUNT(*) FROM flat_photos";
     public static final String UPDATE_FLAT_PHOTO_DATA = "UPDATE flats_photo SET photo = ? WHERE flats_id = ?";
     public static final String FIND_ALL_FLAT_PHOTO = "SELECT flats_photo_id,flats_id,photo FROM flats_photo";
+
+
     public static final String ADD_ADVERTISEMENT = "INSERT INTO advertisements (author_id,flats_id,title,price," +
             "date_of_creation) VALUES (?,?,?,?,?)";
     public static final String FIND_ALL_ADVERTISEMENTS = "SELECT flats.flats_id, flats.is_free, flats.flats_description_id," +
@@ -170,7 +177,6 @@ public class SqlQuery {
             "AND flats_description.possible_with_pets REGEXP ? AND flats_description.possible_with_childs REGEXP ? AND " +
             "advertisements.price REGEXP ? AND advertisements.is_visible = TRUE AND flats.is_free = TRUE AND " +
             "users.is_banned = FALSE LIMIT ?,?";
-
     public static final String FIND_ADVERTISEMENT_BY_USERS_CHOICE_QUANTITY = "SELECT COUNT(*) FROM flats,flats_address, " +
             "flats_description,users, advertisements WHERE flats.flats_description_id = " +
             "flats_description.flats_description_id AND flats.flats_address_id = flats_address.flats_address_id AND " +
@@ -180,6 +186,7 @@ public class SqlQuery {
             "flats_description.has_home_appliciances REGEXP ? AND flats_description.possible_with_pets REGEXP ? " +
             "AND flats_description.possible_with_childs REGEXP ? AND advertisements.price REGEXP ? " +
             "AND advertisements.is_visible = TRUE AND flats.is_free = TRUE AND users.is_banned = FALSE";
+
 
     public static final String ADD_REQUEST = "INSERT INTO requests (users_id,start_date,end_date,application_date," +
             "advertisements_id) VALUES (?,?,?,?,?)";
