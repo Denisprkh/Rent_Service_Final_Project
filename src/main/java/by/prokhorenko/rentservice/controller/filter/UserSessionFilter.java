@@ -17,7 +17,7 @@ public class UserSessionFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
         HttpSession session = request.getSession();
-        if (session != null || session.getAttribute(Attribute.USER) != null) {
+        if (session != null && session.getAttribute(Attribute.USER) != null) {
             chain.doFilter(req, resp);
         } else {
             response.sendRedirect(PagePath.INDEX);
