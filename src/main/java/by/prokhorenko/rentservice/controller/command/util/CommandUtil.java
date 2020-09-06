@@ -29,34 +29,33 @@ public class CommandUtil {
     public static void defineErrorMessageFromUsersDataValidations(HttpServletRequest request,
                                                                   Map<String, Boolean> usersDataValidations) {
         String falseKey = defineFalseKey(usersDataValidations);
-        HttpSession session = request.getSession();
         switch (falseKey) {
             case EMAIL:
                 request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
                         ResourceBundleMessageKey.EMAIL_INCORRECT_ERROR_MESSAGE);
                 break;
             case FIRST_NAME:
-                session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
+                request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
                         ResourceBundleMessageKey.FIRST_NAME_INCORRECT_ERROR_MESSAGE);
                 break;
             case LAST_NAME:
-                session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
+                request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
                         ResourceBundleMessageKey.LAST_NAME_INCORRECT_ERROR_MESSAGE);
                 break;
             case PASSWORD:
-                session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
+                request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
                         ResourceBundleMessageKey.PASSWORD_INCORRECT_ERROR_MESSAGE);
                 break;
             case PHONE_NUMBER:
-                session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
+                request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
                         ResourceBundleMessageKey.PHONE_INCORRECT_ERROR_MESSAGE);
                 break;
             case EMAIL_IS_UNIQUE:
-                session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
+                request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
                         ResourceBundleMessageKey.EMAIL_IS_NOT_UNIQUE_ERROR_MESSAGE);
                 break;
             case PHONE_IS_UNIQUE:
-                session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
+                request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE,
                         ResourceBundleMessageKey.PHONE_IS_NOT_UNIQUE_ERROR_MESSAGE);
                 break;
         }

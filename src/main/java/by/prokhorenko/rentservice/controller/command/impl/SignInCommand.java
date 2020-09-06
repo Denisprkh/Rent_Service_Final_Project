@@ -41,13 +41,12 @@ public class SignInCommand implements Command {
             session.removeAttribute(Attribute.SIGN_IN_ERROR_MESSAGE);
         } catch (ServiceException e) {
             LOG.error(e);
+            router.setForward();
             if (e.getCause() instanceof DaoException) {
-                router.setForward();
                 router.setPage(PagePath.SERVER_ERROR_PAGE);
             } else {
-                session.setAttribute(Attribute.SIGN_IN_ERROR_MESSAGE, e.getMessage());
-                String redirectUrl = buildRedirectUrl(request, CommandName.SIGN_IN_PAGE.getCommandName());
-                router.setPage(redirectUrl);
+                request.setAttribute(Attribute.SIGN_IN_ERROR_MESSAGE, e.getMessage());
+                router.setPage(PagePath.SIGN_IN);
             }
         }
         return router;

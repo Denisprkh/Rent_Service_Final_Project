@@ -20,6 +20,7 @@ public class ChangeLanguageCommand implements Command {
         if (targetLanguage != null) {
             request.getSession().setAttribute(Attribute.LANGUAGE, targetLanguage);
             previousPage = request.getHeader(CommandUtil.REFERER_HEADER);
+            LOG.debug(previousPage);
         }
         return new Router(previousPage);
     }

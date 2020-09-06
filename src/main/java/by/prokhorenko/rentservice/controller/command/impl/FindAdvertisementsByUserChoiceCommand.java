@@ -9,6 +9,7 @@ import by.prokhorenko.rentservice.controller.command.Command;
 import by.prokhorenko.rentservice.controller.command.RequestParameter;
 import by.prokhorenko.rentservice.controller.command.util.CommandUtil;
 import by.prokhorenko.rentservice.entity.Advertisement;
+import by.prokhorenko.rentservice.entity.Request;
 import by.prokhorenko.rentservice.entity.UserChoiceDataHandler;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
@@ -36,6 +37,7 @@ public class FindAdvertisementsByUserChoiceCommand implements Command {
         int start = CommandUtil.defineStartOfRecords(request);
         HttpSession session = request.getSession();
         String page;
+        Router router;
         try {
             UserChoiceDataHandler previousHandler = (UserChoiceDataHandler) session.
                     getAttribute(Attribute.ADVERTISEMENT_FILTER);
@@ -51,12 +53,12 @@ public class FindAdvertisementsByUserChoiceCommand implements Command {
             List<Advertisement> advertisementList = advertisementService.findAdvertisementsByUsersChoice
                     (handlerForSearch, start, CommandUtil.RECORDS_PER_PAGE);
             session.setAttribute(Attribute.ADVERTISEMENT_LIST, advertisementList);
-            page = PagePath.MAIN;
+                router = new Router(DisPathType.FORWARD, PagePath.MAIN);
         } catch (ServiceException e) {
             LOG.error(e);
-            page = PagePath.SERVER_ERROR_PAGE;
+            router = new Router(PagePath.SERVER_ERROR_PAGE);
         }
-        return new Router(DisPathType.FORWARD, page);
+        return router;
     }
 
     private UserChoiceDataHandler buildDataHandlerFromRequest(HttpServletRequest request) {

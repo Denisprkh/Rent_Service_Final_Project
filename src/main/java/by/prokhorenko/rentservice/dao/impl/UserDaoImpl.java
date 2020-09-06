@@ -132,8 +132,6 @@ public class UserDaoImpl extends AbstractCommonDao implements UserDao {
             preparedStatement.setString(2, HashGenerator.generateHash(password));
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                LOG.debug(resultSet.getBoolean(SqlColumnName.USERS_IS_BANNED_COLUMN_NAME));
-                LOG.debug(buildUserFromResultSet(resultSet));
                 return Optional.of(buildUserFromResultSet(resultSet));
             }
             return Optional.empty();

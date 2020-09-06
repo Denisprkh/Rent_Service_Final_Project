@@ -9,6 +9,7 @@ import by.prokhorenko.rentservice.controller.command.CommandName;
 import by.prokhorenko.rentservice.controller.command.RequestParameter;
 import by.prokhorenko.rentservice.controller.command.util.CommandUtil;
 import by.prokhorenko.rentservice.entity.User;
+import by.prokhorenko.rentservice.entity.UserRole;
 import by.prokhorenko.rentservice.exception.DaoException;
 import by.prokhorenko.rentservice.exception.ServiceException;
 import by.prokhorenko.rentservice.factory.ServiceFactory;
@@ -55,23 +56,30 @@ public class UpdateUserInfoCommand implements Command {
                         updatedEmail, updatedPhone);
                 updatedUser = userService.updateUserInfo(updatedUser);
                 session.setAttribute(Attribute.USER, updatedUser);
-                session.removeAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE);
             } else {
                 CommandUtil.defineErrorMessageFromUsersDataValidations(request, usersDataValidations);
+                router.setForward();
+                String page = definePageByUserRole(user);
+                router.setPage(page);
             }
         } catch (ServiceException e) {
+            LOG.error(e);
             if (e.getCause() instanceof DaoException) {
-                router.setForward();
                 router.setPage(PagePath.SERVER_ERROR_PAGE);
             } else {
                 if (e.getMessage() != null) {
-                    session.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE, e.getMessage());
+                   request.setAttribute(Attribute.INCORRECT_DATA_ERROR_MESSAGE, e.getMessage());
                 }
-                String redirectUrl = buildRedirectUrl(request, CommandName.PROFILE_PAGE.getCommandName());
-                router.setPage(redirectUrl);
+                String page = definePageByUserRole(user);
+                router.setPage(page);
             }
         }
         return router;
+    }
+
+    private String definePageByUserRole(User user){
+        String page = UserRole.ADMIN.equals(user.getUserRole()) ? PagePath.ADMIN_PROFILE : PagePath.USER_PROFILE;
+        return page;
     }
 
     private String[] splitFullName(String fullName) {

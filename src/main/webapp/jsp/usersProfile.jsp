@@ -80,17 +80,16 @@
                                 <div class="name-botton" data-type="profile-info">
                                     ${user.phone}
                                 </div>
-                                <input type="phone" class="name-botton input__profile none" name="updatedPhone"
-                                       data-type="profile-input" required
-                                       pattern="^(\+375\([\d]{2}\)[\d]{3}\-[\d]{2}\-[\d]{2})$" title="
-                                <fmt:message key="sign_up_form.invalid_phone_number_format"/>"/>
+                                <input  class="name-botton input__profile none" name="updatedPhone"
+                                       data-type="profile-input" required pattern="^(\+375\([\d]{2}\)[\d]{3}\-[\d]{2}\-[\d]{2})$"
+                                       title="<fmt:message key="sign_up_form.invalid_phone_number_format"/>"/>
+                                <input type="hidden" name="command" value="updateProfileData">
                             </div>
                             <div class="btn-profile__button flex">
                                 <div class="profile-btn-edit" id="profile-edit">
                                     <fmt:message key="profile.my_profile_edit_button"/>
                                 </div>
-                                <button class="profile-btn-edit none" id="profile-edit-btn" type="submit" name="command"
-                                        value="updateProfileData">
+                                <button class="profile-btn-edit none" id="profile-edit-btn" type="submit">
                                     <fmt:message key="profile.my_profile_save_button"/>
                                 </button>
                                 <div class="profile-btn-edit reset none" id="profile-edit-btn"

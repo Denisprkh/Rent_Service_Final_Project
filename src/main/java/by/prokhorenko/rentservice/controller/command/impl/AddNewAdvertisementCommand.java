@@ -67,7 +67,7 @@ public class AddNewAdvertisementCommand implements Command {
 
     private List<InputStream> buildPhotosDataFromRequest(HttpServletRequest request) {
         List<InputStream> photosData = new ArrayList<>();
-        try {
+        try{
             Part firstImgData = request.getPart(RequestParameter.FIRST_IMG_PART);
             Part secondImgData = request.getPart(RequestParameter.SECOND_IMG_PART);
             Part thirdImgData = request.getPart(RequestParameter.THIRD_IMG_PART);
