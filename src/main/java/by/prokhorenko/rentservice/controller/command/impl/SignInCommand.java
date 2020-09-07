@@ -38,7 +38,6 @@ public class SignInCommand implements Command {
             session.removeAttribute(Attribute.SIGN_IN_ERROR_MESSAGE);
             String redirectUrl = buildRedirectUrl(request, CommandName.MAIN_PAGE.getCommandName());
             router.setPage(redirectUrl);
-            session.removeAttribute(Attribute.SIGN_IN_ERROR_MESSAGE);
         } catch (ServiceException e) {
             LOG.error(e);
             router.setForward();

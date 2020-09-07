@@ -39,8 +39,8 @@ public class UpdateUserInfoCommand implements Command {
         User user = (User) session.getAttribute(Attribute.USER);
         int usersId = user.getId();
         Router router = new Router();
-        String previousPage = request.getHeader(CommandUtil.REFERER_HEADER);
-        router.setPage(previousPage);
+        String redirectUrl = buildRedirectUrl(request,CommandName.PROFILE_PAGE.getCommandName());
+        router.setPage(redirectUrl);
         try {
             String updatedFullName = request.getParameter(RequestParameter.UPDATED_USER_FULL_NAME);
             userService.fullNameIsCorrect(updatedFullName);

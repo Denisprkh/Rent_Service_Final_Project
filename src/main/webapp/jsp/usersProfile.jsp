@@ -89,7 +89,8 @@
                                 <div class="profile-btn-edit" id="profile-edit">
                                     <fmt:message key="profile.my_profile_edit_button"/>
                                 </div>
-                                <button class="profile-btn-edit none" id="profile-edit-btn" type="submit">
+                                <button class="profile-btn-edit none" id="profile-edit-btn" type="submit"
+                                        name="command" value="updateProfileData">
                                     <fmt:message key="profile.my_profile_save_button"/>
                                 </button>
                                 <div class="profile-btn-edit reset none" id="profile-edit-btn"

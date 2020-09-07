@@ -12,7 +12,7 @@ public interface Command {
     /**
      * Execute command.
      *
-     * @param request
+     * @param request http request
      * @return {@see Router}
      */
     Router execute(HttpServletRequest request);

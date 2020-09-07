@@ -25,19 +25,17 @@
     </div>
     <div class="all_ads_handler">
         <div class="formyads">
+            <c:if  test="${empty usersAdvertisementList}">
+                <div class="info_text">
+                    <fmt:message key="profile.my_ads_no_ads_info"/>
+                </div>
+            </c:if>
             <div class="btn-row-create-ads">
                 <div class="btn-create-ads">
                     <a href="${pageContext.request.contextPath}/controller?command=addAnAdvertisementPage">
                         <fmt:message key="profile.my_ads_create_button"/> </a>
                 </div>
             </div>
-            <c:choose>
-                <c:when test="${empty usersAdvertisementList}">
-                    <div class="info_text">
-                        <fmt:message key="profile.my_ads_no_ads_info"/>
-                    </div>
-                </c:when>
-                <c:otherwise>
                     <c:forEach var="elem" items="${usersAdvertisementList}">
                         <div class="card-ads-my-ads">
                             <div class="card-ads">
@@ -83,8 +81,6 @@
                             </div>
                         </div>
                     </c:forEach>
-                </c:otherwise>
-            </c:choose>
         </div>
     </div>
 </div>
